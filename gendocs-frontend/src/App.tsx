@@ -1,14 +1,17 @@
-import { useState } from "react";
+import Login from "pages/public/Login";
+import {
+    BrowserRouter,
+    Routes,
+    Route
+} from "react-router-dom";
 
 const App = () => {
-    const [count, setCount] = useState(0);
-
     return (
-        <div className="App">
-            <header className="App-header">
-                <p>Hello Vite + React!</p>
-            </header>
-        </div>
+        <BrowserRouter>
+            <Routes>
+                <Route path="/" element={<Login />} />
+            </Routes>
+        </BrowserRouter>
     );
 };
 
