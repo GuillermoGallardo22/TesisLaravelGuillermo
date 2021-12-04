@@ -3,29 +3,17 @@ import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import { useAuthContext } from "contexts/AuthContext";
-import { AuthActionsEnum } from "reducers/AuthReducer";
+import { useAuth } from "hooks/useAuth";
 
 const Login = () => {
 
     const {
-        dispatch,
-    } = useAuthContext();
+        login,
+    } = useAuth();
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-
-        setTimeout(() => {
-            dispatch({
-                type: AuthActionsEnum.setIsAuth, payload: {
-                    id: 1,
-                    name: "Juan",
-                    email: "juan@gmail.com"
-                }
-            });
-            dispatch({ type: AuthActionsEnum.setIsAuth, payload: true });
-        }, 1000);
-
+        login();
     };
 
     return (

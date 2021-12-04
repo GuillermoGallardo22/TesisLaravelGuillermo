@@ -1,24 +1,17 @@
-import React from "react";
-import {experimentalStyled as styled} from "@material-ui/core/styles";
-import MuiDrawer from "@material-ui/core/Drawer";
-import {
-    Divider,
-    IconButton,
-    List,
-    ListSubheader,
-    Toolbar
-} from "@material-ui/core";
-import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import {getAdminLinks, getUserLinks} from "../Routes";
-import {useAuthContext} from "contexts/AuthContext";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import Divider from "@mui/material/Divider";
+import MuiDrawer from "@mui/material/Drawer";
+import IconButton from "@mui/material/IconButton";
+import List from "@mui/material/List";
+import { styled } from "@mui/material/styles";
+import Toolbar from "@mui/material/Toolbar";
+import { routes } from "layout/routes";
 import Link from "./Link";
-
-import Logo from "../../assets/img/sello.png";
 
 const drawerWidth = 240;
 
-const DrawerBase = styled(MuiDrawer, {shouldForwardProp: (prop) => prop !== "open"})(
-    ({theme, open}) => ({
+const DrawerBase = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== "open" })(
+    ({ theme, open }) => ({
         "& .MuiDrawer-paper": {
             position: "relative",
             whiteSpace: "nowrap",
@@ -48,9 +41,7 @@ interface DrawerProps {
     toggleDrawer: () => void,
 }
 
-const Drawer: React.FC<DrawerProps> = ({open, toggleDrawer}) => {
-
-    const {auth: {user}} = useAuthContext();
+const Drawer: React.FC<DrawerProps> = ({ open, toggleDrawer }) => {
 
     return (
         <DrawerBase variant="permanent" open={open}>
@@ -62,16 +53,14 @@ const Drawer: React.FC<DrawerProps> = ({open, toggleDrawer}) => {
                     px: [1],
                 }}
             >
-                <img src={Logo} height={64}/>
-
                 <IconButton onClick={toggleDrawer}>
-                    <ChevronLeftIcon/>
+                    <ChevronLeftIcon />
                 </IconButton>
             </Toolbar>
-            <Divider/>
+            <Divider />
             <List>
                 {
-                    getUserLinks(user.profile).map(item => (
+                    routes.map(item => (
                         <Link
                             key={item.path}
                             icon={item.icon}
@@ -81,19 +70,6 @@ const Drawer: React.FC<DrawerProps> = ({open, toggleDrawer}) => {
                     ))
                 }
             </List>
-            <Divider/>
-            <ListSubheader inset>Administración</ListSubheader>
-
-            {
-                getAdminLinks(user.profile).map(item => (
-                    <Link
-                        key={item.path}
-                        icon={item.icon}
-                        label={item.label}
-                        path={item.path}
-                    />
-                ))
-            }
         </DrawerBase>
     );
 };

@@ -1,11 +1,9 @@
-import React from "react";
-import MuiAppBar from "@material-ui/core/AppBar";
-import {AppBarProps as MuiAppBarProps} from "@material-ui/core/AppBar/AppBar";
-import {experimentalStyled as styled} from "@material-ui/core/styles";
-import {Badge, IconButton, Toolbar, Typography} from "@material-ui/core";
-import MenuIcon from "@material-ui/icons/Menu";
-import ExitToAppIcon from "@material-ui/icons/ExitToApp";
-import useAuth from "hooks/useAuth";
+import styled from "@emotion/styled";
+import MenuIcon from "@mui/icons-material/Menu";
+import { IconButton, Toolbar, Typography } from "@mui/material";
+import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
+import ExitToAppIcon from "@mui/icons-material/ExitToApp";
+import { useAuth } from "hooks/useAuth";
 
 const drawerWidth = 240;
 
@@ -15,7 +13,7 @@ interface AppBarStyleProps extends MuiAppBarProps {
 
 const AppBarStyle = styled(MuiAppBar, {
     shouldForwardProp: (prop) => prop !== "open",
-})<AppBarStyleProps>(({theme, open}) => ({
+})<AppBarStyleProps>(({ theme, open }) => ({
     zIndex: theme.zIndex.drawer + 1,
     transition: theme.transitions.create(["width", "margin"], {
         easing: theme.transitions.easing.sharp,
@@ -36,10 +34,10 @@ interface AppBarProps {
     toggleDrawer: () => void,
 }
 
-const AppBar: React.FC<AppBarProps> = ({open, toggleDrawer}) => {
+const AppBar: React.FC<AppBarProps> = ({ open, toggleDrawer }) => {
 
     const {
-        logOut,
+        logout,
     } = useAuth();
 
     return (
@@ -56,23 +54,23 @@ const AppBar: React.FC<AppBarProps> = ({open, toggleDrawer}) => {
                     onClick={toggleDrawer}
                     sx={{
                         marginRight: "36px",
-                        ...(open && {display: "none"}),
+                        ...(open && { display: "none" }),
                     }}
                 >
-                    <MenuIcon/>
+                    <MenuIcon />
                 </IconButton>
                 <Typography
                     component="h1"
                     variant="h6"
                     color="inherit"
                     noWrap
-                    sx={{flexGrow: 1}}
+                    sx={{ flexGrow: 1 }}
                 >
-                    Panel de Administración
+                    FISEI
                 </Typography>
 
-                <IconButton color="inherit" onClick={() => logOut()}>
-                    <ExitToAppIcon/>
+                <IconButton color="inherit" onClick={logout}>
+                    <ExitToAppIcon />
                 </IconButton>
             </Toolbar>
         </AppBarStyle>

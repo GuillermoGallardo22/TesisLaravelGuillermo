@@ -1,14 +1,13 @@
-import React from "react";
-import {Link as RouterLink} from "react-router-dom";
-import {ListItem, ListItemIcon, ListItemText} from "@material-ui/core";
+import { Link as RouterLink } from "react-router-dom";
+import { ListItem, ListItemIcon, ListItemText } from "@mui/material";
 
 interface LinkProps {
     path: string,
     label: string,
-    icon: any,
+    icon: React.ReactElement,
 }
 
-const Link: React.FC<LinkProps> = ({path, label, icon}) => {
+const Link: React.FC<LinkProps> = ({ path, label, icon }) => {
     return (
         <ListItem
             button
