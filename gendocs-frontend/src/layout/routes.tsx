@@ -11,11 +11,11 @@ interface IRoute {
     icon: React.ReactElement,
 }
 
-export const DEFAULT_ROUTE = "home";
+export const DEFAULT_ROUTE = "inicio";
 
 export const routes: IRoute[] = [
     {
-        path: "home",
+        path: DEFAULT_ROUTE,
         label: "Inicio",
         component: <Home />,
         icon: <HomeIcon />,
