@@ -1,5 +1,5 @@
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
+import Button from "@mui/lab/LoadingButton";
 import Container from "@mui/material/Container";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
@@ -8,13 +8,9 @@ import { useAuth } from "hooks/useAuth";
 const Login = () => {
 
     const {
-        login,
+        formik,
+        submitting,
     } = useAuth();
-
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        login();
-    };
 
     return (
         <Container component="main" maxWidth="xs">
@@ -34,7 +30,7 @@ const Login = () => {
                     width="100%"
                 />
 
-                <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+                <Box component="form" onSubmit={formik.handleSubmit} noValidate sx={{ mt: 1 }}>
                     <TextField
                         required
                         autoFocus
@@ -44,8 +40,10 @@ const Login = () => {
                         name="email"
                         label="Email"
                         autoComplete="email"
-                        error
-                        helperText={"Campo requerido"}
+                        value={formik.values.email}
+                        onChange={formik.handleChange}
+                        error={formik.touched.email && Boolean(formik.errors.email)}
+                        helperText={formik.touched.email && formik.errors.email}
                     />
                     <TextField
                         margin="normal"
@@ -56,13 +54,19 @@ const Login = () => {
                         type="password"
                         label="Contaseña"
                         autoComplete="current-password"
+                        value={formik.values.password}
+                        onChange={formik.handleChange}
+                        error={formik.touched.password && Boolean(formik.errors.password)}
+                        helperText={formik.touched.password && formik.errors.password}
                     />
 
                     <Button
-                        type="submit"
                         fullWidth
+                        type="submit"
                         variant="contained"
                         sx={{ mt: 3, mb: 2 }}
+                        disabled={submitting}
+                        loading={submitting}
                     >
                         Ingresar
                     </Button>
