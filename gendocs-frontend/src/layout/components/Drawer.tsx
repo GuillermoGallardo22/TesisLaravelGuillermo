@@ -60,14 +60,15 @@ const Drawer: React.FC<DrawerProps> = ({ open, toggleDrawer }) => {
             <Divider />
             <List>
                 {
-                    routes.map(item => (
-                        <Link
-                            key={item.path}
-                            icon={item.icon}
-                            label={item.label}
-                            path={item.path}
-                        />
-                    ))
+                    routes
+                        .map(item => item.icon && item.label && (
+                            <Link
+                                key={item.path}
+                                icon={item.icon}
+                                label={item.label}
+                                path={item.path}
+                            />
+                        ))
                 }
             </List>
         </DrawerBase>

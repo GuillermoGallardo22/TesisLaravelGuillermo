@@ -40,15 +40,25 @@ const PrivateLayout = () => {
                         <Grid item xs={12}>
                             <Routes>
                                 {
-                                    routes.map(item => (
+                                    routes.map((item, index) => (
                                         <Route
-                                            key={item.path}
+                                            key={index}
                                             path={item.path}
                                             element={item.component}
-                                        />
+                                        >
+                                            {
+                                                item.childrens?.map((children, indexC) => (
+                                                    <Route
+                                                        key={indexC}
+                                                        index={children.isIndex}
+                                                        path={!children.isIndex ? children.path : undefined}
+                                                        element={children.component}
+                                                    />
+                                                ))
+                                            }
+                                        </Route>
                                     ))
                                 }
-
                                 <Route path="/" element={<Navigate to={DEFAULT_ROUTE} />} />
                             </Routes>
                         </Grid>

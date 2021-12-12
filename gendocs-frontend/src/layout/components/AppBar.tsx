@@ -1,8 +1,8 @@
-import styled from "@emotion/styled";
+import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import MenuIcon from "@mui/icons-material/Menu";
 import { IconButton, Toolbar, Typography } from "@mui/material";
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
-import ExitToAppIcon from "@mui/icons-material/ExitToApp";
+import { styled } from "@mui/material/styles";
 import { useAuth } from "hooks/useAuth";
 
 const drawerWidth = 240;
@@ -41,7 +41,10 @@ const AppBar: React.FC<AppBarProps> = ({ open, toggleDrawer }) => {
     } = useAuth();
 
     return (
-        <AppBarStyle position="absolute" open={open}>
+        <AppBarStyle
+            color="uta"
+            position="absolute"
+            open={open}>
             <Toolbar
                 sx={{
                     pr: "24px", // keep right padding when drawer closed
