@@ -1,32 +1,25 @@
 import { ThemeProvider } from "@emotion/react";
-import { createTheme, CssBaseline } from "@mui/material";
+import { CssBaseline } from "@mui/material";
 import PrivateLayout from "layout/PrivateLayout";
 import Login from "pages/public/Login";
 import AuthProvider from "providers/AuthProvider";
 import {
-    BrowserRouter, Route, Routes
+    HashRouter, Route, Routes
 } from "react-router-dom";
 import PrivateRoute from "routes/PrivateRoute";
 import PublicRoute from "routes/PublicRoute";
-
-const mdTheme = createTheme({
-    palette: {
-        primary: {
-            main: "#7a1e19",
-        },
-    },
-});
+import { theme } from "utils/theme";
 
 const App = () => {
     return (
-        <ThemeProvider theme={mdTheme}>
-            <CssBaseline />
-            <BrowserRouter>
+        <HashRouter>
+            <ThemeProvider theme={theme}>
+                <CssBaseline />
                 <AuthProvider>
                     <AppBase />
                 </AuthProvider>
-            </BrowserRouter>
-        </ThemeProvider>
+            </ThemeProvider>
+        </HashRouter>
     );
 };
 
