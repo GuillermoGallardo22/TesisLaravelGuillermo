@@ -13,7 +13,7 @@ class UpdateEstudianteRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,16 @@ class UpdateEstudianteRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'cedula' => ['required', 'string', 'max:10'],
+            'nombres' => ['required', 'string', 'max:100'],
+            'apellidos' => ['required', 'string', 'max:100'],
+            'celular' => ['required', 'string', 'max:10'],
+            'telefono' => ['present', 'string', 'nullable', 'max:10'],
+            'correo' => ['present', 'string', 'nullable', 'max:100'],
+            'correo_uta' => ['required', 'string', 'max:100'],
+            'folio' => ['required', 'string', 'max:10'],
+            'matricula' => ['required', 'string', 'max:10'],
+            'carrera_id' => ['required', 'exists:\App\Models\Carrera,id']
         ];
     }
 }

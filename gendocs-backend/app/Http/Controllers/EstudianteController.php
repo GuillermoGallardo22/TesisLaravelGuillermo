@@ -39,12 +39,13 @@ class EstudianteController extends Controller
 
     public function show(Estudiante $estudiante)
     {
-        //
+        return $estudiante;
     }
 
     public function update(UpdateEstudianteRequest $request, Estudiante $estudiante)
     {
-        //
+        $estudiante->fill($request->validated())->save();
+        return $estudiante;
     }
 
     public function destroy(Estudiante $estudiante)
