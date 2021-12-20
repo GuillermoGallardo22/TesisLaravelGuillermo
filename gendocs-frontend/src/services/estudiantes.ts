@@ -65,3 +65,39 @@ export async function saveListEstudiante(form: BaseMultipleStudentForm): Promise
         return handleErrors(error);
     }
 }
+
+export async function getEstudianteById(estudianteId: string | number): Promise<IResponse<IEstudiante>> {
+    try {
+        const { data } = await axios.get("estudiantes/" + estudianteId);
+        return {
+            status: HTTP_STATUS.ok,
+            data: {
+                ...data,
+                carrera: (+data.carrera_id)
+            },
+            message: "",
+        };
+    } catch (error) {
+        return handleErrors(error);
+    }
+}
+
+export async function updateEstudiante(form: IEstudiante): Promise<IResponse<IEstudiante>> {
+    try {
+        const { data } = await axios.put("estudiantes/" + form.id, {
+            ...form,
+            carrera_id: form.carrera,
+        });
+
+        return {
+            status: HTTP_STATUS.ok,
+            data: {
+                ...data,
+                carrera: (+data.carrera_id)
+            },
+            message: "",
+        };
+    } catch (error) {
+        return handleErrors(error);
+    }
+}

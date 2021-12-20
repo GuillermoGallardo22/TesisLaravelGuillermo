@@ -1,26 +1,33 @@
 import AddIcon from "@mui/icons-material/Add";
-import { LoadingButton } from "@mui/lab";
-import { Box, Button, Grid, Stack, TextField } from "@mui/material";
-import { DataGrid, GridColDef, GridRowId } from "@mui/x-data-grid";
+import EditIcon from "@mui/icons-material/Edit";
+import { Button, Stack, TextField, IconButton } from "@mui/material";
+import { DataGrid, GridColDef, GridRenderCellParams, GridRowId } from "@mui/x-data-grid";
 import { IEstudiante, IPagination } from "models/interfaces";
 import { useEffect, useRef, useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import { getEstudiantes } from "services/estudiantes";
-import { useSearchStudent } from "../hooks/useSearchStudent";
 
 const PAGE_SIZE = 100;
 
 const columns: GridColDef[] = [
-    { field: "id", headerName: "#", width: 30 },
     { field: "cedula", headerName: "Cédula", width: 110 },
     { field: "apellidos", headerName: "Apellidos", width: 250 },
     { field: "nombres", headerName: "Nombres", width: 250 },
-    { field: "telefono", headerName: "Teléfono", width: 110 },
     { field: "celular", headerName: "Celular", width: 110 },
-    { field: "correo", headerName: "Correo", width: 250 },
+    { field: "telefono", headerName: "Teléfono", width: 110 },
     { field: "correo_uta", headerName: "Correo UTA", width: 250 },
+    { field: "correo", headerName: "Correo", width: 250 },
     { field: "matricula", headerName: "Matrícula", width: 100 },
     { field: "folio", headerName: "Folio", width: 100 },
+    {
+        field: "id", headerName: "Acciones", renderCell: (item: GridRenderCellParams) =>
+            <IconButton
+                color="primary"
+                component={RouterLink}
+                to={`${item.value}`}>
+                <EditIcon />
+            </IconButton>
+    },
 ];
 
 const ListStudents = () => {
