@@ -11,7 +11,15 @@ class EstudianteController extends Controller
 {
     public function index()
     {
-        return Estudiante::paginate(100);
+        $filter = \request()->query('search');
+
+        $estudiantes = Estudiante::query();
+
+        if ($filter) {
+            $estudiantes = $estudiantes->filter($filter);
+        }
+
+        return $estudiantes->orderBy('apellidos', 'asc')->paginate(100);
     }
 
     public function store(StoreEstudianteRequest $request)

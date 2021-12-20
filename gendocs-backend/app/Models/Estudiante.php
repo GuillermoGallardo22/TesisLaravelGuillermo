@@ -26,4 +26,14 @@ class Estudiante extends Model
     {
         return $this->belongsTo(Carrera::class, "carrera_id");
     }
+
+    public function scopeFilter($query, $filter)
+    {
+        return $this
+            ->where('cedula', 'like', "%$filter%")
+            ->orWhere('matricula', 'like', "%$filter%")
+            ->orWhere('folio', 'like', "%$filter%")
+            ->orWhere('nombres', 'like', "%$filter%")
+            ->orWhere('apellidos', 'like', "%$filter%");
+    }
 }
