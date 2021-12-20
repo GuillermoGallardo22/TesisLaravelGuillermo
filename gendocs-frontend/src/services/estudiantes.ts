@@ -1,9 +1,31 @@
+import { GridRowId } from "@mui/x-data-grid";
 import axios from "axios";
 import { HTTP_STATUS } from "models/enums";
-import { IEstudiante, IResponse } from "models/interfaces";
+import { IEstudiante, IPagination, IResponse } from "models/interfaces";
 import { BaseMultipleStudentForm } from "pages/private/student/hooks/useAddStudent";
 import { handleErrors } from "utils/axios";
 import { HTTP_MESSAGES } from "utils/messages";
+
+export async function getEstudiantes(cursor: GridRowId | null | undefined,): Promise<IPagination<IEstudiante>> {
+    try {
+
+        cursor = cursor || 1;
+
+        const { data } = await axios.get<IPagination<IEstudiante>>(`estudiantes?page=${cursor}`);
+
+        return {
+            ...data,
+            next_page_url: (data.last_page > cursor) ? ((+cursor) + 1) + "" : null,
+        };
+    } catch (error) {
+        return {
+            current_page: 0,
+            data: [],
+            last_page: 0,
+            total: 0,
+        };
+    }
+}
 
 export async function saveEstudiante(form: IEstudiante): Promise<IResponse<IEstudiante>> {
     try {
