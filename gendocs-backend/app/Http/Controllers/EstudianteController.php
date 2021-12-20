@@ -11,7 +11,7 @@ class EstudianteController extends Controller
 {
     public function index()
     {
-        return Estudiante::all();
+        return Estudiante::paginate(100);
     }
 
     public function store(StoreEstudianteRequest $request)
