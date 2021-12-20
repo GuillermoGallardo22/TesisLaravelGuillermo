@@ -2,6 +2,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import LoadingButton from "@mui/lab/LoadingButton";
 import { Accordion, AccordionDetails, AccordionSummary, Alert, Box, Grid, Stack, TextField, Typography } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import ErrorSummary from "components/ErrorSummary";
 import Select from "components/Select";
 import { useState } from "react";
 import { readFile } from "utils/libs";
@@ -45,6 +46,7 @@ const AddSimpleStudent = () => {
         formik,
         submitting,
         carreras,
+        errorSummary,
     } = useAddSimpleStudent();
 
     return (
@@ -148,14 +150,14 @@ const AddSimpleStudent = () => {
                         required
                         fullWidth
                         margin="normal"
-                        id="email_uta"
-                        name="email_uta"
+                        id="correo_uta"
+                        name="correo_uta"
                         label="Correo UTA"
-                        autoComplete="email_uta"
-                        value={formik.values.email_uta}
+                        autoComplete="correo_uta"
+                        value={formik.values.correo_uta}
                         onChange={formik.handleChange}
-                        error={formik.touched.email_uta && Boolean(formik.errors.email_uta)}
-                        helperText={formik.touched.email_uta && formik.errors.email_uta}
+                        error={formik.touched.correo_uta && Boolean(formik.errors.correo_uta)}
+                        helperText={formik.touched.correo_uta && formik.errors.correo_uta}
                     />
                 </Grid>
 
@@ -163,14 +165,14 @@ const AddSimpleStudent = () => {
                     <TextField
                         fullWidth
                         margin="normal"
-                        id="email"
-                        name="email"
+                        id="correo"
+                        name="correo"
                         label="Correo"
-                        autoComplete="email"
-                        value={formik.values.email}
+                        autoComplete="correo"
+                        value={formik.values.correo}
                         onChange={formik.handleChange}
-                        error={formik.touched.email && Boolean(formik.errors.email)}
-                        helperText={formik.touched.email && formik.errors.email}
+                        error={formik.touched.correo && Boolean(formik.errors.correo)}
+                        helperText={formik.touched.correo && formik.errors.correo}
                     />
                 </Grid>
 
@@ -202,6 +204,10 @@ const AddSimpleStudent = () => {
                         error={formik.touched.folio && Boolean(formik.errors.folio)}
                         helperText={formik.touched.folio && formik.errors.folio}
                     />
+                </Grid>
+
+                <Grid item xs={12}>
+                    <ErrorSummary errors={errorSummary} />
                 </Grid>
 
                 <Grid item xs={12} sm={6}>
@@ -277,7 +283,7 @@ const AddMultipleStudents = () => {
 
             readFile(_file)
                 .then((students) => {
-                    formik.setFieldValue("students", students);
+                    formik.setFieldValue("estudiantes", students);
                 })
                 .finally(() => setReading(false));
 
@@ -298,8 +304,8 @@ const AddMultipleStudents = () => {
             <Box>
                 <LoadingButton
                     variant="contained"
-                    disabled={reading}
-                    loading={reading}
+                    disabled={reading || submitting}
+                    loading={reading || submitting}
                     component="label"
                 >
                     Subir archivo...
@@ -341,25 +347,25 @@ const AddMultipleStudents = () => {
 
                         <Grid item xs={12}>
                             <div style={{ height: 600, width: "100%" }}>
-                                <DataGrid rows={formik.values.students} columns={columns} />
+                                <DataGrid rows={formik.values.estudiantes} columns={columns} />
                             </div>
                         </Grid>
 
                         {
-                            formik?.errors?.students && (
+                            formik?.errors?.estudiantes && (
                                 <Grid item xs={12}>
                                     <Alert severity="error">
                                         {
-                                            typeof formik.errors.students === "string"
+                                            typeof formik.errors.estudiantes === "string"
                                                 ? (
-                                                    <p>{formik.errors.students}</p>
+                                                    <p>{formik.errors.estudiantes}</p>
                                                 )
                                                 : (
                                                     <>
                                                         <p>Verifique los errores en las siguientes filas del documento.</p>
 
                                                         {
-                                                            formik.errors.students
+                                                            formik.errors.estudiantes
                                                                 .map((item, index) => item && (
                                                                     <pre key={index}>
                                                                         {JSON.stringify({
