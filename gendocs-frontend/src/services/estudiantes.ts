@@ -6,12 +6,19 @@ import { BaseMultipleStudentForm } from "pages/private/student/hooks/useAddStude
 import { handleErrors } from "utils/axios";
 import { HTTP_MESSAGES } from "utils/messages";
 
-export async function getEstudiantes(cursor: GridRowId | null | undefined,): Promise<IPagination<IEstudiante>> {
+export async function getEstudiantes({
+    cursor,
+    search,
+}: {
+    cursor: GridRowId | null | undefined,
+    search?: string | null | undefined,
+}): Promise<IPagination<IEstudiante>> {
     try {
 
         cursor = cursor || 1;
+        search = search || "";
 
-        const { data } = await axios.get<IPagination<IEstudiante>>(`estudiantes?page=${cursor}`);
+        const { data } = await axios.get<IPagination<IEstudiante>>(`estudiantes?page=${cursor}&search=${search}`);
 
         return {
             ...data,

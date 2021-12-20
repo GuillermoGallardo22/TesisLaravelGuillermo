@@ -1,10 +1,12 @@
 import AddIcon from "@mui/icons-material/Add";
-import { Button } from "@mui/material";
+import { LoadingButton } from "@mui/lab";
+import { Box, Button, Grid, Stack, TextField } from "@mui/material";
 import { DataGrid, GridColDef, GridRowId } from "@mui/x-data-grid";
 import { IEstudiante, IPagination } from "models/interfaces";
 import { useEffect, useRef, useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import { getEstudiantes } from "services/estudiantes";
+import { useSearchStudent } from "../hooks/useSearchStudent";
 
 const PAGE_SIZE = 100;
 
@@ -53,7 +55,8 @@ const ListStudents = () => {
             }
 
             setLoading(true);
-            const response = await getEstudiantes(nextCursor);
+
+            const response = await getEstudiantes({ cursor: nextCursor, search });
 
             if (response.next_page_url) {
                 pagesNextCursor.current[page] = response.next_page_url;
@@ -72,16 +75,55 @@ const ListStudents = () => {
         };
     }, [page]);
 
+    const [search, setSearch] = useState("");
+
+    useEffect(() => {
+        const delayDebounceFn = setTimeout(() => {
+            (async () => {
+                const nextCursor = pagesNextCursor.current[page - 1];
+
+                if (!nextCursor && page > 0) {
+                    return;
+                }
+
+                setLoading(true);
+
+                const response = await getEstudiantes({ cursor: nextCursor, search });
+
+                if (response.next_page_url) {
+                    pagesNextCursor.current[page] = response.next_page_url;
+                }
+
+                setData(response);
+                setLoading(false);
+            })();
+        }, 600);
+
+        return () => clearTimeout(delayDebounceFn);
+    }, [search]);
+
+
     return (
-        <>
+        <Stack spacing={3}>
+
             <Button
                 component={RouterLink}
                 startIcon={<AddIcon />}
                 to="nuevo"
             >
-                Añadir
+                AÑADIR ESTUDIANTES
             </Button>
 
+            <TextField
+                fullWidth
+                margin="normal"
+                id="search"
+                name="search"
+                label="Buscar"
+                placeholder="Cédula | Nombres | Apellidos | Matrícula | Folio"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+            />
 
             <div style={{ height: 600, width: "100%" }}>
                 <DataGrid
@@ -97,7 +139,7 @@ const ListStudents = () => {
                     loading={loading}
                 />
             </div>
-        </>
+        </Stack>
     );
 };
 
