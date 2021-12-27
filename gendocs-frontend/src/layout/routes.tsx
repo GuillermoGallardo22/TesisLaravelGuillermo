@@ -2,6 +2,10 @@ import HomeIcon from "@mui/icons-material/Home";
 import ListIcon from "@mui/icons-material/List";
 import SchoolIcon from "@mui/icons-material/School";
 import Home from "pages/private/home/Home";
+import AddProcess from "pages/private/processes/components/AddProcess";
+import ListProcess from "pages/private/processes/components/ListProcess";
+import UpdateProcess from "pages/private/processes/components/UpdateProcess";
+import Processes from "pages/private/processes/Processes";
 import AddStudents from "pages/private/student/components/AddStudents";
 import ListStudents from "pages/private/student/components/ListStudents";
 import UpdateStudent from "pages/private/student/components/UpdateStudent";
@@ -39,8 +43,13 @@ export const routes: IRoute[] = [
     {
         path: "procesos",
         label: "Procesos",
-        component: <Student />,
+        component: <Processes />,
         icon: <ListIcon />,
+        childrens: [
+            { path: "nuevo", component: <AddProcess /> },
+            { path: ":processId", component: <UpdateProcess /> },
+            { path: "", isIndex: true, component: <ListProcess /> }
+        ],
     },
     {
         path: "consejos",
