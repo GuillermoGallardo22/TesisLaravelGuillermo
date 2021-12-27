@@ -14,6 +14,10 @@ class Proceso extends Model
         'estado',
     ];
 
+    protected $casts = [
+        'estado' => 'boolean',
+    ];
+
     public function fields()
     {
         return [
