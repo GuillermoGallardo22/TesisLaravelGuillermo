@@ -15,9 +15,15 @@ class DirectorioSeeder extends Seeder
     public function run()
     {
         Directorio::create([
-            'nombre' => 'El inicio del fin',
-            'fecha_inicio' => now(),
-            'activo' => true,
+            'nombre' => 'El origen',
+            'fecha_inicio' => '2020-01-01',
+            'estado' => false,
+        ]);
+
+        Directorio::create([
+            'nombre' => 'La resurección',
+            'fecha_inicio' => '2021-01-01',
+            'estado' => true,
         ]);
     }
 }

@@ -15,7 +15,7 @@ class CarreraSeeder extends Seeder
      */
     public function run()
     {
-        $primerDirectorio = Directorio::all()->first();
+        $primerDirectorio = Directorio::query()->activeDirectory();
 
         Carrera::create([
             'nombre' => 'Sistemas Computacionales e Informaticos',
