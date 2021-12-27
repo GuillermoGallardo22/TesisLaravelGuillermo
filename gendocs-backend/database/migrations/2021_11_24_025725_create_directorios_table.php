@@ -19,7 +19,7 @@ class CreateDirectoriosTable extends Migration
             $table->string("nombre", 50);
             $table->date("fecha_inicio");
             $table->string("descripcion", 512)->nullable();
-            $table->boolean("activo")->default(false);
+            $table->boolean("estado")->default(false);
 
             $table->timestamps();
             $table->softDeletes();

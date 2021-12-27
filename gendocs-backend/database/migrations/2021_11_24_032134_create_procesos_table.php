@@ -16,7 +16,8 @@ class CreateProcesosTable extends Migration
         Schema::create('procesos', function (Blueprint $table) {
             $table->id();
 
-            $table->string("nombre");
+            $table->string("nombre", 512);
+            $table->boolean("estado")->default(true);
 
             $table->unsignedBigInteger("directorio_id");
             $table->foreign("directorio_id")->references("id")->on("directorios");
