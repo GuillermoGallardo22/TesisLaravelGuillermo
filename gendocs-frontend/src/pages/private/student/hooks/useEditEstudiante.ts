@@ -26,10 +26,7 @@ export const useEditEstudiante = ({ studentId }: { studentId: string }) => {
 
     const [submitting, setSubmitting] = useState(false);
     const [carreras, setCarreras] = useState<ICarrera[]>([]);
-    const [estudiante, setEstudiante] = useState<IEstudiante>({
-        ...initialValues,
-        id: (+studentId),
-    });
+    const [estudiante, setEstudiante] = useState<IEstudiante>(initialValues);
     const [errorSummary, setErrorSummary] = useState<string | string[] | undefined>();
 
 

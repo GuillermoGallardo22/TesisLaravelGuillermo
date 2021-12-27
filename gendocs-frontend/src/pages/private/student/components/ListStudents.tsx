@@ -1,6 +1,6 @@
 import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
-import { Button, Stack, TextField, IconButton } from "@mui/material";
+import { Button, IconButton, Stack, TextField } from "@mui/material";
 import { DataGrid, GridColDef, GridRenderCellParams, GridRowId } from "@mui/x-data-grid";
 import { IEstudiante, IPagination } from "models/interfaces";
 import { useEffect, useRef, useState } from "react";
@@ -35,10 +35,19 @@ const ListStudents = () => {
     const pagesNextCursor = useRef<{ [page: number]: GridRowId }>({});
 
     const [data, setData] = useState<IPagination<IEstudiante>>({
-        current_page: 0,
-        last_page: 0,
         data: [],
-        total: 0,
+        links: {
+            first: "?page=1",
+            last: "?page=1",
+        },
+        meta: {
+            path: "estudiantes",
+            current_page: 1,
+            last_page: 1,
+            per_page: PAGE_SIZE,
+            total: 0,
+            links: [],
+        },
     });
 
     const [page, setPage] = useState(0);
@@ -65,8 +74,8 @@ const ListStudents = () => {
 
             const response = await getEstudiantes({ cursor: nextCursor, search });
 
-            if (response.next_page_url) {
-                pagesNextCursor.current[page] = response.next_page_url;
+            if (response.meta.to) {
+                pagesNextCursor.current[page] = response.meta.to;
             }
 
             if (!active) {
@@ -97,8 +106,8 @@ const ListStudents = () => {
 
                 const response = await getEstudiantes({ cursor: nextCursor, search });
 
-                if (response.next_page_url) {
-                    pagesNextCursor.current[page] = response.next_page_url;
+                if (response.meta.to) {
+                    pagesNextCursor.current[page] = response.meta.to;
                 }
 
                 setData(response);
@@ -134,16 +143,18 @@ const ListStudents = () => {
 
             <div style={{ height: 600, width: "100%" }}>
                 <DataGrid
-                    rows={data.data}
-                    columns={columns}
                     pagination
-                    pageSize={PAGE_SIZE}
-                    rowsPerPageOptions={[100]}
-                    rowCount={data.total}
                     paginationMode="server"
+                    rowsPerPageOptions={[PAGE_SIZE]}
                     onPageChange={handlePageChange}
+                    //
+                    columns={columns}
                     page={page}
                     loading={loading}
+                    //
+                    rows={data.data}
+                    pageSize={data.meta.per_page}
+                    rowCount={data.meta.total}
                 />
             </div>
         </Stack>
