@@ -4,81 +4,52 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreProcesoRequest;
 use App\Http\Requests\UpdateProcesoRequest;
+use App\Http\Resources\ResourceCollection;
+use App\Http\Resources\ResourceObject;
+use App\Models\Directorio;
 use App\Models\Proceso;
 
 class ProcesoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
-        //
+        $filter = \request()->query('search');
+
+        $procesos = Proceso::query();
+
+        if ($filter) {
+            $procesos = $procesos->filter($filter);
+        }
+
+        return ResourceCollection::make(
+            $procesos
+                ->fromActiveDirectory()
+                ->paginate(100)
+        );
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoreProcesoRequest  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(StoreProcesoRequest $request)
     {
-        //
+        $proceso = new Proceso($request->validated());
+        $proceso->directorio_id = Directorio::query()->activeDirectory()->id;
+
+        $proceso->save();
+
+        return ResourceObject::make($proceso);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Proceso  $proceso
-     * @return \Illuminate\Http\Response
-     */
     public function show(Proceso $proceso)
     {
-        //
+        return ResourceObject::make($proceso);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Proceso  $proceso
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Proceso $proceso)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateProcesoRequest  $request
-     * @param  \App\Models\Proceso  $proceso
-     * @return \Illuminate\Http\Response
-     */
     public function update(UpdateProcesoRequest $request, Proceso $proceso)
     {
-        //
+        $proceso->fill($request->validated())->save();
+        return $proceso;
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Proceso  $proceso
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Proceso $proceso)
     {
         //
