@@ -22,6 +22,23 @@ class Estudiante extends Model
         "carrera_id"
     ];
 
+    public function fields()
+    {
+        return [
+            'id' => $this->id,
+            "cedula" => $this->cedula,
+            "nombres" => $this->nombres,
+            "apellidos" => $this->apellidos,
+            "celular" => $this->celular,
+            "telefono" => $this->telefono,
+            "correo" => $this->correo,
+            "correo_uta" => $this->correo_uta,
+            "matricula" => $this->matricula,
+            "folio" => $this->folio,
+            "carrera" => $this->carrera_id,
+        ];
+    }
+
     public function carrera()
     {
         return $this->belongsTo(Carrera::class, "carrera_id");

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreEstudianteListRequest;
 use App\Http\Requests\StoreEstudianteRequest;
 use App\Http\Requests\UpdateEstudianteRequest;
+use App\Http\Resources\ResourceCollection;
+use App\Http\Resources\ResourceObject;
 use App\Models\Estudiante;
 
 class EstudianteController extends Controller
@@ -19,7 +21,11 @@ class EstudianteController extends Controller
             $estudiantes = $estudiantes->filter($filter);
         }
 
-        return $estudiantes->orderBy('apellidos', 'asc')->paginate(100);
+        return ResourceCollection::make(
+            $estudiantes
+                ->orderBy('apellidos', 'asc')
+                ->paginate(100)
+        );
     }
 
     public function store(StoreEstudianteRequest $request)
@@ -39,13 +45,13 @@ class EstudianteController extends Controller
 
     public function show(Estudiante $estudiante)
     {
-        return $estudiante;
+        return ResourceObject::make($estudiante);
     }
 
     public function update(UpdateEstudianteRequest $request, Estudiante $estudiante)
     {
         $estudiante->fill($request->validated())->save();
-        return $estudiante;
+        return ResourceObject::make($estudiante);
     }
 
     public function destroy(Estudiante $estudiante)

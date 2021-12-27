@@ -47,7 +47,7 @@ class ProcesoController extends Controller
     public function update(UpdateProcesoRequest $request, Proceso $proceso)
     {
         $proceso->fill($request->validated())->save();
-        return $proceso;
+        return ResourceObject::make($proceso);
     }
 
     public function destroy(Proceso $proceso)
