@@ -4,82 +4,59 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StorePlantillasRequest;
 use App\Http\Requests\UpdatePlantillasRequest;
+use App\Http\Resources\ResourceCollection;
+use App\Http\Resources\ResourceObject;
 use App\Models\Plantillas;
 
 class PlantillasController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        //
+        $filters = \request()->query('filter');
+
+        $plantillas = Plantillas::query();
+
+        if ($filters) {
+            foreach ($filters as $filter => $value) {
+                if (collect(Plantillas::FILTERS)->contains($filter)) {
+                    $plantillas->$filter($value);
+                }
+            }
+        }
+
+        return ResourceCollection::make($plantillas->paginate(100));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StorePlantillasRequest  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(StorePlantillasRequest $request)
     {
-        //
+        $validated = $request->validated();
+
+        $plantilla = new Plantillas($validated);
+        $plantilla->proceso_id = $validated['proceso'];
+
+        $plantilla->save();
+
+        return ResourceObject::make($plantilla);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Plantillas  $plantillas
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Plantillas $plantillas)
+    public function show(Plantillas $plantilla)
     {
-        //
+        return ResourceObject::make($plantilla);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Plantillas  $plantillas
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Plantillas $plantillas)
+    public function update(UpdatePlantillasRequest $request, Plantillas $plantilla)
     {
-        //
+        $validated = $request->validated();
+
+        $plantilla->fill($validated);
+        $plantilla->proceso_id = $validated['proceso'];
+
+        $plantilla->save();
+
+        return ResourceObject::make($plantilla);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdatePlantillasRequest  $request
-     * @param  \App\Models\Plantillas  $plantillas
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdatePlantillasRequest $request, Plantillas $plantillas)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Plantillas  $plantillas
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Plantillas $plantillas)
+    public function destroy(Plantillas $plantilla)
     {
         //
     }

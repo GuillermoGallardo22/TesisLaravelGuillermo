@@ -13,7 +13,7 @@ class UpdatePlantillasRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,9 @@ class UpdatePlantillasRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'proceso' => ['required', 'exists:\App\Models\Proceso,id'],
+            'nombre' => ['required', 'string', 'max:512'],
+            'estado' => ['required', 'boolean']
         ];
     }
 }
