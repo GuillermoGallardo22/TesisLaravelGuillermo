@@ -3,8 +3,11 @@ import ListIcon from "@mui/icons-material/List";
 import SchoolIcon from "@mui/icons-material/School";
 import Home from "pages/private/home/Home";
 import AddProcess from "pages/private/processes/components/AddProcess";
+import AddTemplates from "pages/private/processes/components/AddTemplates";
 import ListProcess from "pages/private/processes/components/ListProcess";
+import ListTemplates from "pages/private/processes/components/ListTemplates";
 import UpdateProcess from "pages/private/processes/components/UpdateProcess";
+import UpdateTemplates from "pages/private/processes/components/UpdateTemplates";
 import Processes from "pages/private/processes/Processes";
 import AddStudents from "pages/private/student/components/AddStudents";
 import ListStudents from "pages/private/student/components/ListStudents";
@@ -48,6 +51,9 @@ export const routes: IRoute[] = [
         childrens: [
             { path: "nuevo", component: <AddProcess /> },
             { path: ":processId", component: <UpdateProcess /> },
+            { path: ":processId/plantillas", component: <ListTemplates /> },
+            { path: ":processId/plantillas/nuevo", component: <AddTemplates /> },
+            { path: ":processId/plantillas/:templateId", component: <UpdateTemplates /> },
             { path: "", isIndex: true, component: <ListProcess /> }
         ],
     },

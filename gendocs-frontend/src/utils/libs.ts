@@ -54,3 +54,17 @@ export async function readFile(file: File): Promise<MultipleStudentForm[]> {
         return [];
     }
 }
+
+
+export function parseObjectToQueryParams(queryParams: any): string {
+    try {
+        // const queryParams = { ...data };
+        return Object.keys(queryParams)
+            .map((k) => queryParams[k] && k + "=" + queryParams[k])
+            .filter((i) => i)
+            .join("&");
+    } catch (error) {
+        return "";
+    }
+}
+

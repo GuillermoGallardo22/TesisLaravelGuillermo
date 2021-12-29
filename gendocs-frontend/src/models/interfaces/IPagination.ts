@@ -19,6 +19,7 @@ interface Meta {
     current_page: number;
     from?: any;
     last_page: number;
+    next_page?: number | null;
     links: Link[];
     path: string;
     per_page: number;
