@@ -6,13 +6,26 @@ import * as React from "react";
 import { Navigate, Route, Routes } from "react-router";
 import AppBar from "./components/AppBar";
 import Drawer from "./components/Drawer";
-import { DEFAULT_ROUTE, routes } from "./routes";
+import { DEFAULT_ROUTE, IRoute, routes } from "./routes";
 
 const PrivateLayout = () => {
 
     const [open, setOpen] = React.useState(true);
     const toggleDrawer = () => {
         setOpen(!open);
+    };
+
+    const route = (item: IRoute, index: number) => {
+        return <Route
+            key={index}
+            path={item.path}
+            index={item.isIndex}
+            element={item.component}
+        >
+            {
+                item.childrens?.map(route)
+            }
+        </Route>;
     };
 
     return (
@@ -40,24 +53,7 @@ const PrivateLayout = () => {
                         <Grid item xs={12}>
                             <Routes>
                                 {
-                                    routes.map((item, index) => (
-                                        <Route
-                                            key={index}
-                                            path={item.path}
-                                            element={item.component}
-                                        >
-                                            {
-                                                item.childrens?.map((children, indexC) => (
-                                                    <Route
-                                                        key={indexC}
-                                                        index={children.isIndex}
-                                                        path={!children.isIndex ? children.path : undefined}
-                                                        element={children.component}
-                                                    />
-                                                ))
-                                            }
-                                        </Route>
-                                    ))
+                                    routes.map((route))
                                 }
                                 <Route path="/" element={<Navigate to={DEFAULT_ROUTE} />} />
                             </Routes>

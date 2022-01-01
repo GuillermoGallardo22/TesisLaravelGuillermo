@@ -4,6 +4,7 @@ import SchoolIcon from "@mui/icons-material/School";
 import Home from "pages/private/home/Home";
 import AddProcess from "pages/private/processes/components/AddProcess";
 import AddTemplates from "pages/private/processes/components/AddTemplates";
+import DriveTemplate from "pages/private/processes/components/DriveTemplate";
 import ListProcess from "pages/private/processes/components/ListProcess";
 import ListTemplates from "pages/private/processes/components/ListTemplates";
 import UpdateProcess from "pages/private/processes/components/UpdateProcess";
@@ -13,8 +14,9 @@ import AddStudents from "pages/private/student/components/AddStudents";
 import ListStudents from "pages/private/student/components/ListStudents";
 import UpdateStudent from "pages/private/student/components/UpdateStudent";
 import Student from "pages/private/student/Student";
+import { Outlet } from "react-router-dom";
 
-interface IRoute {
+export interface IRoute {
     path: string,
     component: React.ReactElement,
     isIndex?: boolean,
@@ -50,10 +52,21 @@ export const routes: IRoute[] = [
         icon: <ListIcon />,
         childrens: [
             { path: "nuevo", component: <AddProcess /> },
-            { path: ":processId", component: <UpdateProcess /> },
-            { path: ":processId/plantillas", component: <ListTemplates /> },
-            { path: ":processId/plantillas/nuevo", component: <AddTemplates /> },
-            { path: ":processId/plantillas/:templateId", component: <UpdateTemplates /> },
+            {
+                path: ":processId", component: <Outlet />, childrens: [
+
+                    { path: "plantillas", component: <ListTemplates /> },
+                    { path: "plantillas/nuevo", component: <AddTemplates /> },
+                    {
+                        path: "plantillas/:templateId", component: <Outlet />, childrens: [
+                            { path: "drive", isIndex: true, component: <DriveTemplate /> },
+                            { path: "", isIndex: true, component: <UpdateTemplates /> },
+
+                        ]
+                    },
+                    { path: "", isIndex: true, component: <UpdateProcess /> },
+                ]
+            },
             { path: "", isIndex: true, component: <ListProcess /> }
         ],
     },
