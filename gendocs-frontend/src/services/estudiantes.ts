@@ -77,7 +77,16 @@ export async function getEstudianteById(estudianteId: string | number): Promise<
         const { data: { data } } = await axios.get("estudiantes/" + estudianteId);
         return {
             status: HTTP_STATUS.ok,
-            data: data,
+            data: {
+                ...data,
+                celular: data?.celular || "",
+                correo_uta: data?.correo_uta || "",
+                matricula: data?.matricula || "",
+                folio: data?.folio || "",
+                carrera: data?.carrera || "",
+                telefono: data?.telefono || "",
+                correo: data?.correo || "",
+            },
             message: "",
         };
     } catch (error) {
@@ -95,7 +104,7 @@ export async function updateEstudiante(form: IEstudiante): Promise<IResponse<IEs
         return {
             status: HTTP_STATUS.ok,
             data: data,
-            message: "",
+            message: HTTP_MESSAGES[200],
         };
     } catch (error) {
         return handleErrors(error);

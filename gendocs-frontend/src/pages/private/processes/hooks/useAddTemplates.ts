@@ -1,5 +1,7 @@
 import { useFormik } from "formik";
+import { HTTP_STATUS } from "models/enums";
 import { IProceso } from "models/interfaces";
+import { useSnackbar } from "notistack";
 import { savePlantilla } from "services/plantillas";
 
 export interface IPlantilla {
@@ -11,8 +13,18 @@ export interface IPlantilla {
 
 export const useAddTemplates = ({ processId }: { processId: number }) => {
 
+    const { enqueueSnackbar } = useSnackbar();
+
     const onSubmit = async (form: IPlantilla) => {
-        await savePlantilla(form);
+        const result = await savePlantilla(form);
+
+        if (result.status === HTTP_STATUS.created) {
+            enqueueSnackbar(result.message, { variant: "success" });
+        } else {
+            enqueueSnackbar(result.message, { variant: "error" });
+        }
+
+        formik.resetForm();
     };
 
     const formik = useFormik<IPlantilla>({

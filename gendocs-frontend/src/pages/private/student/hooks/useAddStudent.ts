@@ -1,7 +1,8 @@
 import { useFormik } from "formik";
 import { HTTP_STATUS } from "models/enums";
 import { ICarrera } from "models/interfaces";
-import { useState, useEffect } from "react";
+import { useSnackbar } from "notistack";
+import { useEffect, useState } from "react";
 import { getAllCarreras } from "services/carreras";
 import { saveEstudiante, saveListEstudiante } from "services/estudiantes";
 import { CONSTANTS } from "utils/constants";
@@ -36,6 +37,7 @@ const initialValues: SimpleStudentForm = {
 
 export const useAddSimpleStudent = () => {
 
+    const { enqueueSnackbar } = useSnackbar();
     const [carreras, setCarreras] = useState<ICarrera[]>([]);
 
     const validationSchema = yup.object().shape({
@@ -85,6 +87,7 @@ export const useAddSimpleStudent = () => {
 
         if (result.status === HTTP_STATUS.created) {
             formik.resetForm();
+            enqueueSnackbar(result.message, { variant: "success" });
         } else {
             setErrorSummary(result.message);
         }
@@ -133,6 +136,7 @@ export interface BaseMultipleStudentForm {
 
 export const useAddMultipleStudent = () => {
 
+    const { enqueueSnackbar } = useSnackbar();
     const [carreras, setCarreras] = useState<ICarrera[]>([]);
 
     const validationSchema = yup.object().shape({
@@ -181,6 +185,7 @@ export const useAddMultipleStudent = () => {
 
         if (result.status === HTTP_STATUS.created) {
             formik.resetForm();
+            enqueueSnackbar(result.message, { variant: "success" });
         } else {
             setErrorSummary(result.message);
         }

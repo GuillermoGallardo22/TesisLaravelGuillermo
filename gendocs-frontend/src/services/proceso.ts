@@ -53,11 +53,11 @@ export async function saveProceso(form: IProceso): Promise<IResponse<IProceso>> 
 
 export async function updateProceso(form: IProceso): Promise<IResponse<IProceso>> {
     try {
-        const { data } = await axios.put("procesos/" + form.id, form);
+        const { data: { data } } = await axios.put("procesos/" + form.id, form);
         return {
-            status: HTTP_STATUS.created,
+            status: HTTP_STATUS.ok,
             data: data,
-            message: HTTP_MESSAGES[201],
+            message: HTTP_MESSAGES[200],
         };
     } catch (error) {
         return handleErrors(error);

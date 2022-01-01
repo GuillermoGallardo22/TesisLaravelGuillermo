@@ -1,5 +1,7 @@
 import { useFormik } from "formik";
+import { HTTP_STATUS } from "models/enums";
 import { IProceso } from "models/interfaces";
+import { useSnackbar } from "notistack";
 import { saveProceso } from "services/proceso";
 import { VALIDATION_MESSAGES } from "utils/messages";
 import * as yup from "yup";
@@ -20,8 +22,19 @@ const validationSchema = yup.object().shape({
 
 export const useAddProcess = () => {
 
+    const { enqueueSnackbar } = useSnackbar();
+
     const onSubmit = async (form: IProceso) => {
         const result = await saveProceso(form);
+
+        if (result.status === HTTP_STATUS.created) {
+            enqueueSnackbar(result.message, { variant: "success" });
+        } else {
+            enqueueSnackbar(result.message, { variant: "error" });
+        }
+
+        formik.resetForm();
+
     };
 
     const formik = useFormik({

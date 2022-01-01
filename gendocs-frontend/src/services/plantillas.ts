@@ -6,6 +6,20 @@ import { handleErrors } from "utils/axios";
 import { parseObjectToQueryParams } from "utils/libs";
 import { HTTP_MESSAGES } from "utils/messages";
 
+type OptionsParseResponseToTemplate = {
+    justForeignKey?: boolean,
+}
+
+function parseResponseToTemplate(data: any, options?: OptionsParseResponseToTemplate): IPlantilla {
+
+    const { justForeignKey } = options || { justForeignKey: false };
+
+    return {
+        ...data,
+        proceso: justForeignKey ? typeof data?.proceso === "number" ? data.proceso : data.proceso.id : data.proceso,
+    };
+}
+
 export async function savePlantilla(form: IPlantilla): Promise<IResponse<IPlantilla>> {
     try {
         const { data } = await axios.post("plantillas", form);
@@ -64,12 +78,12 @@ export async function getPlantillasByProcesoId({
     }
 }
 
-export async function getPlantillaById(templateId: number): Promise<IResponse<IPlantilla>> {
+export async function getPlantillaById(templateId: number, options?: OptionsParseResponseToTemplate): Promise<IResponse<IPlantilla>> {
     try {
         const { data: { data } } = await axios.get("plantillas/" + templateId);
         return {
             status: HTTP_STATUS.ok,
-            data: data,
+            data: parseResponseToTemplate(data, options),
             message: "",
         };
     } catch (error) {
@@ -82,8 +96,8 @@ export async function updatePlantilla(form: IPlantilla): Promise<IResponse<IPlan
         const { data: { data } } = await axios.put("plantillas/" + form.id, form);
         return {
             status: HTTP_STATUS.ok,
-            data: data,
-            message: "",
+            data: parseResponseToTemplate(data, { justForeignKey: true }),
+            message: HTTP_MESSAGES[200],
         };
     } catch (error) {
         return handleErrors(error);

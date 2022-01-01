@@ -1,6 +1,7 @@
 import { useFormik } from "formik";
 import { HTTP_STATUS } from "models/enums";
 import { ICarrera, IEstudiante } from "models/interfaces";
+import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
 import { getAllCarreras } from "services/carreras";
 import { getEstudianteById, updateEstudiante } from "services/estudiantes";
@@ -24,6 +25,7 @@ const initialValues: IEstudiante = {
 
 export const useEditEstudiante = ({ studentId }: { studentId: string }) => {
 
+    const { enqueueSnackbar } = useSnackbar();
     const [submitting, setSubmitting] = useState(false);
     const [carreras, setCarreras] = useState<ICarrera[]>([]);
     const [estudiante, setEstudiante] = useState<IEstudiante>(initialValues);
@@ -84,7 +86,9 @@ export const useEditEstudiante = ({ studentId }: { studentId: string }) => {
 
         const result = await updateEstudiante(form);
 
-        if (result.status !== HTTP_STATUS.created) {
+        if (result.status === HTTP_STATUS.ok) {
+            enqueueSnackbar(result.message, { variant: "success" });
+        } else {
             setErrorSummary(result.message);
         }
 

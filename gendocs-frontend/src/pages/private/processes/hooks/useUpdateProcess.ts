@@ -1,6 +1,7 @@
 import { useFormik } from "formik";
 import { HTTP_STATUS } from "models/enums";
 import { IProceso } from "models/interfaces";
+import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
 import { getProcesoById, updateProceso } from "services/proceso";
 import { VALIDATION_MESSAGES } from "utils/messages";
@@ -16,6 +17,7 @@ const validationSchema = yup.object().shape({
 
 export const useUpdateProcess = ({ processId }: { processId: string }) => {
 
+    const { enqueueSnackbar } = useSnackbar();
     const [process, setProcess] = useState<IProceso>({ id: -1, nombre: "", estado: false, });
 
     useEffect(() => {
@@ -28,13 +30,22 @@ export const useUpdateProcess = ({ processId }: { processId: string }) => {
 
     const onSubmit = async (form: IProceso) => {
         const result = await updateProceso(form);
+
+        if (result.status === HTTP_STATUS.ok) {
+            setProcess(result.data);
+            enqueueSnackbar(result.message, { variant: "success" });
+        } else {
+            enqueueSnackbar(result.message, { variant: "error" });
+        }
+
+        formik.resetForm();
     };
 
     const formik = useFormik({
+        enableReinitialize: true,
         initialValues: process,
         onSubmit,
         validationSchema,
-        enableReinitialize: true,
     });
 
     return {
