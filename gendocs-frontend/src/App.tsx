@@ -1,6 +1,7 @@
 import { ThemeProvider } from "@emotion/react";
 import { CssBaseline } from "@mui/material";
 import PrivateLayout from "layout/PrivateLayout";
+import { SnackbarProvider } from "notistack";
 import Login from "pages/public/Login";
 import AuthProvider from "providers/AuthProvider";
 import {
@@ -16,12 +17,14 @@ initAxios();
 const App = () => {
     return (
         <HashRouter>
-            <ThemeProvider theme={theme}>
-                <CssBaseline />
-                <AuthProvider>
-                    <AppBase />
-                </AuthProvider>
-            </ThemeProvider>
+            <SnackbarProvider maxSnack={5}>
+                <ThemeProvider theme={theme}>
+                    <CssBaseline />
+                    <AuthProvider>
+                        <AppBase />
+                    </AuthProvider>
+                </ThemeProvider>
+            </SnackbarProvider>
         </HashRouter>
     );
 };
