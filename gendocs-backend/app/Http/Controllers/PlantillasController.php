@@ -6,10 +6,24 @@ use App\Http\Requests\StorePlantillasRequest;
 use App\Http\Requests\UpdatePlantillasRequest;
 use App\Http\Resources\ResourceCollection;
 use App\Http\Resources\ResourceObject;
+use App\Models\GoogleDrive;
 use App\Models\Plantillas;
+
+use App\Models\Proceso;
 
 class PlantillasController extends Controller
 {
+    protected GoogleDrive $googleDrive;
+
+    /**
+     * @param GoogleDrive $googleDrive
+     */
+    public function __construct(GoogleDrive $googleDrive)
+    {
+        $this->googleDrive = $googleDrive;
+    }
+
+
     public function index()
     {
         $filters = \request()->query('filter');
@@ -33,6 +47,12 @@ class PlantillasController extends Controller
 
         $plantilla = new Plantillas($validated);
         $plantilla->proceso_id = $validated['proceso'];
+
+        $plantilla->drive_id = $this->googleDrive->create(
+            $validated["nombre"],
+            'document',
+            Proceso::find($validated['proceso'])->drive_id
+        )->id;
 
         $plantilla->save();
 
@@ -59,5 +79,15 @@ class PlantillasController extends Controller
     public function destroy(Plantillas $plantilla)
     {
         //
+    }
+
+    public function test()
+    {
+        return response()->json([
+            'data' => $this->googleDrive->create(
+                'prueba',
+                'document'
+            )
+        ]);
     }
 }

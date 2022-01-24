@@ -30,4 +30,20 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'google' => [
+        'root_directory' => env('GOOGLE_DRIVE_ROOT_DIRECTORY_ID'),
+        'credentials' => [
+            'type' => env('GOOGLE_APPLICATION_CREDENTIALS_TYPE'),
+            'project_id' => env('GOOGLE_APPLICATION_CREDENTIALS_PROJECT_ID'),
+            'private_key_id' => env('GOOGLE_APPLICATION_CREDENTIALS_PRIVATE_KEY_ID'),
+            'private_key' => env('GOOGLE_APPLICATION_CREDENTIALS_PRIVATE_KEY'),
+            'client_email' => env('GOOGLE_APPLICATION_CREDENTIALS_CLIENT_EMAIL'),
+            'client_id' => env('GOOGLE_APPLICATION_CREDENTIALS_CLIENT_ID'),
+            'auth_uri' => env('GOOGLE_APPLICATION_CREDENTIALS_AUTH_URI'),
+            'token_uri' => env('GOOGLE_APPLICATION_CREDENTIALS_TOKEN_URI'),
+            'auth_provider_x509_cert_url' => env('GOOGLE_APPLICATION_CREDENTIALS_AUTH_PROVIDER_X509_CERT_URL'),
+            'client_x509_cert_url' => env('GOOGLE_APPLICATION_CREDENTIALS_CLIENT_X509_CERT_URL'),
+        ],
+    ],
+
 ];
