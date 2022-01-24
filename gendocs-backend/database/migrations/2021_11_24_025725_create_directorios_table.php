@@ -16,6 +16,8 @@ class CreateDirectoriosTable extends Migration
         Schema::create('directorios', function (Blueprint $table) {
             $table->id();
 
+            $table->string("drive_id")->unique();
+
             $table->string("nombre", 50);
             $table->date("fecha_inicio");
             $table->string("descripcion", 512)->nullable();

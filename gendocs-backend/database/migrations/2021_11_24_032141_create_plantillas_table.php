@@ -16,7 +16,7 @@ class CreatePlantillasTable extends Migration
         Schema::create('plantillas', function (Blueprint $table) {
             $table->id();
 
-            $table->string("id_drive")->nullable();
+            $table->string("drive_id")->unique();
 
             $table->string("nombre");
             $table->boolean("estado")->default(false);

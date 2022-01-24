@@ -19,6 +19,8 @@ class CreateProcesosTable extends Migration
             $table->string("nombre", 512);
             $table->boolean("estado")->default(true);
 
+            $table->string("drive_id")->unique();
+            
             $table->unsignedBigInteger("directorio_id");
             $table->foreign("directorio_id")->references("id")->on("directorios");
 
