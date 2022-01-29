@@ -1,7 +1,6 @@
 import axios from "axios";
 import { HTTP_STATUS } from "models/enums";
-import { IPagination, IResponse } from "models/interfaces";
-import { IPlantilla } from "pages/private/processes/hooks/useAddTemplates";
+import { IMoveTemplateForm, IPagination, IPlantilla, IResponse } from "models/interfaces";
 import { handleErrors } from "utils/axios";
 import { parseObjectToQueryParams } from "utils/libs";
 import { HTTP_MESSAGES } from "utils/messages";
@@ -94,6 +93,19 @@ export async function getPlantillaById(templateId: number, options?: OptionsPars
 export async function updatePlantilla(form: IPlantilla): Promise<IResponse<IPlantilla>> {
     try {
         const { data: { data } } = await axios.put("plantillas/" + form.id, form);
+        return {
+            status: HTTP_STATUS.ok,
+            data: parseResponseToTemplate(data, { justForeignKey: true }),
+            message: HTTP_MESSAGES[200],
+        };
+    } catch (error) {
+        return handleErrors(error);
+    }
+}
+
+export async function movePlantilla(form: IMoveTemplateForm): Promise<IResponse<IPlantilla>> {
+    try {
+        const { data: { data } } = await axios.put("plantillas/" + form.plantilla + "/move/" + form.proceso);
         return {
             status: HTTP_STATUS.ok,
             data: parseResponseToTemplate(data, { justForeignKey: true }),
