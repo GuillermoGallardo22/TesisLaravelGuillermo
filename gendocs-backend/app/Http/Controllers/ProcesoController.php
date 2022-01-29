@@ -7,10 +7,21 @@ use App\Http\Requests\UpdateProcesoRequest;
 use App\Http\Resources\ResourceCollection;
 use App\Http\Resources\ResourceObject;
 use App\Models\Directorio;
+use App\Models\GoogleDrive;
 use App\Models\Proceso;
 
 class ProcesoController extends Controller
 {
+
+    protected GoogleDrive $googleDrive;
+
+    /**
+     * @param GoogleDrive $googleDrive
+     */
+    public function __construct(GoogleDrive $googleDrive)
+    {
+        $this->googleDrive = $googleDrive;
+    }
 
     public function index()
     {
@@ -32,7 +43,12 @@ class ProcesoController extends Controller
     public function store(StoreProcesoRequest $request)
     {
         $proceso = new Proceso($request->validated());
-        $proceso->directorio_id = Directorio::query()->activeDirectory()->id;
+
+        $directorio = Directorio::query()->activeDirectory();
+
+        $proceso->directorio_id = $directorio->id;
+
+        $proceso->drive_id = $this->googleDrive->create($proceso->nombre, "folder", $directorio->drive_id)->id;
 
         $proceso->save();
 
@@ -46,7 +62,21 @@ class ProcesoController extends Controller
 
     public function update(UpdateProcesoRequest $request, Proceso $proceso)
     {
-        $proceso->fill($request->validated())->save();
+        $validated = $request->validated();
+
+        $needsUpdateOnDrive = $proceso->nombre != $validated['nombre'];
+
+        $proceso->fill($validated);
+
+        if ($proceso->isDirty()) {
+
+            if ($needsUpdateOnDrive) {
+                $this->googleDrive->rename($proceso->drive_id, $validated['nombre']);
+            }
+
+            $proceso->save();
+        }
+
         return ResourceObject::make($proceso);
     }
 

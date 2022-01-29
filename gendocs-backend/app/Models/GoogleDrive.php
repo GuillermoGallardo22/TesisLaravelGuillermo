@@ -45,4 +45,13 @@ class GoogleDrive
             'removeParents' => $removeParents,
         ]);
     }
+
+    public function rename($fileId, $newName)
+    {
+        $tempFile = new Google\Service\Drive\DriveFile([
+            'name' => $newName,
+        ]);
+
+        return $this->service->files->update($fileId, $tempFile);
+    }
 }

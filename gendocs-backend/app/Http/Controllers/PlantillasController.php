@@ -68,10 +68,19 @@ class PlantillasController extends Controller
     {
         $validated = $request->validated();
 
+        $needsUpdateOnDrive = $plantilla->nombre != $validated['nombre'];
+
         $plantilla->fill($validated);
         $plantilla->proceso_id = $validated['proceso'];
 
-        $plantilla->save();
+        if ($plantilla->isDirty()) {
+
+            if ($needsUpdateOnDrive) {
+                $this->googleDrive->rename($plantilla->drive_id, $plantilla->nombre);
+            }
+
+            $plantilla->save();
+        }
 
         return ResourceObject::make($plantilla);
     }
@@ -79,16 +88,6 @@ class PlantillasController extends Controller
     public function destroy(Plantillas $plantilla)
     {
         //
-    }
-
-    public function test()
-    {
-        return response()->json([
-            'data' => $this->googleDrive->create(
-                'prueba',
-                'document'
-            )
-        ]);
     }
 
     public function movePlantilla(Plantillas $plantilla, Proceso $proceso)
