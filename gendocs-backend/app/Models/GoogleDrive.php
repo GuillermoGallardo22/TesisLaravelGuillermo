@@ -36,4 +36,13 @@ class GoogleDrive
         return $this->service->files->create($file);
     }
 
+    public function move($file, $addParents, $removeParents)
+    {
+        $tempFile = new Google\Service\Drive\DriveFile();
+
+        return $this->service->files->update($file, $tempFile, [
+            'addParents' => $addParents,
+            'removeParents' => $removeParents,
+        ]);
+    }
 }

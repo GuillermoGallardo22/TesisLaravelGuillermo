@@ -27,6 +27,7 @@ class Plantillas extends Model
             'nombre' => $this->nombre,
             'estado' => $this->estado,
             'proceso' => $this->proceso,
+            'drive' => $this->drive_id,
         ];
     }
 

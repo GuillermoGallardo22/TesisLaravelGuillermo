@@ -25,8 +25,7 @@ Route::post('estudiantes-list', [EstudianteController::class, 'storeList']);
 Route::apiResource('procesos', ProcesoController::class);
 
 Route::apiResource('plantillas', PlantillasController::class);
-Route::get('test-google-drive', [PlantillasController::class, 'test']);
-Route::post('test-google-drive', [PlantillasController::class, 'shareFolder']);
+Route::put('plantillas/{plantilla}/move/{proceso}', [PlantillasController::class, 'movePlantilla']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();

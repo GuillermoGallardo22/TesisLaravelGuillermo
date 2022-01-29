@@ -90,4 +90,18 @@ class PlantillasController extends Controller
             )
         ]);
     }
+
+    public function movePlantilla(Plantillas $plantilla, Proceso $proceso)
+    {
+
+        $oldProceso = Proceso::find($plantilla->proceso_id);
+
+        $plantilla->proceso_id = $proceso->id;
+
+        $temp = $this->googleDrive->move($plantilla->drive_id, $proceso->drive_id, $oldProceso->drive_id);
+
+        $plantilla->save();
+
+        return ResourceObject::make($plantilla);
+    }
 }
