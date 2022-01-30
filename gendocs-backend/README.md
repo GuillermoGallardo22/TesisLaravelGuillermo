@@ -1,30 +1,39 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# BACKEND - LARAVEL - GENDOCS V.2
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## GOOGLE DRIVE SERVICE
 
-## Acerca de Laravel
+1. Crear proyecto en [Google cloud console](https://console.cloud.google.com/)
 
-## Dudas pendientes
+![pasos para crear proyecto](docs/img/Screenshot%20from%202022-01-29%2018-12-22.png "Crear proyecto")
 
-- Al inicio del video, mencionan que hay que entrar al sistema con una cuenta de google en específico. ¿Los demás
-  usuarios del sistemas(secretarias), tienen que acceder con esa misma cuenta de google?
-    - Dudas que se respondería
-        - Seguriad: si alguien guarda la contraseña, las demás personas la pueden ver
-        - API: Si yo accedo al sistema sin haber accedido primero a la cuenta de google, la previsualización de
-          documentos no cargaría
-- ¿Es necesario que aparezca la previsualización de documentos (edición) en el sistema?
-    - Observaciónes podría mejorar si la respuesta es NO
-        - Se dejaría de depender de la API de google
-        - Configuración de varibles personalizadas (un usuario puede subir una plantilla y )
-- Se necesita más información sobre la creación de consejos
-    - Hay un responsable?
-    - Existen varios integrantes del consejo, como lo ingresan actualmente?
-    - Numeración de resoluciones
+2. Habilidar la API de Google Drive en la [Biblioteca de API](https://console.cloud.google.com/apis/library)
 
-- Solo se generá un acta por consejo??
-    - Si hoy empiezo a generar actas, empezaría con la numeración '001', la próxima acta generada será la '002'??
+![google drive api](docs/img/Screenshot%20from%202022-01-29%2018-20-16.png 'Google Drive API' )
+
+3. En la sección **Api y servicios**, crear credenciales de tipo **Cuenta de servicios**.
+   ![paso 1](docs/img/Screenshot%20from%202022-01-29%2018-25-29.png 'Cuenta de servicios' )
+
+    1. Agregar un nombre a la cuenta de servicio
+        1. ![paso 1.1](docs/img/Screenshot%20from%202022-01-29%2018-30-25.png)
+    2. Agregar la función **Propietario**
+        1. ![paso 1.2](docs/img/Screenshot%20from%202022-01-29%2018-33-21.png)
+    3. Finalizar
+
+4. Crear credenciales
+    1. Ingresar a la cuenta de servicio creada
+        1. ![correo cuenta de servicio](docs/img/Screenshot%20from%202022-01-29%2018-35-35.png)
+    2. En la sección **Claves** agregar una nueva clave de tipo JSON
+        1. ![claves](docs/img/Screenshot%20from%202022-01-29%2019-00-54.png)
+        2. ![clave json](docs/img/Screenshot%20from%202022-01-29%2019-07-53.png)
+    3. Copiar el contenido en el archivo **json** en el archivo `.env` del proyecto
+        1. ![](docs/img/Screenshot%20from%202022-01-29%2019-11-51.png)
+
+5. Copiar el correo electrónico de la cuenta de servicio creada.
+
+![correo cuenta de servicio](docs/img/Screenshot%20from%202022-01-29%2018-35-35.png)
+
+5. Crear una carpata en google drive y compartirla al correo de la cuenta de servicio
+
+![](docs/img/Screenshot%20from%202022-01-29%2018-53-40.png)
+
+6. Documentación [DRIVE API](https://developers.google.com/drive/api/v3/about-sdk)
