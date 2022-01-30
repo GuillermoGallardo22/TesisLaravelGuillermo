@@ -18,15 +18,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::apiResource('carreras', CarreraController::class);
-Route::apiResource('estudiantes', EstudianteController::class);
-Route::post('estudiantes-list', [EstudianteController::class, 'storeList']);
+Route::middleware("auth:sanctum")->group(function () {
+    Route::get("user", function (Request $request) {
+        return $request->user();
+    });
 
-Route::apiResource('procesos', ProcesoController::class);
+    Route::apiResource('carreras', CarreraController::class);
+    Route::apiResource('estudiantes', EstudianteController::class);
+    Route::post('estudiantes-list', [EstudianteController::class, 'storeList']);
 
-Route::apiResource('plantillas', PlantillasController::class);
-Route::put('plantillas/{plantilla}/move/{proceso}', [PlantillasController::class, 'movePlantilla']);
+    Route::apiResource('procesos', ProcesoController::class);
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+    Route::apiResource('plantillas', PlantillasController::class);
+    Route::put('plantillas/{plantilla}/move/{proceso}', [PlantillasController::class, 'movePlantilla']);
 });
