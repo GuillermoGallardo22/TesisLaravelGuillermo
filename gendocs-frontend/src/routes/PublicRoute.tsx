@@ -1,8 +1,10 @@
 import LoadingScreen from "components/LoadingScreen";
 import { useAuthContext } from "contexts/AuthContext";
-import { useEffect } from "react";
+import { HTTP_STATUS } from "models/enums";
+import { useCallback, useEffect } from "react";
 import { Navigate } from "react-router-dom";
 import { AuthActionsEnum } from "reducers/AuthReducer";
+import { getUser } from "services/auth";
 
 const PublicRoute: React.FC = ({ children }) => {
 
@@ -14,12 +16,22 @@ const PublicRoute: React.FC = ({ children }) => {
         dispatch,
     } = useAuthContext();
 
-    useEffect(() => {
-        setTimeout(() => {
+    const _checkAuth = useCallback(async () => {
+        const { status, data } = await getUser();
+
+        if (status === HTTP_STATUS.ok) {
+            dispatch({ type: AuthActionsEnum.setIsAuth, payload: true });
+            dispatch({ type: AuthActionsEnum.setCheckingAuth, payload: false });
+            dispatch({ type: AuthActionsEnum.setUser, payload: data });
+        } else {
             dispatch({ type: AuthActionsEnum.setIsAuth, payload: false });
             dispatch({ type: AuthActionsEnum.setCheckingAuth, payload: false });
-        }, 3000);
+        }
     }, []);
+
+    useEffect(() => {
+        _checkAuth();
+    }, [_checkAuth]);
 
     return checkingAuth ? (
         <LoadingScreen />

@@ -9,8 +9,9 @@ const Login = () => {
 
     const {
         formik,
-        submitting,
     } = useAuth();
+
+    const submitting = formik.isSubmitting;
 
     return (
         <Container component="main" maxWidth="xs">

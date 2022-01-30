@@ -6,6 +6,9 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import { VALIDATION_MESSAGES } from "utils/messages";
 import { useState } from "react";
+import { login, logout as _logout } from "services/auth";
+import { HTTP_STATUS } from "models/enums";
+import { useSnackbar } from "notistack";
 
 interface IAuth {
     email: string,
@@ -14,7 +17,7 @@ interface IAuth {
 
 const defaultFormValues: IAuth = {
     email: "gbarcia@uta.edu.ec",
-    password: "123456",
+    password: "12345678",
 };
 
 const validationSchema = yup.object().shape({
@@ -29,36 +32,33 @@ const validationSchema = yup.object().shape({
 
 export const useAuth = () => {
 
+    const { enqueueSnackbar } = useSnackbar();
+
     const {
         dispatch,
     } = useAuthContext();
 
-    const [submitting, setSubmitting] = useState(false);
+    const onSubmit = async (form: IAuth) => {
+        const { status, message, data } = await login(form.email, form.password);
 
-    const onSubmit = (form: IAuth) => {
-        setSubmitting(true);
-
-        setTimeout(() => {
-
+        if (status === HTTP_STATUS.ok) {
             dispatch({
-                type: AuthActionsEnum.setIsAuth, payload: {
-                    id: 1,
-                    name: "Juan",
-                    email: form.email,
-                }
+                type: AuthActionsEnum.setIsAuth,
+                payload: data,
             });
             dispatch({ type: AuthActionsEnum.setIsAuth, payload: true });
-
-            setSubmitting(false);
-        }, 1000);
+        } else {
+            enqueueSnackbar(message, { variant: "error" });
+        }
     };
 
-    const logout = () => {
-        setTimeout(() => {
-            dispatch({ type: AuthActionsEnum.setCheckingAuth, payload: true });
-            dispatch({ type: AuthActionsEnum.setIsAuth, payload: false });
-            dispatch({ type: AuthActionsEnum.setUser, payload: {} as IUser });
-        }, 500);
+    const logout = async () => {
+
+        await _logout();
+
+        dispatch({ type: AuthActionsEnum.setCheckingAuth, payload: true });
+        dispatch({ type: AuthActionsEnum.setIsAuth, payload: false });
+        dispatch({ type: AuthActionsEnum.setUser, payload: {} as IUser });
     };
 
     const formik = useFormik<IAuth>({
@@ -70,6 +70,5 @@ export const useAuth = () => {
     return {
         formik,
         logout,
-        submitting,
     };
 };

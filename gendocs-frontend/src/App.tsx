@@ -5,14 +5,11 @@ import { SnackbarProvider } from "notistack";
 import Login from "pages/public/Login";
 import AuthProvider from "providers/AuthProvider";
 import {
-    HashRouter, Route, Routes
+    BrowserRouter as HashRouter, Route, Routes
 } from "react-router-dom";
 import PrivateRoute from "routes/PrivateRoute";
 import PublicRoute from "routes/PublicRoute";
-import { initAxios } from "utils/axios";
 import { theme } from "utils/theme";
-
-initAxios();
 
 const App = () => {
     return (

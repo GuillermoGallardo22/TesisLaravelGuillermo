@@ -3,19 +3,23 @@ import { HTTP_STATUS } from "models/enums";
 import { IResponse } from "models/interfaces";
 import { HTTP_MESSAGES } from "./messages";
 
-const BASE_PATH = "http://localhost:80/api";
+const PROTOCOL = "http";
+const DOMAIN = "localhost";
+const PORT = "80";
 
-export const initAxios = () => {
-    // axios.defaults.withCredentials = true;
-    axios.defaults.baseURL = BASE_PATH;
+const API = "api";
+
+const BASE_PATH = `${PROTOCOL}://${DOMAIN}:${PORT}`;
+
+axios.defaults.withCredentials = true;
+
+export const initAxios = (mode: "api" | "base") => {
+    axios.defaults.baseURL = mode === "api"
+        ? `${BASE_PATH}/${API}`
+        : BASE_PATH;
 };
 
-export function handleErrors<T>(error: any, options?: {
-    defaultValues: {
-        data?: T,
-        message?: string,
-    }
-}): IResponse<T> {
+export function handleErrors<T>(error: any, defaultValues?: any): IResponse<T> {
 
     if (error.response) {
         /*
@@ -27,14 +31,21 @@ export function handleErrors<T>(error: any, options?: {
         let message: string | string[] | undefined;
 
         if (data?.errors) {
-            const { errors } = data.errors;
-            message = [""].concat(...Object.values<string[]>(errors || []));
+            message = [""]
+                .concat(
+                    ...Object.values<string[]>(data.errors.errors || {})
+                )
+                .filter(i => i);
+        }
+
+        if (!message || message.length <= 0) {
+            message = HTTP_MESSAGES[status] || HTTP_MESSAGES[503];
         }
 
         return {
             status: status,
-            data: options?.defaultValues?.data || {} as T,
-            message: options?.defaultValues?.message || message || "",
+            data: defaultValues,
+            message: message || HTTP_MESSAGES[503],
         };
     } else if (error.request) {
         /*
@@ -44,15 +55,15 @@ export function handleErrors<T>(error: any, options?: {
          */
         return {
             status: HTTP_STATUS.unprocessableEntity,
-            data: options?.defaultValues?.data || {} as T,
-            message: options?.defaultValues?.message || HTTP_MESSAGES[503] || "",
+            data: defaultValues,
+            message: HTTP_MESSAGES[503] || "",
         };
     } else {
         // Something happened in setting up the request and triggered an Error
         return {
-            status: HTTP_STATUS.badRequest,
-            data: options?.defaultValues?.data || {} as T,
-            message: options?.defaultValues?.message || HTTP_MESSAGES[503] || "",
+            status: HTTP_STATUS.serviceUnavailable,
+            data: defaultValues,
+            message: HTTP_MESSAGES[503] || "",
         };
     }
 }
