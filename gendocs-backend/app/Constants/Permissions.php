@@ -4,25 +4,25 @@ namespace App\Constants;
 
 abstract class Permissions
 {
-    static $Estudiantes = [
+    const Estudiantes = [
         'index' => 'estudiante.index',
         'create' => 'estudiante.create',
         'update' => 'estudiante.update',
     ];
 
-    static $Procesos = [
+    const Procesos = [
         'index' => 'proceso.index',
         'create' => 'proceso.create',
         'update' => 'proceso.update',
     ];
 
-    static $Plantillas = [
+    const Plantillas = [
         'index' => 'plantilla.index',
         'create' => 'plantilla.create',
         'update' => 'plantilla.update',
     ];
 
-    static $Users = [
+    const Users = [
         'index' => 'user.index',
         'create' => 'user.create',
         'update' => 'user.update',

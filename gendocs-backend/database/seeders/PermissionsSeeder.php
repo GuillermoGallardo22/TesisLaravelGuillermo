@@ -34,9 +34,9 @@ class PermissionsSeeder extends Seeder
         ]);
 
         $permissions = array_merge(
-            Arr::divide(Permissions::$Estudiantes)[1],
-            Arr::divide(Permissions::$Plantillas)[1],
-            Arr::divide(Permissions::$Procesos)[1],
+            Arr::divide(Permissions::Estudiantes)[1],
+            Arr::divide(Permissions::Plantillas)[1],
+            Arr::divide(Permissions::Procesos)[1],
         );
 
         foreach ($permissions as $permissionName) {
@@ -55,7 +55,7 @@ class PermissionsSeeder extends Seeder
             }
         }
 
-        foreach (Arr::divide(Permissions::$Users)[1] as $permissionName) {
+        foreach (Arr::divide(Permissions::Users)[1] as $permissionName) {
             $permission = Permission::create([
                 'name' => $permissionName,
             ]);
