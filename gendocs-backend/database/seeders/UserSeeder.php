@@ -19,6 +19,12 @@ class UserSeeder extends Seeder
             'name' => 'Guillermo',
             'email' => 'gbarcia@uta.edu.ec',
             'password' => Hash::make('12345678'),
-        ]);
+        ])->assignRole('Admin');
+
+        User::create([
+            'name' => 'Carleeetos',
+            'email' => 'cmorales@uta.edu.ec',
+            'password' => Hash::make('12345678'),
+        ])->assignRole('Reader');
     }
 }
