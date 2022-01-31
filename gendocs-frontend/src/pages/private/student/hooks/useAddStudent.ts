@@ -88,6 +88,9 @@ export const useAddSimpleStudent = () => {
         if (result.status === HTTP_STATUS.created) {
             formik.resetForm();
             enqueueSnackbar(result.message, { variant: "success" });
+        } else if (result.status === HTTP_STATUS.forbidden) {
+            enqueueSnackbar(result.message, { variant: "error" });
+            setErrorSummary(result.message);
         } else {
             setErrorSummary(result.message);
         }
@@ -186,6 +189,9 @@ export const useAddMultipleStudent = () => {
         if (result.status === HTTP_STATUS.created) {
             formik.resetForm();
             enqueueSnackbar(result.message, { variant: "success" });
+        } else if (result.status === HTTP_STATUS.forbidden) {
+            enqueueSnackbar(result.message, { variant: "error" });
+            setErrorSummary(result.message);
         } else {
             setErrorSummary(result.message);
         }
