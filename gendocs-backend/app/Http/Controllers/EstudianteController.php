@@ -11,6 +11,12 @@ use App\Models\Estudiante;
 
 class EstudianteController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->authorizeResource(Estudiante::class);
+    }
+
     public function index()
     {
         $filter = \request()->query('search');

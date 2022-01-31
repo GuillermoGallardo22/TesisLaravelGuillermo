@@ -20,6 +20,7 @@ class ProcesoController extends Controller
      */
     public function __construct(GoogleDrive $googleDrive)
     {
+        $this->authorizeResource(Proceso::class);
         $this->googleDrive = $googleDrive;
     }
 
