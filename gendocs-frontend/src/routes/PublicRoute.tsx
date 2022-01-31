@@ -2,9 +2,13 @@ import LoadingScreen from "components/LoadingScreen";
 import { useAuthContext } from "contexts/AuthContext";
 import { HTTP_STATUS } from "models/enums";
 import { useCallback, useEffect } from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import { AuthActionsEnum } from "reducers/AuthReducer";
 import { getUser } from "services/auth";
+
+type IState = {
+    path?: string;
+}
 
 const PublicRoute: React.FC = ({ children }) => {
 
@@ -16,8 +20,13 @@ const PublicRoute: React.FC = ({ children }) => {
         dispatch,
     } = useAuthContext();
 
+    const { state } = useLocation();
+    const navigate = useNavigate();
+
     const _checkAuth = useCallback(async () => {
         const { status, data } = await getUser();
+
+        navigate((state as IState)?.path || "/");
 
         if (status === HTTP_STATUS.ok) {
             dispatch({ type: AuthActionsEnum.setIsAuth, payload: true });
