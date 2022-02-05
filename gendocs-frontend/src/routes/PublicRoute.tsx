@@ -26,9 +26,8 @@ const PublicRoute: React.FC = ({ children }) => {
     const _checkAuth = useCallback(async () => {
         const { status, data } = await getUser();
 
-        navigate((state as IState)?.path || "/");
-
         if (status === HTTP_STATUS.ok) {
+            navigate((state as IState)?.path || "/");
             dispatch({ type: AuthActionsEnum.setIsAuth, payload: true });
             dispatch({ type: AuthActionsEnum.setCheckingAuth, payload: false });
             dispatch({ type: AuthActionsEnum.setUser, payload: data });

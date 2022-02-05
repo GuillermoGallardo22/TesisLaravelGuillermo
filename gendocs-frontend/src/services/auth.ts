@@ -26,6 +26,8 @@ export async function getUser(): Promise<IResponse<IUser>> {
             status: HTTP_STATUS.ok,
         };
     } catch (error) {
+        deleteAllCookies();
+
         return handleErrors(error, {} as IUser);
     }
 }
