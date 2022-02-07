@@ -9,6 +9,7 @@ import { useState } from "react";
 import { login, logout as _logout } from "services/auth";
 import { HTTP_STATUS } from "models/enums";
 import { useSnackbar } from "notistack";
+import { useNavigate } from "react-router-dom";
 
 interface IAuth {
     email: string,
@@ -33,6 +34,7 @@ const validationSchema = yup.object().shape({
 export const useAuth = () => {
 
     const { enqueueSnackbar } = useSnackbar();
+    const navigate = useNavigate();
 
     const {
         dispatch,
@@ -53,12 +55,15 @@ export const useAuth = () => {
     };
 
     const logout = async () => {
+        dispatch({ type: AuthActionsEnum.setCheckingAuth, payload: true });
 
         await _logout();
 
-        dispatch({ type: AuthActionsEnum.setCheckingAuth, payload: true });
+        navigate("/login", { replace: true });
+
         dispatch({ type: AuthActionsEnum.setIsAuth, payload: false });
         dispatch({ type: AuthActionsEnum.setUser, payload: {} as IUser });
+        dispatch({ type: AuthActionsEnum.setCheckingAuth, payload: false });
     };
 
     const formik = useFormik<IAuth>({
