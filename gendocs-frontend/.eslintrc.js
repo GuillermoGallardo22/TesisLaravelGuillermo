@@ -7,7 +7,9 @@ module.exports = {
     extends: [
         "eslint:recommended",
         "plugin:react/recommended",
-        "plugin:@typescript-eslint/recommended"
+        "plugin:@typescript-eslint/recommended",
+        "prettier",
+        "prettier/react"
     ],
     parser: "@typescript-eslint/parser",
     parserOptions: {
@@ -19,7 +21,8 @@ module.exports = {
     },
     plugins: [
         "react",
-        "@typescript-eslint"
+        "@typescript-eslint",
+        "prettier"
     ],
     ignorePatterns: [
         "*.config.[j|t]s"
