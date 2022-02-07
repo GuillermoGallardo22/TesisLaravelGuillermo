@@ -3,7 +3,6 @@ import React, { useReducer } from "react";
 import { authReducer } from "reducers/AuthReducer";
 
 const AuthProvider: React.FC = ({ children }) => {
-
     const [state, dispatch] = useReducer(authReducer, initialState);
 
     return (

@@ -9,28 +9,26 @@ import Drawer from "./components/Drawer";
 import { DEFAULT_ROUTE, IRoute, routes } from "./routes";
 
 const PrivateLayout = () => {
-
     const [open, setOpen] = React.useState(true);
     const toggleDrawer = () => {
         setOpen(!open);
     };
 
     const route = (item: IRoute, index: number) => {
-        return <Route
-            key={index}
-            path={item.path}
-            index={item.isIndex}
-            element={item.component}
-        >
-            {
-                item.childrens?.map(route)
-            }
-        </Route>;
+        return (
+            <Route
+                key={index}
+                path={item.path}
+                index={item.isIndex}
+                element={item.component}
+            >
+                {item.childrens?.map(route)}
+            </Route>
+        );
     };
 
     return (
         <Box sx={{ display: "flex" }}>
-
             <AppBar open={open} toggleDrawer={toggleDrawer} />
             <Drawer open={open} toggleDrawer={toggleDrawer} />
 
@@ -52,10 +50,11 @@ const PrivateLayout = () => {
                         {/* Recent Orders */}
                         <Grid item xs={12}>
                             <Routes>
-                                {
-                                    routes.map((route))
-                                }
-                                <Route path="/" element={<Navigate to={DEFAULT_ROUTE} />} />
+                                {routes.map(route)}
+                                <Route
+                                    path="/"
+                                    element={<Navigate to={DEFAULT_ROUTE} />}
+                                />
                             </Routes>
                         </Grid>
                     </Grid>

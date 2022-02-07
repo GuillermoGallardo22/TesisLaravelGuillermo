@@ -59,12 +59,22 @@ const AuthCheck = () => {
 const AppBase = () => {
     return (
         <Routes>
-            <Route path="/login" element={<PublicRoute>
-                <Login />
-            </PublicRoute>} />
-            <Route path="/*" element={<PrivateRoute>
-                <PrivateLayout />
-            </PrivateRoute>} />
+            <Route
+                path="/login"
+                element={
+                    <PublicRoute>
+                        <Login />
+                    </PublicRoute>
+                }
+            />
+            <Route
+                path="/*"
+                element={
+                    <PrivateRoute>
+                        <PrivateLayout />
+                    </PrivateRoute>
+                }
+            />
         </Routes>
     );
 };

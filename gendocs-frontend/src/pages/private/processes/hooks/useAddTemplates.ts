@@ -5,7 +5,6 @@ import { useSnackbar } from "notistack";
 import { savePlantilla } from "services/plantillas";
 
 export const useAddTemplates = ({ processId }: { processId: number }) => {
-
     const { enqueueSnackbar } = useSnackbar();
 
     const onSubmit = async (form: IPlantilla) => {
@@ -27,7 +26,7 @@ export const useAddTemplates = ({ processId }: { processId: number }) => {
             nombre: "",
             estado: true,
             proceso: processId,
-            drive: ""
+            drive: "",
         },
     });
 

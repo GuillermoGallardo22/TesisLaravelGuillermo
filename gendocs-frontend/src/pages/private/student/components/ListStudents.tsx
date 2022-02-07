@@ -1,7 +1,12 @@
 import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
 import { Button, IconButton, Stack, TextField } from "@mui/material";
-import { DataGrid, GridColDef, GridRenderCellParams, GridRowId } from "@mui/x-data-grid";
+import {
+    DataGrid,
+    GridColDef,
+    GridRenderCellParams,
+    GridRowId,
+} from "@mui/x-data-grid";
 import { IEstudiante, IPagination } from "models/interfaces";
 import { useEffect, useRef, useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
@@ -20,18 +25,21 @@ const columns: GridColDef[] = [
     { field: "matricula", headerName: "Matrícula", width: 100 },
     { field: "folio", headerName: "Folio", width: 100 },
     {
-        field: "id", headerName: "Acciones", renderCell: (item: GridRenderCellParams) =>
+        field: "id",
+        headerName: "Acciones",
+        renderCell: (item: GridRenderCellParams) => (
             <IconButton
                 color="primary"
                 component={RouterLink}
-                to={`${item.value}`}>
+                to={`${item.value}`}
+            >
                 <EditIcon />
             </IconButton>
+        ),
     },
 ];
 
 const ListStudents = () => {
-
     const pagesNextCursor = useRef<{ [page: number]: GridRowId }>({});
 
     const [data, setData] = useState<IPagination<IEstudiante>>({
@@ -72,7 +80,10 @@ const ListStudents = () => {
 
             setLoading(true);
 
-            const response = await getEstudiantes({ cursor: nextCursor, search });
+            const response = await getEstudiantes({
+                cursor: nextCursor,
+                search,
+            });
 
             if (response.meta.to) {
                 pagesNextCursor.current[page] = response.meta.to;
@@ -104,7 +115,10 @@ const ListStudents = () => {
 
                 setLoading(true);
 
-                const response = await getEstudiantes({ cursor: nextCursor, search });
+                const response = await getEstudiantes({
+                    cursor: nextCursor,
+                    search,
+                });
 
                 if (response.meta.to) {
                     pagesNextCursor.current[page] = response.meta.to;
@@ -118,15 +132,9 @@ const ListStudents = () => {
         return () => clearTimeout(delayDebounceFn);
     }, [search]);
 
-
     return (
         <Stack spacing={3}>
-
-            <Button
-                component={RouterLink}
-                startIcon={<AddIcon />}
-                to="nuevo"
-            >
+            <Button component={RouterLink} startIcon={<AddIcon />} to="nuevo">
                 AÑADIR ESTUDIANTES
             </Button>
 

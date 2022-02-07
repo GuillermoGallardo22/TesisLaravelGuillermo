@@ -1,18 +1,29 @@
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import LoadingButton from "@mui/lab/LoadingButton";
-import { Accordion, AccordionDetails, AccordionSummary, Alert, Box, Grid, Stack, TextField, Typography } from "@mui/material";
+import {
+    Accordion,
+    AccordionDetails,
+    AccordionSummary,
+    Alert,
+    Box,
+    Grid,
+    Stack,
+    TextField,
+    Typography,
+} from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import ErrorSummary from "components/ErrorSummary";
 import Select from "components/Select";
 import { useState } from "react";
 import { readFile } from "utils/libs";
-import { useAddMultipleStudent, useAddSimpleStudent } from "../hooks/useAddStudent";
+import {
+    useAddMultipleStudent,
+    useAddSimpleStudent,
+} from "../hooks/useAddStudent";
 
 const AddStudents = () => {
-
     return (
         <>
-
             <Accordion>
                 <AccordionSummary
                     expandIcon={<ExpandMoreIcon />}
@@ -42,32 +53,35 @@ const AddStudents = () => {
 };
 
 const AddSimpleStudent = () => {
-    const {
-        formik,
-        submitting,
-        carreras,
-        errorSummary,
-    } = useAddSimpleStudent();
+    const { formik, submitting, carreras, errorSummary } =
+        useAddSimpleStudent();
 
     return (
         <Box
             component="form"
             onSubmit={formik.handleSubmit}
             onReset={formik.handleReset}
-            noValidate>
-
+            noValidate
+        >
             <Grid container spacing={2}>
-
                 <Grid item xs={12}>
                     <Select
                         id="carrera"
                         name="carrera"
                         label="Carrera"
-                        items={carreras.map(item => ({ id: item.id, label: item.nombre }))}
+                        items={carreras.map((item) => ({
+                            id: item.id,
+                            label: item.nombre,
+                        }))}
                         value={formik.values.carrera}
                         onChange={formik.handleChange}
-                        error={formik.touched.carrera && Boolean(formik.errors.carrera)}
-                        errorMessage={formik.touched.carrera && formik.errors.carrera}
+                        error={
+                            formik.touched.carrera &&
+                            Boolean(formik.errors.carrera)
+                        }
+                        errorMessage={
+                            formik.touched.carrera && formik.errors.carrera
+                        }
                     />
                 </Grid>
 
@@ -81,8 +95,13 @@ const AddSimpleStudent = () => {
                         label="Cédula"
                         value={formik.values.cedula}
                         onChange={formik.handleChange}
-                        error={formik.touched.cedula && Boolean(formik.errors.cedula)}
-                        helperText={formik.touched.cedula && formik.errors.cedula}
+                        error={
+                            formik.touched.cedula &&
+                            Boolean(formik.errors.cedula)
+                        }
+                        helperText={
+                            formik.touched.cedula && formik.errors.cedula
+                        }
                     />
                 </Grid>
 
@@ -96,8 +115,13 @@ const AddSimpleStudent = () => {
                         label="Nombres"
                         value={formik.values.nombres}
                         onChange={formik.handleChange}
-                        error={formik.touched.nombres && Boolean(formik.errors.nombres)}
-                        helperText={formik.touched.nombres && formik.errors.nombres}
+                        error={
+                            formik.touched.nombres &&
+                            Boolean(formik.errors.nombres)
+                        }
+                        helperText={
+                            formik.touched.nombres && formik.errors.nombres
+                        }
                     />
                 </Grid>
 
@@ -111,8 +135,13 @@ const AddSimpleStudent = () => {
                         label="Apellidos"
                         value={formik.values.apellidos}
                         onChange={formik.handleChange}
-                        error={formik.touched.apellidos && Boolean(formik.errors.apellidos)}
-                        helperText={formik.touched.apellidos && formik.errors.apellidos}
+                        error={
+                            formik.touched.apellidos &&
+                            Boolean(formik.errors.apellidos)
+                        }
+                        helperText={
+                            formik.touched.apellidos && formik.errors.apellidos
+                        }
                     />
                 </Grid>
 
@@ -126,8 +155,13 @@ const AddSimpleStudent = () => {
                         label="Celular"
                         value={formik.values.celular}
                         onChange={formik.handleChange}
-                        error={formik.touched.celular && Boolean(formik.errors.celular)}
-                        helperText={formik.touched.celular && formik.errors.celular}
+                        error={
+                            formik.touched.celular &&
+                            Boolean(formik.errors.celular)
+                        }
+                        helperText={
+                            formik.touched.celular && formik.errors.celular
+                        }
                     />
                 </Grid>
 
@@ -140,8 +174,13 @@ const AddSimpleStudent = () => {
                         label="Teléfono"
                         value={formik.values.telefono}
                         onChange={formik.handleChange}
-                        error={formik.touched.telefono && Boolean(formik.errors.telefono)}
-                        helperText={formik.touched.telefono && formik.errors.telefono}
+                        error={
+                            formik.touched.telefono &&
+                            Boolean(formik.errors.telefono)
+                        }
+                        helperText={
+                            formik.touched.telefono && formik.errors.telefono
+                        }
                     />
                 </Grid>
 
@@ -156,8 +195,14 @@ const AddSimpleStudent = () => {
                         autoComplete="correo_uta"
                         value={formik.values.correo_uta}
                         onChange={formik.handleChange}
-                        error={formik.touched.correo_uta && Boolean(formik.errors.correo_uta)}
-                        helperText={formik.touched.correo_uta && formik.errors.correo_uta}
+                        error={
+                            formik.touched.correo_uta &&
+                            Boolean(formik.errors.correo_uta)
+                        }
+                        helperText={
+                            formik.touched.correo_uta &&
+                            formik.errors.correo_uta
+                        }
                     />
                 </Grid>
 
@@ -171,8 +216,13 @@ const AddSimpleStudent = () => {
                         autoComplete="correo"
                         value={formik.values.correo}
                         onChange={formik.handleChange}
-                        error={formik.touched.correo && Boolean(formik.errors.correo)}
-                        helperText={formik.touched.correo && formik.errors.correo}
+                        error={
+                            formik.touched.correo &&
+                            Boolean(formik.errors.correo)
+                        }
+                        helperText={
+                            formik.touched.correo && formik.errors.correo
+                        }
                     />
                 </Grid>
 
@@ -186,8 +236,13 @@ const AddSimpleStudent = () => {
                         label="Matrícula"
                         value={formik.values.matricula}
                         onChange={formik.handleChange}
-                        error={formik.touched.matricula && Boolean(formik.errors.matricula)}
-                        helperText={formik.touched.matricula && formik.errors.matricula}
+                        error={
+                            formik.touched.matricula &&
+                            Boolean(formik.errors.matricula)
+                        }
+                        helperText={
+                            formik.touched.matricula && formik.errors.matricula
+                        }
                     />
                 </Grid>
 
@@ -201,7 +256,9 @@ const AddSimpleStudent = () => {
                         label="Folio"
                         value={formik.values.folio}
                         onChange={formik.handleChange}
-                        error={formik.touched.folio && Boolean(formik.errors.folio)}
+                        error={
+                            formik.touched.folio && Boolean(formik.errors.folio)
+                        }
                         helperText={formik.touched.folio && formik.errors.folio}
                     />
                 </Grid>
@@ -255,24 +312,20 @@ const columns: GridColDef[] = [
 ];
 
 const AddMultipleStudents = () => {
-    const {
-        formik,
-        submitting,
-        carreras,
-    } = useAddMultipleStudent();
+    const { formik, submitting, carreras } = useAddMultipleStudent();
 
     const [file, setFile] = useState<File>();
 
     const [reading, setReading] = useState(false);
 
     const handleChangeFile = (event: React.ChangeEvent<HTMLInputElement>) => {
-
         handleReset();
         setReading(true);
 
         try {
-
-            const _file = event?.target?.files ? event.target.files[0] : undefined;
+            const _file = event?.target?.files
+                ? event.target.files[0]
+                : undefined;
 
             if (!_file) {
                 setReading(false);
@@ -286,11 +339,9 @@ const AddMultipleStudents = () => {
                     formik.setFieldValue("estudiantes", students);
                 })
                 .finally(() => setReading(false));
-
         } catch (error) {
             setReading(false);
         }
-
     };
 
     const handleReset = () => {
@@ -300,7 +351,6 @@ const AddMultipleStudents = () => {
 
     return (
         <Stack spacing={3}>
-
             <Box>
                 <LoadingButton
                     variant="contained"
@@ -318,7 +368,10 @@ const AddMultipleStudents = () => {
                         hidden
                     />
                 </LoadingButton>
-                <label style={{ marginLeft: "1rem" }} htmlFor="contained-button-file">
+                <label
+                    style={{ marginLeft: "1rem" }}
+                    htmlFor="contained-button-file"
+                >
                     {file?.name && !reading && file.name}
                 </label>
             </Box>
@@ -328,60 +381,76 @@ const AddMultipleStudents = () => {
                     component="form"
                     onSubmit={formik.handleSubmit}
                     onReset={handleReset}
-                    noValidate>
-
+                    noValidate
+                >
                     <Grid container spacing={2}>
-
                         <Grid item xs={12}>
                             <Select
                                 id="carrera"
                                 name="carrera"
                                 label="Carrera"
-                                items={carreras.map(item => ({ id: item.id, label: item.nombre }))}
+                                items={carreras.map((item) => ({
+                                    id: item.id,
+                                    label: item.nombre,
+                                }))}
                                 value={formik.values.carrera}
                                 onChange={formik.handleChange}
-                                error={formik.touched.carrera && Boolean(formik.errors.carrera)}
-                                errorMessage={formik.touched.carrera && formik.errors.carrera}
+                                error={
+                                    formik.touched.carrera &&
+                                    Boolean(formik.errors.carrera)
+                                }
+                                errorMessage={
+                                    formik.touched.carrera &&
+                                    formik.errors.carrera
+                                }
                             />
                         </Grid>
 
                         <Grid item xs={12}>
                             <div style={{ height: 600, width: "100%" }}>
-                                <DataGrid rows={formik.values.estudiantes} columns={columns} />
+                                <DataGrid
+                                    rows={formik.values.estudiantes}
+                                    columns={columns}
+                                />
                             </div>
                         </Grid>
 
-                        {
-                            formik?.errors?.estudiantes && (
-                                <Grid item xs={12}>
-                                    <Alert severity="error">
-                                        {
-                                            typeof formik.errors.estudiantes === "string"
-                                                ? (
-                                                    <p>{formik.errors.estudiantes}</p>
-                                                )
-                                                : (
-                                                    <>
-                                                        <p>Verifique los errores en las siguientes filas del documento.</p>
+                        {formik?.errors?.estudiantes && (
+                            <Grid item xs={12}>
+                                <Alert severity="error">
+                                    {typeof formik.errors.estudiantes ===
+                                    "string" ? (
+                                        <p>{formik.errors.estudiantes}</p>
+                                    ) : (
+                                        <>
+                                            <p>
+                                                Verifique los errores en las
+                                                siguientes filas del documento.
+                                            </p>
 
-                                                        {
-                                                            formik.errors.estudiantes
-                                                                .map((item, index) => item && (
-                                                                    <pre key={index}>
-                                                                        {JSON.stringify({
-                                                                            fila: (index + 2),
-                                                                            errores: item
-                                                                        }, null, 2)}
-                                                                    </pre>
-                                                                ))
-                                                        }
-                                                    </>
-                                                )
-                                        }
-                                    </Alert>
-                                </Grid>
-                            )
-                        }
+                                            {formik.errors.estudiantes.map(
+                                                (item, index) =>
+                                                    item && (
+                                                        <pre key={index}>
+                                                            {JSON.stringify(
+                                                                {
+                                                                    fila:
+                                                                        index +
+                                                                        2,
+                                                                    errores:
+                                                                        item,
+                                                                },
+                                                                null,
+                                                                2
+                                                            )}
+                                                        </pre>
+                                                    )
+                                            )}
+                                        </>
+                                    )}
+                                </Alert>
+                            </Grid>
+                        )}
 
                         <Grid item xs={12} sm={6}>
                             <LoadingButton
@@ -413,7 +482,7 @@ const AddMultipleStudents = () => {
                     </Grid>
                 </Box>
             </Box>
-        </Stack >
+        </Stack>
     );
 };
 

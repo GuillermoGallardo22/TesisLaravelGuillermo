@@ -30,21 +30,15 @@ const AppBarStyle = styled(MuiAppBar, {
 }));
 
 interface AppBarProps {
-    open: boolean,
-    toggleDrawer: () => void,
+    open: boolean;
+    toggleDrawer: () => void;
 }
 
 const AppBar: React.FC<AppBarProps> = ({ open, toggleDrawer }) => {
-
-    const {
-        logout,
-    } = useAuth();
+    const { logout } = useAuth();
 
     return (
-        <AppBarStyle
-            color="uta"
-            position="absolute"
-            open={open}>
+        <AppBarStyle color="uta" position="absolute" open={open}>
             <Toolbar
                 sx={{
                     pr: "24px", // keep right padding when drawer closed

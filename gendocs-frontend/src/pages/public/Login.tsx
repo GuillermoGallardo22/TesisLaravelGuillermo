@@ -6,10 +6,7 @@ import TextField from "@mui/material/TextField";
 import { useAuth } from "hooks/useAuth";
 
 const Login = () => {
-
-    const {
-        formik,
-    } = useAuth();
+    const { formik } = useAuth();
 
     const submitting = formik.isSubmitting;
 
@@ -31,7 +28,12 @@ const Login = () => {
                     width="100%"
                 />
 
-                <Box component="form" onSubmit={formik.handleSubmit} noValidate sx={{ mt: 1 }}>
+                <Box
+                    component="form"
+                    onSubmit={formik.handleSubmit}
+                    noValidate
+                    sx={{ mt: 1 }}
+                >
                     <TextField
                         required
                         autoFocus
@@ -43,7 +45,9 @@ const Login = () => {
                         autoComplete="email"
                         value={formik.values.email}
                         onChange={formik.handleChange}
-                        error={formik.touched.email && Boolean(formik.errors.email)}
+                        error={
+                            formik.touched.email && Boolean(formik.errors.email)
+                        }
                         helperText={formik.touched.email && formik.errors.email}
                     />
                     <TextField
@@ -57,8 +61,13 @@ const Login = () => {
                         autoComplete="current-password"
                         value={formik.values.password}
                         onChange={formik.handleChange}
-                        error={formik.touched.password && Boolean(formik.errors.password)}
-                        helperText={formik.touched.password && formik.errors.password}
+                        error={
+                            formik.touched.password &&
+                            Boolean(formik.errors.password)
+                        }
+                        helperText={
+                            formik.touched.password && formik.errors.password
+                        }
                     />
 
                     <Button

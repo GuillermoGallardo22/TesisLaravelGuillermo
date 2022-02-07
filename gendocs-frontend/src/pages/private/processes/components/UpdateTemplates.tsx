@@ -1,15 +1,19 @@
 import { LoadingButton } from "@mui/lab";
-import { Box, FormControlLabel, FormLabel, Grid, Switch, TextField } from "@mui/material";
+import {
+    Box,
+    FormControlLabel,
+    FormLabel,
+    Grid,
+    Switch,
+    TextField,
+} from "@mui/material";
 import React from "react";
 import { useParams } from "react-router-dom";
 import { useUpdateTemplate } from "../hooks/useUpdateTemplate";
 
 const UpdateTemplates = () => {
-
     const { templateId = "" } = useParams<{ templateId: string }>();
-    const {
-        formik,
-    } = useUpdateTemplate({ templateId: +templateId, });
+    const { formik } = useUpdateTemplate({ templateId: +templateId });
 
     const submitting = formik.isSubmitting;
 
@@ -18,10 +22,9 @@ const UpdateTemplates = () => {
             component="form"
             onSubmit={formik.handleSubmit}
             onReset={formik.handleReset}
-            noValidate>
-
+            noValidate
+        >
             <Grid container spacing={2}>
-
                 <Grid item xs={12}>
                     <TextField
                         required
@@ -32,18 +35,33 @@ const UpdateTemplates = () => {
                         label="Nombre"
                         value={formik.values.nombre}
                         onChange={formik.handleChange}
-                        error={formik.touched.nombre && Boolean(formik.errors.nombre)}
-                        helperText={formik.touched.nombre && formik.errors.nombre}
+                        error={
+                            formik.touched.nombre &&
+                            Boolean(formik.errors.nombre)
+                        }
+                        helperText={
+                            formik.touched.nombre && formik.errors.nombre
+                        }
                     />
                 </Grid>
 
                 <Grid item xs={12}>
                     <FormLabel component="legend">Estado</FormLabel>
                     <FormControlLabel
-                        control={<Switch checked={formik.values.estado}
-                            onChange={(e) => formik.setFieldValue("estado", e.target.checked)}
-                        />}
-                        label={formik.values.estado ? "Activado" : "Desactivado"}
+                        control={
+                            <Switch
+                                checked={formik.values.estado}
+                                onChange={(e) =>
+                                    formik.setFieldValue(
+                                        "estado",
+                                        e.target.checked
+                                    )
+                                }
+                            />
+                        }
+                        label={
+                            formik.values.estado ? "Activado" : "Desactivado"
+                        }
                         labelPlacement="start"
                     />
                 </Grid>

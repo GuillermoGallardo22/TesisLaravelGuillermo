@@ -1,7 +1,21 @@
 import AddIcon from "@mui/icons-material/Add";
 import { LoadingButton } from "@mui/lab";
-import { Box, Button, Chip, Grid, Modal, Stack, TextField, Typography } from "@mui/material";
-import { DataGrid, GridColDef, GridRenderCellParams, GridRowId } from "@mui/x-data-grid";
+import {
+    Box,
+    Button,
+    Chip,
+    Grid,
+    Modal,
+    Stack,
+    TextField,
+    Typography,
+} from "@mui/material";
+import {
+    DataGrid,
+    GridColDef,
+    GridRenderCellParams,
+    GridRowId,
+} from "@mui/x-data-grid";
 import IconButton from "components/IconButton";
 import Select from "components/Select";
 import { IPagination, IPlantilla } from "models/interfaces";
@@ -27,11 +41,12 @@ const style = {
 };
 
 const ListTemplates = () => {
-
     const { processId = "" } = useParams<{ processId: string }>();
     const pagesNextCursor = useRef<{ [page: number]: GridRowId }>({});
 
-    const [templateSelected, setTemplateSelected] = useState<number | null>(null);
+    const [templateSelected, setTemplateSelected] = useState<number | null>(
+        null
+    );
     const [open, setOpen] = useState(false);
 
     const [data, setData] = useState<IPagination<IPlantilla>>({
@@ -72,7 +87,11 @@ const ListTemplates = () => {
 
             setLoading(true);
 
-            const response = await getPlantillasByProcesoId({ procesoId: processId, cursor: nextCursor, search });
+            const response = await getPlantillasByProcesoId({
+                procesoId: processId,
+                cursor: nextCursor,
+                search,
+            });
 
             if (response.meta.next_page) {
                 pagesNextCursor.current[page] = response.meta.next_page;
@@ -92,7 +111,6 @@ const ListTemplates = () => {
     }, [page]);
 
     useEffect(() => {
-
         if (open) return;
 
         const delayDebounceFn = setTimeout(() => {
@@ -105,7 +123,11 @@ const ListTemplates = () => {
 
                 setLoading(true);
 
-                const response = await getPlantillasByProcesoId({ procesoId: processId, cursor: nextCursor, search });
+                const response = await getPlantillasByProcesoId({
+                    procesoId: processId,
+                    cursor: nextCursor,
+                    search,
+                });
 
                 if (response.meta.next_page) {
                     pagesNextCursor.current[page] = response.meta.next_page;
@@ -119,10 +141,7 @@ const ListTemplates = () => {
         return () => clearTimeout(delayDebounceFn);
     }, [search, open]);
 
-    const {
-        formik,
-        procesos,
-    } = useMoveTemplate({
+    const { formik, procesos } = useMoveTemplate({
         callback: () => {
             handleClose();
         },
@@ -145,32 +164,44 @@ const ListTemplates = () => {
         { field: "nombre", headerName: "Nombre", flex: 1 },
         { field: "autor", headerName: "Autor", flex: 1 },
         {
-            field: "estado", headerName: "Estado", width: 120,
-            renderCell: (item: GridRenderCellParams) => <Chip label={item?.value ? "Activado" : "Desactivado"} color={item?.value ? "primary" : "error"} />
+            field: "estado",
+            headerName: "Estado",
+            width: 120,
+            renderCell: (item: GridRenderCellParams) => (
+                <Chip
+                    label={item?.value ? "Activado" : "Desactivado"}
+                    color={item?.value ? "primary" : "error"}
+                />
+            ),
         },
         {
-            field: "id", headerName: "Acciones", flex: 1, renderCell: (item: GridRenderCellParams) =>
+            field: "id",
+            headerName: "Acciones",
+            flex: 1,
+            renderCell: (item: GridRenderCellParams) => (
                 <>
                     <IconButton
-                        icon='article'
+                        icon="article"
                         color="primary"
                         component={RouterLink}
                         tooltipText="Ver documento"
-                        to={`${item?.value}/drive`} />
+                        to={`${item?.value}/drive`}
+                    />
 
                     <IconButton
-                        icon='edit'
+                        icon="edit"
                         component={RouterLink}
                         tooltipText="Editar"
-                        to={`${item.value}`} />
+                        to={`${item.value}`}
+                    />
 
                     <IconButton
-                        icon='move'
+                        icon="move"
                         tooltipText="Mover"
                         onClick={() => handleOpen(item.value)}
                     />
                 </>
-
+            ),
         },
     ];
 
@@ -180,12 +211,7 @@ const ListTemplates = () => {
 
     return (
         <Stack spacing={3}>
-
-            <Button
-                component={RouterLink}
-                startIcon={<AddIcon />}
-                to="nuevo"
-            >
+            <Button component={RouterLink} startIcon={<AddIcon />} to="nuevo">
                 AÑADIR PLANTILLA
             </Button>
 
@@ -201,7 +227,6 @@ const ListTemplates = () => {
             />
 
             <div style={{ height: 600, width: "100%" }}>
-
                 <DataGrid
                     pagination
                     paginationMode="server"
@@ -218,19 +243,15 @@ const ListTemplates = () => {
                 />
             </div>
 
-            <Modal
-                open={open}
-                onClose={handleClose}
-            >
+            <Modal open={open} onClose={handleClose}>
                 <Box
                     sx={style}
                     component="form"
                     onSubmit={formik.handleSubmit}
                     onReset={formik.handleReset}
-                    noValidate>
-
+                    noValidate
+                >
                     <Grid container spacing={2}>
-
                         <Grid item xs={12}>
                             <Typography variant="h6" component="h2">
                                 Mover
@@ -242,11 +263,20 @@ const ListTemplates = () => {
                                 id="proceso"
                                 name="proceso"
                                 label="Procesos"
-                                items={procesos.map(item => ({ id: item.id, label: item.nombre }))}
+                                items={procesos.map((item) => ({
+                                    id: item.id,
+                                    label: item.nombre,
+                                }))}
                                 value={formik.values.proceso}
                                 onChange={formik.handleChange}
-                                error={formik.touched.proceso && Boolean(formik.errors.proceso)}
-                                errorMessage={formik.touched.proceso && formik.errors.proceso}
+                                error={
+                                    formik.touched.proceso &&
+                                    Boolean(formik.errors.proceso)
+                                }
+                                errorMessage={
+                                    formik.touched.proceso &&
+                                    formik.errors.proceso
+                                }
                             />
                         </Grid>
 
@@ -279,7 +309,7 @@ const ListTemplates = () => {
                     </Grid>
                 </Box>
             </Modal>
-        </Stack >
+        </Stack>
     );
 };
 

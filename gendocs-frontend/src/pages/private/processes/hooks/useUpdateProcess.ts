@@ -8,20 +8,23 @@ import { VALIDATION_MESSAGES } from "utils/messages";
 import * as yup from "yup";
 
 const validationSchema = yup.object().shape({
-    nombre: yup.string()
+    nombre: yup
+        .string()
         .required(VALIDATION_MESSAGES.required)
         .max(512, VALIDATION_MESSAGES.maxLength(512)),
-    estado: yup.boolean()
-        .required(VALIDATION_MESSAGES.required),
+    estado: yup.boolean().required(VALIDATION_MESSAGES.required),
 });
 
 export const useUpdateProcess = ({ processId }: { processId: string }) => {
-
     const { enqueueSnackbar } = useSnackbar();
-    const [process, setProcess] = useState<IProceso>({ id: -1, nombre: "", estado: false, });
+    const [process, setProcess] = useState<IProceso>({
+        id: -1,
+        nombre: "",
+        estado: false,
+    });
 
     useEffect(() => {
-        getProcesoById(processId).then(result => {
+        getProcesoById(processId).then((result) => {
             if (result.status === HTTP_STATUS.ok) {
                 setProcess(result.data);
             }

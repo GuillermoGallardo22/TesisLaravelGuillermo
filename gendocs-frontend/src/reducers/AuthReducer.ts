@@ -7,18 +7,20 @@ export enum AuthActionsEnum {
 }
 
 export interface AuthReducerState {
-    user: IUser,
-    isAuth: boolean,
-    checkingAuth: boolean,
+    user: IUser;
+    isAuth: boolean;
+    checkingAuth: boolean;
 }
 
 export interface AuthActionsProps {
-    type: AuthActionsEnum,
-    payload: IUser | boolean
+    type: AuthActionsEnum;
+    payload: IUser | boolean;
 }
 
-export function authReducer(state: AuthReducerState, actions: AuthActionsProps): AuthReducerState {
-
+export function authReducer(
+    state: AuthReducerState,
+    actions: AuthActionsProps
+): AuthReducerState {
     const { payload, type } = actions;
 
     switch (type) {

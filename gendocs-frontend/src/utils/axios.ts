@@ -14,13 +14,10 @@ const BASE_PATH = `${PROTOCOL}://${DOMAIN}:${PORT}`;
 axios.defaults.withCredentials = true;
 
 export const initAxios = (mode: "api" | "base") => {
-    axios.defaults.baseURL = mode === "api"
-        ? `${BASE_PATH}/${API}`
-        : BASE_PATH;
+    axios.defaults.baseURL = mode === "api" ? `${BASE_PATH}/${API}` : BASE_PATH;
 };
 
 export function handleErrors<T>(error: any, defaultValues?: any): IResponse<T> {
-
     if (error.response) {
         /*
          * The request was made and the server responded with a
@@ -32,10 +29,8 @@ export function handleErrors<T>(error: any, defaultValues?: any): IResponse<T> {
 
         if (data?.errors) {
             message = [""]
-                .concat(
-                    ...Object.values<string[]>(data.errors.errors || {})
-                )
-                .filter(i => i);
+                .concat(...Object.values<string[]>(data.errors.errors || {}))
+                .filter((i) => i);
         }
 
         if (!message || message.length <= 0) {

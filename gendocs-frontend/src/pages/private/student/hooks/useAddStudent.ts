@@ -10,16 +10,16 @@ import { VALIDATION_MESSAGES } from "utils/messages";
 import * as yup from "yup";
 
 export interface SimpleStudentForm {
-    cedula: string,
-    nombres: string,
-    apellidos: string,
-    telefono: string,
-    celular: string,
-    correo: string,
-    correo_uta: string,
-    matricula: string,
-    folio: string,
-    carrera: number,
+    cedula: string;
+    nombres: string;
+    apellidos: string;
+    telefono: string;
+    celular: string;
+    correo: string;
+    correo_uta: string;
+    matricula: string;
+    folio: string;
+    carrera: number;
 }
 
 const initialValues: SimpleStudentForm = {
@@ -36,50 +36,66 @@ const initialValues: SimpleStudentForm = {
 };
 
 export const useAddSimpleStudent = () => {
-
     const { enqueueSnackbar } = useSnackbar();
     const [carreras, setCarreras] = useState<ICarrera[]>([]);
 
     const validationSchema = yup.object().shape({
-        cedula: yup.string()
+        cedula: yup
+            .string()
             .required(VALIDATION_MESSAGES.required)
             .max(10, VALIDATION_MESSAGES.maxLength(10)),
-        nombres: yup.string()
+        nombres: yup
+            .string()
             .required(VALIDATION_MESSAGES.required)
             .max(100, VALIDATION_MESSAGES.maxLength(100)),
-        apellidos: yup.string()
+        apellidos: yup
+            .string()
             .required(VALIDATION_MESSAGES.required)
             .max(100, VALIDATION_MESSAGES.maxLength(100)),
-        celular: yup.string()
+        celular: yup
+            .string()
             .matches(CONSTANTS.phone_regex, VALIDATION_MESSAGES.invalidFormat)
             .required(VALIDATION_MESSAGES.required)
             .max(10, VALIDATION_MESSAGES.maxLength(10)),
-        telefono: yup.string()
+        telefono: yup
+            .string()
             .matches(CONSTANTS.phone_regex, VALIDATION_MESSAGES.invalidFormat)
             .max(10, VALIDATION_MESSAGES.maxLength(10)),
-        correo: yup.string()
+        correo: yup
+            .string()
             .email(VALIDATION_MESSAGES.invalidFormat)
             .max(100, VALIDATION_MESSAGES.maxLength(100)),
-        correo_uta: yup.string()
-            .matches(CONSTANTS.email_uta_regex, VALIDATION_MESSAGES.invalidFormat)
+        correo_uta: yup
+            .string()
+            .matches(
+                CONSTANTS.email_uta_regex,
+                VALIDATION_MESSAGES.invalidFormat
+            )
             .required(VALIDATION_MESSAGES.required)
             .max(100, VALIDATION_MESSAGES.maxLength(100)),
-        matricula: yup.string()
+        matricula: yup
+            .string()
             .required(VALIDATION_MESSAGES.required)
             .max(10, VALIDATION_MESSAGES.maxLength(10)),
-        folio: yup.string()
+        folio: yup
+            .string()
             .required(VALIDATION_MESSAGES.required)
             .max(10, VALIDATION_MESSAGES.maxLength(10)),
-        carrera: yup.mixed()
-            .oneOf(carreras.map(item => item.id), VALIDATION_MESSAGES.invalidOption)
+        carrera: yup
+            .mixed()
+            .oneOf(
+                carreras.map((item) => item.id),
+                VALIDATION_MESSAGES.invalidOption
+            )
             .required(VALIDATION_MESSAGES.required),
     });
 
     const [submitting, setSubmitting] = useState(false);
-    const [errorSummary, setErrorSummary] = useState<string | string[] | undefined>();
+    const [errorSummary, setErrorSummary] = useState<
+        string | string[] | undefined
+    >();
 
     const onSubmit = async (form: SimpleStudentForm) => {
-
         setSubmitting(true);
         setErrorSummary(undefined);
 
@@ -120,64 +136,90 @@ export const useAddSimpleStudent = () => {
 };
 
 export interface MultipleStudentForm {
-    id: number,
-    cedula: string,
-    nombres: string,
-    apellidos: string,
-    telefono: string,
-    celular: string,
-    correo: string,
-    correo_uta: string,
-    matricula: string,
-    folio: string,
+    id: number;
+    cedula: string;
+    nombres: string;
+    apellidos: string;
+    telefono: string;
+    celular: string;
+    correo: string;
+    correo_uta: string;
+    matricula: string;
+    folio: string;
 }
 
 export interface BaseMultipleStudentForm {
-    carrera: number,
-    estudiantes: MultipleStudentForm[]
+    carrera: number;
+    estudiantes: MultipleStudentForm[];
 }
 
 export const useAddMultipleStudent = () => {
-
     const { enqueueSnackbar } = useSnackbar();
     const [carreras, setCarreras] = useState<ICarrera[]>([]);
 
     const validationSchema = yup.object().shape({
-        carrera: yup.mixed()
-            .oneOf(carreras.map(item => item.id), VALIDATION_MESSAGES.invalidOption)
+        carrera: yup
+            .mixed()
+            .oneOf(
+                carreras.map((item) => item.id),
+                VALIDATION_MESSAGES.invalidOption
+            )
             .required(VALIDATION_MESSAGES.required),
-        estudiantes: yup.array()
-            .of(yup.object().shape({
-                cedula: yup.string()
-                    .required(VALIDATION_MESSAGES.required)
-                    .max(10, VALIDATION_MESSAGES.maxLength(10)),
-                nombres: yup.string()
-                    .required(VALIDATION_MESSAGES.required)
-                    .max(100, VALIDATION_MESSAGES.maxLength(100)),
-                apellidos: yup.string()
-                    .required(VALIDATION_MESSAGES.required)
-                    .max(100, VALIDATION_MESSAGES.maxLength(100)),
-                celular: yup.string()
-                    .matches(CONSTANTS.phone_regex, VALIDATION_MESSAGES.invalidFormat)
-                    .max(10, VALIDATION_MESSAGES.maxLength(10)),
-                telefono: yup.string()
-                    .matches(CONSTANTS.phone_regex, VALIDATION_MESSAGES.invalidFormat)
-                    .max(10, VALIDATION_MESSAGES.maxLength(10)),
-                correo: yup.string()
-                    // .email(VALIDATION_MESSAGES.invalidFormat)
-                    .max(100, VALIDATION_MESSAGES.maxLength(100)),
-                correo_uta: yup.string()
-                    .matches(CONSTANTS.email_uta_regex, VALIDATION_MESSAGES.invalidFormat)
-                    .max(100, VALIDATION_MESSAGES.maxLength(100)),
-                matricula: yup.string()
-                    .max(10, VALIDATION_MESSAGES.maxLength(10)),
-                folio: yup.string()
-                    .max(10, VALIDATION_MESSAGES.maxLength(10)),
-            }))
-            .min(1, VALIDATION_MESSAGES.required)
+        estudiantes: yup
+            .array()
+            .of(
+                yup.object().shape({
+                    cedula: yup
+                        .string()
+                        .required(VALIDATION_MESSAGES.required)
+                        .max(10, VALIDATION_MESSAGES.maxLength(10)),
+                    nombres: yup
+                        .string()
+                        .required(VALIDATION_MESSAGES.required)
+                        .max(100, VALIDATION_MESSAGES.maxLength(100)),
+                    apellidos: yup
+                        .string()
+                        .required(VALIDATION_MESSAGES.required)
+                        .max(100, VALIDATION_MESSAGES.maxLength(100)),
+                    celular: yup
+                        .string()
+                        .matches(
+                            CONSTANTS.phone_regex,
+                            VALIDATION_MESSAGES.invalidFormat
+                        )
+                        .max(10, VALIDATION_MESSAGES.maxLength(10)),
+                    telefono: yup
+                        .string()
+                        .matches(
+                            CONSTANTS.phone_regex,
+                            VALIDATION_MESSAGES.invalidFormat
+                        )
+                        .max(10, VALIDATION_MESSAGES.maxLength(10)),
+                    correo: yup
+                        .string()
+                        // .email(VALIDATION_MESSAGES.invalidFormat)
+                        .max(100, VALIDATION_MESSAGES.maxLength(100)),
+                    correo_uta: yup
+                        .string()
+                        .matches(
+                            CONSTANTS.email_uta_regex,
+                            VALIDATION_MESSAGES.invalidFormat
+                        )
+                        .max(100, VALIDATION_MESSAGES.maxLength(100)),
+                    matricula: yup
+                        .string()
+                        .max(10, VALIDATION_MESSAGES.maxLength(10)),
+                    folio: yup
+                        .string()
+                        .max(10, VALIDATION_MESSAGES.maxLength(10)),
+                })
+            )
+            .min(1, VALIDATION_MESSAGES.required),
     });
 
-    const [errorSummary, setErrorSummary] = useState<string | string[] | undefined>();
+    const [errorSummary, setErrorSummary] = useState<
+        string | string[] | undefined
+    >();
     const [submitting, setSubmitting] = useState(false);
 
     const onSubmit = async (form: BaseMultipleStudentForm) => {

@@ -1,6 +1,11 @@
 import AddIcon from "@mui/icons-material/Add";
 import { Button, Chip, Stack, TextField } from "@mui/material";
-import { DataGrid, GridColDef, GridRenderCellParams, GridRowId } from "@mui/x-data-grid";
+import {
+    DataGrid,
+    GridColDef,
+    GridRenderCellParams,
+    GridRowId,
+} from "@mui/x-data-grid";
 import IconButton from "components/IconButton";
 import { IPagination, IProceso } from "models/interfaces";
 import { useEffect, useRef, useState } from "react";
@@ -12,31 +17,41 @@ const PAGE_SIZE = 100;
 const columns: GridColDef[] = [
     { field: "nombre", headerName: "Nombre", flex: 1 },
     {
-        field: "estado", headerName: "Estado", width: 120,
-        renderCell: (item: GridRenderCellParams) => <Chip label={item?.value ? "Activado" : "Desactivado"} color={item?.value ? "primary" : "error"} />
+        field: "estado",
+        headerName: "Estado",
+        width: 120,
+        renderCell: (item: GridRenderCellParams) => (
+            <Chip
+                label={item?.value ? "Activado" : "Desactivado"}
+                color={item?.value ? "primary" : "error"}
+            />
+        ),
     },
     {
-        field: "id", headerName: "Acciones", renderCell: (item: GridRenderCellParams) =>
+        field: "id",
+        headerName: "Acciones",
+        renderCell: (item: GridRenderCellParams) => (
             <>
                 <IconButton
-                    icon='article'
+                    icon="article"
                     color="primary"
                     component={RouterLink}
                     tooltipText="Plantillas"
-                    to={`${item?.value}/plantillas`} />
+                    to={`${item?.value}/plantillas`}
+                />
 
                 <IconButton
-                    icon='edit'
+                    icon="edit"
                     component={RouterLink}
                     tooltipText="Editar"
-                    to={`${item.value}`} />
+                    to={`${item.value}`}
+                />
             </>
-
+        ),
     },
 ];
 
 const ListProcess = () => {
-
     const pagesNextCursor = useRef<{ [page: number]: GridRowId }>({});
 
     const [data, setData] = useState<IPagination<IProceso>>({
@@ -109,7 +124,10 @@ const ListProcess = () => {
 
                 setLoading(true);
 
-                const response = await getProcesos({ cursor: nextCursor, search });
+                const response = await getProcesos({
+                    cursor: nextCursor,
+                    search,
+                });
 
                 if (response.meta.to) {
                     pagesNextCursor.current[page] = response.meta.to;
@@ -125,12 +143,7 @@ const ListProcess = () => {
 
     return (
         <Stack spacing={3}>
-
-            <Button
-                component={RouterLink}
-                startIcon={<AddIcon />}
-                to="nuevo"
-            >
+            <Button component={RouterLink} startIcon={<AddIcon />} to="nuevo">
                 AÑADIR PROCESOS
             </Button>
 
@@ -146,7 +159,6 @@ const ListProcess = () => {
             />
 
             <div style={{ height: 600, width: "100%" }}>
-
                 <DataGrid
                     pagination
                     paginationMode="server"

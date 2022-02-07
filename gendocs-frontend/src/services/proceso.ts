@@ -9,14 +9,16 @@ export async function getProcesos({
     cursor,
     search,
 }: {
-    cursor: GridRowId | null | undefined,
-    search?: string | null | undefined,
+    cursor: GridRowId | null | undefined;
+    search?: string | null | undefined;
 }): Promise<IPagination<IProceso>> {
     try {
         cursor = cursor || 1;
         search = search || "";
 
-        const { data } = await axios.get(`procesos?page=${cursor}&search=${search}`);
+        const { data } = await axios.get(
+            `procesos?page=${cursor}&search=${search}`
+        );
 
         return data;
     } catch (error) {
@@ -38,7 +40,9 @@ export async function getProcesos({
     }
 }
 
-export async function saveProceso(form: IProceso): Promise<IResponse<IProceso>> {
+export async function saveProceso(
+    form: IProceso
+): Promise<IResponse<IProceso>> {
     try {
         const { data } = await axios.post("procesos", form);
         return {
@@ -51,9 +55,13 @@ export async function saveProceso(form: IProceso): Promise<IResponse<IProceso>> 
     }
 }
 
-export async function updateProceso(form: IProceso): Promise<IResponse<IProceso>> {
+export async function updateProceso(
+    form: IProceso
+): Promise<IResponse<IProceso>> {
     try {
-        const { data: { data } } = await axios.put("procesos/" + form.id, form);
+        const {
+            data: { data },
+        } = await axios.put("procesos/" + form.id, form);
         return {
             status: HTTP_STATUS.ok,
             data: data,
@@ -64,7 +72,9 @@ export async function updateProceso(form: IProceso): Promise<IResponse<IProceso>
     }
 }
 
-export async function getProcesoById(procesoId: number | string): Promise<IResponse<IProceso>> {
+export async function getProcesoById(
+    procesoId: number | string
+): Promise<IResponse<IProceso>> {
     try {
         const { data } = await axios.get("procesos/" + procesoId);
         return {

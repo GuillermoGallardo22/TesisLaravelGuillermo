@@ -1,5 +1,3 @@
 import { HTTP_STATUS } from "./HttpStatus";
 
-export {
-    HTTP_STATUS,
-};
+export { HTTP_STATUS };

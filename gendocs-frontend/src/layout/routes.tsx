@@ -17,12 +17,12 @@ import Student from "pages/private/student/Student";
 import { Outlet } from "react-router-dom";
 
 export interface IRoute {
-    path: string,
-    component: React.ReactElement,
-    isIndex?: boolean,
-    label?: string,
-    icon?: React.ReactElement,
-    childrens?: IRoute[],
+    path: string;
+    component: React.ReactElement;
+    isIndex?: boolean;
+    label?: string;
+    icon?: React.ReactElement;
+    childrens?: IRoute[];
 }
 
 export const DEFAULT_ROUTE = "inicio";
@@ -42,7 +42,7 @@ export const routes: IRoute[] = [
         childrens: [
             { path: "nuevo", component: <AddStudents /> },
             { path: ":studentId", component: <UpdateStudent /> },
-            { path: "", isIndex: true, component: <ListStudents /> }
+            { path: "", isIndex: true, component: <ListStudents /> },
         ],
     },
     {
@@ -53,21 +53,31 @@ export const routes: IRoute[] = [
         childrens: [
             { path: "nuevo", component: <AddProcess /> },
             {
-                path: ":processId", component: <Outlet />, childrens: [
-
+                path: ":processId",
+                component: <Outlet />,
+                childrens: [
                     { path: "plantillas", component: <ListTemplates /> },
                     { path: "plantillas/nuevo", component: <AddTemplates /> },
                     {
-                        path: "plantillas/:templateId", component: <Outlet />, childrens: [
-                            { path: "drive", isIndex: true, component: <DriveTemplate /> },
-                            { path: "", isIndex: true, component: <UpdateTemplates /> },
-
-                        ]
+                        path: "plantillas/:templateId",
+                        component: <Outlet />,
+                        childrens: [
+                            {
+                                path: "drive",
+                                isIndex: true,
+                                component: <DriveTemplate />,
+                            },
+                            {
+                                path: "",
+                                isIndex: true,
+                                component: <UpdateTemplates />,
+                            },
+                        ],
                     },
                     { path: "", isIndex: true, component: <UpdateProcess /> },
-                ]
+                ],
             },
-            { path: "", isIndex: true, component: <ListProcess /> }
+            { path: "", isIndex: true, component: <ListProcess /> },
         ],
     },
     {

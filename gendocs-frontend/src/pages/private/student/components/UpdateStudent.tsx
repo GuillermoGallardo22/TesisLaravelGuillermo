@@ -7,35 +7,38 @@ import { useParams } from "react-router-dom";
 import { useEditEstudiante } from "../hooks/useEditEstudiante";
 
 const UpdateStudent = () => {
-
     const { studentId = "" } = useParams<{ studentId: string }>();
 
-    const {
-        formik,
-        carreras,
-        submitting,
-        errorSummary,
-    } = useEditEstudiante({ studentId });
+    const { formik, carreras, submitting, errorSummary } = useEditEstudiante({
+        studentId,
+    });
 
     return (
         <Box
             component="form"
             onSubmit={formik.handleSubmit}
             onReset={formik.handleReset}
-            noValidate>
-
+            noValidate
+        >
             <Grid container spacing={2}>
-
                 <Grid item xs={12}>
                     <Select
                         id="carrera"
                         name="carrera"
                         label="Carrera"
-                        items={carreras.map(item => ({ id: item.id, label: item.nombre }))}
+                        items={carreras.map((item) => ({
+                            id: item.id,
+                            label: item.nombre,
+                        }))}
                         value={formik.values.carrera}
                         onChange={formik.handleChange}
-                        error={formik.touched.carrera && Boolean(formik.errors.carrera)}
-                        errorMessage={formik.touched.carrera && formik.errors.carrera}
+                        error={
+                            formik.touched.carrera &&
+                            Boolean(formik.errors.carrera)
+                        }
+                        errorMessage={
+                            formik.touched.carrera && formik.errors.carrera
+                        }
                     />
                 </Grid>
 
@@ -49,8 +52,13 @@ const UpdateStudent = () => {
                         label="Cédula"
                         value={formik.values.cedula}
                         onChange={formik.handleChange}
-                        error={formik.touched.cedula && Boolean(formik.errors.cedula)}
-                        helperText={formik.touched.cedula && formik.errors.cedula}
+                        error={
+                            formik.touched.cedula &&
+                            Boolean(formik.errors.cedula)
+                        }
+                        helperText={
+                            formik.touched.cedula && formik.errors.cedula
+                        }
                     />
                 </Grid>
 
@@ -64,8 +72,13 @@ const UpdateStudent = () => {
                         label="Nombres"
                         value={formik.values.nombres}
                         onChange={formik.handleChange}
-                        error={formik.touched.nombres && Boolean(formik.errors.nombres)}
-                        helperText={formik.touched.nombres && formik.errors.nombres}
+                        error={
+                            formik.touched.nombres &&
+                            Boolean(formik.errors.nombres)
+                        }
+                        helperText={
+                            formik.touched.nombres && formik.errors.nombres
+                        }
                     />
                 </Grid>
 
@@ -79,8 +92,13 @@ const UpdateStudent = () => {
                         label="Apellidos"
                         value={formik.values.apellidos}
                         onChange={formik.handleChange}
-                        error={formik.touched.apellidos && Boolean(formik.errors.apellidos)}
-                        helperText={formik.touched.apellidos && formik.errors.apellidos}
+                        error={
+                            formik.touched.apellidos &&
+                            Boolean(formik.errors.apellidos)
+                        }
+                        helperText={
+                            formik.touched.apellidos && formik.errors.apellidos
+                        }
                     />
                 </Grid>
 
@@ -94,8 +112,13 @@ const UpdateStudent = () => {
                         label="Celular"
                         value={formik.values.celular}
                         onChange={formik.handleChange}
-                        error={formik.touched.celular && Boolean(formik.errors.celular)}
-                        helperText={formik.touched.celular && formik.errors.celular}
+                        error={
+                            formik.touched.celular &&
+                            Boolean(formik.errors.celular)
+                        }
+                        helperText={
+                            formik.touched.celular && formik.errors.celular
+                        }
                     />
                 </Grid>
 
@@ -108,8 +131,13 @@ const UpdateStudent = () => {
                         label="Teléfono"
                         value={formik.values.telefono}
                         onChange={formik.handleChange}
-                        error={formik.touched.telefono && Boolean(formik.errors.telefono)}
-                        helperText={formik.touched.telefono && formik.errors.telefono}
+                        error={
+                            formik.touched.telefono &&
+                            Boolean(formik.errors.telefono)
+                        }
+                        helperText={
+                            formik.touched.telefono && formik.errors.telefono
+                        }
                     />
                 </Grid>
 
@@ -124,8 +152,14 @@ const UpdateStudent = () => {
                         autoComplete="correo_uta"
                         value={formik.values.correo_uta}
                         onChange={formik.handleChange}
-                        error={formik.touched.correo_uta && Boolean(formik.errors.correo_uta)}
-                        helperText={formik.touched.correo_uta && formik.errors.correo_uta}
+                        error={
+                            formik.touched.correo_uta &&
+                            Boolean(formik.errors.correo_uta)
+                        }
+                        helperText={
+                            formik.touched.correo_uta &&
+                            formik.errors.correo_uta
+                        }
                     />
                 </Grid>
 
@@ -139,8 +173,13 @@ const UpdateStudent = () => {
                         autoComplete="correo"
                         value={formik.values.correo}
                         onChange={formik.handleChange}
-                        error={formik.touched.correo && Boolean(formik.errors.correo)}
-                        helperText={formik.touched.correo && formik.errors.correo}
+                        error={
+                            formik.touched.correo &&
+                            Boolean(formik.errors.correo)
+                        }
+                        helperText={
+                            formik.touched.correo && formik.errors.correo
+                        }
                     />
                 </Grid>
 
@@ -154,8 +193,13 @@ const UpdateStudent = () => {
                         label="Matrícula"
                         value={formik.values.matricula}
                         onChange={formik.handleChange}
-                        error={formik.touched.matricula && Boolean(formik.errors.matricula)}
-                        helperText={formik.touched.matricula && formik.errors.matricula}
+                        error={
+                            formik.touched.matricula &&
+                            Boolean(formik.errors.matricula)
+                        }
+                        helperText={
+                            formik.touched.matricula && formik.errors.matricula
+                        }
                     />
                 </Grid>
 
@@ -169,18 +213,18 @@ const UpdateStudent = () => {
                         label="Folio"
                         value={formik.values.folio}
                         onChange={formik.handleChange}
-                        error={formik.touched.folio && Boolean(formik.errors.folio)}
+                        error={
+                            formik.touched.folio && Boolean(formik.errors.folio)
+                        }
                         helperText={formik.touched.folio && formik.errors.folio}
                     />
                 </Grid>
 
-                {
-                    errorSummary && (
-                        <Grid item xs={12}>
-                            <ErrorSummary errors={errorSummary} />
-                        </Grid>
-                    )
-                }
+                {errorSummary && (
+                    <Grid item xs={12}>
+                        <ErrorSummary errors={errorSummary} />
+                    </Grid>
+                )}
 
                 <Grid item xs={12}>
                     <LoadingButton

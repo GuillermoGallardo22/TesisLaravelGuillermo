@@ -7,10 +7,10 @@ const Processes = () => {
         <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
             <Title>Procesos</Title>
             <Divider />
-            <Box py={2} >
+            <Box py={2}>
                 <Outlet />
             </Box>
-        </Paper >
+        </Paper>
     );
 };
 

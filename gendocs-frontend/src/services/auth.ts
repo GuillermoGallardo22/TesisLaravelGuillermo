@@ -15,7 +15,6 @@ async function getCsrf() {
 
 export async function getUser(): Promise<IResponse<IUser>> {
     try {
-
         initAxios("api");
 
         const { data } = await axios.get("/user");
@@ -32,9 +31,11 @@ export async function getUser(): Promise<IResponse<IUser>> {
     }
 }
 
-export async function login(email: string, password: string): Promise<IResponse<IUser>> {
+export async function login(
+    email: string,
+    password: string
+): Promise<IResponse<IUser>> {
     try {
-
         const payload = { email, password };
 
         await getCsrf();
@@ -42,7 +43,6 @@ export async function login(email: string, password: string): Promise<IResponse<
         await axios.post("/login", payload);
 
         return await getUser();
-
     } catch (error) {
         return handleErrors(error, {} as IUser);
     }
@@ -57,16 +57,15 @@ export async function logout(): Promise<IResponse<boolean>> {
         return {
             data: true,
             message: "",
-            status: HTTP_STATUS.ok
+            status: HTTP_STATUS.ok,
         };
     } catch (error) {
-
         deleteAllCookies();
 
         return {
             data: true,
             message: "",
-            status: HTTP_STATUS.ok
+            status: HTTP_STATUS.ok,
         };
     }
 }

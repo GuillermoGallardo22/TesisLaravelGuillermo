@@ -24,61 +24,85 @@ const initialValues: IEstudiante = {
 };
 
 export const useEditEstudiante = ({ studentId }: { studentId: string }) => {
-
     const { enqueueSnackbar } = useSnackbar();
     const [submitting, setSubmitting] = useState(false);
     const [carreras, setCarreras] = useState<ICarrera[]>([]);
     const [estudiante, setEstudiante] = useState<IEstudiante>(initialValues);
-    const [errorSummary, setErrorSummary] = useState<string | string[] | undefined>();
-
+    const [errorSummary, setErrorSummary] = useState<
+        string | string[] | undefined
+    >();
 
     const validationSchema = yup.object().shape({
-        cedula: yup.string()
+        cedula: yup
+            .string()
             .required(VALIDATION_MESSAGES.required)
             .max(10, VALIDATION_MESSAGES.maxLength(10))
             .typeError(VALIDATION_MESSAGES.required),
-        nombres: yup.string()
-            .required(VALIDATION_MESSAGES.required)
-            .max(100, VALIDATION_MESSAGES.maxLength(100))
-            .typeError(VALIDATION_MESSAGES.required),
-        apellidos: yup.string()
+        nombres: yup
+            .string()
             .required(VALIDATION_MESSAGES.required)
             .max(100, VALIDATION_MESSAGES.maxLength(100))
             .typeError(VALIDATION_MESSAGES.required),
-        celular: yup.string().nullable()
+        apellidos: yup
+            .string()
+            .required(VALIDATION_MESSAGES.required)
+            .max(100, VALIDATION_MESSAGES.maxLength(100))
+            .typeError(VALIDATION_MESSAGES.required),
+        celular: yup
+            .string()
+            .nullable()
             .matches(CONSTANTS.phone_regex, VALIDATION_MESSAGES.invalidFormat)
             .max(10, VALIDATION_MESSAGES.maxLength(10))
             .typeError(VALIDATION_MESSAGES.required),
-        telefono: yup.string().nullable()
+        telefono: yup
+            .string()
+            .nullable()
             .matches(CONSTANTS.phone_regex, VALIDATION_MESSAGES.invalidFormat)
             .max(10, VALIDATION_MESSAGES.maxLength(10))
             .typeError(VALIDATION_MESSAGES.required),
-        correo: yup.string().nullable()
+        correo: yup
+            .string()
+            .nullable()
             .email(VALIDATION_MESSAGES.invalidFormat)
             .max(100, VALIDATION_MESSAGES.maxLength(100))
             .typeError(VALIDATION_MESSAGES.required),
-        correo_uta: yup.string().nullable()
-            .matches(CONSTANTS.email_uta_regex, VALIDATION_MESSAGES.invalidFormat)
+        correo_uta: yup
+            .string()
+            .nullable()
+            .matches(
+                CONSTANTS.email_uta_regex,
+                VALIDATION_MESSAGES.invalidFormat
+            )
             .max(100, VALIDATION_MESSAGES.maxLength(100))
             .typeError(VALIDATION_MESSAGES.required),
-        matricula: yup.string().nullable()
+        matricula: yup
+            .string()
+            .nullable()
             .max(10, VALIDATION_MESSAGES.maxLength(10))
             .typeError(VALIDATION_MESSAGES.required),
-        folio: yup.string().nullable()
+        folio: yup
+            .string()
+            .nullable()
             .max(10, VALIDATION_MESSAGES.maxLength(10))
             .typeError(VALIDATION_MESSAGES.required),
-        carrera: yup.mixed()
-            .oneOf(carreras.map(item => item.id), VALIDATION_MESSAGES.invalidOption)
+        carrera: yup
+            .mixed()
+            .oneOf(
+                carreras.map((item) => item.id),
+                VALIDATION_MESSAGES.invalidOption
+            )
             .required(VALIDATION_MESSAGES.required)
             .typeError(VALIDATION_MESSAGES.required),
     });
 
     useEffect(() => {
-        Promise.all([getAllCarreras(), getEstudianteById(studentId)]).then((results) => {
-            const [_carreras, _estudiante] = results;
-            setCarreras(_carreras);
-            setEstudiante(_estudiante.data);
-        });
+        Promise.all([getAllCarreras(), getEstudianteById(studentId)]).then(
+            (results) => {
+                const [_carreras, _estudiante] = results;
+                setCarreras(_carreras);
+                setEstudiante(_estudiante.data);
+            }
+        );
     }, [studentId]);
 
     const onSubmit = async (form: IEstudiante) => {

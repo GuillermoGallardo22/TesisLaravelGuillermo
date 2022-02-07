@@ -13,15 +13,14 @@ const initialValues: IProceso = {
 };
 
 const validationSchema = yup.object().shape({
-    nombre: yup.string()
+    nombre: yup
+        .string()
         .required(VALIDATION_MESSAGES.required)
         .max(512, VALIDATION_MESSAGES.maxLength(512)),
-    estado: yup.boolean()
-        .required(VALIDATION_MESSAGES.required),
+    estado: yup.boolean().required(VALIDATION_MESSAGES.required),
 });
 
 export const useAddProcess = () => {
-
     const { enqueueSnackbar } = useSnackbar();
 
     const onSubmit = async (form: IProceso) => {
@@ -34,7 +33,6 @@ export const useAddProcess = () => {
         }
 
         formik.resetForm();
-
     };
 
     const formik = useFormik({

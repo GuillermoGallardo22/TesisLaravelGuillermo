@@ -10,15 +10,16 @@ export async function getEstudiantes({
     cursor,
     search,
 }: {
-    cursor: GridRowId | null | undefined,
-    search?: string | null | undefined,
+    cursor: GridRowId | null | undefined;
+    search?: string | null | undefined;
 }): Promise<IPagination<IEstudiante>> {
     try {
-
         cursor = cursor || 1;
         search = search || "";
 
-        const { data } = await axios.get<IPagination<IEstudiante>>(`estudiantes?page=${cursor}&search=${search}`);
+        const { data } = await axios.get<IPagination<IEstudiante>>(
+            `estudiantes?page=${cursor}&search=${search}`
+        );
 
         return data;
     } catch (error) {
@@ -40,9 +41,13 @@ export async function getEstudiantes({
     }
 }
 
-export async function saveEstudiante(form: IEstudiante): Promise<IResponse<IEstudiante>> {
+export async function saveEstudiante(
+    form: IEstudiante
+): Promise<IResponse<IEstudiante>> {
     try {
-        const { data: { data } } = await axios.post("estudiantes", form);
+        const {
+            data: { data },
+        } = await axios.post("estudiantes", form);
         return {
             status: HTTP_STATUS.created,
             data: data,
@@ -53,11 +58,13 @@ export async function saveEstudiante(form: IEstudiante): Promise<IResponse<IEstu
     }
 }
 
-export async function saveListEstudiante(form: BaseMultipleStudentForm): Promise<IResponse<IEstudiante>> {
+export async function saveListEstudiante(
+    form: BaseMultipleStudentForm
+): Promise<IResponse<IEstudiante>> {
     try {
         const { data: data } = await axios.post("estudiantes-list", {
             carrera_id: form.carrera,
-            estudiantes: form.estudiantes.map(i => ({
+            estudiantes: form.estudiantes.map((i) => ({
                 ...i,
                 carrera_id: form.carrera,
             })),
@@ -72,9 +79,13 @@ export async function saveListEstudiante(form: BaseMultipleStudentForm): Promise
     }
 }
 
-export async function getEstudianteById(estudianteId: string | number): Promise<IResponse<IEstudiante>> {
+export async function getEstudianteById(
+    estudianteId: string | number
+): Promise<IResponse<IEstudiante>> {
     try {
-        const { data: { data } } = await axios.get("estudiantes/" + estudianteId);
+        const {
+            data: { data },
+        } = await axios.get("estudiantes/" + estudianteId);
         return {
             status: HTTP_STATUS.ok,
             data: {
@@ -94,7 +105,9 @@ export async function getEstudianteById(estudianteId: string | number): Promise<
     }
 }
 
-export async function updateEstudiante(form: IEstudiante): Promise<IResponse<IEstudiante>> {
+export async function updateEstudiante(
+    form: IEstudiante
+): Promise<IResponse<IEstudiante>> {
     try {
         const { data: data } = await axios.put("estudiantes/" + form.id, {
             ...form,

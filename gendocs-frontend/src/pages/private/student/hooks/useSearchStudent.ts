@@ -2,13 +2,12 @@ import { useFormik } from "formik";
 import { useState } from "react";
 
 interface SearchStudentForm {
-    search: string,
+    search: string;
 }
 
 const initialValues: SearchStudentForm = { search: "" };
 
 export const useSearchStudent = () => {
-
     const [submitting, setSubmitting] = useState(false);
 
     const onSubmit = async (form: SearchStudentForm) => {
@@ -19,7 +18,6 @@ export const useSearchStudent = () => {
         initialValues,
         onSubmit,
     });
-
 
     return {
         formik,

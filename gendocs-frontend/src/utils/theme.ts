@@ -30,5 +30,5 @@ export const theme = createTheme(
         },
     },
     coreEsES,
-    tableEsES,
+    tableEsES
 );
