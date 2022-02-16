@@ -20,7 +20,7 @@ class PlantillasController extends Controller
      */
     public function __construct(GoogleDrive $googleDrive)
     {
-        $this->authorizeResource(Plantillas::class);
+        $this->authorizeResource(Plantillas::class, 'plantilla');
         $this->googleDrive = $googleDrive;
     }
 
