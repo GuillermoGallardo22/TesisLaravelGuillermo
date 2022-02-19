@@ -24,10 +24,10 @@ class StoreUserRequest extends FormRequest
     public function rules()
     {
         return [
-            'nombre' => ['required', 'string', ''],
-            'email' => ['required', 'string', 'unique:\App\Models\User,email'],
-            'email_gmail' => ['required', 'string', 'email', 'unique:\App\Models\User,email_gmail'],
-            'rol' => ['required', 'string', 'exists:\Spatie\Permission\Models\Role,id'],
+            'nombre' => ['required', 'string', 'max:255'],
+            'correo_principal' => ['required', 'string', 'unique:\App\Models\User,email', 'max:255'],
+            'correo_secundario' => ['required', 'string', 'email', 'unique:\App\Models\User,email_gmail', 'max:255'],
+            'rol' => ['required', 'exists:\Spatie\Permission\Models\Role,id'],
         ];
     }
 }

@@ -33,8 +33,8 @@ class UserController extends Controller
 
         $userCreated = User::create([
             'name' => $validated['nombre'],
-            'email' => $validated['email'],
-            'email_gmail' => $validated['email_gmail'],
+            'email' => $validated['correo_principal'],
+            'email_gmail' => $validated['correo_secundario'],
             'password' => Hash::make('12345678'),
         ]);
 
