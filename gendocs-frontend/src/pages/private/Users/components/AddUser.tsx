@@ -100,6 +100,7 @@ const AddUser = () => {
             <Grid container spacing={2}>
                 <Grid item xs={12}>
                     <Select
+                        required
                         id="rol"
                         name="rol"
                         label="Rol"
