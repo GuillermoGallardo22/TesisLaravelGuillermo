@@ -1,7 +1,8 @@
 import axios from "axios";
 import { HTTP_STATUS } from "models/enums";
-import { IResponse, IUser } from "models/interfaces";
-import { initAxios, handleErrors } from "utils/axios";
+import { IResponse, IRole, IUser, IUserForm } from "models/interfaces";
+import { handleErrors, initAxios } from "utils/axios";
+import { HTTP_MESSAGES } from "utils/messages";
 
 async function getCsrf() {
     initAxios("base");
@@ -17,7 +18,7 @@ export async function getUser(): Promise<IResponse<IUser>> {
     try {
         initAxios("api");
 
-        const { data } = await axios.get("/user");
+        const { data } = await axios.get("/me");
 
         return {
             data: data,
@@ -78,5 +79,38 @@ function deleteAllCookies() {
         const eqPos = cookie.indexOf("=");
         const name = eqPos > -1 ? cookie.substring(0, eqPos) : cookie;
         document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+    }
+}
+
+export async function getRoles(): Promise<IRole[]> {
+    try {
+        const {
+            data: { data },
+        } = await axios.get("/roles");
+
+        return data.map(({ id, name }: { id: number; name: string }) => ({
+            id,
+            nombre: name,
+        }));
+    } catch (error) {
+        return [];
+    }
+}
+
+export async function createUser(form: IUserForm): Promise<IResponse<IUser>> {
+    try {
+        const payload = form;
+
+        const {
+            data: { data },
+        } = await axios.post("/user", payload);
+
+        return {
+            data: data,
+            message: HTTP_MESSAGES[201],
+            status: HTTP_STATUS.created,
+        };
+    } catch (error) {
+        return handleErrors(error, {} as IUser);
     }
 }

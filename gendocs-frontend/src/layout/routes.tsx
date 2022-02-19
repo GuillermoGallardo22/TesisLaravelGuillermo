@@ -14,7 +14,11 @@ import AddStudents from "pages/private/student/components/AddStudents";
 import ListStudents from "pages/private/student/components/ListStudents";
 import UpdateStudent from "pages/private/student/components/UpdateStudent";
 import Student from "pages/private/student/Student";
+import Users from "pages/private/Users/Users";
 import { Outlet } from "react-router-dom";
+import GroupAddIcon from "@mui/icons-material/GroupAdd";
+import AddUser from "pages/private/Users/components/AddUser";
+import ListUsers from "pages/private/Users/components/ListUsers";
 
 export interface IRoute {
     path: string;
@@ -85,5 +89,16 @@ export const routes: IRoute[] = [
         label: "Consejos",
         component: <Student />,
         icon: <SchoolIcon />,
+    },
+    {
+        path: "users",
+        label: "Usuarios",
+        component: <Users />,
+        icon: <GroupAddIcon />,
+        childrens: [
+            // { path: "nuevo", component: <AddUser /> },
+            // { path: "", isIndex: true, component: <ListUsers /> },
+            { path: "", isIndex: true, component: <AddUser /> },
+        ],
     },
 ];
