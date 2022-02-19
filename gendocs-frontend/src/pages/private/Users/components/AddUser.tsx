@@ -2,93 +2,12 @@ import { LoadingButton } from "@mui/lab";
 import { Box, Grid, TextField } from "@mui/material";
 import ErrorSummary from "components/ErrorSummary";
 import Select from "components/Select";
-import { useFormik } from "formik";
-import { HTTP_STATUS } from "models/enums";
-import { IRole, IUserForm } from "models/interfaces";
-import { useSnackbar } from "notistack";
-import { useCallback, useEffect, useState } from "react";
-import { createUser, getRoles } from "services/auth";
-import { CONSTANTS } from "utils/constants";
-import { VALIDATION_MESSAGES } from "utils/messages";
-import * as yup from "yup";
-
-const initialValues: IUserForm = {
-    correo_principal: "",
-    nombre: "",
-    correo_secundario: "",
-    id: -1,
-    rol: -1,
-};
+import { useAddUser } from "../hooks/useAddUser";
 
 const AddUser = () => {
-    const [roles, setRoles] = useState<IRole[]>([]);
-    const { enqueueSnackbar } = useSnackbar();
-    const [errors, setErrors] = useState<string[] | undefined>();
-
-    const loadInitData = useCallback(() => {
-        getRoles().then((r) => setRoles(r));
-    }, []);
-
-    useEffect(() => {
-        loadInitData();
-    }, []);
-
-    const onSubmit = async (form: IUserForm): Promise<void> => {
-        setErrors(undefined);
-
-        const { status, message, errors } = await createUser(form);
-
-        if (status === HTTP_STATUS.created) {
-            enqueueSnackbar(message, { variant: "success" });
-        } else {
-            enqueueSnackbar(message, { variant: "error" });
-            setErrors(errors);
-        }
-    };
-
-    const validationSchema = yup.object().shape({
-        nombre: yup
-            .string()
-            .required(VALIDATION_MESSAGES.required)
-            .max(255, VALIDATION_MESSAGES.maxLength(255)),
-        correo_principal: yup
-            .string()
-            .matches(
-                CONSTANTS.email_uta_regex,
-                VALIDATION_MESSAGES.invalidFormat
-            )
-            .required(VALIDATION_MESSAGES.required)
-            .max(255, VALIDATION_MESSAGES.maxLength(255)),
-        correo_secundario: yup
-            .string()
-            .matches(
-                CONSTANTS.email_gmail_regex,
-                VALIDATION_MESSAGES.invalidFormat
-            )
-            .required(VALIDATION_MESSAGES.required)
-            .max(255, VALIDATION_MESSAGES.maxLength(255)),
-        rol: yup
-            .mixed()
-            .oneOf(
-                roles.map((item) => item.id),
-                VALIDATION_MESSAGES.invalidOption
-            )
-            .required(VALIDATION_MESSAGES.required),
-    });
-
-    const formik = useFormik({
-        onSubmit,
-        initialValues,
-        validationSchema,
-        enableReinitialize: true,
-    });
+    const { formik, handleReset, errorsResponse, roles } = useAddUser();
 
     const submitting = formik.isSubmitting;
-
-    const handleReset = (e: any) => {
-        setErrors(undefined);
-        formik.handleReset(e);
-    };
 
     return (
         <Box
@@ -182,9 +101,7 @@ const AddUser = () => {
                     />
                 </Grid>
 
-                <Grid item xs={12}>
-                    <ErrorSummary errors={errors} />
-                </Grid>
+                {errorsResponse && <ErrorSummary errors={errorsResponse} />}
 
                 <Grid item xs={12} sm={6}>
                     <LoadingButton
