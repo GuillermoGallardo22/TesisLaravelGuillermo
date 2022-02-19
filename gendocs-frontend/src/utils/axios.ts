@@ -25,22 +25,20 @@ export function handleErrors<T>(error: any, defaultValues?: any): IResponse<T> {
          */
         const { data, status } = error.response;
 
-        let message: string | string[] | undefined;
+        let errors: string[] = [];
+        const message = HTTP_MESSAGES[status] || HTTP_MESSAGES[503];
 
         if (data?.errors) {
-            message = [""]
-                .concat(...Object.values<string[]>(data.errors.errors || {}))
+            errors = [""]
+                .concat(...Object.values<string[]>(data.errors || {}))
                 .filter((i) => i);
-        }
-
-        if (!message || message.length <= 0) {
-            message = HTTP_MESSAGES[status] || HTTP_MESSAGES[503];
         }
 
         return {
             status: status,
             data: defaultValues,
-            message: message || HTTP_MESSAGES[503],
+            message: message,
+            errors,
         };
     } else if (error.request) {
         /*
@@ -51,14 +49,14 @@ export function handleErrors<T>(error: any, defaultValues?: any): IResponse<T> {
         return {
             status: HTTP_STATUS.unprocessableEntity,
             data: defaultValues,
-            message: HTTP_MESSAGES[503] || "",
+            message: HTTP_MESSAGES[503],
         };
     } else {
         // Something happened in setting up the request and triggered an Error
         return {
             status: HTTP_STATUS.serviceUnavailable,
             data: defaultValues,
-            message: HTTP_MESSAGES[503] || "",
+            message: HTTP_MESSAGES[503],
         };
     }
 }
