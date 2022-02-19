@@ -21,6 +21,7 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'email_gmail',
         'password',
     ];
 
@@ -49,6 +50,7 @@ class User extends Authenticatable
             'id' => $this->id,
             'name' => $this->name,
             'email' => $this->email,
+            'email_gmail' => $this->email_gmail,
             'roles' => $this->getRoleNames(),
             'permissions' => $this->getPermissionsViaRoles()->map(function ($item) {
                 return $item->name;
