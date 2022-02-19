@@ -6,6 +6,7 @@ use App\Http\Requests\StoreUserRequest;
 use App\Http\Resources\ResourceCollection;
 use App\Http\Resources\ResourceObject;
 use App\Models\User;
+use App\Notifications\UserCreated;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -31,14 +32,18 @@ class UserController extends Controller
     {
         $validated = $request->validated();
 
+        $tempPassword = '12345678';
+
         $userCreated = User::create([
             'name' => $validated['nombre'],
             'email' => $validated['correo_principal'],
             'email_gmail' => $validated['correo_secundario'],
-            'password' => Hash::make('12345678'),
+            'password' => Hash::make($tempPassword),
         ]);
 
         $userCreated->assignRole($validated['rol']);
+
+        $userCreated->notify(new UserCreated($request->user(), $tempPassword));
 
         return ResourceObject::make($userCreated);
     }
