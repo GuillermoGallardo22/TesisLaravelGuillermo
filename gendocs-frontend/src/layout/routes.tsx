@@ -96,9 +96,8 @@ export const routes: IRoute[] = [
         component: <Users />,
         icon: <GroupAddIcon />,
         childrens: [
-            // { path: "nuevo", component: <AddUser /> },
-            // { path: "", isIndex: true, component: <ListUsers /> },
-            { path: "", isIndex: true, component: <AddUser /> },
+            { path: "nuevo", component: <AddUser /> },
+            { path: "", isIndex: true, component: <ListUsers /> },
         ],
     },
 ];

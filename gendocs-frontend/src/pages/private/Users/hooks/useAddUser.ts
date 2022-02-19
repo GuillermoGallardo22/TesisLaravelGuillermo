@@ -37,12 +37,12 @@ export const useAddUser = () => {
 
         if (status === HTTP_STATUS.created) {
             enqueueSnackbar(message, { variant: "success" });
+            formik.resetForm();
         } else {
             enqueueSnackbar(message, { variant: "error" });
             setErrors(errors);
         }
 
-        formik.resetForm();
     };
 
     const validationSchema = yup.object().shape({

@@ -114,3 +114,15 @@ export async function createUser(form: IUserForm): Promise<IResponse<IUser>> {
         return handleErrors(error, {} as IUser);
     }
 }
+
+export async function getUsers(): Promise<IUser[]> {
+    try {
+        const {
+            data: { data },
+        } = await axios.get("/user");
+
+        return data;
+    } catch (error) {
+        return [];
+    }
+}

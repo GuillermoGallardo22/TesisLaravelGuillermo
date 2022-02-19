@@ -1,6 +1,7 @@
 export interface IUser {
     id: number;
     email: string;
+    email_gmail: string;
     name: string;
 }
 
