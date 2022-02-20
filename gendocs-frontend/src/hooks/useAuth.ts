@@ -46,7 +46,7 @@ export const useAuth = () => {
 
         if (status === HTTP_STATUS.ok) {
             dispatch({
-                type: AuthActionsEnum.setIsAuth,
+                type: AuthActionsEnum.setUser,
                 payload: data,
             });
             dispatch({ type: AuthActionsEnum.setIsAuth, payload: true });
