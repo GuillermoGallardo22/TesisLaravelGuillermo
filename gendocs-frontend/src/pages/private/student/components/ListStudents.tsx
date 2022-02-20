@@ -2,11 +2,10 @@ import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
 import { Button, IconButton, Stack, TextField } from "@mui/material";
 import { DataGrid, GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
-import { IEstudiante, IPagination } from "models/interfaces";
-import { useEffect, useState } from "react";
+import { useFilterPagination } from "hooks/useFilterPagination";
+import { IEstudiante } from "models/interfaces";
 import { Link as RouterLink } from "react-router-dom";
 import { getEstudiantes } from "services/estudiantes";
-import { DEFAULT_PAGINATION_VALUES } from "utils/pagination";
 
 const columns: GridColDef[] = [
     { field: "cedula", headerName: "Cédula", width: 110 },
@@ -34,74 +33,16 @@ const columns: GridColDef[] = [
 ];
 
 const ListStudents = () => {
-    const [data, setData] = useState<IPagination<IEstudiante>>(
-        DEFAULT_PAGINATION_VALUES
-    );
-
-    const [loading, setLoading] = useState<boolean>(true);
-    const [search, setSearch] = useState("");
-
-    const handlePageChange = (newPage: number) => {
-        setData((prev) => ({
-            ...prev,
-            meta: { ...prev.meta, current_page: newPage },
-        }));
-    };
-
-    const handlePageSizeChange = (newSize: number) => {
-        setData((prev) => ({
-            data: [],
-            meta: {
-                ...prev.meta,
-                current_page: 0,
-                per_page: newSize,
-            },
-        }));
-    };
-
-    useEffect(() => {
-        if (search) {
-            const delayDebounceFn = setTimeout(() => {
-                (async () => {
-                    setLoading(true);
-
-                    const response = await getEstudiantes({
-                        number: data.meta.current_page,
-                        size: data.meta.per_page,
-                        search,
-                    });
-
-                    setData(response);
-                    setLoading(false);
-                })();
-            }, 600);
-
-            return () => clearTimeout(delayDebounceFn);
-        } else {
-            let active = true;
-
-            (async () => {
-                setLoading(true);
-
-                const response = await getEstudiantes({
-                    number: data.meta.current_page,
-                    size: data.meta.per_page,
-                    search,
-                });
-
-                if (!active) {
-                    return;
-                }
-
-                setData(response);
-                setLoading(false);
-            })();
-
-            return () => {
-                active = false;
-            };
-        }
-    }, [data.meta.current_page, data.meta.per_page, search]);
+    const {
+        data,
+        handlePageChange,
+        handlePageSizeChange,
+        loading,
+        search,
+        setSearch,
+    } = useFilterPagination<IEstudiante>({
+        filter: getEstudiantes,
+    });
 
     return (
         <Stack spacing={2}>
