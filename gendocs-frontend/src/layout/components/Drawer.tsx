@@ -5,6 +5,7 @@ import IconButton from "@mui/material/IconButton";
 import List from "@mui/material/List";
 import { styled } from "@mui/material/styles";
 import Toolbar from "@mui/material/Toolbar";
+import { useAuthContext } from "contexts/AuthContext";
 import { routes } from "layout/routes";
 import Link from "./Link";
 
@@ -42,6 +43,10 @@ interface DrawerProps {
 }
 
 const Drawer: React.FC<DrawerProps> = ({ open, toggleDrawer }) => {
+    const {
+        context: { user },
+    } = useAuthContext();
+
     return (
         <DrawerBase variant="permanent" open={open}>
             <Toolbar
@@ -58,18 +63,20 @@ const Drawer: React.FC<DrawerProps> = ({ open, toggleDrawer }) => {
             </Toolbar>
             <Divider />
             <List>
-                {routes.map(
-                    (item) =>
-                        item.icon &&
-                        item.label && (
-                            <Link
-                                key={item.path}
-                                icon={item.icon}
-                                label={item.label}
-                                path={item.path}
-                            />
-                        )
-                )}
+                {routes
+                    .filter((i) => !i.roles || i?.roles.includes(user.roles[0]))
+                    .map(
+                        (item) =>
+                            item.icon &&
+                            item.label && (
+                                <Link
+                                    key={item.path}
+                                    icon={item.icon}
+                                    label={item.label}
+                                    path={item.path}
+                                />
+                            )
+                    )}
             </List>
         </DrawerBase>
     );

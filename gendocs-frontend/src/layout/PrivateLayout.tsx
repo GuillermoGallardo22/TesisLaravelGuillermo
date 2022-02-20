@@ -2,6 +2,8 @@ import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Toolbar from "@mui/material/Toolbar";
+import AccessDenied from "components/AccesDenied";
+import { useAuthContext } from "contexts/AuthContext";
 import * as React from "react";
 import { Navigate, Route, Routes } from "react-router";
 import AppBar from "./components/AppBar";
@@ -14,13 +16,13 @@ const PrivateLayout = () => {
         setOpen(!open);
     };
 
-    const route = (item: IRoute, index: number) => {
+    const route = (item: IRoute) => {
         return (
             <Route
-                key={index}
+                key={item.path}
                 path={item.path}
-                index={item.isIndex}
-                element={item.component}
+                index={Boolean(item.isIndex)}
+                element={<RoleCheckerRoute item={item} />}
             >
                 {item.childrens?.map(route)}
             </Route>
@@ -47,7 +49,6 @@ const PrivateLayout = () => {
                 <Toolbar />
                 <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
                     <Grid container spacing={3}>
-                        {/* Recent Orders */}
                         <Grid item xs={12}>
                             <Routes>
                                 {routes.map(route)}
@@ -62,6 +63,20 @@ const PrivateLayout = () => {
             </Box>
         </Box>
     );
+};
+
+interface RoleCheckerRouteProps {
+    item: IRoute;
+}
+
+const RoleCheckerRoute: React.FC<RoleCheckerRouteProps> = ({ item }) => {
+    const {
+        context: { user },
+    } = useAuthContext();
+
+    if (!item?.roles) return item.component;
+    if (item.roles.includes(user.roles[0])) return item.component;
+    return <AccessDenied />;
 };
 
 export default PrivateLayout;

@@ -19,6 +19,7 @@ import { Outlet } from "react-router-dom";
 import GroupAddIcon from "@mui/icons-material/GroupAdd";
 import AddUser from "pages/private/Users/components/AddUser";
 import ListUsers from "pages/private/Users/components/ListUsers";
+import { RolEnum } from "models/enums";
 
 export interface IRoute {
     path: string;
@@ -27,6 +28,7 @@ export interface IRoute {
     label?: string;
     icon?: React.ReactElement;
     childrens?: IRoute[];
+    roles?: RolEnum[];
 }
 
 export const DEFAULT_ROUTE = "inicio";
@@ -99,5 +101,6 @@ export const routes: IRoute[] = [
             { path: "nuevo", component: <AddUser /> },
             { path: "", isIndex: true, component: <ListUsers /> },
         ],
+        roles: [RolEnum.ADMIN],
     },
 ];
