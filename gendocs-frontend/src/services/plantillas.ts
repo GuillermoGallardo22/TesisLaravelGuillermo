@@ -1,14 +1,19 @@
 import axios from "axios";
 import { HTTP_STATUS } from "models/enums";
 import {
+    IFilterPaginationProps,
     IMoveTemplateForm,
     IPagination,
     IPlantilla,
-    IResponse,
+    IResponse
 } from "models/interfaces";
 import { handleErrors } from "utils/axios";
-import { parseObjectToQueryParams } from "utils/libs";
 import { HTTP_MESSAGES } from "utils/messages";
+import {
+    DEFAULT_PAGINATION_VALUES,
+    parseFilterPaginationProps,
+    parsePaginationData
+} from "utils/pagination";
 
 type OptionsParseResponseToTemplate = {
     justForeignKey?: boolean;
@@ -45,51 +50,17 @@ export async function savePlantilla(
     }
 }
 
-export async function getPlantillasByProcesoId({
-    procesoId,
-    cursor,
-    search,
-}: {
-    procesoId: string;
-    cursor?: string | number | null | undefined;
-    search?: string | null | undefined;
-}): Promise<IPagination<IPlantilla>> {
+export async function getPlantillasByProcesoId(
+    props: IFilterPaginationProps
+): Promise<IPagination<IPlantilla>> {
     try {
-        const params = parseObjectToQueryParams({
-            "filter[proceso]": procesoId,
-            "filter[search]": search,
-            page: cursor || 1,
-        });
+        const params = parseFilterPaginationProps(props);
 
         const { data } = await axios.get(`plantillas?${params}`);
 
-        return {
-            ...data,
-            meta: {
-                ...data.meta,
-                next_page: data?.links?.next
-                    ? new URLSearchParams(data?.links?.next.split("?")[1]).get(
-                          "page"
-                      )
-                    : null,
-            },
-        };
+        return parsePaginationData(data);
     } catch (error) {
-        return {
-            data: [],
-            links: {
-                first: "?page=1",
-                last: "?page=1",
-            },
-            meta: {
-                path: "procesos",
-                current_page: 1,
-                last_page: 1,
-                per_page: 0,
-                total: 0,
-                links: [],
-            },
-        };
+        return DEFAULT_PAGINATION_VALUES;
     }
 }
 

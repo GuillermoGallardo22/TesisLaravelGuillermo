@@ -10,22 +10,14 @@ import {
     TextField,
     Typography,
 } from "@mui/material";
-import {
-    DataGrid,
-    GridColDef,
-    GridRenderCellParams,
-    GridRowId,
-} from "@mui/x-data-grid";
+import { DataGrid, GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
 import IconButton from "components/IconButton";
 import Select from "components/Select";
-import { IPagination, IPlantilla } from "models/interfaces";
-import { useEffect, useRef, useState } from "react";
+import { useFilterPagination } from "hooks/useFilterPagination";
+import { useEffect, useState } from "react";
 import { Link as RouterLink, useParams } from "react-router-dom";
 import { getPlantillasByProcesoId } from "services/plantillas";
-import { CONSTANTS } from "utils/constants";
 import { useMoveTemplate } from "../hooks/useMoveTemplate";
-
-const { page_size } = CONSTANTS;
 
 const style = {
     position: "absolute" as const,
@@ -42,104 +34,25 @@ const style = {
 
 const ListTemplates = () => {
     const { processId = "" } = useParams<{ processId: string }>();
-    const pagesNextCursor = useRef<{ [page: number]: GridRowId }>({});
+
+    const {
+        data,
+        handlePageChange,
+        handlePageSizeChange,
+        loading,
+        search,
+        setSearch,
+    } = useFilterPagination({
+        callback: getPlantillasByProcesoId,
+        filters: {
+            processId,
+        },
+    });
 
     const [templateSelected, setTemplateSelected] = useState<number | null>(
         null
     );
     const [open, setOpen] = useState(false);
-
-    const [data, setData] = useState<IPagination<IPlantilla>>({
-        data: [],
-        links: {
-            first: "?page=1",
-            last: "?page=1",
-        },
-        meta: {
-            path: "plantillas",
-            per_page: page_size,
-            current_page: 1,
-            last_page: 1,
-            total: 0,
-            links: [],
-        },
-    });
-
-    const [page, setPage] = useState(0);
-    const [loading, setLoading] = useState<boolean>(false);
-    const [search, setSearch] = useState("");
-
-    const handlePageChange = (newPage: number) => {
-        if (newPage === 0 || pagesNextCursor.current[newPage - 1]) {
-            setPage(newPage);
-        }
-    };
-
-    useEffect(() => {
-        let active = true;
-
-        (async () => {
-            const nextCursor = pagesNextCursor.current[page - 1];
-
-            if (!nextCursor && page > 0) {
-                return;
-            }
-
-            setLoading(true);
-
-            const response = await getPlantillasByProcesoId({
-                procesoId: processId,
-                cursor: nextCursor,
-                search,
-            });
-
-            if (response.meta.next_page) {
-                pagesNextCursor.current[page] = response.meta.next_page;
-            }
-
-            if (!active) {
-                return;
-            }
-
-            setData(response);
-            setLoading(false);
-        })();
-
-        return () => {
-            active = false;
-        };
-    }, [page]);
-
-    useEffect(() => {
-        if (open) return;
-
-        const delayDebounceFn = setTimeout(() => {
-            (async () => {
-                const nextCursor = pagesNextCursor.current[page - 1];
-
-                if (!nextCursor && page > 0) {
-                    return;
-                }
-
-                setLoading(true);
-
-                const response = await getPlantillasByProcesoId({
-                    procesoId: processId,
-                    cursor: nextCursor,
-                    search,
-                });
-
-                if (response.meta.next_page) {
-                    pagesNextCursor.current[page] = response.meta.next_page;
-                }
-
-                setData(response);
-                setLoading(false);
-            })();
-        }, 600);
-
-        return () => clearTimeout(delayDebounceFn);
-    }, [search, open]);
 
     const { formik, procesos } = useMoveTemplate({
         callback: () => {
@@ -230,14 +143,14 @@ const ListTemplates = () => {
                 <DataGrid
                     pagination
                     paginationMode="server"
-                    rowsPerPageOptions={[page_size]}
+                    onPageSizeChange={handlePageSizeChange}
                     onPageChange={handlePageChange}
                     //
                     columns={columns}
-                    page={page}
                     loading={loading}
                     //
                     rows={data.data}
+                    page={data.meta.current_page}
                     pageSize={data.meta.per_page}
                     rowCount={data.meta.total}
                 />
