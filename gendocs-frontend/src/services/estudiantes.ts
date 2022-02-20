@@ -45,9 +45,14 @@ export async function saveEstudiante(
     form: IEstudiante
 ): Promise<IResponse<IEstudiante>> {
     try {
+        const payload = {
+            type: "simple",
+            ...form,
+        };
+
         const {
             data: { data },
-        } = await axios.post("estudiantes", form);
+        } = await axios.post("estudiantes", payload);
         return {
             status: HTTP_STATUS.created,
             data: data,
@@ -62,13 +67,16 @@ export async function saveListEstudiante(
     form: BaseMultipleStudentForm
 ): Promise<IResponse<IEstudiante>> {
     try {
-        const { data: data } = await axios.post("estudiantes-list", {
+        const payload = {
+            type: "list",
             carrera_id: form.carrera,
             estudiantes: form.estudiantes.map((i) => ({
                 ...i,
                 carrera_id: form.carrera,
             })),
-        });
+        };
+
+        const { data: data } = await axios.post("estudiantes", payload);
         return {
             status: HTTP_STATUS.created,
             data: data,
