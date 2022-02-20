@@ -1,18 +1,11 @@
 import AddIcon from "@mui/icons-material/Add";
 import { Button, Chip, Stack, TextField } from "@mui/material";
-import {
-    DataGrid,
-    GridColDef,
-    GridRenderCellParams,
-    GridRowId,
-} from "@mui/x-data-grid";
+import { DataGrid, GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
 import IconButton from "components/IconButton";
-import { IPagination, IProceso } from "models/interfaces";
-import { useEffect, useRef, useState } from "react";
+import { useFilterPagination } from "hooks/useFilterPagination";
+import { IProceso } from "models/interfaces";
 import { Link as RouterLink } from "react-router-dom";
 import { getProcesos } from "services/proceso";
-
-const PAGE_SIZE = 100;
 
 const columns: GridColDef[] = [
     { field: "nombre", headerName: "Nombre", flex: 1 },
@@ -52,94 +45,16 @@ const columns: GridColDef[] = [
 ];
 
 const ListProcess = () => {
-    const pagesNextCursor = useRef<{ [page: number]: GridRowId }>({});
-
-    const [data, setData] = useState<IPagination<IProceso>>({
-        data: [],
-        links: {
-            first: "?page=1",
-            last: "?page=1",
-        },
-        meta: {
-            path: "procesos",
-            current_page: 1,
-            last_page: 1,
-            per_page: PAGE_SIZE,
-            total: 0,
-            links: [],
-        },
+    const {
+        data,
+        handlePageChange,
+        handlePageSizeChange,
+        loading,
+        search,
+        setSearch,
+    } = useFilterPagination<IProceso>({
+        filter: getProcesos,
     });
-
-    const [page, setPage] = useState(0);
-    const [loading, setLoading] = useState<boolean>(false);
-
-    const handlePageChange = (newPage: number) => {
-        console.log({ newPage });
-        if (newPage === 0 || pagesNextCursor.current[newPage - 1]) {
-            setPage(newPage);
-        }
-    };
-
-    useEffect(() => {
-        let active = true;
-
-        (async () => {
-            const nextCursor = pagesNextCursor.current[page - 1];
-
-            if (!nextCursor && page > 0) {
-                return;
-            }
-
-            setLoading(true);
-
-            const response = await getProcesos({ cursor: nextCursor, search });
-
-            if (response.meta.to) {
-                pagesNextCursor.current[page] = response.meta.to;
-            }
-
-            if (!active) {
-                return;
-            }
-
-            setData(response);
-            setLoading(false);
-        })();
-
-        return () => {
-            active = false;
-        };
-    }, [page]);
-
-    const [search, setSearch] = useState("");
-
-    useEffect(() => {
-        const delayDebounceFn = setTimeout(() => {
-            (async () => {
-                const nextCursor = pagesNextCursor.current[page - 1];
-
-                if (!nextCursor && page > 0) {
-                    return;
-                }
-
-                setLoading(true);
-
-                const response = await getProcesos({
-                    cursor: nextCursor,
-                    search,
-                });
-
-                if (response.meta.to) {
-                    pagesNextCursor.current[page] = response.meta.to;
-                }
-
-                setData(response);
-                setLoading(false);
-            })();
-        }, 600);
-
-        return () => clearTimeout(delayDebounceFn);
-    }, [search]);
 
     return (
         <Stack spacing={3}>
@@ -162,14 +77,14 @@ const ListProcess = () => {
                 <DataGrid
                     pagination
                     paginationMode="server"
-                    rowsPerPageOptions={[PAGE_SIZE]}
+                    onPageSizeChange={handlePageSizeChange}
                     onPageChange={handlePageChange}
                     //
                     columns={columns}
-                    page={page}
                     loading={loading}
                     //
                     rows={data.data}
+                    page={data.meta.current_page}
                     pageSize={data.meta.per_page}
                     rowCount={data.meta.total}
                 />

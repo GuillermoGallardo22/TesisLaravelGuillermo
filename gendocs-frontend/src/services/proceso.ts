@@ -1,42 +1,30 @@
-import { GridRowId } from "@mui/x-data-grid";
 import axios from "axios";
 import { HTTP_STATUS } from "models/enums";
-import { IPagination, IProceso, IResponse } from "models/interfaces";
+import {
+    IFilterPaginationProps,
+    IPagination,
+    IProceso,
+    IResponse,
+} from "models/interfaces";
 import { handleErrors } from "utils/axios";
 import { HTTP_MESSAGES } from "utils/messages";
+import {
+    DEFAULT_PAGINATION_VALUES,
+    parseFilterPaginationProps,
+    parsePaginationData,
+} from "utils/pagination";
 
-export async function getProcesos({
-    cursor,
-    search,
-}: {
-    cursor: GridRowId | null | undefined;
-    search?: string | null | undefined;
-}): Promise<IPagination<IProceso>> {
+export async function getProcesos(
+    props: IFilterPaginationProps
+): Promise<IPagination<IProceso>> {
     try {
-        cursor = cursor || 1;
-        search = search || "";
+        const params = parseFilterPaginationProps(props);
 
-        const { data } = await axios.get(
-            `procesos?page=${cursor}&search=${search}`
-        );
+        const { data } = await axios.get(`procesos?${params}`);
 
-        return data;
+        return parsePaginationData(data);
     } catch (error) {
-        return {
-            data: [],
-            links: {
-                first: "?page=1",
-                last: "?page=1",
-            },
-            meta: {
-                path: "procesos",
-                current_page: 1,
-                last_page: 1,
-                per_page: 0,
-                total: 0,
-                links: [],
-            },
-        };
+        return DEFAULT_PAGINATION_VALUES;
     }
 }
 
