@@ -1,3 +1,4 @@
+import { Paper } from "@mui/material";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
@@ -50,13 +51,17 @@ const PrivateLayout = () => {
                 <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
                     <Grid container spacing={3}>
                         <Grid item xs={12}>
-                            <Routes>
-                                {routes.map(route)}
-                                <Route
-                                    path="/"
-                                    element={<Navigate to={DEFAULT_ROUTE} />}
-                                />
-                            </Routes>
+                            <Paper sx={{ p: 2 }}>
+                                <Routes>
+                                    {routes.map(route)}
+                                    <Route
+                                        path="/"
+                                        element={
+                                            <Navigate to={DEFAULT_ROUTE} />
+                                        }
+                                    />
+                                </Routes>
+                            </Paper>
                         </Grid>
                     </Grid>
                 </Container>
