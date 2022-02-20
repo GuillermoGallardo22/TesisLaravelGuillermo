@@ -24,7 +24,6 @@ Route::middleware("auth:sanctum")->group(function () {
 
     Route::apiResource('carreras', CarreraController::class);
     Route::apiResource('estudiantes', EstudianteController::class);
-    Route::post('estudiantes-list', [EstudianteController::class, 'storeList']);
 
     Route::apiResource('procesos', ProcesoController::class);
 

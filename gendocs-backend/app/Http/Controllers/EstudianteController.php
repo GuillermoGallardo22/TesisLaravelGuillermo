@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreEstudianteListRequest;
+use App\Constants\StoreTipoEstudiante;
 use App\Http\Requests\StoreEstudianteRequest;
 use App\Http\Requests\UpdateEstudianteRequest;
 use App\Http\Resources\ResourceCollection;
@@ -37,16 +37,14 @@ class EstudianteController extends Controller
     public function store(StoreEstudianteRequest $request)
     {
         $validated = $request->validated();
-        $estudiante = new Estudiante($validated);
 
-        $estudiante->carrera_id = $validated['carrera'];
-
-        return $estudiante->save();
-    }
-
-    public function storeList(StoreEstudianteListRequest $request)
-    {
-        return Estudiante::insert($request->validated()['estudiantes']);
+        if ($request->input('type') === StoreTipoEstudiante::List) {
+            return Estudiante::insert($request->validated()['estudiantes']);
+        } else {
+            $estudiante = new Estudiante($validated);
+            $estudiante->carrera_id = $validated['carrera'];
+            return $estudiante->save();
+        }
     }
 
     public function show(Estudiante $estudiante)
