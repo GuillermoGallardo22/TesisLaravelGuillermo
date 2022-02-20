@@ -18,6 +18,8 @@ class Proceso extends Model
         'estado' => 'boolean',
     ];
 
+    public const FILTERS = ['search'];
+
     public function fields()
     {
         return [
@@ -37,7 +39,7 @@ class Proceso extends Model
         return $query->where('directorio_id', Directorio::query()->activeDirectory()->id);
     }
 
-    public function scopeFilter($query, $filter)
+    public function scopeSearch($query, $filter)
     {
         return $query->where('nombre', 'like', "%$filter%");
     }

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Constants\Pagination;
+use App\Constants\Query;
 use App\Http\Requests\StoreProcesoRequest;
 use App\Http\Requests\UpdateProcesoRequest;
 use App\Http\Resources\ResourceCollection;
@@ -9,6 +11,7 @@ use App\Http\Resources\ResourceObject;
 use App\Models\Directorio;
 use App\Models\GoogleDrive;
 use App\Models\Proceso;
+use Illuminate\Support\Arr;
 
 class ProcesoController extends Controller
 {
@@ -26,18 +29,37 @@ class ProcesoController extends Controller
 
     public function index()
     {
-        $filter = \request()->query('search');
+        $query = Proceso::query();
 
-        $procesos = Proceso::query();
+        // FILTERS
+        $filters = \request()->query(Query::FILTER);
 
-        if ($filter) {
-            $procesos = $procesos->filter($filter);
+
+        if ($filters) {
+            foreach ($filters as $filter => $value) {
+                if (collect(Proceso::FILTERS)->contains($filter)) {
+                    $query->$filter($value);
+                }
+            }
+        }
+
+        // PAGINATION
+        $pagination = \request()->query(Query::PAGE);
+
+        $size = Pagination::SIZE;
+        $number = Pagination::NUMBER;
+
+        if ($pagination) {
+            $size = Arr::get($pagination, Pagination::SIZE_TEXT, Pagination::SIZE);
+            $size = $size > Pagination::SIZE ? Pagination::SIZE : (int)$size;
+            //
+            $number = (int)Arr::get($pagination, Pagination::NUMBER_TEXT, Pagination::NUMBER);
         }
 
         return ResourceCollection::make(
-            $procesos
+            $query
                 ->fromActiveDirectory()
-                ->paginate(100)
+                ->paginate($size, '*', Pagination::NUMBER_PARAM, $number)
         );
     }
 
