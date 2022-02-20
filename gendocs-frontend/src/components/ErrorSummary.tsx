@@ -1,4 +1,4 @@
-import { Alert, Grid } from "@mui/material";
+import { Alert, AlertTitle, Grid } from "@mui/material";
 import React from "react";
 
 interface ErrorSummaryProps {
@@ -11,6 +11,11 @@ const ErrorSummary: React.FC<ErrorSummaryProps> = ({ errors }) => {
     ) : (
         <Grid item xs={12}>
             <Alert severity="error">
+                <AlertTitle>
+                    Por favor solucione los siguientes errores (
+                    {typeof errors === "string" ? 1 : errors.length})
+                </AlertTitle>
+
                 {typeof errors === "string"
                     ? errors
                     : errors.map((error, index) => <p key={index}>{error}</p>)}
