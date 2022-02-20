@@ -148,6 +148,8 @@ export interface MultipleStudentForm {
     folio: string;
 }
 
+yup.addMethod(yup.array, "unique", unique);
+
 export interface BaseMultipleStudentForm {
     carrera: number;
     estudiantes: MultipleStudentForm[];
@@ -214,6 +216,7 @@ export const useAddMultipleStudent = () => {
                         .max(10, VALIDATION_MESSAGES.maxLength(10)),
                 })
             )
+            .unique(VALIDATION_MESSAGES.ciDuplicated, (a: any) => a.cedula)
             .min(1, VALIDATION_MESSAGES.required),
     });
 
