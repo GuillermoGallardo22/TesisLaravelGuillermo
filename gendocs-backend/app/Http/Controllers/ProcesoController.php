@@ -29,7 +29,7 @@ class ProcesoController extends Controller
 
     public function index()
     {
-        $query = Proceso::query();
+        $query = Proceso::query()->fromActiveDirectory();
 
         // FILTERS
         $filters = \request()->query(Query::FILTER);
@@ -46,20 +46,23 @@ class ProcesoController extends Controller
         // PAGINATION
         $pagination = \request()->query(Query::PAGE);
 
-        $size = Pagination::SIZE;
-        $number = Pagination::NUMBER;
-
         if ($pagination) {
+
+            $size = Pagination::SIZE;
+            $number = Pagination::NUMBER;
+
             $size = Arr::get($pagination, Pagination::SIZE_TEXT, Pagination::SIZE);
             $size = $size > Pagination::SIZE ? Pagination::SIZE : (int)$size;
             //
             $number = (int)Arr::get($pagination, Pagination::NUMBER_TEXT, Pagination::NUMBER);
+
+            return ResourceCollection::make(
+                $query->paginate($size, '*', Pagination::NUMBER_PARAM, $number)
+            );
         }
 
         return ResourceCollection::make(
-            $query
-                ->fromActiveDirectory()
-                ->paginate($size, '*', Pagination::NUMBER_PARAM, $number)
+            $query->get()
         );
     }
 
