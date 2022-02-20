@@ -1,18 +1,12 @@
 import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
 import { Button, IconButton, Stack, TextField } from "@mui/material";
-import {
-    DataGrid,
-    GridColDef,
-    GridRenderCellParams,
-    GridRowId,
-} from "@mui/x-data-grid";
+import { DataGrid, GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
 import { IEstudiante, IPagination } from "models/interfaces";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import { getEstudiantes } from "services/estudiantes";
-
-const PAGE_SIZE = 50;
+import { DEFAULT_PAGINATION_VALUES } from "utils/pagination";
 
 const columns: GridColDef[] = [
     { field: "cedula", headerName: "Cédula", width: 110 },
@@ -40,15 +34,9 @@ const columns: GridColDef[] = [
 ];
 
 const ListStudents = () => {
-    const [data, setData] = useState<IPagination<IEstudiante>>({
-        data: [],
-        meta: {
-            current_page: 0,
-            last_page: 0,
-            total: 0,
-            per_page: PAGE_SIZE,
-        },
-    });
+    const [data, setData] = useState<IPagination<IEstudiante>>(
+        DEFAULT_PAGINATION_VALUES
+    );
 
     const [loading, setLoading] = useState<boolean>(true);
     const [search, setSearch] = useState("");

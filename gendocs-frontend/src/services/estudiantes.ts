@@ -1,4 +1,3 @@
-import { GridRowId } from "@mui/x-data-grid";
 import axios from "axios";
 import { HTTP_STATUS } from "models/enums";
 import { IEstudiante, IPagination, IResponse } from "models/interfaces";
