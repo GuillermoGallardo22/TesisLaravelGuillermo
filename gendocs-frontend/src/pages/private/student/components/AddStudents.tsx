@@ -20,6 +20,7 @@ import {
     useAddMultipleStudent,
     useAddSimpleStudent,
 } from "../hooks/useAddStudent";
+import ListStudentsErrors from "./ListStudentsErrors";
 
 const AddStudents = () => {
     return (
@@ -53,8 +54,9 @@ const AddStudents = () => {
 };
 
 const AddSimpleStudent = () => {
-    const { formik, submitting, carreras, errorSummary } =
-        useAddSimpleStudent();
+    const { formik, carreras, errorSummary } = useAddSimpleStudent();
+
+    const submitting = formik.isSubmitting;
 
     return (
         <Box
@@ -263,9 +265,7 @@ const AddSimpleStudent = () => {
                     />
                 </Grid>
 
-                <Grid item xs={12}>
-                    <ErrorSummary errors={errorSummary} />
-                </Grid>
+                {errorSummary && <ErrorSummary errors={errorSummary} />}
 
                 <Grid item xs={12} sm={6}>
                     <LoadingButton
@@ -275,7 +275,6 @@ const AddSimpleStudent = () => {
                         variant="contained"
                         sx={{ mt: 3, mb: 2 }}
                         disabled={submitting}
-                        loading={submitting}
                     >
                         Limpiar
                     </LoadingButton>
@@ -416,40 +415,9 @@ const AddMultipleStudents = () => {
                         </Grid>
 
                         {formik?.errors?.estudiantes && (
-                            <Grid item xs={12}>
-                                <Alert severity="error">
-                                    {typeof formik.errors.estudiantes ===
-                                    "string" ? (
-                                        <p>{formik.errors.estudiantes}</p>
-                                    ) : (
-                                        <>
-                                            <p>
-                                                Verifique los errores en las
-                                                siguientes filas del documento.
-                                            </p>
-
-                                            {formik.errors.estudiantes.map(
-                                                (item, index) =>
-                                                    item && (
-                                                        <pre key={index}>
-                                                            {JSON.stringify(
-                                                                {
-                                                                    fila:
-                                                                        index +
-                                                                        2,
-                                                                    errores:
-                                                                        item,
-                                                                },
-                                                                null,
-                                                                2
-                                                            )}
-                                                        </pre>
-                                                    )
-                                            )}
-                                        </>
-                                    )}
-                                </Alert>
-                            </Grid>
+                            <ListStudentsErrors
+                                errors={formik?.errors?.estudiantes}
+                            />
                         )}
 
                         <Grid item xs={12} sm={6}>
@@ -461,7 +429,6 @@ const AddMultipleStudents = () => {
                                 variant="contained"
                                 sx={{ mt: 3, mb: 2 }}
                                 disabled={submitting || reading}
-                                loading={submitting || reading}
                             >
                                 Limpiar
                             </LoadingButton>

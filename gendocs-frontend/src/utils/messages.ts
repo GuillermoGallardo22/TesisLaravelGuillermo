@@ -12,6 +12,7 @@ export const HTTP_MESSAGES: { [code: number]: string } = {
     401: "No se encuentra autenticado",
     403: "Permisos insuficientes para realizar esta acción",
     400: "Por favor verifique la información",
-    422: "Los datos proporcionados no son válidos.",
+    422: "Los datos proporcionados no son válidos",
+    500: "Se produjo un error al intentar procesar su solicitud",
     503: "No se pudo comunicar con el servidor, inténtelo más tarde",
 };

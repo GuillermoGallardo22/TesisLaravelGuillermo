@@ -1,4 +1,5 @@
 import { useFormik } from "formik";
+import { useErrorsResponse } from "hooks/useErrorsResponse";
 import { HTTP_STATUS } from "models/enums";
 import { ICarrera } from "models/interfaces";
 import { useSnackbar } from "notistack";
@@ -6,6 +7,7 @@ import { useEffect, useState } from "react";
 import { getAllCarreras } from "services/carreras";
 import { saveEstudiante, saveListEstudiante } from "services/estudiantes";
 import { CONSTANTS } from "utils/constants";
+import { unique } from "utils/libs";
 import { VALIDATION_MESSAGES } from "utils/messages";
 import * as yup from "yup";
 
@@ -90,13 +92,9 @@ export const useAddSimpleStudent = () => {
             .required(VALIDATION_MESSAGES.required),
     });
 
-    const [submitting, setSubmitting] = useState(false);
-    const [errorSummary, setErrorSummary] = useState<
-        string | string[] | undefined
-    >();
+    const { errorSummary, setErrorSummary } = useErrorsResponse();
 
     const onSubmit = async (form: SimpleStudentForm) => {
-        setSubmitting(true);
         setErrorSummary(undefined);
 
         const result = await saveEstudiante({ ...form, id: -1 });
@@ -104,14 +102,10 @@ export const useAddSimpleStudent = () => {
         if (result.status === HTTP_STATUS.created) {
             formik.resetForm();
             enqueueSnackbar(result.message, { variant: "success" });
-        } else if (result.status === HTTP_STATUS.forbidden) {
-            enqueueSnackbar(result.message, { variant: "error" });
-            setErrorSummary(result.message);
         } else {
-            setErrorSummary(result.message);
+            enqueueSnackbar(result.message, { variant: "error" });
+            setErrorSummary(result.errors);
         }
-
-        setSubmitting(false);
     };
 
     const formik = useFormik({
@@ -129,7 +123,6 @@ export const useAddSimpleStudent = () => {
 
     return {
         formik,
-        submitting,
         carreras,
         errorSummary,
     };
@@ -220,25 +213,18 @@ export const useAddMultipleStudent = () => {
             .min(1, VALIDATION_MESSAGES.required),
     });
 
-    const [errorSummary, setErrorSummary] = useState<
-        string | string[] | undefined
-    >();
     const [submitting, setSubmitting] = useState(false);
 
     const onSubmit = async (form: BaseMultipleStudentForm) => {
         setSubmitting(true);
-        setErrorSummary(undefined);
 
         const result = await saveListEstudiante(form);
 
         if (result.status === HTTP_STATUS.created) {
             formik.resetForm();
             enqueueSnackbar(result.message, { variant: "success" });
-        } else if (result.status === HTTP_STATUS.forbidden) {
-            enqueueSnackbar(result.message, { variant: "error" });
-            setErrorSummary(result.message);
         } else {
-            setErrorSummary(result.message);
+            enqueueSnackbar(result.message, { variant: "error" });
         }
 
         setSubmitting(false);
