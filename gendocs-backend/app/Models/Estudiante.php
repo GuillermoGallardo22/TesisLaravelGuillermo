@@ -22,6 +22,8 @@ class Estudiante extends Model
         "carrera_id"
     ];
 
+    public const FILTERS = ['search'];
+
     public function fields()
     {
         return [
@@ -44,9 +46,9 @@ class Estudiante extends Model
         return $this->belongsTo(Carrera::class, "carrera_id");
     }
 
-    public function scopeFilter($query, $filter)
+    public function scopeSearch($query, $filter)
     {
-        return $this
+        return $query
             ->where('cedula', 'like', "%$filter%")
             ->orWhere('matricula', 'like', "%$filter%")
             ->orWhere('folio', 'like', "%$filter%")
