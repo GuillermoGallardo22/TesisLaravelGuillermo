@@ -3,8 +3,10 @@
 namespace Database\Seeders;
 
 use App\Constants\Permissions;
+use App\Constants\Roles;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
@@ -18,19 +20,23 @@ class PermissionsSeeder extends Seeder
     public function run()
     {
         $roleAdmin = Role::create([
-            'name' => 'Admin'
+            'name' => Roles::Admin,
+            'name_role_drive' => Str::lower(Roles::Writer),
         ]);
 
         $roleAdminTemp = Role::create([
-            'name' => 'AdminTemp'
+            'name' => Roles::AdminTemp,
+            'name_role_drive' => Str::lower(Roles::Writer),
         ]);
 
         $roleWriter = Role::create([
-            'name' => 'Writer'
+            'name' => Roles::Writer,
+            'name_role_drive' => Str::lower(Roles::Writer),
         ]);
 
         $roleReader = Role::create([
-            'name' => 'Reader'
+            'name' => Roles::Reader,
+            'name_role_drive' => Str::lower(Roles::Reader),
         ]);
 
         $permissions = array_merge(
@@ -62,6 +68,5 @@ class PermissionsSeeder extends Seeder
 
             $roleAdmin->givePermissionTo($permission);
         }
-
     }
 }

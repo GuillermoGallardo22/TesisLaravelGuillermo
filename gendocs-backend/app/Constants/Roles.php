@@ -7,4 +7,5 @@ abstract class Roles
     const Admin = 'Admin';
     const AdminTemp = 'AdminTemp';
     const Reader = 'Reader';
+    const Writer = 'Writer';
 }

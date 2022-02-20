@@ -54,4 +54,19 @@ class GoogleDrive
 
         return $this->service->files->update($fileId, $tempFile);
     }
+
+    public function shareFolder($userEmail, $folderId, $role)
+    {
+        $userPermission = new Google\Service\Drive\Permission(array(
+            'type' => 'user',
+            'role' => $role,
+            'emailAddress' => $userEmail
+        ));
+
+        return $this->service->permissions->create(
+            $folderId,
+            $userPermission,
+            array('fields' => 'id')
+        );
+    }
 }

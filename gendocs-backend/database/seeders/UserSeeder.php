@@ -18,14 +18,14 @@ class UserSeeder extends Seeder
         User::create([
             'name' => 'Guillermo',
             'email' => 'gbarcia@uta.edu.ec',
-            'email_gmail' => 'moxb17@gmail.com',
+            'email_gmail' => 'gbarcia@gmail.com',
             'password' => Hash::make('12345678'),
         ])->assignRole('Admin');
 
         User::create([
             'name' => 'Carleeetos',
             'email' => 'ciza@uta.edu.ec',
-            'email_gmail' => 'luis.illapa.98@gmail.com',
+            'email_gmail' => 'ciza@gmail.com',
             'password' => Hash::make('12345678'),
         ])->assignRole('Reader');
     }
