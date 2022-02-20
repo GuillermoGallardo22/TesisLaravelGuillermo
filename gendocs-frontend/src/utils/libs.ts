@@ -61,3 +61,15 @@ export function parseObjectToQueryParams(queryParams: any): string {
         return "";
     }
 }
+
+export function unique(
+    this: any,
+    message: string,
+    mapper = (val: unknown) => val
+) {
+    return this.test(
+        "unique",
+        message,
+        (list = []) => list.length === new Set(list.map(mapper)).size
+    );
+}
