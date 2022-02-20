@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Constants\Pagination;
+use App\Constants\Query;
 use App\Http\Requests\StorePlantillasRequest;
 use App\Http\Requests\UpdatePlantillasRequest;
 use App\Http\Resources\ResourceCollection;
@@ -10,6 +12,7 @@ use App\Models\GoogleDrive;
 use App\Models\Plantillas;
 
 use App\Models\Proceso;
+use Illuminate\Support\Arr;
 
 class PlantillasController extends Controller
 {
@@ -27,19 +30,35 @@ class PlantillasController extends Controller
 
     public function index()
     {
-        $filters = \request()->query('filter');
+        $query = Plantillas::query();
 
-        $plantillas = Plantillas::query();
+        // FILTERS
+        $filters = \request()->query(Query::FILTER);
 
         if ($filters) {
             foreach ($filters as $filter => $value) {
-                if (collect(Plantillas::FILTERS)->contains($filter)) {
-                    $plantillas->$filter($value);
+                if (collect(Proceso::FILTERS)->contains($filter)) {
+                    $query->$filter($value);
                 }
             }
         }
 
-        return ResourceCollection::make($plantillas->paginate(100));
+        // PAGINATION
+        $pagination = \request()->query(Query::PAGE);
+
+        $size = Pagination::SIZE;
+        $number = Pagination::NUMBER;
+
+        if ($pagination) {
+            $size = Arr::get($pagination, Pagination::SIZE_TEXT, Pagination::SIZE);
+            $size = $size > Pagination::SIZE ? Pagination::SIZE : (int)$size;
+            //
+            $number = (int)Arr::get($pagination, Pagination::NUMBER_TEXT, Pagination::NUMBER);
+        }
+
+        return ResourceCollection::make(
+            $query->paginate($size, '*', Pagination::NUMBER_PARAM, $number)
+        );
     }
 
     public function store(StorePlantillasRequest $request)
