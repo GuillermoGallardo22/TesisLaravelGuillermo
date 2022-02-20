@@ -14,14 +14,30 @@ export const DEFAULT_PAGINATION_VALUES = {
 };
 
 export function parseFilterPaginationProps({
-    search,
-    number,
-    size,
+    filters: filterProps,
+    pagination: paginationProps,
 }: IFilterPaginationProps): string {
+    let pagination = {};
+
+    if (paginationProps) {
+        pagination = {
+            "page[number]": paginationProps.number + 1,
+            "page[size]": paginationProps.size,
+        };
+    }
+
+    let filter = {};
+    if (filterProps) {
+        filter = Object.keys(filterProps).reduce(
+            (p, c) => ({ ...p, [`filter[${c}]`]: filterProps[c] }),
+            {}
+        );
+    }
+
     return parseObjectToQueryParams({
-        "filter[search]": search,
-        "page[number]": (number || 0) + 1,
-        "page[size]": size,
+        ...pagination,
+        ...filter,
+        //
     });
 }
 

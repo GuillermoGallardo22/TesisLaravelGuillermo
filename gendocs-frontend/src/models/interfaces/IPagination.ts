@@ -13,8 +13,16 @@ interface Meta {
     total: number;
 }
 
+export interface IPaginationProps {
+    number: number;
+    size: number;
+}
+
+export interface IFilterProps {
+    [filter: string]: string;
+}
+
 export interface IFilterPaginationProps {
-    number?: number | null | undefined;
-    search?: string | null | undefined;
-    size?: number | null | undefined;
+    filters?: IFilterProps;
+    pagination?: IPaginationProps;
 }

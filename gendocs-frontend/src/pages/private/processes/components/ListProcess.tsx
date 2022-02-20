@@ -53,7 +53,7 @@ const ListProcess = () => {
         search,
         setSearch,
     } = useFilterPagination<IProceso>({
-        filter: getProcesos,
+        callback: getProcesos,
     });
 
     return (

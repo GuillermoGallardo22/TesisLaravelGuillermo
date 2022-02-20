@@ -1,11 +1,17 @@
-import { IFilterPaginationProps, IPagination } from "models/interfaces";
+import {
+    IFilterPaginationProps,
+    IFilterProps,
+    IPagination,
+} from "models/interfaces";
 import { useEffect, useState } from "react";
 import { DEFAULT_PAGINATION_VALUES } from "utils/pagination";
 
 export const useFilterPagination = <T>({
-    filter,
+    callback,
+    filters,
 }: {
-    filter: (props: IFilterPaginationProps) => Promise<IPagination<T>>;
+    callback: (props: IFilterPaginationProps) => Promise<IPagination<T>>;
+    filters?: IFilterProps;
 }) => {
     const [data, setData] = useState<IPagination<T>>(DEFAULT_PAGINATION_VALUES);
 
@@ -36,10 +42,15 @@ export const useFilterPagination = <T>({
                 (async () => {
                     setLoading(true);
 
-                    const response = await filter({
-                        number: data.meta.current_page,
-                        size: data.meta.per_page,
-                        search,
+                    const response = await callback({
+                        pagination: {
+                            number: data.meta.current_page,
+                            size: data.meta.per_page,
+                        },
+                        filters: {
+                            search,
+                            ...filters,
+                        },
                     });
 
                     setData(response);
@@ -54,10 +65,15 @@ export const useFilterPagination = <T>({
             (async () => {
                 setLoading(true);
 
-                const response = await filter({
-                    number: data.meta.current_page,
-                    size: data.meta.per_page,
-                    search,
+                const response = await callback({
+                    pagination: {
+                        number: data.meta.current_page,
+                        size: data.meta.per_page,
+                    },
+                    filters: {
+                        search,
+                        ...filters,
+                    },
                 });
 
                 if (!active) {
