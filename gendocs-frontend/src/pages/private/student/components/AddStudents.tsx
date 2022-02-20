@@ -271,7 +271,7 @@ const AddSimpleStudent = () => {
                     <LoadingButton
                         fullWidth
                         type="reset"
-                        color="error"
+                        color="warning"
                         variant="contained"
                         sx={{ mt: 3, mb: 2 }}
                         disabled={submitting}
@@ -456,7 +456,7 @@ const AddMultipleStudents = () => {
                             <LoadingButton
                                 fullWidth
                                 type="reset"
-                                color="error"
+                                color="warning"
                                 onClick={handleReset}
                                 variant="contained"
                                 sx={{ mt: 3, mb: 2 }}

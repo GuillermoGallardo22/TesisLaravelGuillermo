@@ -107,7 +107,7 @@ const AddUser = () => {
                     <LoadingButton
                         fullWidth
                         type="reset"
-                        color="error"
+                        color="warning"
                         variant="contained"
                         sx={{ mt: 3, mb: 2 }}
                         disabled={submitting}
