@@ -11,7 +11,7 @@ import { GridRowModel } from "@mui/x-data-grid";
 
 export interface IPagination<T> {
     data: Array<T>;
-    links: Links;
+    // links: Links;
     meta: Meta;
 }
 
@@ -20,8 +20,8 @@ interface Meta {
     from?: any;
     last_page: number;
     next_page?: number | null;
-    links: Link[];
-    path: string;
+    // links: Link[];
+    // path: string;
     per_page: number;
     to?: any;
     total: number;

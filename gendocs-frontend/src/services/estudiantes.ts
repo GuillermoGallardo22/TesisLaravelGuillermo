@@ -4,38 +4,44 @@ import { HTTP_STATUS } from "models/enums";
 import { IEstudiante, IPagination, IResponse } from "models/interfaces";
 import { BaseMultipleStudentForm } from "pages/private/student/hooks/useAddStudent";
 import { handleErrors } from "utils/axios";
+import { parseObjectToQueryParams } from "utils/libs";
 import { HTTP_MESSAGES } from "utils/messages";
 
 export async function getEstudiantes({
-    cursor,
+    number,
+    size,
     search,
 }: {
-    cursor: GridRowId | null | undefined;
+    number?: number | null | undefined;
     search?: string | null | undefined;
+    size?: number | null | undefined;
 }): Promise<IPagination<IEstudiante>> {
     try {
-        cursor = cursor || 1;
-        search = search || "";
+        const params = parseObjectToQueryParams({
+            "filter[search]": search,
+            "page[number]": (number || 0) + 1,
+            "page[size]": size,
+        });
 
         const { data } = await axios.get<IPagination<IEstudiante>>(
-            `estudiantes?page=${cursor}&search=${search}`
+            `estudiantes?${params}`
         );
 
-        return data;
+        return {
+            ...data,
+            meta: {
+                ...data.meta,
+                current_page: data.meta.current_page - 1,
+            },
+        };
     } catch (error) {
         return {
             data: [],
-            links: {
-                first: "?page=1",
-                last: "?page=1",
-            },
             meta: {
-                path: "procesos",
-                current_page: 1,
-                last_page: 1,
+                current_page: 0,
+                last_page: 0,
                 per_page: 0,
                 total: 0,
-                links: [],
             },
         };
     }

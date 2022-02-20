@@ -12,7 +12,7 @@ import { useEffect, useRef, useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import { getEstudiantes } from "services/estudiantes";
 
-const PAGE_SIZE = 100;
+const PAGE_SIZE = 50;
 
 const columns: GridColDef[] = [
     { field: "cedula", headerName: "Cédula", width: 110 },
@@ -40,100 +40,83 @@ const columns: GridColDef[] = [
 ];
 
 const ListStudents = () => {
-    const pagesNextCursor = useRef<{ [page: number]: GridRowId }>({});
-
     const [data, setData] = useState<IPagination<IEstudiante>>({
         data: [],
-        links: {
-            first: "?page=1",
-            last: "?page=1",
-        },
         meta: {
-            path: "estudiantes",
-            current_page: 1,
-            last_page: 1,
-            per_page: PAGE_SIZE,
+            current_page: 0,
+            last_page: 0,
             total: 0,
-            links: [],
+            per_page: PAGE_SIZE,
         },
     });
 
-    const [page, setPage] = useState(0);
-    const [loading, setLoading] = useState<boolean>(false);
+    const [loading, setLoading] = useState<boolean>(true);
+    const [search, setSearch] = useState("");
 
     const handlePageChange = (newPage: number) => {
-        // We have the cursor, we can allow the page transition.
-        if (newPage === 0 || pagesNextCursor.current[newPage - 1]) {
-            setPage(newPage);
-        }
+        setData((prev) => ({
+            ...prev,
+            meta: { ...prev.meta, current_page: newPage },
+        }));
+    };
+
+    const handlePageSizeChange = (newSize: number) => {
+        setData((prev) => ({
+            data: [],
+            meta: {
+                ...prev.meta,
+                current_page: 0,
+                per_page: newSize,
+            },
+        }));
     };
 
     useEffect(() => {
-        let active = true;
+        if (search) {
+            const delayDebounceFn = setTimeout(() => {
+                (async () => {
+                    setLoading(true);
 
-        (async () => {
-            const nextCursor = pagesNextCursor.current[page - 1];
+                    const response = await getEstudiantes({
+                        number: data.meta.current_page,
+                        size: data.meta.per_page,
+                        search,
+                    });
 
-            if (!nextCursor && page > 0) {
-                return;
-            }
+                    setData(response);
+                    setLoading(false);
+                })();
+            }, 600);
 
-            setLoading(true);
+            return () => clearTimeout(delayDebounceFn);
+        } else {
+            let active = true;
 
-            const response = await getEstudiantes({
-                cursor: nextCursor,
-                search,
-            });
-
-            if (response.meta.to) {
-                pagesNextCursor.current[page] = response.meta.to;
-            }
-
-            if (!active) {
-                return;
-            }
-
-            setData(response);
-            setLoading(false);
-        })();
-
-        return () => {
-            active = false;
-        };
-    }, [page]);
-
-    const [search, setSearch] = useState("");
-
-    useEffect(() => {
-        const delayDebounceFn = setTimeout(() => {
             (async () => {
-                const nextCursor = pagesNextCursor.current[page - 1];
-
-                if (!nextCursor && page > 0) {
-                    return;
-                }
-
                 setLoading(true);
 
                 const response = await getEstudiantes({
-                    cursor: nextCursor,
+                    number: data.meta.current_page,
+                    size: data.meta.per_page,
                     search,
                 });
 
-                if (response.meta.to) {
-                    pagesNextCursor.current[page] = response.meta.to;
+                if (!active) {
+                    return;
                 }
 
                 setData(response);
                 setLoading(false);
             })();
-        }, 600);
 
-        return () => clearTimeout(delayDebounceFn);
-    }, [search]);
+            return () => {
+                active = false;
+            };
+        }
+    }, [data.meta.current_page, data.meta.per_page, search]);
 
     return (
-        <Stack spacing={3}>
+        <Stack spacing={2}>
             <Button component={RouterLink} startIcon={<AddIcon />} to="nuevo">
                 AÑADIR ESTUDIANTES
             </Button>
@@ -153,14 +136,14 @@ const ListStudents = () => {
                 <DataGrid
                     pagination
                     paginationMode="server"
-                    rowsPerPageOptions={[PAGE_SIZE]}
+                    onPageSizeChange={handlePageSizeChange}
                     onPageChange={handlePageChange}
                     //
                     columns={columns}
-                    page={page}
                     loading={loading}
                     //
                     rows={data.data}
+                    page={data.meta.current_page}
                     pageSize={data.meta.per_page}
                     rowCount={data.meta.total}
                 />
