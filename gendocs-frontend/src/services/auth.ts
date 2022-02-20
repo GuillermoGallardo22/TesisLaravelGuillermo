@@ -18,7 +18,9 @@ export async function getUser(): Promise<IResponse<IUser>> {
     try {
         initAxios("api");
 
-        const { data } = await axios.get("/me");
+        const {
+            data: { data },
+        } = await axios.get("/me");
 
         return {
             data: data,
