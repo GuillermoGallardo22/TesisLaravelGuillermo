@@ -46,8 +46,16 @@ export const routes: IRoute[] = [
         component: <Student />,
         icon: <SchoolIcon />,
         childrens: [
-            { path: "nuevo", component: <AddStudents /> },
-            { path: ":studentId", component: <UpdateStudent /> },
+            {
+                path: "nuevo",
+                component: <AddStudents />,
+                roles: [RolEnum.ADMIN, RolEnum.ADMINTEMP, RolEnum.WRITER],
+            },
+            {
+                path: ":studentId",
+                component: <UpdateStudent />,
+                roles: [RolEnum.ADMIN, RolEnum.ADMINTEMP, RolEnum.WRITER],
+            },
             { path: "", isIndex: true, component: <ListStudents /> },
         ],
     },
@@ -57,13 +65,25 @@ export const routes: IRoute[] = [
         component: <Processes />,
         icon: <ListIcon />,
         childrens: [
-            { path: "nuevo", component: <AddProcess /> },
+            {
+                path: "nuevo",
+                component: <AddProcess />,
+                roles: [RolEnum.ADMIN, RolEnum.ADMINTEMP, RolEnum.WRITER],
+            },
             {
                 path: ":processId",
                 component: <Outlet />,
                 childrens: [
                     { path: "plantillas", component: <ListTemplates /> },
-                    { path: "plantillas/nuevo", component: <AddTemplates /> },
+                    {
+                        path: "plantillas/nuevo",
+                        component: <AddTemplates />,
+                        roles: [
+                            RolEnum.ADMIN,
+                            RolEnum.ADMINTEMP,
+                            RolEnum.WRITER,
+                        ],
+                    },
                     {
                         path: "plantillas/:templateId",
                         component: <Outlet />,
@@ -77,10 +97,24 @@ export const routes: IRoute[] = [
                                 path: "",
                                 isIndex: true,
                                 component: <UpdateTemplates />,
+                                roles: [
+                                    RolEnum.ADMIN,
+                                    RolEnum.ADMINTEMP,
+                                    RolEnum.WRITER,
+                                ],
                             },
                         ],
                     },
-                    { path: "", isIndex: true, component: <UpdateProcess /> },
+                    {
+                        path: "",
+                        isIndex: true,
+                        component: <UpdateProcess />,
+                        roles: [
+                            RolEnum.ADMIN,
+                            RolEnum.ADMINTEMP,
+                            RolEnum.WRITER,
+                        ],
+                    },
                 ],
             },
             { path: "", isIndex: true, component: <ListProcess /> },
