@@ -1,4 +1,4 @@
-import { ThemeProvider } from "@emotion/react";
+import { ThemeProvider } from "@mui/material/styles";
 import { CssBaseline } from "@mui/material";
 import LoadingScreen from "components/LoadingScreen";
 import { useAuthContext } from "contexts/AuthContext";
