@@ -15,14 +15,13 @@ const columns: GridColDef[] = [
         field: "id",
         headerName: "Acciones",
         renderCell: (item: GridRenderCellParams) => (
-            <></>
-            // <IconButton
-            //     color="primary"
-            //     component={RouterLink}
-            //     to={`${item.value}`}
-            // >
-            //     <EditIcon />
-            // </IconButton>
+            <IconButton
+                color="primary"
+                component={RouterLink}
+                to={item.value + ""}
+            >
+                <EditIcon />
+            </IconButton>
         ),
     },
 ];
@@ -47,17 +46,6 @@ const ListUsers = () => {
             <Button component={RouterLink} startIcon={<AddIcon />} to="nuevo">
                 AÑADIR USUARIO
             </Button>
-
-            {/* <TextField
-                fullWidth
-                margin="normal"
-                id="search"
-                name="search"
-                label="Buscar"
-                placeholder="Cédula | Nombres | Apellidos | Matrícula | Folio"
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-            /> */}
 
             <div style={{ height: 600, width: "100%" }}>
                 <DataGrid loading={loading} columns={columns} rows={users} />

@@ -99,6 +99,22 @@ export async function getRoles(): Promise<IRole[]> {
     }
 }
 
+export async function getUserById(userId: string): Promise<IResponse<IUser>> {
+    try {
+        const {
+            data: { data },
+        } = await axios.get(`/user/${userId}`);
+
+        return {
+            data: data,
+            message: HTTP_MESSAGES[200],
+            status: HTTP_STATUS.ok,
+        };
+    } catch (error) {
+        return handleErrors(error, {} as IUser);
+    }
+}
+
 export async function createUser(form: IUserForm): Promise<IResponse<IUser>> {
     try {
         const payload = form;
@@ -111,6 +127,24 @@ export async function createUser(form: IUserForm): Promise<IResponse<IUser>> {
             data: data,
             message: HTTP_MESSAGES[201],
             status: HTTP_STATUS.created,
+        };
+    } catch (error) {
+        return handleErrors(error, {} as IUser);
+    }
+}
+
+export async function updateUser(form: IUserForm): Promise<IResponse<IUser>> {
+    try {
+        const payload = form;
+
+        const {
+            data: { data },
+        } = await axios.put("/user/" + form.id, payload);
+
+        return {
+            data: data,
+            message: HTTP_MESSAGES[200],
+            status: HTTP_STATUS.ok,
         };
     } catch (error) {
         return handleErrors(error, {} as IUser);

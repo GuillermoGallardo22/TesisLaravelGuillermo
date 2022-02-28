@@ -20,6 +20,7 @@ import GroupAddIcon from "@mui/icons-material/GroupAdd";
 import AddUser from "pages/private/Users/components/AddUser";
 import ListUsers from "pages/private/Users/components/ListUsers";
 import { RolEnum } from "models/enums";
+import UpdateUser from "pages/private/Users/components/UpdateUser";
 
 export interface IRoute {
     path: string;
@@ -133,6 +134,7 @@ export const routes: IRoute[] = [
         icon: <GroupAddIcon />,
         childrens: [
             { path: "nuevo", component: <AddUser /> },
+            { path: ":userId", component: <UpdateUser /> },
             { path: "", isIndex: true, component: <ListUsers /> },
         ],
         roles: [RolEnum.ADMIN],
