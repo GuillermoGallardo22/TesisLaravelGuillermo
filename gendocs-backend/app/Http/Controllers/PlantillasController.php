@@ -10,6 +10,7 @@ use App\Http\Resources\ResourceCollection;
 use App\Http\Resources\ResourceObject;
 use App\Models\GoogleDrive;
 use App\Models\Plantillas;
+use Illuminate\Support\Facades\DB;
 
 use App\Models\Proceso;
 use Illuminate\Support\Arr;
@@ -86,41 +87,42 @@ class PlantillasController extends Controller
 
     public function update(UpdatePlantillasRequest $request, Plantillas $plantilla)
     {
-        $validated = $request->validated();
+        try {
+            DB::beginTransaction();
 
-        $needsUpdateOnDrive = $plantilla->nombre != $validated['nombre'];
+            $validated = $request->validated();
 
-        $plantilla->fill($validated);
-        $plantilla->proceso_id = $validated['proceso'];
+            $plantilla->fill([
+                'nombre' => $validated['nombre'],
+                'estado' => $validated['estado'],
+                'proceso_id' => $validated['proceso'],
+            ]);
 
-        if ($plantilla->isDirty()) {
-
-            if ($needsUpdateOnDrive) {
+            if ($plantilla->isDirty('nombre')) {
                 $this->googleDrive->rename($plantilla->drive_id, $plantilla->nombre);
             }
 
-            $plantilla->save();
-        }
+            if ($plantilla->isDirty('proceso_id')) {
+                $fromProceso = Proceso::find($plantilla->getOriginal('proceso_id'));
+                $toProceso = Proceso::find($plantilla->proceso_id);
 
-        return ResourceObject::make($plantilla);
+                $this->googleDrive->move($plantilla->drive_id, $toProceso->drive_id, $fromProceso->drive_id);
+            }
+
+            $plantilla->save();
+
+            DB::commit();
+            return ResourceObject::make($plantilla);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json([
+                'error' => $e->getMessage(),
+            ], 422);
+        }
     }
 
     public function destroy(Plantillas $plantilla)
     {
         //
-    }
-
-    public function movePlantilla(Plantillas $plantilla, Proceso $proceso)
-    {
-
-        $oldProceso = Proceso::find($plantilla->proceso_id);
-
-        $plantilla->proceso_id = $proceso->id;
-
-        $temp = $this->googleDrive->move($plantilla->drive_id, $proceso->drive_id, $oldProceso->drive_id);
-
-        $plantilla->save();
-
-        return ResourceObject::make($plantilla);
     }
 }

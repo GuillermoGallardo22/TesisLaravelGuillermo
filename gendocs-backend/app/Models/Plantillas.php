@@ -14,6 +14,7 @@ class Plantillas extends Model
     protected $fillable = [
         'nombre',
         'estado',
+        'proceso_id',
     ];
 
     protected $casts = [

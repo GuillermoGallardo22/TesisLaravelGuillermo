@@ -66,7 +66,6 @@ class GoogleDrive
         return $this->service->permissions->create(
             $folderId,
             $userPermission,
-            array('fields' => 'id')
         );
     }
 

@@ -29,7 +29,6 @@ Route::middleware(["auth:sanctum", "isUserActive"])->group(function () {
     Route::apiResource('procesos', ProcesoController::class);
 
     Route::apiResource('plantillas', PlantillasController::class);
-    Route::put('plantillas/{plantilla}/move/{proceso}', [PlantillasController::class, 'movePlantilla']);
 
     Route::get('roles', [RoleController::class, 'index']);
 
