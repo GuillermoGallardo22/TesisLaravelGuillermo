@@ -11,23 +11,23 @@ import AppBar from "./components/AppBar";
 import Drawer from "./components/Drawer";
 import { DEFAULT_ROUTE, IRoute, routes } from "./routes";
 
+const handleRoutes = (item: IRoute) => {
+    return (
+        <Route
+            key={item.path}
+            path={item.path}
+            index={Boolean(item.isIndex)}
+            element={<RoleCheckerRoute item={item} />}
+        >
+            {item.childrens?.map(handleRoutes)}
+        </Route>
+    );
+};
+
 const PrivateLayout = () => {
     const [open, setOpen] = React.useState(true);
     const toggleDrawer = () => {
         setOpen(!open);
-    };
-
-    const route = (item: IRoute) => {
-        return (
-            <Route
-                key={item.path}
-                path={item.path}
-                index={Boolean(item.isIndex)}
-                element={<RoleCheckerRoute item={item} />}
-            >
-                {item.childrens?.map(route)}
-            </Route>
-        );
     };
 
     return (
@@ -53,7 +53,7 @@ const PrivateLayout = () => {
                         <Grid item xs={12}>
                             <Paper sx={{ p: 2 }}>
                                 <Routes>
-                                    {routes.map(route)}
+                                    {routes.map(handleRoutes)}
                                     <Route
                                         path="/"
                                         element={
@@ -74,13 +74,15 @@ interface RoleCheckerRouteProps {
     item: IRoute;
 }
 
-const RoleCheckerRoute: React.FC<RoleCheckerRouteProps> = ({ item }) => {
+const RoleCheckerRoute: React.FC<RoleCheckerRouteProps> = ({
+    item: { component, roles },
+}) => {
     const {
         context: { user },
     } = useAuthContext();
 
-    if (!item?.roles) return item.component;
-    if (item.roles.includes(user.roles[0])) return item.component;
+    if (!roles || roles?.includes(user.roles[0])) return component;
+
     return <AccessDenied />;
 };
 
