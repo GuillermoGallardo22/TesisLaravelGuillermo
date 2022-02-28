@@ -58,6 +58,11 @@ class User extends Authenticatable
         ];
     }
 
+    public function permission()
+    {
+        return $this->morphOne(DriveApi::class, 'model');
+    }
+
     /**
      * Route notifications for the mail channel.
      *

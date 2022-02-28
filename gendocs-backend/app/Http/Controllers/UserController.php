@@ -58,17 +58,20 @@ class UserController extends Controller
 
             $userCreated->notify(new UserCreated($request->user(), $tempPassword));
 
-            $this->googleDrive->shareFolder(
+            $permission = $this->googleDrive->shareFolder(
                 $userCreated->email_gmail,
                 Directorio::query()->activeDirectory()->drive_id,
                 $role->name_role_drive,
             );
 
+            $userCreated->permission()->create([
+                'google_drive_id' => $permission->id,
+            ]);
+
             DB::commit();
 
             return ResourceObject::make($userCreated);
-
-        } catch (e) {
+        } catch (\Exception $e) {
             DB::rollBack();
             return response()->noContent(4222);
         }
