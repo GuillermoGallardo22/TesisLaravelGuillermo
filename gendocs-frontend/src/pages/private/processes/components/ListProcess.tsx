@@ -1,6 +1,7 @@
 import AddIcon from "@mui/icons-material/Add";
 import { Button, Chip, Stack, TextField } from "@mui/material";
 import { DataGrid, GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
+import ChipStatus from "components/ChipStatus";
 import IconButton from "components/IconButton";
 import { useFilterPagination } from "hooks/useFilterPagination";
 import { IProceso } from "models/interfaces";
@@ -14,10 +15,7 @@ const columns: GridColDef[] = [
         headerName: "Estado",
         width: 120,
         renderCell: (item: GridRenderCellParams) => (
-            <Chip
-                label={item?.value ? "Activado" : "Desactivado"}
-                color={item?.value ? "primary" : "error"}
-            />
+            <ChipStatus value={item?.value} />
         ),
     },
     {

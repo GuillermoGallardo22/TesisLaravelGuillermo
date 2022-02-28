@@ -11,6 +11,7 @@ import {
     Typography,
 } from "@mui/material";
 import { DataGrid, GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
+import ChipStatus from "components/ChipStatus";
 import IconButton from "components/IconButton";
 import Select from "components/Select";
 import { useFilterPagination } from "hooks/useFilterPagination";
@@ -81,10 +82,7 @@ const ListTemplates = () => {
             headerName: "Estado",
             width: 120,
             renderCell: (item: GridRenderCellParams) => (
-                <Chip
-                    label={item?.value ? "Activado" : "Desactivado"}
-                    color={item?.value ? "primary" : "error"}
-                />
+                <ChipStatus value={item?.value} />
             ),
         },
         {
