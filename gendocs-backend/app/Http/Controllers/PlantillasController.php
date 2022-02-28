@@ -37,7 +37,7 @@ class PlantillasController extends Controller
 
         if ($filters) {
             foreach ($filters as $filter => $value) {
-                if (collect(Proceso::FILTERS)->contains($filter)) {
+                if (collect(Plantillas::FILTERS)->contains($filter)) {
                     $query->$filter($value);
                 }
             }
