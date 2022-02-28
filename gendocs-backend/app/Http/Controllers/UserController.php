@@ -95,30 +95,57 @@ class UserController extends Controller
 
             $user->fill([
                 'name' => $validated['nombre'],
+                'status' => $validated['status'],
                 'email' => $validated['correo_principal'],
                 'email_gmail' => $validated['correo_secundario'],
             ]);
 
+            $needsNewAccess = false;
+
+            if ($user->isDirty('status')) {
+                if ($user->status) {
+                    $needsNewAccess = true;
+                } else {
+                    // Remove old email
+                    $permission = $user->permission;
+                    if ($permission) {
+                        $this->googleDrive->deletePermission(
+                            Directorio::query()->activeDirectory()->drive_id,
+                            $user->permission->google_drive_id
+                        );
+
+                        $permission->delete();
+                    }
+                }
+            }
+
             if (
                 !$user->hasRole($role) ||
-                $user->isDirty('email_gmail')
+                $user->isDirty('email_gmail') ||
+                $needsNewAccess
             ) {
                 // Remove old email
-                $this->googleDrive->deletePermission(
-                    Directorio::query()->activeDirectory()->drive_id,
-                    $user->permission->google_drive_id
-                );
+                $permission = $user->permission;
+                if ($permission) {
+                    $this->googleDrive->deletePermission(
+                        Directorio::query()->activeDirectory()->drive_id,
+                        $user->permission->google_drive_id
+                    );
+
+                    $permission->delete();
+                }
 
                 // Add new permissions to new email
-                $permissionCreated = $this->googleDrive->shareFolder(
+                $permission = $this->googleDrive->shareFolder(
                     $user->email_gmail,
                     Directorio::query()->activeDirectory()->drive_id,
                     $role->name_role_drive,
                 );
 
                 // Update relationship table
-                $permission = $user->permission;
-                $permission->fill(['google_drive_id' => $permissionCreated->id])->save();
+                $user->permission()->create([
+                    'google_drive_id' => $permission->id,
+                ]);
 
                 // Add new roles
                 $user->roles()->detach();

@@ -21,6 +21,7 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'status',
         'email_gmail',
         'password',
     ];
@@ -42,6 +43,7 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'status' => 'boolean'
     ];
 
     public function fields()
@@ -52,6 +54,7 @@ class User extends Authenticatable
             'email' => $this->email,
             'email_gmail' => $this->email_gmail,
             'roles' => $this->getRoleNames(),
+            'status' => $this->status,
             'permissions' => $this->getPermissionsViaRoles()->map(function ($item) {
                 return $item->name;
             }),

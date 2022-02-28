@@ -28,6 +28,7 @@ class UpdateUserRequest extends FormRequest
             'correo_principal' => ['required', 'string', 'max:255', 'unique:\App\Models\User,email,' . $this->user->id],
             'correo_secundario' => ['required', 'string', 'email', 'max:255', 'unique:\App\Models\User,email_gmail,' . $this->user->id],
             'rol' => ['required', 'numeric', 'exists:\Spatie\Permission\Models\Role,id'],
+            'status' => ['required', 'boolean']
         ];
     }
 }

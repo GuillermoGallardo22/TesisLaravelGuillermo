@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware("auth:sanctum")->group(function () {
+Route::middleware(["auth:sanctum", "isUserActive"])->group(function () {
 
     Route::apiResource('carreras', CarreraController::class);
     Route::apiResource('estudiantes', EstudianteController::class);
