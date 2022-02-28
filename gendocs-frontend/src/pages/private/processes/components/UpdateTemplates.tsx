@@ -7,15 +7,18 @@ import {
     Switch,
     TextField,
 } from "@mui/material";
+import Select from "components/Select";
 import React from "react";
 import { useParams } from "react-router-dom";
 import { useUpdateTemplate } from "../hooks/useUpdateTemplate";
 
 const UpdateTemplates = () => {
     const { templateId = "" } = useParams<{ templateId: string }>();
-    const { formik } = useUpdateTemplate({ templateId: +templateId });
+    const { formik, procesos, loading } = useUpdateTemplate({
+        templateId: +templateId,
+    });
 
-    const submitting = formik.isSubmitting;
+    const submitting = formik.isSubmitting || loading;
 
     return (
         <Box
@@ -25,6 +28,27 @@ const UpdateTemplates = () => {
             noValidate
         >
             <Grid container spacing={2}>
+                <Grid item xs={12}>
+                    <Select
+                        id="proceso"
+                        name="proceso"
+                        label="Procesos"
+                        items={procesos.map((item) => ({
+                            id: item.id,
+                            label: item.nombre,
+                        }))}
+                        value={formik.values.proceso}
+                        onChange={formik.handleChange}
+                        error={
+                            formik.touched.proceso &&
+                            Boolean(formik.errors.proceso)
+                        }
+                        errorMessage={
+                            formik.touched.proceso && formik.errors.proceso
+                        }
+                    />
+                </Grid>
+
                 <Grid item xs={12}>
                     <TextField
                         required
@@ -65,10 +89,6 @@ const UpdateTemplates = () => {
                         labelPlacement="start"
                     />
                 </Grid>
-
-                {/* <Grid item xs={12}>
-                <ErrorSummary errors={errorSummary} />
-            </Grid> */}
 
                 <Grid item xs={12} sm={6}>
                     <LoadingButton
