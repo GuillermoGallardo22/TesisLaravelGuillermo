@@ -79,7 +79,6 @@ const AddTemplates = () => {
                         variant="contained"
                         sx={{ mt: 3, mb: 2 }}
                         disabled={submitting}
-                        loading={submitting}
                     >
                         Limpiar
                     </LoadingButton>
