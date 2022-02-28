@@ -45,7 +45,7 @@ const ListTemplates = () => {
     } = useFilterPagination({
         callback: getPlantillasByProcesoId,
         filters: {
-            processId,
+            proceso: processId,
         },
     });
 
