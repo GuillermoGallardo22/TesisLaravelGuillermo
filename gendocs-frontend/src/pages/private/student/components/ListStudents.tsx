@@ -1,7 +1,6 @@
-import AddIcon from "@mui/icons-material/Add";
-import EditIcon from "@mui/icons-material/Edit";
 import { Button, IconButton, Stack, TextField } from "@mui/material";
 import { DataGrid, GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
+import Icon from "components/Icon";
 import { useFilterPagination } from "hooks/useFilterPagination";
 import { IEstudiante } from "models/interfaces";
 import { Link as RouterLink } from "react-router-dom";
@@ -26,7 +25,7 @@ const columns: GridColDef[] = [
                 component={RouterLink}
                 to={`${item.value}`}
             >
-                <EditIcon />
+                <Icon icon="edit" />
             </IconButton>
         ),
     },
@@ -46,7 +45,11 @@ const ListStudents = () => {
 
     return (
         <Stack spacing={2}>
-            <Button component={RouterLink} startIcon={<AddIcon />} to="nuevo">
+            <Button
+                component={RouterLink}
+                startIcon={<Icon icon="add" />}
+                to="nuevo"
+            >
                 AÑADIR ESTUDIANTES
             </Button>
 

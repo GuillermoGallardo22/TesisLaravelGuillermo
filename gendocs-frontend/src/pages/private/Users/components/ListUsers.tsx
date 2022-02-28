@@ -1,12 +1,11 @@
-import { Stack, Button, IconButton, Chip } from "@mui/material";
+import { Button, IconButton, Stack } from "@mui/material";
 import { DataGrid, GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
-import EditIcon from "@mui/icons-material/Edit";
-import AddIcon from "@mui/icons-material/Add";
-import { Link as RouterLink } from "react-router-dom";
-import { useCallback, useEffect, useState } from "react";
-import { IUser } from "models/interfaces";
-import { getUsers } from "services/auth";
 import ChipStatus from "components/ChipStatus";
+import Icon from "components/Icon";
+import { IUser } from "models/interfaces";
+import { useCallback, useEffect, useState } from "react";
+import { Link as RouterLink } from "react-router-dom";
+import { getUsers } from "services/auth";
 
 const columns: GridColDef[] = [
     { field: "name", headerName: "Nombre", flex: 1 },
@@ -29,7 +28,7 @@ const columns: GridColDef[] = [
                 component={RouterLink}
                 to={item.value + ""}
             >
-                <EditIcon />
+                <Icon icon="edit" />
             </IconButton>
         ),
     },
@@ -52,7 +51,11 @@ const ListUsers = () => {
 
     return (
         <Stack spacing={3}>
-            <Button component={RouterLink} startIcon={<AddIcon />} to="nuevo">
+            <Button
+                component={RouterLink}
+                startIcon={<Icon icon="add" />}
+                to="nuevo"
+            >
                 AÑADIR USUARIO
             </Button>
 

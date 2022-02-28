@@ -1,9 +1,7 @@
-import AddIcon from "@mui/icons-material/Add";
 import { LoadingButton } from "@mui/lab";
 import {
     Box,
     Button,
-    Chip,
     Grid,
     Modal,
     Stack,
@@ -12,6 +10,7 @@ import {
 } from "@mui/material";
 import { DataGrid, GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
 import ChipStatus from "components/ChipStatus";
+import Icon from "components/Icon";
 import IconButton from "components/IconButton";
 import Select from "components/Select";
 import { useFilterPagination } from "hooks/useFilterPagination";
@@ -122,7 +121,11 @@ const ListTemplates = () => {
 
     return (
         <Stack spacing={3}>
-            <Button component={RouterLink} startIcon={<AddIcon />} to="nuevo">
+            <Button
+                component={RouterLink}
+                startIcon={<Icon icon="add" />}
+                to="nuevo"
+            >
                 AÑADIR PLANTILLA
             </Button>
 

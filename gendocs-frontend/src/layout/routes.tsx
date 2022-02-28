@@ -1,6 +1,3 @@
-import HomeIcon from "@mui/icons-material/Home";
-import ListIcon from "@mui/icons-material/List";
-import SchoolIcon from "@mui/icons-material/School";
 import Home from "pages/private/home/Home";
 import AddProcess from "pages/private/processes/components/AddProcess";
 import AddTemplates from "pages/private/processes/components/AddTemplates";
@@ -16,11 +13,11 @@ import UpdateStudent from "pages/private/student/components/UpdateStudent";
 import Student from "pages/private/student/Student";
 import Users from "pages/private/Users/Users";
 import { Outlet } from "react-router-dom";
-import GroupAddIcon from "@mui/icons-material/GroupAdd";
 import AddUser from "pages/private/Users/components/AddUser";
 import ListUsers from "pages/private/Users/components/ListUsers";
 import { RolEnum } from "models/enums";
 import UpdateUser from "pages/private/Users/components/UpdateUser";
+import Icon from "components/Icon";
 
 export interface IRoute {
     path: string;
@@ -39,13 +36,13 @@ export const routes: IRoute[] = [
         path: DEFAULT_ROUTE,
         label: "Inicio",
         component: <Home />,
-        icon: <HomeIcon />,
+        icon: <Icon icon="home" />,
     },
     {
         path: "estudiante",
         label: "Estudiantes",
         component: <Student />,
-        icon: <SchoolIcon />,
+        icon: <Icon icon="school" />,
         childrens: [
             {
                 path: "nuevo",
@@ -64,7 +61,7 @@ export const routes: IRoute[] = [
         path: "procesos",
         label: "Procesos",
         component: <Processes />,
-        icon: <ListIcon />,
+        icon: <Icon icon="list" />,
         childrens: [
             {
                 path: "nuevo",
@@ -125,13 +122,13 @@ export const routes: IRoute[] = [
         path: "consejos",
         label: "Consejos",
         component: <Student />,
-        icon: <SchoolIcon />,
+        icon: <Icon icon="school" />,
     },
     {
         path: "users",
         label: "Usuarios",
         component: <Users />,
-        icon: <GroupAddIcon />,
+        icon: <Icon icon="groupAdd" />,
         childrens: [
             { path: "nuevo", component: <AddUser /> },
             { path: ":userId", component: <UpdateUser /> },

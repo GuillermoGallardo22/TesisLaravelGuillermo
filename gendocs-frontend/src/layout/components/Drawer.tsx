@@ -1,10 +1,10 @@
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import Divider from "@mui/material/Divider";
 import MuiDrawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
 import List from "@mui/material/List";
 import { styled } from "@mui/material/styles";
 import Toolbar from "@mui/material/Toolbar";
+import Icon from "components/Icon";
 import { useAuthContext } from "contexts/AuthContext";
 import { routes } from "layout/routes";
 import Link from "./Link";
@@ -58,7 +58,7 @@ const Drawer: React.FC<DrawerProps> = ({ open, toggleDrawer }) => {
                 }}
             >
                 <IconButton onClick={toggleDrawer}>
-                    <ChevronLeftIcon />
+                    <Icon icon="chevronLeft" />
                 </IconButton>
             </Toolbar>
             <Divider />

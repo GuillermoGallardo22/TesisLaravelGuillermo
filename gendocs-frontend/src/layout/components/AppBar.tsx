@@ -1,5 +1,4 @@
-import ExitToAppIcon from "@mui/icons-material/ExitToApp";
-import MenuIcon from "@mui/icons-material/Menu";
+import Icon from "components/Icon";
 import { IconButton, Toolbar, Typography } from "@mui/material";
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 import { styled } from "@mui/material/styles";
@@ -54,7 +53,7 @@ const AppBar: React.FC<AppBarProps> = ({ open, toggleDrawer }) => {
                         ...(open && { display: "none" }),
                     }}
                 >
-                    <MenuIcon />
+                    <Icon icon="menu" />
                 </IconButton>
                 <Typography
                     component="h1"
@@ -67,7 +66,7 @@ const AppBar: React.FC<AppBarProps> = ({ open, toggleDrawer }) => {
                 </Typography>
 
                 <IconButton color="inherit" onClick={logout}>
-                    <ExitToAppIcon />
+                    <Icon icon="exitToApp" />
                 </IconButton>
             </Toolbar>
         </AppBarStyle>

@@ -1,10 +1,8 @@
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import LoadingButton from "@mui/lab/LoadingButton";
 import {
     Accordion,
     AccordionDetails,
     AccordionSummary,
-    Alert,
     Box,
     Grid,
     Stack,
@@ -13,6 +11,7 @@ import {
 } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import ErrorSummary from "components/ErrorSummary";
+import Icon from "components/Icon";
 import Select from "components/Select";
 import { useState } from "react";
 import { readFile } from "utils/libs";
@@ -27,7 +26,7 @@ const AddStudents = () => {
         <>
             <Accordion>
                 <AccordionSummary
-                    expandIcon={<ExpandMoreIcon />}
+                    expandIcon={<Icon icon="expandMore" />}
                     aria-controls="panel1a-content"
                     id="panel1a-header"
                 >
@@ -39,7 +38,7 @@ const AddStudents = () => {
             </Accordion>
             <Accordion>
                 <AccordionSummary
-                    expandIcon={<ExpandMoreIcon />}
+                    expandIcon={<Icon icon="expandMore" />}
                     aria-controls="panel2a-content"
                     id="panel2a-header"
                 >
