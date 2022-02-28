@@ -16,28 +16,24 @@ interface IconButtonProps {
     icon: IconTypes;
 }
 
+const ICONS = {
+    article: <ArticleIcon />,
+    edit: <EditIcon />,
+    add: <AddIcon />,
+    move: <DriveFileMoveIcon />,
+};
+
 const IconButton: React.FC<IconButtonProps & IconButtonBaseProps> = ({
     tooltipText,
     icon,
     ...props
 }) => {
-    const renderIcon = () => {
-        const ICONS = {
-            article: <ArticleIcon />,
-            edit: <EditIcon />,
-            add: <AddIcon />,
-            move: <DriveFileMoveIcon />,
-        };
-
-        return ICONS[icon];
-    };
-
     return tooltipText ? (
         <Tooltip title={tooltipText}>
-            <IconButtonBase {...props}>{renderIcon()}</IconButtonBase>
+            <IconButtonBase {...props}>{ICONS[icon]}</IconButtonBase>
         </Tooltip>
     ) : (
-        <IconButtonBase {...props}>{renderIcon()}</IconButtonBase>
+        <IconButtonBase {...props}>{ICONS[icon]}</IconButtonBase>
     );
 };
 
