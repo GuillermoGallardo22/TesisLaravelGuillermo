@@ -69,6 +69,15 @@ class GoogleDrive
             array('fields' => 'id')
         );
     }
+
+    public function deletePermission($resourceId, $permissionId)
+    {
+        return $this->service->permissions->delete(
+            $resourceId,
+            $permissionId,
+        );
+    }
+
     public function retrieveAllPermissions($folderId, $userPermissionId)
     {
         return $this->service->permissions->get(

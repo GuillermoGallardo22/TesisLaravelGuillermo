@@ -15,9 +15,9 @@ class UserPolicy
         return $user->hasRole([Roles::Admin, Roles::AdminTemp]);
     }
 
-    public function view(User $user, User $model)
+    public function view(User $userLogged, User $user)
     {
-        return $user->hasRole(Roles::Admin);
+        return $userLogged->hasRole(Roles::Admin);
     }
 
     public function create(User $user)
@@ -25,22 +25,22 @@ class UserPolicy
         return $user->hasRole(Roles::Admin);
     }
 
-    public function update(User $user, User $model)
+    public function update(User $userLogged, User $user)
+    {
+        return $userLogged->hasRole(Roles::Admin);
+    }
+
+    public function delete(User $userLogged, User $user)
     {
         //
     }
 
-    public function delete(User $user, User $model)
+    public function restore(User $userLogged, User $user)
     {
         //
     }
 
-    public function restore(User $user, User $model)
-    {
-        //
-    }
-
-    public function forceDelete(User $user, User $model)
+    public function forceDelete(User $userLogged, User $user)
     {
         //
     }

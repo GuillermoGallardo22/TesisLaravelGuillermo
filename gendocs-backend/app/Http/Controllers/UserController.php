@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UpdateUserRequest;
 use App\Http\Resources\ResourceCollection;
 use App\Http\Resources\ResourceObject;
 use App\Models\Directorio;
+use App\Models\DriveApi;
 use App\Models\User;
 use App\Notifications\UserCreated;
 use Illuminate\Http\Request;
@@ -82,9 +84,58 @@ class UserController extends Controller
         return ResourceObject::make($user);
     }
 
-    public function update(Request $request, User $user)
+    public function update(UpdateUserRequest $request, User $user)
     {
-        //
+        $validated = $request->validated();
+
+        try {
+            DB::beginTransaction();
+
+            $role = Role::find($validated['rol']);
+
+            $user->fill([
+                'name' => $validated['nombre'],
+                'email' => $validated['correo_principal'],
+                'email_gmail' => $validated['correo_secundario'],
+            ]);
+
+            if (
+                !$user->hasRole($role) ||
+                $user->isDirty('email_gmail')
+            ) {
+                // Remove old email
+                $this->googleDrive->deletePermission(
+                    Directorio::query()->activeDirectory()->drive_id,
+                    $user->permission->google_drive_id
+                );
+
+                // Add new permissions to new email
+                $permissionCreated = $this->googleDrive->shareFolder(
+                    $user->email_gmail,
+                    Directorio::query()->activeDirectory()->drive_id,
+                    $role->name_role_drive,
+                );
+
+                // Update relationship table
+                $permission = $user->permission;
+                $permission->fill(['google_drive_id' => $permissionCreated->id])->save();
+
+                // Add new roles
+                $user->roles()->detach();
+                $user->assignRole($role);
+            }
+
+            $user->save();
+
+            DB::commit();
+
+            return ResourceObject::make($user);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json([
+                'error' => $e->getMessage(),
+            ], 422);
+        }
     }
 
     public function destroy(User $user)
