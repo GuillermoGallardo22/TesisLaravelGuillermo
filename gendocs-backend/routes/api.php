@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CarreraController;
 use App\Http\Controllers\EstudianteController;
+use App\Http\Controllers\GoogleDriveController;
 use App\Http\Controllers\PlantillasController;
 use App\Http\Controllers\ProcesoController;
 use App\Http\Controllers\RoleController;
@@ -35,4 +36,8 @@ Route::middleware("auth:sanctum")->group(function () {
     Route::get('me', [UserController::class, 'me']);
     Route::apiResource('user', UserController::class);
 
+    //
+    Route::get('my-permissions', [GoogleDriveController::class, 'myPermissions']);
+    Route::get('get-file', [GoogleDriveController::class, 'getFile']);
+    Route::get('export-file', [GoogleDriveController::class, 'exportFile']);
 });

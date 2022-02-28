@@ -69,4 +69,29 @@ class GoogleDrive
             array('fields' => 'id')
         );
     }
+    public function retrieveAllPermissions($folderId, $userPermissionId)
+    {
+        return $this->service->permissions->get(
+            $folderId,
+            $userPermissionId,
+        );
+    }
+
+    public function getFile($fileId)
+    {
+        return $this->service->files->get(
+            $fileId,
+        );
+    }
+
+    public function exportFile($fileId, $mimeType)
+    {
+        return $this->service->files->export(
+            $fileId,
+            $mimeType,
+            array(
+                'alt' => 'media',
+            )
+        );
+    }
 }
