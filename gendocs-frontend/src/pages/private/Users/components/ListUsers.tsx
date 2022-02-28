@@ -1,4 +1,4 @@
-import { Stack, Button, IconButton } from "@mui/material";
+import { Stack, Button, IconButton, Chip } from "@mui/material";
 import { DataGrid, GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
 import EditIcon from "@mui/icons-material/Edit";
 import AddIcon from "@mui/icons-material/Add";
@@ -6,11 +6,20 @@ import { Link as RouterLink } from "react-router-dom";
 import { useCallback, useEffect, useState } from "react";
 import { IUser } from "models/interfaces";
 import { getUsers } from "services/auth";
+import ChipStatus from "components/ChipStatus";
 
 const columns: GridColDef[] = [
     { field: "name", headerName: "Nombre", flex: 1 },
     { field: "email", headerName: "Correo (UTA)", flex: 1 },
     { field: "email_gmail", headerName: "Correo (GMAIL)", flex: 1 },
+    {
+        field: "status",
+        headerName: "Estado",
+        width: 120,
+        renderCell: (item: GridRenderCellParams) => (
+            <ChipStatus value={item?.value} />
+        ),
+    },
     {
         field: "id",
         headerName: "Acciones",

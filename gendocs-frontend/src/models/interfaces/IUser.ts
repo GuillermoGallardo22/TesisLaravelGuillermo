@@ -6,6 +6,7 @@ export interface IUser {
     email_gmail: string;
     name: string;
     roles: RolEnum[];
+    status?: boolean;
 }
 
 export interface IUserForm {
@@ -14,4 +15,5 @@ export interface IUserForm {
     correo_principal: string;
     correo_secundario: string;
     rol: number;
+    status?: boolean;
 }

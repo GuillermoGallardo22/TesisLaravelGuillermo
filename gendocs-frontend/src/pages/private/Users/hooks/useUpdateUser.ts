@@ -17,6 +17,7 @@ const initialValues: IUserForm = {
     correo_secundario: "",
     id: -1,
     rol: -1,
+    status: true,
 };
 
 type useUpdateUserProps = {
@@ -39,6 +40,7 @@ export const useUpdateUser = ({ userId }: useUpdateUserProps) => {
             nombre: user.name,
             correo_principal: user.email,
             correo_secundario: user.email_gmail,
+            status: user.status,
             id: user.id,
             rol: roles.find((i) => i.nombre === user.roles[0])?.id || -1,
         });
