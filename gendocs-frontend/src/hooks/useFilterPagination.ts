@@ -56,7 +56,7 @@ export const useFilterPagination = <T>({
                     setData(response);
                     setLoading(false);
                 })();
-            }, 600);
+            }, 500);
 
             return () => clearTimeout(delayDebounceFn);
         } else {
