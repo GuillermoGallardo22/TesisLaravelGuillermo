@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             DirectorioSeeder::class,
             CarreraSeeder::class,
             ProcesoSeeder::class,
+            TipoConsejoSeeder::class,
             // FACTORIES
         ]);
     }
