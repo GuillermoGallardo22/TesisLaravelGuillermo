@@ -10,6 +10,7 @@ use App\Http\Resources\ResourceCollection;
 use App\Http\Resources\ResourceObject;
 use App\Models\GoogleDrive;
 use App\Models\Plantillas;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 use App\Models\Proceso;
@@ -29,37 +30,21 @@ class PlantillasController extends Controller
     }
 
 
-    public function index()
+    public function index(Request $request)
     {
         $query = Plantillas::query();
 
-        // FILTERS
-        $filters = \request()->query(Query::FILTER);
+        $query->applyFilters($request->all());
 
-        if ($filters) {
-            foreach ($filters as $filter => $value) {
-                if (collect(Plantillas::FILTERS)->contains($filter)) {
-                    $query->$filter($value);
-                }
-            }
+        $paginate = $query->applyPaginate($request->all());
+
+        if ($paginate['isPageable']) {
+            return ResourceCollection::make(
+                $query->paginate($paginate['size'], '*', $paginate['param'], $paginate['number'])
+            );
         }
 
-        // PAGINATION
-        $pagination = \request()->query(Query::PAGE);
-
-        $size = Pagination::SIZE;
-        $number = Pagination::NUMBER;
-
-        if ($pagination) {
-            $size = Arr::get($pagination, Pagination::SIZE_TEXT, Pagination::SIZE);
-            $size = $size > Pagination::SIZE ? Pagination::SIZE : (int)$size;
-            //
-            $number = (int)Arr::get($pagination, Pagination::NUMBER_TEXT, Pagination::NUMBER);
-        }
-
-        return ResourceCollection::make(
-            $query->paginate($size, '*', Pagination::NUMBER_PARAM, $number)
-        );
+        return ResourceCollection::make($query->get());
     }
 
     public function store(StorePlantillasRequest $request)

@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use App\Traits\Filterable;
+use App\Traits\Pageable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Plantillas extends Model
 {
-    use HasFactory;
+    use HasFactory, Pageable, Filterable;
 
     public const FILTERS = ["proceso", "search"];
 

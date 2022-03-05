@@ -11,6 +11,7 @@ use App\Http\Resources\ResourceObject;
 use App\Models\Directorio;
 use App\Models\GoogleDrive;
 use App\Models\Proceso;
+use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 
 class ProcesoController extends Controller
@@ -27,43 +28,21 @@ class ProcesoController extends Controller
         $this->googleDrive = $googleDrive;
     }
 
-    public function index()
+    public function index(Request $request)
     {
         $query = Proceso::query()->fromActiveDirectory();
 
-        // FILTERS
-        $filters = \request()->query(Query::FILTER);
+        $query->applyFilters($request->all());
 
+        $paginate = $query->applyPaginate($request->all());
 
-        if ($filters) {
-            foreach ($filters as $filter => $value) {
-                if (collect(Proceso::FILTERS)->contains($filter)) {
-                    $query->$filter($value);
-                }
-            }
-        }
-
-        // PAGINATION
-        $pagination = \request()->query(Query::PAGE);
-
-        if ($pagination) {
-
-            $size = Pagination::SIZE;
-            $number = Pagination::NUMBER;
-
-            $size = Arr::get($pagination, Pagination::SIZE_TEXT, Pagination::SIZE);
-            $size = $size > Pagination::SIZE ? Pagination::SIZE : (int)$size;
-            //
-            $number = (int)Arr::get($pagination, Pagination::NUMBER_TEXT, Pagination::NUMBER);
-
+        if ($paginate['isPageable']) {
             return ResourceCollection::make(
-                $query->paginate($size, '*', Pagination::NUMBER_PARAM, $number)
+                $query->paginate($paginate['size'], '*', $paginate['param'], $paginate['number'])
             );
         }
 
-        return ResourceCollection::make(
-            $query->get()
-        );
+        return ResourceCollection::make($query->get());
     }
 
     public function store(StoreProcesoRequest $request)

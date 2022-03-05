@@ -9,6 +9,7 @@ use App\Http\Requests\UpdateEstudianteRequest;
 use App\Http\Resources\ResourceCollection;
 use App\Http\Resources\ResourceObject;
 use App\Models\Estudiante;
+use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use App\Constants\Query;
 
@@ -20,40 +21,24 @@ class EstudianteController extends Controller
         $this->authorizeResource(Estudiante::class);
     }
 
-    public function index()
+    public function index(Request $request)
     {
         $query = Estudiante::query();
 
-        // FILTERS
-        $filters = \request()->query(Query::FILTER);
+        $query
+            ->orderBy('apellidos');
 
+        $query->applyFilters($request->all());
 
-        if ($filters) {
-            foreach ($filters as $filter => $value) {
-                if (collect(Estudiante::FILTERS)->contains($filter)) {
-                    $query->$filter($value);
-                }
-            }
+        $paginate = $query->applyPaginate($request->all());
+
+        if ($paginate['isPageable']) {
+            return ResourceCollection::make(
+                $query->paginate($paginate['size'], '*', $paginate['param'], $paginate['number'])
+            );
         }
 
-        // PAGINATION
-        $pagination = \request()->query(Query::PAGE);
-
-        $size = Pagination::SIZE;
-        $number = Pagination::NUMBER;
-
-        if ($pagination) {
-            $size = Arr::get($pagination, Pagination::SIZE_TEXT, Pagination::SIZE);
-            $size = $size > Pagination::SIZE ? Pagination::SIZE : (int)$size;
-            //
-            $number = (int)Arr::get($pagination, Pagination::NUMBER_TEXT, Pagination::NUMBER);
-        }
-
-        return ResourceCollection::make(
-            $query
-                ->orderBy('apellidos')
-                ->paginate($size, '*', Pagination::NUMBER_PARAM, $number)
-        );
+        return ResourceCollection::make($query->get());
     }
 
     public function store(StoreEstudianteRequest $request)
