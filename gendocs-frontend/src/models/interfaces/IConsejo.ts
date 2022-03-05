@@ -3,7 +3,7 @@ import { ITipoConsejo } from "./ITipoConsejo";
 export interface IConsejo {
     id: number;
     nombre: string;
-    fecha: Date;
+    fecha: string;
     tipo_consejo: number | ITipoConsejo;
 }
 
