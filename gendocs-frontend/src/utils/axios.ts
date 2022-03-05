@@ -29,9 +29,15 @@ export function handleErrors<T>(error: any, defaultValues?: any): IResponse<T> {
         const message = HTTP_MESSAGES[status] || HTTP_MESSAGES[503];
 
         if (data?.errors) {
-            errors = [""]
-                .concat(...Object.values<string[]>(data.errors || {}))
-                .filter((i) => i);
+            const _errors = data.errors;
+
+            if (typeof _errors === "string") {
+                errors = [_errors];
+            } else {
+                errors = [""]
+                    .concat(...Object.values<string[]>(_errors || {}))
+                    .filter((i) => i);
+            }
         }
 
         return {
