@@ -60,12 +60,22 @@ class ConsejoController extends Controller
 
     public function show(Consejo $consejo)
     {
-        //
+        return ResourceObject::make($consejo);
     }
 
     public function update(UpdateConsejoRequest $request, Consejo $consejo)
     {
-        //
+        $validated = $request->validated();
+
+        $consejo->fill([
+            'nombre' => $validated['nombre'],
+            'fecha' => new Carbon($validated['fecha']),
+            'tipo_consejo_id' => $validated['tipo_consejo'],
+        ]);
+
+        $consejo->save();
+
+        return ResourceObject::make($consejo);
     }
 
     public function destroy(Consejo $consejo)

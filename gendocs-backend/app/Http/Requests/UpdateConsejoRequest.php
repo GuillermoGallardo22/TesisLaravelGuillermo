@@ -13,7 +13,7 @@ class UpdateConsejoRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,9 @@ class UpdateConsejoRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'nombre' => ['string', 'required', 'max:255'],
+            'fecha' => ['date', 'required'],
+            'tipo_consejo' => ['required', 'exists:\App\Models\TipoConsejo,id'],
         ];
     }
 }
