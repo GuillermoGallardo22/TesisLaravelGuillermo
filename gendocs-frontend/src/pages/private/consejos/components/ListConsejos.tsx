@@ -28,8 +28,8 @@ const columns: GridColDef[] = [
         renderCell: (item) => (
             <ChipStatus
                 value={item.value}
-                textPrimary="Abierta"
-                textSecondary="Cerrada"
+                textPrimary="Abierto"
+                textSecondary="Cerrado"
                 colorSecondary="success"
             />
         ),
