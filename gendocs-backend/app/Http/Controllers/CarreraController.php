@@ -15,7 +15,8 @@ class CarreraController extends Controller
      */
     public function index()
     {
-        return Carrera::all();
+        $query = Carrera::query();
+        return $query->orderBy('nombre', 'asc')->get();
     }
 
     /**
