@@ -11,6 +11,8 @@ import GroupAddIcon from "@mui/icons-material/GroupAdd";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import SecurityIcon from "@mui/icons-material/Security";
+import GroupsIcon from "@mui/icons-material/Groups";
+import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
 
 export type IconTypes =
     | "article"
@@ -27,7 +29,9 @@ export type IconTypes =
     | "menu"
     | "chevronLeft"
     | "expandMore"
-    | "security";
+    | "security"
+    | "groups"
+    | "meetingRoom";
 
 const ICONS = {
     article: <ArticleIcon />,
@@ -43,6 +47,8 @@ const ICONS = {
     chevronLeft: <ChevronLeftIcon />,
     expandMore: <ExpandMoreIcon />,
     security: <SecurityIcon />,
+    groups: <GroupsIcon />,
+    meetingRoom: <MeetingRoomIcon />,
 };
 
 interface IconProps {
