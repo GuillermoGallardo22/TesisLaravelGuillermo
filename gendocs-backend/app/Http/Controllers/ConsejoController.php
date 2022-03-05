@@ -10,6 +10,7 @@ use App\Models\Consejo;
 use App\Models\Directorio;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class ConsejoController extends Controller
 {
@@ -65,6 +66,12 @@ class ConsejoController extends Controller
 
     public function update(UpdateConsejoRequest $request, Consejo $consejo)
     {
+        if (!$consejo->estado) {
+            return response()->json([
+                'errors' => trans('validation.custom.consejo.update.estado')
+            ], Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
         $validated = $request->validated();
 
         $consejo->fill([

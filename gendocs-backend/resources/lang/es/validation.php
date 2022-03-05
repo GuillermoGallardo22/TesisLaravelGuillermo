@@ -134,5 +134,11 @@ return [
         'password' => [
             'min' => 'La :attribute debe contener más de :min caracteres',
         ],
+        // CUSTOM VALIDATION
+        'consejo' => [
+            'update' => [
+                'estado' => 'No se puede actualizar el registro con el estado actual.'
+            ]
+        ]
     ],
 ];
