@@ -15,6 +15,24 @@ import {
     parsePaginationData,
 } from "utils/pagination";
 
+export async function getConsejo(
+    consejoId: string
+): Promise<IResponse<IConsejo>> {
+    try {
+        const {
+            data: { data },
+        } = await axios.get(`consejos/${consejoId}`);
+
+        return {
+            data,
+            message: HTTP_MESSAGES[200],
+            status: HTTP_STATUS.ok,
+        };
+    } catch (error) {
+        return handleErrors(error);
+    }
+}
+
 export async function getConsejos(
     props: IFilterPaginationProps
 ): Promise<IPagination<IConsejo>> {
@@ -46,6 +64,29 @@ export async function saveConsejo(
             data,
             status: HTTP_STATUS.created,
             message: HTTP_MESSAGES[201],
+        };
+    } catch (error) {
+        return handleErrors(error);
+    }
+}
+
+export async function updateConsejo(
+    form: IConsejoForm
+): Promise<IResponse<IConsejo>> {
+    try {
+        const payload = {
+            ...form,
+            fecha: form.fecha.toISOString(),
+        };
+
+        const {
+            data: { data },
+        } = await axios.put("/consejos/" + form.id, payload);
+
+        return {
+            data,
+            status: HTTP_STATUS.ok,
+            message: HTTP_MESSAGES[200],
         };
     } catch (error) {
         return handleErrors(error);

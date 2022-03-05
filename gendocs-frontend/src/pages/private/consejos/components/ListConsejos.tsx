@@ -1,4 +1,4 @@
-import { Button, Stack, TextField } from "@mui/material";
+import { Button, IconButton, Stack, TextField } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import ChipStatus from "components/ChipStatus";
 import Icon from "components/Icon";
@@ -13,12 +13,13 @@ const columns: GridColDef[] = [
         field: "fecha",
         headerName: "Fecha",
         flex: 1,
-        renderCell: (item) => format(new Date(item.value), "dd/MM/yyyy p"),
-        // renderCell: (item) => item.value.toDateString(),
+        renderCell: (item) =>
+            format(new Date(item.value), "dd/MM/yyyy HH:mm a"),
     },
     {
         field: "tipo_consejo",
         headerName: "Tipo",
+        width: 120,
         renderCell: (item) => item.value.nombre,
     },
     {
@@ -37,14 +38,17 @@ const columns: GridColDef[] = [
         field: "id",
         headerName: "Acciones",
         renderCell: (item) => (
-            <></>
-            // <IconButton
-            //     color="primary"
-            //     component={RouterLink}
-            //     to={item.value + ""}
-            // >
-            //     <Icon icon="edit" />
-            // </IconButton>
+            <>
+                {item.row.estado && (
+                    <IconButton
+                        color="primary"
+                        component={Link}
+                        to={item.value + ""}
+                    >
+                        <Icon icon="edit" />
+                    </IconButton>
+                )}
+            </>
         ),
     },
 ];
@@ -60,8 +64,6 @@ export default function ListConsejos() {
     } = useFilterPagination({
         callback: getConsejos,
     });
-
-    console.log({ data });
 
     return (
         <Stack spacing={3}>
