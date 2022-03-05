@@ -11,8 +11,13 @@ import {
 import { IProceso } from "./IProceso";
 import { IPlantilla, IMoveTemplateForm } from "./IPlantilla";
 import { IRole } from "./IRole";
+import { ITipoConsejo } from "./ITipoConsejo";
+import { IConsejo, IConsejoForm } from "./IConsejo";
 
 export type {
+    IConsejo,
+    IConsejoForm,
+    ITipoConsejo,
     IUser,
     ICarrera,
     IEstudiante,

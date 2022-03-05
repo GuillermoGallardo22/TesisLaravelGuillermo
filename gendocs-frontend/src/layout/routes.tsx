@@ -18,6 +18,9 @@ import ListUsers from "pages/private/Users/components/ListUsers";
 import { RolEnum } from "models/enums";
 import UpdateUser from "pages/private/Users/components/UpdateUser";
 import Icon from "components/Icon";
+import Consejos from "pages/private/consejos/Consejos";
+import AddConsejo from "pages/private/consejos/components/AddConsejo";
+import ListConsejos from "pages/private/consejos/components/ListConsejos";
 
 export interface IRoute {
     path: string;
@@ -121,8 +124,13 @@ export const routes: IRoute[] = [
     {
         path: "consejos",
         label: "Consejos",
-        component: <Student />,
-        icon: <Icon icon="school" />,
+        component: <Consejos />,
+        icon: <Icon icon="meetingRoom" />,
+        childrens: [
+            { path: "nuevo", component: <AddConsejo /> },
+            // { path: ":userId", component: <UpdateUser /> },
+            { path: "", isIndex: true, component: <ListConsejos /> },
+        ],
     },
     {
         path: "users",

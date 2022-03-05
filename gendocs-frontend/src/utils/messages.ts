@@ -3,6 +3,7 @@ export const VALIDATION_MESSAGES = {
     invalidFormat: "Formato no válido.",
     maxLength: (length: number) => `Máximo ${length} caracteres.`,
     invalidOption: "Opción no válida.",
+    invalidDate: "Fecha no válida.",
     ciDuplicated: "Existen uno o más números de cédulas duplicadas.",
 };
 
