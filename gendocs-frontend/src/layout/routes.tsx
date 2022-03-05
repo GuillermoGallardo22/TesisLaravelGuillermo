@@ -21,6 +21,7 @@ import Icon from "components/Icon";
 import Consejos from "pages/private/consejos/Consejos";
 import AddConsejo from "pages/private/consejos/components/AddConsejo";
 import ListConsejos from "pages/private/consejos/components/ListConsejos";
+import UpdateConsejo from "pages/private/consejos/components/UpdateConsejo";
 
 export interface IRoute {
     path: string;
@@ -127,8 +128,16 @@ export const routes: IRoute[] = [
         component: <Consejos />,
         icon: <Icon icon="meetingRoom" />,
         childrens: [
-            { path: "nuevo", component: <AddConsejo /> },
-            // { path: ":userId", component: <UpdateUser /> },
+            {
+                path: "nuevo",
+                component: <AddConsejo />,
+                roles: [RolEnum.ADMIN, RolEnum.ADMINTEMP],
+            },
+            {
+                path: ":consejoId",
+                component: <UpdateConsejo />,
+                roles: [RolEnum.ADMIN, RolEnum.ADMINTEMP],
+            },
             { path: "", isIndex: true, component: <ListConsejos /> },
         ],
     },
