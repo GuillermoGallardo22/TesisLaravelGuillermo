@@ -14,16 +14,24 @@ import PrivateRoute from "routes/PrivateRoute";
 import PublicRoute from "routes/PublicRoute";
 import { getUser } from "services/auth";
 import { theme } from "utils/theme";
+import DateAdapter from "@mui/lab/AdapterDateFns";
+import LocalizationProvider from "@mui/lab/LocalizationProvider";
+import esLocale from "date-fns/locale/es";
 
 const App = () => {
     return (
         <Router>
             <SnackbarProvider maxSnack={5}>
                 <ThemeProvider theme={theme}>
-                    <CssBaseline />
-                    <AuthProvider>
-                        <AuthCheck />
-                    </AuthProvider>
+                    <LocalizationProvider
+                        dateAdapter={DateAdapter}
+                        locale={esLocale}
+                    >
+                        <CssBaseline />
+                        <AuthProvider>
+                            <AuthCheck />
+                        </AuthProvider>
+                    </LocalizationProvider>
                 </ThemeProvider>
             </SnackbarProvider>
         </Router>
