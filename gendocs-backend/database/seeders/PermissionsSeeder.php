@@ -43,6 +43,7 @@ class PermissionsSeeder extends Seeder
             Arr::divide(Permissions::Estudiantes)[1],
             Arr::divide(Permissions::Plantillas)[1],
             Arr::divide(Permissions::Procesos)[1],
+            Arr::divide(Permissions::Consejos)[1],
         );
 
         foreach ($permissions as $permissionName) {

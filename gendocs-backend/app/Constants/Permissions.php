@@ -22,6 +22,12 @@ abstract class Permissions
         'update' => 'plantilla.update',
     ];
 
+    const Consejos = [
+        'index' => 'consejo.index',
+        'create' => 'consejo.create',
+        'update' => 'consejo.update',
+    ];
+
     const Users = [
         'index' => 'user.index',
         'create' => 'user.create',

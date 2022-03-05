@@ -13,6 +13,13 @@ use Illuminate\Http\Request;
 
 class ConsejoController extends Controller
 {
+
+
+    public function __construct()
+    {
+        $this->authorizeResource(Consejo::class);
+    }
+
     public function index(Request $request)
     {
         $query = Consejo::query();
