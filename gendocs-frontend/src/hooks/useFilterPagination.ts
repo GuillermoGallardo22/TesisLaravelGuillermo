@@ -9,9 +9,11 @@ import { DEFAULT_PAGINATION_VALUES } from "utils/pagination";
 export const useFilterPagination = <T>({
     callback,
     filters,
+    token = 1,
 }: {
     callback: (props: IFilterPaginationProps) => Promise<IPagination<T>>;
     filters?: IFilterProps;
+    token?: number;
 }) => {
     const [data, setData] = useState<IPagination<T>>(DEFAULT_PAGINATION_VALUES);
 
@@ -88,7 +90,7 @@ export const useFilterPagination = <T>({
                 active = false;
             };
         }
-    }, [data.meta.current_page, data.meta.per_page, search]);
+    }, [data.meta.current_page, data.meta.per_page, search, token]);
 
     return {
         handlePageChange,
