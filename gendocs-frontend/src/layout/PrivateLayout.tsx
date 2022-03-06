@@ -48,8 +48,8 @@ const PrivateLayout = () => {
                 }}
             >
                 <Toolbar />
-                <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-                    <Grid container spacing={3}>
+                <Container maxWidth="xl" sx={{ mt: 4, mb: 4 }}>
+                    <Grid container>
                         <Grid item xs={12}>
                             <Paper sx={{ p: 2 }}>
                                 <Routes>
