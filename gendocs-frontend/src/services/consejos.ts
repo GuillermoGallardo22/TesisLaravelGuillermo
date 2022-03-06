@@ -92,3 +92,21 @@ export async function updateConsejo(
         return handleErrors(error);
     }
 }
+
+export async function deleteConsejo(
+    id: string | number
+): Promise<IResponse<IConsejo>> {
+    try {
+        const {
+            data: { data },
+        } = await axios.delete("consejos/" + id);
+
+        return {
+            data,
+            status: HTTP_STATUS.ok,
+            message: HTTP_MESSAGES[200],
+        };
+    } catch (error) {
+        return handleErrors(error);
+    }
+}
