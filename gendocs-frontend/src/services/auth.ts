@@ -86,9 +86,7 @@ function deleteAllCookies() {
 
 export async function getRoles(): Promise<IRole[]> {
     try {
-        const {
-            data: { data },
-        } = await axios.get("/roles");
+        const { data } = await axios.get("/roles");
 
         return data.map(({ id, name }: { id: number; name: string }) => ({
             id,
