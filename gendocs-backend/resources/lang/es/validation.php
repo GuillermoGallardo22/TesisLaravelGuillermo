@@ -138,6 +138,9 @@ return [
         'consejo' => [
             'update' => [
                 'estado' => 'No se puede actualizar el registro con el estado actual.'
+            ],
+            'delete' => [
+                'estado' => 'No se puede eliminar el registro con el estado actual.'
             ]
         ]
     ],

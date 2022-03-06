@@ -11,6 +11,7 @@ use App\Models\Directorio;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
 class ConsejoController extends Controller
 {
@@ -69,7 +70,7 @@ class ConsejoController extends Controller
         if (!$consejo->estado) {
             return response()->json([
                 'errors' => trans('validation.custom.consejo.update.estado')
-            ], Response::HTTP_UNPROCESSABLE_ENTITY);
+            ], ResponseAlias::HTTP_UNPROCESSABLE_ENTITY);
         }
 
         $validated = $request->validated();
@@ -87,6 +88,18 @@ class ConsejoController extends Controller
 
     public function destroy(Consejo $consejo)
     {
-        //
+        if (!$consejo->estado) {
+            return response()->json([
+                'errors' => trans('validation.custom.consejo.delete.estado')
+            ], ResponseAlias::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        $wasDeleted = $consejo->delete();
+
+        if ($wasDeleted) {
+            return response()->noContent(ResponseAlias::HTTP_OK);
+        }
+
+        return response()->noContent(ResponseAlias::HTTP_UNPROCESSABLE_ENTITY);
     }
 }

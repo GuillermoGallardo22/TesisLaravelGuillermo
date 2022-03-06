@@ -6,10 +6,11 @@ use App\Traits\Filterable;
 use App\Traits\Pageable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Consejo extends Model
 {
-    use HasFactory, Filterable, Pageable;
+    use HasFactory, Filterable, Pageable, SoftDeletes;
 
     protected $fillable = [
         'nombre',
