@@ -1,5 +1,5 @@
 import { MultipleStudentForm } from "pages/private/student/hooks/useAddStudent";
-import xlsx from "xlsx";
+import * as xlsx from "xlsx";
 
 type SheetType = {
     A: string;
