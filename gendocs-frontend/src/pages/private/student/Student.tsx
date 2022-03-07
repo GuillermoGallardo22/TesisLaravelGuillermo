@@ -7,9 +7,7 @@ const Student = () => {
         <Stack gap={2}>
             <Title>Estudiantes</Title>
             <Divider />
-            <Box py={2}>
-                <Outlet />
-            </Box>
+            <Outlet />
         </Stack>
     );
 };

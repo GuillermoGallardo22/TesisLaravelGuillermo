@@ -7,9 +7,7 @@ const Processes = () => {
         <Stack gap={2}>
             <Title>Procesos</Title>
             <Divider />
-            <Box>
-                <Outlet />
-            </Box>
+            <Outlet />
         </Stack>
     );
 };

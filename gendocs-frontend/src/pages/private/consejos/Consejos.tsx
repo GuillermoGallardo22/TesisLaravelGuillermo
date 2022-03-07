@@ -7,9 +7,7 @@ export default function Consejos() {
         <Stack gap={2}>
             <Title>Consejos</Title>
             <Divider />
-            <Box>
-                <Outlet />
-            </Box>
+            <Outlet />
         </Stack>
     );
 }

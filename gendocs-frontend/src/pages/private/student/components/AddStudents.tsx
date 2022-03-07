@@ -348,7 +348,7 @@ const AddMultipleStudents = () => {
     };
 
     return (
-        <Stack spacing={3}>
+        <Stack spacing={2}>
             <Box>
                 <LoadingButton
                     variant="contained"

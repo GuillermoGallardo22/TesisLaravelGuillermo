@@ -49,6 +49,7 @@ const ListStudents = () => {
                 component={RouterLink}
                 startIcon={<Icon icon="add" />}
                 to="nuevo"
+                variant="outlined"
             >
                 AÑADIR ESTUDIANTES
             </Button>

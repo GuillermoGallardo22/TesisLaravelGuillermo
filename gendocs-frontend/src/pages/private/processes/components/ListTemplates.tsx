@@ -61,11 +61,12 @@ const ListTemplates = () => {
     });
 
     return (
-        <Stack spacing={3}>
+        <Stack spacing={2}>
             <Button
                 component={RouterLink}
                 startIcon={<Icon icon="add" />}
                 to="nuevo"
+                variant="outlined"
             >
                 AÑADIR PLANTILLA
             </Button>

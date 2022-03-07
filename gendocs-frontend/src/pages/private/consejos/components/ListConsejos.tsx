@@ -111,11 +111,12 @@ export default function ListConsejos() {
 
     return (
         <>
-            <Stack spacing={3}>
+            <Stack spacing={2}>
                 <Button
                     component={Link}
                     startIcon={<Icon icon="add" />}
                     to="nuevo"
+                    variant="outlined"
                 >
                     AÑADIR CONSEJO
                 </Button>

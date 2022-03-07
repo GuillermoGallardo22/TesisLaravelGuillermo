@@ -7,9 +7,7 @@ const Users: React.FC = () => {
         <Stack gap={2}>
             <Title>Usuarios</Title>
             <Divider />
-            <Box py={2}>
-                <Outlet />
-            </Box>
+            <Outlet />
         </Stack>
     );
 };
