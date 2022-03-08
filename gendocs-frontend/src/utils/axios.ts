@@ -3,19 +3,10 @@ import { HTTP_STATUS } from "models/enums";
 import { IResponse } from "models/interfaces";
 import { HTTP_MESSAGES } from "./messages";
 
-const PROTOCOL = "http";
-const DOMAIN = "localhost";
-const PORT = "80";
-
-const API = "api";
-
-const BASE_PATH = `${PROTOCOL}://${DOMAIN}:${PORT}`;
+const API_PATH = import.meta.env.VITE_API_URL;
 
 axios.defaults.withCredentials = true;
-
-export const initAxios = (mode: "api" | "base") => {
-    axios.defaults.baseURL = mode === "api" ? `${BASE_PATH}/${API}` : BASE_PATH;
-};
+axios.defaults.baseURL = API_PATH;
 
 export function handleErrors<T>(error: any, defaultValues?: any): IResponse<T> {
     if (error.response) {

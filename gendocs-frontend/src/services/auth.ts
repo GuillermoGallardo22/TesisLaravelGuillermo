@@ -7,23 +7,19 @@ import {
     IUser,
     IUserForm,
 } from "models/interfaces";
-import { handleErrors, initAxios } from "utils/axios";
+import { handleErrors } from "utils/axios";
 import { HTTP_MESSAGES } from "utils/messages";
 
 async function getCsrf() {
-    initAxios("base");
     try {
-        await axios.get("/sanctum/csrf-cookie");
+        await axios.get("csrf-cookie");
     } catch (error) {
         console.error({ error });
     }
-    initAxios("api");
 }
 
 export async function getUser(): Promise<IResponse<IUser>> {
     try {
-        initAxios("api");
-
         const {
             data: { data },
         } = await axios.get("/me");
