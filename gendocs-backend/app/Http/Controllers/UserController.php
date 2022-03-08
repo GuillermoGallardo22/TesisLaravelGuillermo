@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UpdatePasswordRequest;
+use App\Http\Requests\UpdateProfileRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Http\Resources\ResourceCollection;
 use App\Http\Resources\ResourceObject;
@@ -16,6 +18,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\GoogleDrive;
 use Illuminate\Support\Str;
 use Spatie\Permission\Models\Role;
+use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
 class UserController extends Controller
 {
@@ -163,6 +166,38 @@ class UserController extends Controller
                 'error' => $e->getMessage(),
             ], 422);
         }
+    }
+
+    public function updateProfile(UpdateProfileRequest $request)
+    {
+        $validated = $request->validated();
+        $user = \request()->user();
+
+        $user->fill([
+            'name' => $validated['nombre'],
+        ]);
+
+        $user->save();
+
+        return ResourceObject::make($user);
+    }
+
+    public function updatePassword(UpdatePasswordRequest $request)
+    {
+        $validated = $request->validated();
+        $user = \request()->user();
+
+        if (!isset($validated['current_password']) || !Hash::check($validated['current_password'], $user->password)) {
+            return response()->json([
+                'errors' => trans('validation.custom.user.update.password')
+            ], ResponseAlias::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        $user->forceFill([
+            'password' => Hash::make($validated['password']),
+        ])->save();
+
+        return response()->noContent(ResponseAlias::HTTP_OK);
     }
 
     public function destroy(User $user)

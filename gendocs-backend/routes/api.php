@@ -33,9 +33,12 @@ Route::middleware(["auth:sanctum", "isUserActive"])->group(function () {
     Route::apiResource('tipo-consejos', TipoConsejoController::class);
 
     // AUTH
-    Route::get('roles', [RoleController::class, 'index']);
     Route::get('me', [UserController::class, 'me']);
+    Route::put('user/profile', [UserController::class, 'updateProfile']);
+    Route::put('user/password', [UserController::class, 'updatePassword']);
     Route::apiResource('user', UserController::class);
+
+    Route::get('roles', [RoleController::class, 'index']);
 
     // TEST
     Route::get('my-permissions', [GoogleDriveController::class, 'myPermissions']);

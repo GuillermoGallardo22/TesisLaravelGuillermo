@@ -142,6 +142,11 @@ return [
             'delete' => [
                 'estado' => 'No se puede eliminar el registro con el estado actual.'
             ]
+        ],
+        'user' => [
+            'update' => [
+                'password' => 'La contraseña proporcionada no coincide con su contraseña actual.'
+            ]
         ]
     ],
 ];
