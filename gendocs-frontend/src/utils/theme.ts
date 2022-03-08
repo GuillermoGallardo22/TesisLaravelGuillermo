@@ -1,24 +1,6 @@
 import { esES as coreEsES } from "@mui/material/locale";
-import { createTheme } from "@mui/material/styles";
 import { esES as tableEsES } from "@mui/x-data-grid";
-
-declare module "@mui/material/styles" {
-    interface Palette {
-        uta: Palette["primary"];
-    }
-
-    // allow configuration using `createTheme`
-    interface PaletteOptions {
-        uta?: PaletteOptions["primary"];
-    }
-}
-
-// Update the Button's color prop options
-declare module "@mui/material/Button" {
-    interface ButtonPropsColorOverrides {
-        uta: true;
-    }
-}
+import { createTheme } from "@mui/material/styles";
 
 export const theme = createTheme(
     {
@@ -30,5 +12,5 @@ export const theme = createTheme(
         },
     },
     tableEsES,
-    coreEsES,
+    coreEsES
 );
