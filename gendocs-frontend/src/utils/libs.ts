@@ -1,6 +1,8 @@
 import { MultipleStudentForm } from "pages/private/student/hooks/useAddStudent";
 import * as xlsx from "xlsx";
 
+export const DRAWERWIDTH = 240;
+
 type SheetType = {
     A: string;
     B: string;

@@ -3,8 +3,9 @@ import { IconButton, Toolbar, Typography } from "@mui/material";
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 import { styled } from "@mui/material/styles";
 import { useAuth } from "hooks/useAuth";
+import { DRAWERWIDTH } from "utils/libs";
 
-const drawerWidth = 240;
+const drawerWidth = DRAWERWIDTH;
 
 interface AppBarStyleProps extends MuiAppBarProps {
     open?: boolean;

@@ -7,9 +7,10 @@ import Toolbar from "@mui/material/Toolbar";
 import Icon from "components/Icon";
 import { useAuthContext } from "contexts/AuthContext";
 import { routes } from "layout/routes";
+import { DRAWERWIDTH } from "utils/libs";
 import Link from "./Link";
 
-const drawerWidth = 240;
+const drawerWidth = DRAWERWIDTH;
 
 const DrawerBase = styled(MuiDrawer, {
     shouldForwardProp: (prop) => prop !== "open",
