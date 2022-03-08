@@ -17,3 +17,9 @@ export interface IUserForm {
     rol: number;
     status?: boolean;
 }
+
+export interface IUpdatePasswordForm {
+    currentPassword: string;
+    newPassword: string;
+    confirmPassword: string;
+}

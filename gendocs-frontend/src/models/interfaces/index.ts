@@ -1,4 +1,4 @@
-import { IUser, IUserForm } from "./IUser";
+import { IUser, IUserForm, IUpdatePasswordForm } from "./IUser";
 import { ICarrera } from "./ICarrera";
 import { IEstudiante } from "./IEstudiante";
 import { IResponse } from "./IResponse";
@@ -31,4 +31,5 @@ export type {
     IMoveTemplateForm,
     IUserForm,
     IRole,
+    IUpdatePasswordForm,
 };

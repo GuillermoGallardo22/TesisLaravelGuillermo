@@ -1,6 +1,12 @@
 import axios from "axios";
 import { HTTP_STATUS } from "models/enums";
-import { IResponse, IRole, IUser, IUserForm } from "models/interfaces";
+import {
+    IResponse,
+    IRole,
+    IUpdatePasswordForm,
+    IUser,
+    IUserForm,
+} from "models/interfaces";
 import { handleErrors, initAxios } from "utils/axios";
 import { HTTP_MESSAGES } from "utils/messages";
 
@@ -141,6 +147,48 @@ export async function updateUser(form: IUserForm): Promise<IResponse<IUser>> {
 
         return {
             data: data,
+            message: HTTP_MESSAGES[200],
+            status: HTTP_STATUS.ok,
+        };
+    } catch (error) {
+        return handleErrors(error, {} as IUser);
+    }
+}
+
+export async function updateProfile(form: IUser): Promise<IResponse<IUser>> {
+    try {
+        const payload = {
+            nombre: form.name,
+        };
+
+        const {
+            data: { data },
+        } = await axios.put("/user/profile", payload);
+
+        return {
+            data: data,
+            message: HTTP_MESSAGES[200],
+            status: HTTP_STATUS.ok,
+        };
+    } catch (error) {
+        return handleErrors(error, {} as IUser);
+    }
+}
+
+export async function updatePassword(
+    form: IUpdatePasswordForm
+): Promise<IResponse<null>> {
+    try {
+        const payload = {
+            current_password: form.currentPassword,
+            password: form.newPassword,
+            password_confirmation: form.confirmPassword,
+        };
+
+        await axios.put("/user/password", payload);
+
+        return {
+            data: null,
             message: HTTP_MESSAGES[200],
             status: HTTP_STATUS.ok,
         };

@@ -1,10 +1,12 @@
 export const VALIDATION_MESSAGES = {
     required: "Campo requerido.",
     invalidFormat: "Formato no válido.",
+    minLength: (length: number) => `Mínimo ${length} caracteres.`,
     maxLength: (length: number) => `Máximo ${length} caracteres.`,
     invalidOption: "Opción no válida.",
     invalidDate: "Fecha no válida.",
     ciDuplicated: "Existen uno o más números de cédulas duplicadas.",
+    passwordConfirmation: "Las contraseñas deben coincidir.",
 };
 
 export const HTTP_MESSAGES: { [code: number]: string } = {

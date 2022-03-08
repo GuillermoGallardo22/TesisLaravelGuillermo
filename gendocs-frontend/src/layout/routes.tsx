@@ -22,6 +22,7 @@ import Consejos from "pages/private/consejos/Consejos";
 import AddConsejo from "pages/private/consejos/components/AddConsejo";
 import ListConsejos from "pages/private/consejos/components/ListConsejos";
 import UpdateConsejo from "pages/private/consejos/components/UpdateConsejo";
+import Profile from "pages/private/profile/Profile";
 
 export interface IRoute {
     path: string;
@@ -152,5 +153,11 @@ export const routes: IRoute[] = [
             { path: "", isIndex: true, component: <ListUsers /> },
         ],
         roles: [RolEnum.ADMIN],
+    },
+    {
+        path: "profile",
+        label: "Perfil",
+        component: <Profile />,
+        icon: <Icon icon="accountCircle" />,
     },
 ];
