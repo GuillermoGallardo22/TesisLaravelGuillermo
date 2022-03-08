@@ -4,6 +4,7 @@ import {
     MenuItem,
     FormHelperText,
     Select as SelectBase,
+    SelectChangeEvent,
 } from "@mui/material";
 import React from "react";
 
@@ -12,8 +13,11 @@ interface SelectProps {
     id: string;
     name: string;
     label: string;
-    value: any;
-    onChange: any;
+    value: string | number;
+    onChange: (
+        event: SelectChangeEvent<string | number>,
+        child: React.ReactNode
+    ) => void;
     items: { id: number; label: string }[];
     errorMessage?: any;
     autoFocus?: boolean;
@@ -34,7 +38,9 @@ const Select: React.FC<SelectProps> = ({
 }) => {
     return (
         <FormControl fullWidth error={error}>
-            <InputLabel required={required} id={id}>{label}</InputLabel>
+            <InputLabel required={required} id={id}>
+                {label}
+            </InputLabel>
             <SelectBase
                 required={required}
                 autoFocus={autoFocus}

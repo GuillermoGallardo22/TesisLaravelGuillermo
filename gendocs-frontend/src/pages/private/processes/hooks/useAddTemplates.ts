@@ -1,6 +1,6 @@
 import { useFormik } from "formik";
 import { HTTP_STATUS } from "models/enums";
-import { IPlantilla, IProceso } from "models/interfaces";
+import { IPlantilla } from "models/interfaces";
 import { useSnackbar } from "notistack";
 import { savePlantilla } from "services/plantillas";
 

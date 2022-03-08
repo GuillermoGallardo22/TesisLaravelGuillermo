@@ -1,4 +1,4 @@
-import { Box, Divider, Stack } from "@mui/material";
+import { Divider, Stack } from "@mui/material";
 import Title from "components/Title";
 import { Outlet } from "react-router-dom";
 

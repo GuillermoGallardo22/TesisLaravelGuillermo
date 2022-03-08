@@ -5,11 +5,11 @@ export interface IPagination<T> {
 
 interface Meta {
     current_page: number;
-    from?: any;
+    from?: number;
     last_page: number;
     next_page?: number | null;
     per_page: number;
-    to?: any;
+    to?: number;
     total: number;
 }
 
