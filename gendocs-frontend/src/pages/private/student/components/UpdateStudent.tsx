@@ -30,7 +30,7 @@ const UpdateStudent = () => {
                             id: item.id,
                             label: item.nombre,
                         }))}
-                        value={formik.values.carrera}
+                        value={formik.values.carrera as number}
                         onChange={formik.handleChange}
                         error={
                             formik.touched.carrera &&

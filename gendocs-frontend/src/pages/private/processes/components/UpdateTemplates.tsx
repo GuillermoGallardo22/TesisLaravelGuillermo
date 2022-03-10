@@ -37,7 +37,7 @@ const UpdateTemplates = () => {
                             id: item.id,
                             label: item.nombre,
                         }))}
-                        value={formik.values.proceso}
+                        value={formik.values.proceso as number}
                         onChange={formik.handleChange}
                         error={
                             formik.touched.proceso &&
