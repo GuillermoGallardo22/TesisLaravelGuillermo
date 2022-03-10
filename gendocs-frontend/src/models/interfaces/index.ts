@@ -9,7 +9,7 @@ import {
     IFilterPaginationProps,
 } from "./IPagination";
 import { IProceso } from "./IProceso";
-import { IPlantilla, IMoveTemplateForm } from "./IPlantilla";
+import { IPlantilla } from "./IPlantilla";
 import { IRole } from "./IRole";
 import { ITipoConsejo } from "./ITipoConsejo";
 import { IConsejo, IConsejoForm } from "./IConsejo";
@@ -28,7 +28,6 @@ export type {
     IFilterPaginationProps,
     IProceso,
     IPlantilla,
-    IMoveTemplateForm,
     IUserForm,
     IRole,
     IUpdatePasswordForm,

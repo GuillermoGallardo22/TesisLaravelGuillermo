@@ -1,4 +1,5 @@
 import { IProceso } from ".";
+import { IUser } from "./IUser";
 
 export interface IPlantilla {
     id: number;
@@ -6,9 +7,5 @@ export interface IPlantilla {
     estado: boolean;
     proceso: number | IProceso;
     drive: string;
-}
-
-export interface IMoveTemplateForm {
-    proceso: number;
-    plantilla: number;
+    autor?: IUser;
 }

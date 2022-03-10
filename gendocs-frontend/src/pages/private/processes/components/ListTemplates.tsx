@@ -8,7 +8,12 @@ import { getPlantillasByProcesoId } from "services/plantillas";
 
 const columns: GridColDef[] = [
     { field: "nombre", headerName: "Nombre", flex: 1 },
-    { field: "autor", headerName: "Autor", flex: 1 },
+    {
+        field: "autor",
+        headerName: "Autor",
+        flex: 1,
+        renderCell: (item) => item?.value.name,
+    },
     {
         field: "estado",
         headerName: "Estado",
