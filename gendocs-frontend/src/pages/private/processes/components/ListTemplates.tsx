@@ -1,8 +1,7 @@
-import { Button, Stack, TextField } from "@mui/material";
+import { Button, IconButton, Stack, TextField, Tooltip } from "@mui/material";
 import { DataGrid, GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
 import ChipStatus from "components/ChipStatus";
 import Icon from "components/Icon";
-import IconButton from "components/IconButton";
 import { useFilterPagination } from "hooks/useFilterPagination";
 import { Link as RouterLink, useParams } from "react-router-dom";
 import { getPlantillasByProcesoId } from "services/plantillas";
@@ -21,23 +20,23 @@ const columns: GridColDef[] = [
     {
         field: "id",
         headerName: "Acciones",
-        flex: 1,
         renderCell: (item: GridRenderCellParams) => (
             <>
-                <IconButton
-                    icon="article"
-                    color="primary"
-                    component={RouterLink}
-                    tooltipText="Ver documento"
-                    to={`${item?.value}/drive`}
-                />
+                <Tooltip title="Ver documento">
+                    <IconButton
+                        color="primary"
+                        component={RouterLink}
+                        to={`${item?.value}/drive`}
+                    >
+                        <Icon icon="article" />
+                    </IconButton>
+                </Tooltip>
 
-                <IconButton
-                    icon="edit"
-                    component={RouterLink}
-                    tooltipText="Editar"
-                    to={`${item.value}`}
-                />
+                <Tooltip title="Editar">
+                    <IconButton component={RouterLink} to={`${item.value}`}>
+                        <Icon icon="edit" />
+                    </IconButton>
+                </Tooltip>
             </>
         ),
     },
