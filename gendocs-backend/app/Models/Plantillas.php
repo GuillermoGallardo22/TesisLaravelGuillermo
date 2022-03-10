@@ -31,6 +31,7 @@ class Plantillas extends Model
             'estado' => $this->estado,
             'proceso' => $this->proceso,
             'drive' => $this->drive_id,
+            'autor' => $this->autor,
         ];
     }
 
@@ -47,5 +48,10 @@ class Plantillas extends Model
     public function proceso()
     {
         return $this->belongsTo(Proceso::class, 'proceso_id');
+    }
+
+    public function autor()
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

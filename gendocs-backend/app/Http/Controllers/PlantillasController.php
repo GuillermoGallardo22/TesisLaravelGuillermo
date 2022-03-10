@@ -53,6 +53,7 @@ class PlantillasController extends Controller
 
         $plantilla = new Plantillas($validated);
         $plantilla->proceso_id = $validated['proceso'];
+        $plantilla->user_id = \request()->user()->id;
 
         $plantilla->drive_id = $this->googleDrive->create(
             $validated["nombre"],

@@ -28,6 +28,9 @@ class CreatePlantillasTable extends Migration
 
             // $table->string("descripcion");
 
+            $table->unsignedBigInteger("user_id");
+            $table->foreign("user_id")->references("id")->on("users");
+
             $table->unsignedBigInteger("proceso_id");
             $table->foreign("proceso_id")->references("id")->on("procesos");
 

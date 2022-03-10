@@ -34,6 +34,11 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        'created_at',
+        'two_factor_recovery_codes',
+        'two_factor_secret',
+        'updated_at',
+        'email_verified_at'
     ];
 
     /**
@@ -42,7 +47,6 @@ class User extends Authenticatable
      * @var array
      */
     protected $casts = [
-        'email_verified_at' => 'datetime',
         'status' => 'boolean'
     ];
 
