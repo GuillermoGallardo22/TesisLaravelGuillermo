@@ -15,16 +15,21 @@ export const DEFAULT_PAGINATION_VALUES = {
     meta: DEFAULT_META,
 };
 
-export function parseFilterPaginationProps({
-    filters: filterProps,
-    pagination: paginationProps,
-}: IFilterPaginationProps): string {
+export function parseFilterPaginationProps(
+    props?: IFilterPaginationProps
+): string {
+    if (!props) return "";
+
+    const { filters: filterProps, pagination: paginationProps } = props;
+
     let pagination = {};
 
     if (paginationProps) {
+        const { size, number = 0 } = paginationProps;
+
         pagination = {
-            "page[number]": paginationProps.number + 1,
-            "page[size]": paginationProps.size,
+            "page[number]": number + 1,
+            "page[size]": size,
         };
     }
 

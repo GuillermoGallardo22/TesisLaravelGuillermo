@@ -14,7 +14,7 @@ interface Meta {
 }
 
 export interface IPaginationProps {
-    number: number;
+    number?: number;
     size: number;
 }
 
