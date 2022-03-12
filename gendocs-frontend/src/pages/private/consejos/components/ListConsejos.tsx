@@ -28,7 +28,7 @@ export default function ListConsejos() {
         search,
         setSearch,
     } = useFilterPagination({
-        callback: getConsejos,
+        fetch: getConsejos,
         token: token,
     });
 

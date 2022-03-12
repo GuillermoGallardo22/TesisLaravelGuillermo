@@ -40,7 +40,7 @@ const ListStudents = () => {
         search,
         setSearch,
     } = useFilterPagination<IEstudiante>({
-        callback: getEstudiantes,
+        fetch: getEstudiantes,
     });
 
     return (

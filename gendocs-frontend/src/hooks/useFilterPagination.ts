@@ -3,18 +3,21 @@ import {
     IFilterProps,
     IPagination,
 } from "models/interfaces";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { DEFAULT_PAGINATION_VALUES } from "utils/pagination";
+import { debounce } from "lodash";
 
-export const useFilterPagination = <T>({
-    callback,
-    filters,
-    token = 1,
-}: {
-    callback: (props: IFilterPaginationProps) => Promise<IPagination<T>>;
+type useFilterPaginationProps<T> = {
+    fetch: (props: IFilterPaginationProps) => Promise<IPagination<T>>;
     filters?: IFilterProps;
     token?: number;
-}) => {
+};
+
+export const useFilterPagination = <T>({
+    fetch,
+    filters,
+    token = 1,
+}: useFilterPaginationProps<T>) => {
     const [data, setData] = useState<IPagination<T>>(DEFAULT_PAGINATION_VALUES);
 
     const [loading, setLoading] = useState<boolean>(true);
@@ -38,36 +41,27 @@ export const useFilterPagination = <T>({
         }));
     };
 
+    const handleFetch = useCallback(
+        async (
+            props: IFilterPaginationProps,
+            callback: (result: IPagination<T>) => void
+        ) => {
+            const result = await fetch(props);
+            callback(result);
+        },
+        []
+    );
+
+    const debouncedFetch = useMemo(() => debounce(handleFetch, 300), []);
+
     useEffect(() => {
+        let active = true;
+
+        setLoading(true);
+
         if (search) {
-            const delayDebounceFn = setTimeout(() => {
-                (async () => {
-                    setLoading(true);
-
-                    const response = await callback({
-                        pagination: {
-                            number: data.meta.current_page,
-                            size: data.meta.per_page,
-                        },
-                        filters: {
-                            search,
-                            ...filters,
-                        },
-                    });
-
-                    setData(response);
-                    setLoading(false);
-                })();
-            }, 500);
-
-            return () => clearTimeout(delayDebounceFn);
-        } else {
-            let active = true;
-
-            (async () => {
-                setLoading(true);
-
-                const response = await callback({
+            debouncedFetch(
+                {
                     pagination: {
                         number: data.meta.current_page,
                         size: data.meta.per_page,
@@ -76,20 +70,40 @@ export const useFilterPagination = <T>({
                         search,
                         ...filters,
                     },
-                });
-
-                if (!active) {
-                    return;
+                },
+                (results) => {
+                    if (!active) {
+                        return;
+                    }
+                    setData(results);
+                    setLoading(false);
                 }
-
-                setData(response);
-                setLoading(false);
-            })();
-
-            return () => {
-                active = false;
-            };
+            );
+        } else {
+            handleFetch(
+                {
+                    pagination: {
+                        number: data.meta.current_page,
+                        size: data.meta.per_page,
+                    },
+                    filters: {
+                        search,
+                        ...filters,
+                    },
+                },
+                (results) => {
+                    if (!active) {
+                        return;
+                    }
+                    setData(results);
+                    setLoading(false);
+                }
+            );
         }
+
+        return () => {
+            active = false;
+        };
     }, [data.meta.current_page, data.meta.per_page, search, token]);
 
     return {
