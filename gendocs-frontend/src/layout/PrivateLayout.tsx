@@ -24,10 +24,16 @@ const handleRoutes = (item: IRoute) => {
     );
 };
 
+const isToogleDrawer = localStorage.getItem("isToogleDrawer") || "true";
+const defaultState = JSON.parse(isToogleDrawer);
+
 const PrivateLayout = () => {
-    const [open, setOpen] = React.useState(true);
+    const [open, setOpen] = React.useState(defaultState);
+
     const toggleDrawer = () => {
-        setOpen(!open);
+        const state = !open;
+        localStorage.setItem("isToogleDrawer", JSON.stringify(state));
+        setOpen(state);
     };
 
     return (
