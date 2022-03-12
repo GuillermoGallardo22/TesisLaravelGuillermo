@@ -1,8 +1,8 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
 import path from "path";
 
-function srcPath(subdir) {
+function srcPath(subdir: string) {
     return path.join(__dirname, "src", subdir);
 }
 
@@ -24,4 +24,4 @@ export default defineConfig({
             routes: srcPath("routes/"),
         },
     },
-})
+});
