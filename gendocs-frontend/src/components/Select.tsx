@@ -37,7 +37,7 @@ const Select: React.FC<SelectProps> = ({
     required,
 }) => {
     return (
-        <FormControl fullWidth error={error}>
+        <FormControl fullWidth error={error} margin="normal">
             <InputLabel required={required} id={id}>
                 {label}
             </InputLabel>
