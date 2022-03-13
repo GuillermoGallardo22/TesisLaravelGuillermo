@@ -34,7 +34,7 @@ class ConsejoPolicy
 
     public function delete(User $user, Consejo $consejo)
     {
-        return $user->hasRole([Roles::Admin, Roles::AdminTemp]);
+        return $user->getAllPermissions()->contains('name', Permissions::Consejos['delete']);
     }
 
     public function restore(User $user, Consejo $consejo)

@@ -26,6 +26,7 @@ abstract class Permissions
         'index' => 'consejo.index',
         'create' => 'consejo.create',
         'update' => 'consejo.update',
+        'delete' => 'consejo.delete'
     ];
 
     const Users = [

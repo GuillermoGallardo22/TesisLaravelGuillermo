@@ -44,6 +44,7 @@ class PermissionsSeeder extends Seeder
             Arr::divide(Permissions::Plantillas)[1],
             Arr::divide(Permissions::Procesos)[1],
             Arr::divide(Permissions::Consejos)[1],
+            Arr::divide(Permissions::Documentos)[1],
         );
 
         foreach ($permissions as $permissionName) {
@@ -51,15 +52,18 @@ class PermissionsSeeder extends Seeder
                 'name' => $permissionName,
             ]);
 
-            $roleAdmin->givePermissionTo($permission);
-            $roleAdminTemp->givePermissionTo($permission);
-            $roleWriter->givePermissionTo($permission);
-
             list(, $action) = explode('.', $permissionName);
 
             if ($action === 'index') {
                 $roleReader->givePermissionTo($permission);
             }
+
+            if ($action !== 'delete') {
+                $roleWriter->givePermissionTo($permission);
+            }
+
+            $roleAdmin->givePermissionTo($permission);
+            $roleAdminTemp->givePermissionTo($permission);
         }
 
         foreach (Arr::divide(Permissions::Users)[1] as $permissionName) {
