@@ -2,17 +2,16 @@ import axios from "axios";
 import { HTTP_STATUS } from "models/enums";
 import {
     IFilterPaginationProps,
-    IMoveTemplateForm,
     IPagination,
     IPlantilla,
-    IResponse
+    IResponse,
 } from "models/interfaces";
 import { handleErrors } from "utils/axios";
 import { HTTP_MESSAGES } from "utils/messages";
 import {
     DEFAULT_PAGINATION_VALUES,
     parseFilterPaginationProps,
-    parsePaginationData
+    parsePaginationData,
 } from "utils/pagination";
 
 type OptionsParseResponseToTemplate = {
@@ -89,25 +88,6 @@ export async function updatePlantilla(
         const {
             data: { data },
         } = await axios.put("plantillas/" + form.id, form);
-        return {
-            status: HTTP_STATUS.ok,
-            data: parseResponseToTemplate(data, { justForeignKey: true }),
-            message: HTTP_MESSAGES[200],
-        };
-    } catch (error) {
-        return handleErrors(error);
-    }
-}
-
-export async function movePlantilla(
-    form: IMoveTemplateForm
-): Promise<IResponse<IPlantilla>> {
-    try {
-        const {
-            data: { data },
-        } = await axios.put(
-            "plantillas/" + form.plantilla + "/move/" + form.proceso
-        );
         return {
             status: HTTP_STATUS.ok,
             data: parseResponseToTemplate(data, { justForeignKey: true }),
