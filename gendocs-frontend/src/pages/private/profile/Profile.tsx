@@ -21,9 +21,8 @@ function UserInfo() {
         <Box component="form" onSubmit={formik.handleSubmit} noValidate>
             <Grid container spacing={3}>
                 <Grid item xs={12}>
-                    <Divider>
-                        <Title>Perfil</Title>
-                    </Divider>
+                    <Title>Perfil</Title>
+                    <Divider />
                 </Grid>
 
                 <Grid item xs={12}>
@@ -97,9 +96,8 @@ function UserPassword() {
         <Box component="form" onSubmit={formik.handleSubmit} noValidate>
             <Grid container spacing={3}>
                 <Grid item xs={12}>
-                    <Divider>
-                        <Title>Cambiar la contraseña</Title>
-                    </Divider>
+                    <Title>Cambiar la contraseña</Title>
+                    <Divider />
                 </Grid>
 
                 <Grid item xs={12}>
