@@ -34,6 +34,9 @@ class PlantillasController extends Controller
     {
         $query = Plantillas::query();
 
+        $query->orderBy('estado', 'DESC');
+        $query->orderBy('nombre');
+
         $query->applyFilters($request->all());
 
         $paginate = $query->applyPaginate($request->all());

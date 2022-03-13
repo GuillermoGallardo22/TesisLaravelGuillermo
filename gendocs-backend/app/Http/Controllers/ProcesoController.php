@@ -32,6 +32,9 @@ class ProcesoController extends Controller
     {
         $query = Proceso::query()->fromActiveDirectory();
 
+        $query->orderBy('estado', 'DESC');
+        $query->orderBy('nombre');
+
         $query->applyFilters($request->all());
 
         $paginate = $query->applyPaginate($request->all());
