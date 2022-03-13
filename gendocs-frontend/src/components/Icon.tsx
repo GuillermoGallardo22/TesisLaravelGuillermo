@@ -15,6 +15,7 @@ import GroupsIcon from "@mui/icons-material/Groups";
 import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import TopicIcon from "@mui/icons-material/Topic";
 
 export type IconTypes =
     | "article"
@@ -35,7 +36,8 @@ export type IconTypes =
     | "groups"
     | "meetingRoom"
     | "delete"
-    | "accountCircle";
+    | "accountCircle"
+    | "topic";
 
 const ICONS = {
     article: <ArticleIcon />,
@@ -55,6 +57,7 @@ const ICONS = {
     meetingRoom: <MeetingRoomIcon />,
     delete: <DeleteIcon />,
     accountCircle: <AccountCircleIcon />,
+    topic: <TopicIcon />,
 };
 
 interface IconProps {

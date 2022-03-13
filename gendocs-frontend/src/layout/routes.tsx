@@ -1,3 +1,12 @@
+import Icon from "components/Icon";
+import { RolEnum } from "models/enums";
+import AddConsejo from "pages/private/consejos/components/AddConsejo";
+import ListConsejos from "pages/private/consejos/components/ListConsejos";
+import UpdateConsejo from "pages/private/consejos/components/UpdateConsejo";
+import Consejos from "pages/private/consejos/Consejos";
+import AddDocumento from "pages/private/documentos/components/AddDocumento";
+import ListDocumentos from "pages/private/documentos/components/ListDocumentos";
+import Documentos from "pages/private/documentos/Documents";
 import Home from "pages/private/home/Home";
 import AddProcess from "pages/private/processes/components/AddProcess";
 import AddTemplates from "pages/private/processes/components/AddTemplates";
@@ -7,22 +16,16 @@ import ListTemplates from "pages/private/processes/components/ListTemplates";
 import UpdateProcess from "pages/private/processes/components/UpdateProcess";
 import UpdateTemplates from "pages/private/processes/components/UpdateTemplates";
 import Processes from "pages/private/processes/Processes";
+import Profile from "pages/private/profile/Profile";
 import AddStudents from "pages/private/student/components/AddStudents";
 import ListStudents from "pages/private/student/components/ListStudents";
 import UpdateStudent from "pages/private/student/components/UpdateStudent";
 import Student from "pages/private/student/Student";
-import Users from "pages/private/Users/Users";
-import { Outlet } from "react-router-dom";
 import AddUser from "pages/private/Users/components/AddUser";
 import ListUsers from "pages/private/Users/components/ListUsers";
-import { RolEnum } from "models/enums";
 import UpdateUser from "pages/private/Users/components/UpdateUser";
-import Icon from "components/Icon";
-import Consejos from "pages/private/consejos/Consejos";
-import AddConsejo from "pages/private/consejos/components/AddConsejo";
-import ListConsejos from "pages/private/consejos/components/ListConsejos";
-import UpdateConsejo from "pages/private/consejos/components/UpdateConsejo";
-import Profile from "pages/private/profile/Profile";
+import Users from "pages/private/Users/Users";
+import { Outlet } from "react-router-dom";
 
 export interface IRoute {
     path: string;
@@ -42,6 +45,20 @@ export const routes: IRoute[] = [
         label: "Inicio",
         component: <Home />,
         icon: <Icon icon="home" />,
+    },
+    {
+        path: "documentos",
+        label: "Documentos",
+        component: <Documentos />,
+        icon: <Icon icon="topic" />,
+        childrens: [
+            {
+                path: "nuevo",
+                component: <AddDocumento />,
+                roles: [RolEnum.ADMIN, RolEnum.ADMINTEMP, RolEnum.WRITER],
+            },
+            { path: "", isIndex: true, component: <ListDocumentos /> },
+        ],
     },
     {
         path: "estudiante",
