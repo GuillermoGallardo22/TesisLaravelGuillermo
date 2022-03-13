@@ -34,4 +34,11 @@ abstract class Permissions
         'create' => 'user.create',
         'update' => 'user.update',
     ];
+
+    const Documentos = [
+        'index' => 'documento.index',
+        'create' => 'documento.create',
+        'update' => 'documento.update',
+        'delete' => 'documento.delete'
+    ];
 }

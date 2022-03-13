@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CarreraController;
 use App\Http\Controllers\ConsejoController;
+use App\Http\Controllers\DocumentoController;
 use App\Http\Controllers\EstudianteController;
 use App\Http\Controllers\GoogleDriveController;
 use App\Http\Controllers\PlantillasController;
@@ -31,6 +32,7 @@ Route::middleware(["auth:sanctum", "isUserActive"])->group(function () {
     Route::apiResource('plantillas', PlantillasController::class);
     Route::apiResource('consejos', ConsejoController::class);
     Route::apiResource('tipo-consejos', TipoConsejoController::class);
+    Route::apiResource('documentos', DocumentoController::class);
 
     // AUTH
     Route::get('me', [UserController::class, 'me']);
