@@ -6,6 +6,7 @@ use App\Traits\Filterable;
 use App\Traits\Pageable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Estudiante extends Model
 {
@@ -50,11 +51,12 @@ class Estudiante extends Model
 
     public function scopeSearch($query, $filter)
     {
+        $filter = preg_replace('/\s+/', '%', $filter);
+
         return $query
             ->where('cedula', 'like', "%$filter%")
             ->orWhere('matricula', 'like', "%$filter%")
             ->orWhere('folio', 'like', "%$filter%")
-            ->orWhere('nombres', 'like', "%$filter%")
-            ->orWhere('apellidos', 'like', "%$filter%");
+            ->orWhere(DB::raw("CONCAT_WS(' ', nombres, apellidos)"), 'like', "%$filter%");
     }
 }
