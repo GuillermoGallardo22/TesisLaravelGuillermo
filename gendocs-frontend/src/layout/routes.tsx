@@ -1,30 +1,101 @@
 import Icon from "components/Icon";
 import { RolEnum } from "models/enums";
-import AddConsejo from "pages/private/consejos/components/AddConsejo";
-import ListConsejos from "pages/private/consejos/components/ListConsejos";
-import UpdateConsejo from "pages/private/consejos/components/UpdateConsejo";
-import Consejos from "pages/private/consejos/Consejos";
-import AddDocumento from "pages/private/documentos/components/AddDocumento";
-import ListDocumentos from "pages/private/documentos/components/ListDocumentos";
-import Documentos from "pages/private/documentos/Documents";
-import Home from "pages/private/home/Home";
-import AddProcess from "pages/private/processes/components/AddProcess";
-import AddTemplates from "pages/private/processes/components/AddTemplates";
-import DriveTemplate from "pages/private/processes/components/DriveTemplate";
-import ListProcess from "pages/private/processes/components/ListProcess";
-import ListTemplates from "pages/private/processes/components/ListTemplates";
-import UpdateProcess from "pages/private/processes/components/UpdateProcess";
-import UpdateTemplates from "pages/private/processes/components/UpdateTemplates";
-import Processes from "pages/private/processes/Processes";
-import Profile from "pages/private/profile/Profile";
-import AddStudents from "pages/private/student/components/AddStudents";
-import ListStudents from "pages/private/student/components/ListStudents";
-import UpdateStudent from "pages/private/student/components/UpdateStudent";
-import Student from "pages/private/student/Student";
-import AddUser from "pages/private/Users/components/AddUser";
-import ListUsers from "pages/private/Users/components/ListUsers";
-import UpdateUser from "pages/private/Users/components/UpdateUser";
-import Users from "pages/private/Users/Users";
+import { lazy } from "react";
+
+
+const Home = lazy(() => import("pages/private/home/Home"));
+
+const AddConsejo = lazy(
+    () => import("pages/private/consejos/components/AddConsejo")
+);
+
+const ListConsejos = lazy(
+    () => import("pages/private/consejos/components/ListConsejos")
+);
+
+const UpdateConsejo = lazy(
+    () => import("pages/private/consejos/components/UpdateConsejo")
+);
+
+const Consejos = lazy(() => import("pages/private/consejos/Consejos"));
+
+const AddDocumento = lazy(
+    () => import("pages/private/documentos/components/AddDocumento")
+);
+
+const ListDocumentos = lazy(
+    () => import("pages/private/documentos/components/ListDocumentos")
+);
+
+const Documentos = lazy(() => import("pages/private/documentos/Documents"));
+
+const AddProcess = lazy(
+    () => import("pages/private/processes/components/AddProcess")
+);
+
+const AddTemplates = lazy(
+    () => import("pages/private/processes/components/AddTemplates")
+);
+
+const DriveTemplate = lazy(
+    () => import("pages/private/processes/components/DriveTemplate")
+);
+
+const ListProcess = lazy(
+    () => import("pages/private/processes/components/ListProcess")
+);
+
+const ListTemplates = lazy(
+    () => import("pages/private/processes/components/ListTemplates")
+);
+
+const UpdateProcess = lazy(
+    () => import("pages/private/processes/components/UpdateProcess")
+);
+
+const UpdateTemplates = lazy(
+    () => import("pages/private/processes/components/UpdateTemplates")
+);
+
+const Processes = lazy(() => import("pages/private/processes/Processes"));
+
+const Profile = lazy(() => import("pages/private/profile/Profile"));
+
+const AddReserva = lazy(
+    () => import("pages/private/reservas/components/AddReserva")
+);
+
+const ListReservas = lazy(
+    () => import("pages/private/reservas/components/ListReservas")
+);
+
+const Reservas = lazy(() => import("pages/private/reservas/Reservas"));
+
+const AddStudents = lazy(
+    () => import("pages/private/student/components/AddStudents")
+);
+
+const ListStudents = lazy(
+    () => import("pages/private/student/components/ListStudents")
+);
+
+const UpdateStudent = lazy(
+    () => import("pages/private/student/components/UpdateStudent")
+);
+
+const Student = lazy(() => import("pages/private/student/Student"));
+
+const AddUser = lazy(() => import("pages/private/Users/components/AddUser"));
+
+const ListUsers = lazy(
+    () => import("pages/private/Users/components/ListUsers")
+);
+
+const UpdateUser = lazy(
+    () => import("pages/private/Users/components/UpdateUser")
+);
+
+const Users = lazy(() => import("pages/private/Users/Users"));
 import { Outlet } from "react-router-dom";
 
 export interface IRoute {
@@ -59,6 +130,20 @@ export const routes: IRoute[] = [
             },
             { path: "", isIndex: true, component: <ListDocumentos /> },
         ],
+    },
+    {
+        path: "reservas",
+        label: "Reservar",
+        component: <Reservas />,
+        icon: <Icon icon="numbers" />,
+        childrens: [
+            {
+                path: "nuevo",
+                component: <AddReserva />,
+            },
+            { path: "", isIndex: true, component: <ListReservas /> },
+        ],
+        roles: [RolEnum.ADMIN, RolEnum.ADMINTEMP],
     },
     {
         path: "estudiante",

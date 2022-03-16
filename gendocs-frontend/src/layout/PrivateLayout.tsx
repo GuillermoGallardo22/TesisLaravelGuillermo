@@ -4,8 +4,9 @@ import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Toolbar from "@mui/material/Toolbar";
 import AccessDenied from "components/AccesDenied";
+import { Skeleton } from "components/Skeleton";
 import { useAuthContext } from "contexts/AuthContext";
-import * as React from "react";
+import { Suspense, useState } from "react";
 import { Navigate, Route, Routes } from "react-router";
 import AppBar from "./components/AppBar";
 import Drawer from "./components/Drawer";
@@ -28,7 +29,7 @@ const isToogleDrawer = localStorage.getItem("isToogleDrawer") || "true";
 const defaultState = JSON.parse(isToogleDrawer);
 
 const PrivateLayout = () => {
-    const [open, setOpen] = React.useState(defaultState);
+    const [open, setOpen] = useState(defaultState);
 
     const toggleDrawer = () => {
         const state = !open;
@@ -58,15 +59,17 @@ const PrivateLayout = () => {
                     <Grid container>
                         <Grid item xs={12}>
                             <Paper sx={{ p: 2 }}>
-                                <Routes>
-                                    {routes.map(handleRoutes)}
-                                    <Route
-                                        path="/"
-                                        element={
-                                            <Navigate to={DEFAULT_ROUTE} />
-                                        }
-                                    />
-                                </Routes>
+                                <Suspense fallback={<Skeleton />}>
+                                    <Routes>
+                                        {routes.map(handleRoutes)}
+                                        <Route
+                                            path="/"
+                                            element={
+                                                <Navigate to={DEFAULT_ROUTE} />
+                                            }
+                                        />
+                                    </Routes>
+                                </Suspense>
                             </Paper>
                         </Grid>
                     </Grid>
