@@ -1,22 +1,23 @@
-import { ThemeProvider } from "@mui/material/styles";
-import { CssBaseline } from "@mui/material";
-import LoadingScreen from "components/LoadingScreen";
-import { useAuthContext } from "contexts/AuthContext";
-import PrivateLayout from "layout/PrivateLayout";
-import { HTTP_STATUS } from "models/enums";
-import { SnackbarProvider } from "notistack";
-import Login from "pages/public/Login";
-import AuthProvider from "providers/AuthProvider";
-import { useCallback, useEffect } from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import { AuthActionsEnum } from "reducers/AuthReducer";
-import PrivateRoute from "routes/PrivateRoute";
-import PublicRoute from "routes/PublicRoute";
-import { getUser } from "services/auth";
-import { theme } from "utils/theme";
 import DateAdapter from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
+import { CssBaseline } from "@mui/material";
+import { ThemeProvider } from "@mui/material/styles";
+import LoadingScreen from "components/LoadingScreen";
+import { useAuthContext } from "contexts/AuthContext";
 import esLocale from "date-fns/locale/es";
+import { HTTP_STATUS } from "models/enums";
+import { SnackbarProvider } from "notistack";
+import AuthProvider from "providers/AuthProvider";
+import { lazy, Suspense, useCallback, useEffect } from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { AuthActionsEnum } from "reducers/AuthReducer";
+import { getUser } from "services/auth";
+import { theme } from "utils/theme";
+
+const Login = lazy(() => import("pages/public/Login"));
+const PrivateLayout = lazy(() => import("layout/PrivateLayout"));
+const PrivateRoute = lazy(() => import("routes/PrivateRoute"));
+const PublicRoute = lazy(() => import("routes/PublicRoute"));
 
 const App = () => {
     return (
@@ -66,24 +67,26 @@ const AuthCheck = () => {
 
 const AppBase = () => {
     return (
-        <Routes>
-            <Route
-                path="/login"
-                element={
-                    <PublicRoute>
-                        <Login />
-                    </PublicRoute>
-                }
-            />
-            <Route
-                path="/*"
-                element={
-                    <PrivateRoute>
-                        <PrivateLayout />
-                    </PrivateRoute>
-                }
-            />
-        </Routes>
+        <Suspense fallback={<LoadingScreen />}>
+            <Routes>
+                <Route
+                    path="/login"
+                    element={
+                        <PublicRoute>
+                            <Login />
+                        </PublicRoute>
+                    }
+                />
+                <Route
+                    path="/*"
+                    element={
+                        <PrivateRoute>
+                            <PrivateLayout />
+                        </PrivateRoute>
+                    }
+                />
+            </Routes>
+        </Suspense>
     );
 };
 
