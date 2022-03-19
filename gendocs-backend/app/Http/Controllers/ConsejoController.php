@@ -8,18 +8,21 @@ use App\Http\Resources\ResourceCollection;
 use App\Http\Resources\ResourceObject;
 use App\Models\Consejo;
 use App\Models\Directorio;
+use App\Models\GoogleDrive;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
 class ConsejoController extends Controller
 {
+    protected GoogleDrive $googleDrive;
 
-
-    public function __construct()
+    public function __construct(GoogleDrive $googleDrive)
     {
         $this->authorizeResource(Consejo::class);
+        $this->googleDrive = $googleDrive;
     }
 
     public function index(Request $request)
@@ -47,17 +50,38 @@ class ConsejoController extends Controller
     {
         $validated = $request->validated();
 
-        $consejo = new Consejo([
-            'nombre' => $validated['nombre'],
-            'fecha' => new Carbon($validated['fecha']),
-            'tipo_consejo_id' => $validated['tipo_consejo'],
-        ]);
+        try {
+            DB::beginTransaction();
 
-        $consejo->directorio_id = Directorio::activeDirectory()->id;
+            $activeDirectory = Directorio::query()->activeDirectory();
 
-        $consejo->save();
+            $directorio = $this->googleDrive->create(
+                'CONSEJO - ' . $validated['nombre'],
+                "folder",
+                $activeDirectory->drive_id,
+            );
 
-        return ResourceObject::make($consejo);
+            $consejo = Consejo::create([
+                'nombre' => $validated['nombre'],
+                'fecha' => new Carbon($validated['fecha']),
+                'tipo_consejo_id' => $validated['tipo_consejo'],
+                'directorio_id' => $activeDirectory->id,
+            ]);
+
+            $consejo->directorio()->create([
+                'google_drive_id' => $directorio->id,
+            ]);
+
+            DB::commit();
+
+            return ResourceObject::make($consejo);
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return response()->json([
+                'errors' => $e->getMessage(),
+            ], ResponseAlias::HTTP_UNPROCESSABLE_ENTITY);
+        }
     }
 
     public function show(Consejo $consejo)

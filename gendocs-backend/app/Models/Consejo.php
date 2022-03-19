@@ -15,7 +15,14 @@ class Consejo extends Model
     protected $fillable = [
         'nombre',
         'fecha',
-        'tipo_consejo_id'
+        'tipo_consejo_id',
+        'directorio_id'
+    ];
+
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+        'deleted_at'
     ];
 
     public const FILTERS = ['search', 'estado'];
@@ -49,5 +56,10 @@ class Consejo extends Model
     public function scopeEstado($query, $target)
     {
         return $query->where('estado', '=', $target);
+    }
+
+    public function directorio()
+    {
+        return $this->morphOne(DriveApi::class, 'model');
     }
 }
