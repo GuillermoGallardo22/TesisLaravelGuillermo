@@ -22,6 +22,7 @@ interface SelectProps {
     errorMessage?: any;
     autoFocus?: boolean;
     required?: boolean;
+    disabled?: boolean;
 }
 
 const Select: React.FC<SelectProps> = ({
@@ -35,9 +36,15 @@ const Select: React.FC<SelectProps> = ({
     errorMessage,
     autoFocus,
     required,
+    disabled = false,
 }) => {
     return (
-        <FormControl fullWidth error={error} margin="normal">
+        <FormControl
+            fullWidth
+            disabled={disabled}
+            error={error}
+            margin="normal"
+        >
             <InputLabel required={required} id={id}>
                 {label}
             </InputLabel>

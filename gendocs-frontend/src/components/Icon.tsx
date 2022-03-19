@@ -16,6 +16,8 @@ import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import TopicIcon from "@mui/icons-material/Topic";
+import AutorenewIcon from "@mui/icons-material/Autorenew";
+import NumbersIcon from "@mui/icons-material/Numbers";
 
 export type IconTypes =
     | "article"
@@ -37,7 +39,9 @@ export type IconTypes =
     | "meetingRoom"
     | "delete"
     | "accountCircle"
-    | "topic";
+    | "topic"
+    | "autorenew"
+    | "numbers";
 
 const ICONS = {
     article: <ArticleIcon />,
@@ -58,6 +62,8 @@ const ICONS = {
     delete: <DeleteIcon />,
     accountCircle: <AccountCircleIcon />,
     topic: <TopicIcon />,
+    autorenew: <AutorenewIcon />,
+    numbers: <NumbersIcon />,
 };
 
 interface IconProps {

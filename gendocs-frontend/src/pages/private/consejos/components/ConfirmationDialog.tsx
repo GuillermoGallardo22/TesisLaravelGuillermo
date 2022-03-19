@@ -1,5 +1,6 @@
 import { LoadingButton } from "@mui/lab";
 import {
+    Breakpoint,
     Dialog,
     DialogActions,
     DialogContent,
@@ -27,6 +28,9 @@ type ConfirmationDialogProps = {
     textApprove?: string;
     buttonColorCancel?: ButtonColor;
     buttonColorApprove?: ButtonColor;
+    width?: string;
+    maxHeight?: string;
+    maxWidth?: Breakpoint;
 };
 
 const ConfirmationDialog: React.FC<ConfirmationDialogProps> = ({
@@ -41,14 +45,18 @@ const ConfirmationDialog: React.FC<ConfirmationDialogProps> = ({
     textApprove = "Aceptar",
     buttonColorCancel = "primary",
     buttonColorApprove = "primary",
+    width = "80%",
+    maxHeight = "80%",
+    maxWidth = "sm",
     children,
 }) => {
     return (
         <Dialog
             id={id}
-            sx={{ "& .MuiDialog-paper": { width: "80%", maxHeight: 435 } }}
-            maxWidth="sm"
+            sx={{ "& .MuiDialog-paper": { width, maxHeight } }}
+            maxWidth={maxWidth}
             open={isVisible}
+            scroll="paper"
             keepMounted={keepMounted}
         >
             <DialogTitle>{title}</DialogTitle>

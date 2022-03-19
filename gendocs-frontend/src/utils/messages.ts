@@ -7,6 +7,8 @@ export const VALIDATION_MESSAGES = {
     invalidDate: "Fecha no válida.",
     ciDuplicated: "Existen uno o más números de cédulas duplicadas.",
     passwordConfirmation: "Las contraseñas deben coincidir.",
+    consejoNumeracion:
+        "Al consejo seleccionado no se le puede asignar la numeración deseda",
 };
 
 export const HTTP_MESSAGES: { [code: number]: string } = {
