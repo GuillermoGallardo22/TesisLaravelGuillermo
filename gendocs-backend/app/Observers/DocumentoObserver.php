@@ -15,12 +15,21 @@ class DocumentoObserver
      */
     public function created(Documento $documento)
     {
-        Numeracion::create([
-            'numero' => $documento->numero,
-            'usado' => true,
-            'reservado' => false,
-            'encolado' => false,
-        ]);
+        $numeracion = Numeracion::query()->where('numero', $documento->numero)->first();
+
+        if (!$numeracion) {
+            $numeracion = new  Numeracion([
+                'numero' => $documento->numero,
+            ]);
+        }
+
+        $numeracion
+            ->fill([
+                'usado' => true,
+                'reservado' => false,
+                'encolado' => false,
+            ])
+            ->save();
     }
 
     /**
