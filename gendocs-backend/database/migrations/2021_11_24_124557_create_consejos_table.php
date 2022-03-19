@@ -20,11 +20,13 @@ class CreateConsejosTable extends Migration
             $table->dateTime("fecha");
             $table->boolean('estado')->default(true); // true = Abierto | false = Cerrado
 
-            $table->unsignedBigInteger("directorio_id");
-            $table->foreign("directorio_id")->references("id")->on("directorios");
+            $table->foreignId("directorio_id")
+                ->references("id")
+                ->on("directorios");
 
-            $table->unsignedBigInteger("tipo_consejo_id");
-            $table->foreign("tipo_consejo_id")->references("id")->on("tipo_consejos");
+            $table->foreignId("tipo_consejo_id")
+                ->references("id")
+                ->on("tipo_consejos");
 
             $table->timestamps();
             $table->softDeletes();

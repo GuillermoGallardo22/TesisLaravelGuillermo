@@ -3,10 +3,24 @@
 namespace App\Observers;
 
 use App\Models\Documento;
+use App\Models\GoogleDrive;
 use App\Models\Numeracion;
+use App\Traits\Nameable;
 
 class DocumentoObserver
 {
+    use Nameable;
+
+    protected GoogleDrive $googleDrive;
+
+    /**
+     * @param GoogleDrive $googleDrive
+     */
+    public function __construct(GoogleDrive $googleDrive)
+    {
+        $this->googleDrive = $googleDrive;
+    }
+
     /**
      * Handle the Documento "created" event.
      *
@@ -15,6 +29,18 @@ class DocumentoObserver
      */
     public function created(Documento $documento)
     {
+        $documentoDrive = $this->googleDrive->copyFile(
+            $this
+                ->setNumber($documento->numero)
+                ->generateNameFile(),
+            $documento->consejo->directorio->google_drive_id,
+            $documento->plantilla->archivo->google_drive_id,
+        );
+
+        $documento->archivo()->create([
+            'google_drive_id' => $documentoDrive->id,
+        ]);
+
         $numeracion = Numeracion::query()->where('numero', $documento->numero)->first();
 
         if (!$numeracion) {

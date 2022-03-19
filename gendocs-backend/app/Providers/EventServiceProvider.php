@@ -2,9 +2,11 @@
 
 namespace App\Providers;
 
+use App\Models\Consejo;
 use App\Models\Documento;
 use App\Models\Plantillas;
 use App\Models\Proceso;
+use App\Observers\ConsejoObserver;
 use App\Observers\DocumentoObserver;
 use App\Observers\PlantillaObserver;
 use App\Observers\ProcesoObserver;
@@ -35,6 +37,7 @@ class EventServiceProvider extends ServiceProvider
     {
         Proceso::observe(ProcesoObserver::class);
         Plantillas::observe(PlantillaObserver::class);
+        Consejo::observe(ConsejoObserver::class);
         Documento::observe(DocumentoObserver::class);
     }
 }

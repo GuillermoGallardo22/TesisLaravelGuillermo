@@ -2,11 +2,20 @@
 
 namespace App\Traits;
 
+use Carbon\Carbon;
+
 trait Nameable
 {
     protected $prefix = '###';
     protected $separator = '-';
     protected $name = '';
+    protected $number = '';
+
+    public function setNumber(string $number)
+    {
+        $this->number = $number;
+        return $this;
+    }
 
     public function setPrefix(string $prefix)
     {
@@ -38,5 +47,16 @@ trait Nameable
             $s,
             $n,
         );
+    }
+
+    private function generateNameFile(): string
+    {
+        $tempName = sprintf(
+            "%s_%s",
+            Carbon::now()->timestamp,
+            $this->number,
+        );
+
+        return preg_replace('/\s+/', '_', $tempName);
     }
 }

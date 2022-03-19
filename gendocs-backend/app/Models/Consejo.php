@@ -58,6 +58,11 @@ class Consejo extends Model
         return $query->where('estado', '=', $target);
     }
 
+    public function directorioLocal()
+    {
+        return $this->belongsTo(Directorio::class, 'directorio_id');
+    }
+
     public function directorio()
     {
         return $this->morphOne(DriveApi::class, 'model');

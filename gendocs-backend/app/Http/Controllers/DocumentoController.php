@@ -11,7 +11,6 @@ use App\Models\Documento;
 use App\Models\Estudiante;
 use App\Models\GoogleDrive;
 use App\Models\Plantillas;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Response as ResponseAlias;
@@ -52,27 +51,13 @@ class DocumentoController extends Controller
         try {
             DB::beginTransaction();
 
-            $consejo = Consejo::find($validated['consejo']);
-            $estudiante = Estudiante::find($validated['estudiante']);
-            $platilla = Plantillas::find($validated['plantilla']);
-
             $documento = Documento::create([
-                'consejo_id' => $consejo->id,
-                'estudiante_id' => $estudiante?->id,
+                'consejo_id' => $validated['consejo'],
+                'estudiante_id' => $validated['estudiante'],
                 'numero' => $validated['numero'],
-                'plantilla_id' => $platilla->id,
+                'plantilla_id' => $validated['plantilla'],
                 'autor_id' => $request->user()->id,
                 'descripcion' => $validated['descripcion']
-            ]);
-
-            $documentoDrive = $this->googleDrive->copyFile(
-                $this->createName($validated['numero']),
-                $consejo->directorio->google_drive_id,
-                $platilla->drive_id,
-            );
-
-            $documento->archivo()->create([
-                'google_drive_id' => $documentoDrive->id,
             ]);
 
             DB::commit();
@@ -100,16 +85,5 @@ class DocumentoController extends Controller
     public function destroy(Documento $documento)
     {
         //
-    }
-
-    private function createName($numero): string
-    {
-        $tempName = sprintf(
-            "%s_%s",
-            Carbon::now()->timestamp,
-            $numero
-        );
-
-        return preg_replace('/\s+/', '_', $tempName);
     }
 }

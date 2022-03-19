@@ -55,21 +55,11 @@ class ConsejoController extends Controller
 
             $activeDirectory = Directorio::query()->activeDirectory();
 
-            $directorio = $this->googleDrive->create(
-                'CONSEJO - ' . $validated['nombre'],
-                "folder",
-                $activeDirectory->drive_id,
-            );
-
             $consejo = Consejo::create([
                 'nombre' => $validated['nombre'],
                 'fecha' => new Carbon($validated['fecha']),
                 'tipo_consejo_id' => $validated['tipo_consejo'],
                 'directorio_id' => $activeDirectory->id,
-            ]);
-
-            $consejo->directorio()->create([
-                'google_drive_id' => $directorio->id,
             ]);
 
             DB::commit();
