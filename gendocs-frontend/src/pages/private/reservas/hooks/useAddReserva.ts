@@ -34,7 +34,10 @@ export function useAddReserva() {
             .integer(VALIDATION_MESSAGES.required)
             .positive(VALIDATION_MESSAGES.invalidOption)
             .moreThan(yup.ref("desde"), VALIDATION_MESSAGES.invalidOption),
-        consejo: yup.number().oneOf(consejos.map((i) => i.id)),
+        consejo: yup.number().oneOf(
+            consejos.map((i) => i.id),
+            VALIDATION_MESSAGES.invalidOption
+        ),
     });
 
     useEffect(() => {

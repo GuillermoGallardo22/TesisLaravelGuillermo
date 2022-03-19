@@ -5,7 +5,7 @@ import {
     Grid,
     IconButton,
     InputAdornment,
-    TextField
+    TextField,
 } from "@mui/material";
 import ErrorSummary from "components/ErrorSummary";
 import Icon from "components/Icon";
@@ -52,7 +52,7 @@ export default function AddReserva() {
                     />
                 </Grid>
 
-                <Grid item xs={12} sm={6}>
+                <Grid item xs={12} sm={4}>
                     <TextField
                         fullWidth
                         required
@@ -93,7 +93,7 @@ export default function AddReserva() {
                     />
                 </Grid>
 
-                <Grid item xs={12} sm={6}>
+                <Grid item xs={12} sm={4}>
                     <TextField
                         fullWidth
                         required
@@ -109,6 +109,19 @@ export default function AddReserva() {
                             formik.touched.hasta && Boolean(formik.errors.hasta)
                         }
                         helperText={formik.touched.hasta && formik.errors.hasta}
+                    />
+                </Grid>
+
+                <Grid item xs={12} sm={4}>
+                    <TextField
+                        fullWidth
+                        disabled
+                        id="total"
+                        name="total"
+                        type="number"
+                        label="Total de números reservados"
+                        margin="normal"
+                        value={formik.values.hasta - formik.values.desde + 1}
                     />
                 </Grid>
 
