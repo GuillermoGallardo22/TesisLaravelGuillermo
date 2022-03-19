@@ -27,8 +27,6 @@ class NumeracionController extends Controller
     {
         $validated = $request->validated();
 
-        return response()->json($validated);
-
         $desde = $validated['desde'];
         $hasta = $validated['hasta'];
         $consejo_id = $validated['consejo'];
