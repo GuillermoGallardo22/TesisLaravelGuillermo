@@ -5,6 +5,7 @@ use App\Http\Controllers\ConsejoController;
 use App\Http\Controllers\DocumentoController;
 use App\Http\Controllers\EstudianteController;
 use App\Http\Controllers\GoogleDriveController;
+use App\Http\Controllers\NumeracionController;
 use App\Http\Controllers\PlantillasController;
 use App\Http\Controllers\ProcesoController;
 use App\Http\Controllers\RoleController;
@@ -33,6 +34,9 @@ Route::middleware(["auth:sanctum", "isUserActive"])->group(function () {
     Route::apiResource('consejos', ConsejoController::class);
     Route::apiResource('tipo-consejos', TipoConsejoController::class);
     Route::apiResource('documentos', DocumentoController::class);
+    Route::get('numeracion', [NumeracionController::class, 'index']);
+    Route::post('numeracion', [NumeracionController::class, 'store']);
+    Route::get('numeracion/{consejo}/check/{numero}', [NumeracionController::class, 'checkNumeracionConsejo']);
 
     // AUTH
     Route::get('me', [UserController::class, 'me']);

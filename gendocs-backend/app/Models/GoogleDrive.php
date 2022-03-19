@@ -102,4 +102,17 @@ class GoogleDrive
             )
         );
     }
+
+    public function copyFile($nameFile, $parentDirectory, $idFile)
+    {
+        $file = new Google\Service\Drive\DriveFile();
+
+        $file->setName($nameFile);
+
+        $file->setParents([
+            $parentDirectory,
+        ]);
+
+        return $this->service->files->copy($idFile, $file);
+    }
 }

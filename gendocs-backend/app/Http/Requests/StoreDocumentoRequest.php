@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\NumeroAsignado;
+use App\Rules\NumeroConsejo;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreDocumentoRequest extends FormRequest
@@ -24,7 +26,18 @@ class StoreDocumentoRequest extends FormRequest
     public function rules()
     {
         return [
-            'consejo' => ['required', 'exists:\App\Models\Consejo,id'],
+            'consejo' => [
+                'bail',
+                'required',
+                'exists:\App\Models\Consejo,id'
+            ],
+            'numero' => [
+                'bail',
+                'required',
+                'numeric',
+                new NumeroAsignado(),
+                new NumeroConsejo($this->consejo)
+            ],
             'plantilla' => ['required', 'exists:\App\Models\Plantillas,id'],
             'estudiante' => ['nullable', 'exists:\App\Models\Estudiante,id'],
             'descripcion' => ['string', 'nullable', 'max:512']

@@ -147,6 +147,22 @@ return [
             'update' => [
                 'password' => 'La contraseña proporcionada no coincide con su contraseña actual.'
             ]
+        ],
+        'documento' => [
+            'create' => [
+                'numero' => [
+                    'usado' => 'El número seleccionado ya ha sido asignado',
+                    'numeroConsejoInconsistente' => 'Al consejo seleccionado no se le puede asignar el número deseado'
+                ]
+            ]
+        ],
+        'numeracion' => [
+            'create' => [
+                'rangoValido' => 'El rango seleccionado no es válido',
+                'rangoNoDisponible' => 'El rango seleccionado ya no se encuentra disponible',
+                'numeroReservado' => 'El número (:attribute) seleccionado ya ha sido reservado',
+                'numeroInicio' => 'El número de inicio no es válido'
+            ]
         ]
     ],
 ];
