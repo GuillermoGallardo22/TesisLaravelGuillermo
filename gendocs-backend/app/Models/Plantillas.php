@@ -30,9 +30,14 @@ class Plantillas extends Model
             'nombre' => $this->nombre,
             'estado' => $this->estado,
             'proceso' => $this->proceso,
-            'drive' => $this->drive_id,
+            'drive' => $this->archivo->google_drive_id,
             'autor' => $this->autor,
         ];
+    }
+
+    public function archivo()
+    {
+        return $this->morphOne(DriveApi::class, 'model');
     }
 
     public function scopeProceso($query, $value)

@@ -2,31 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\Constants\Pagination;
-use App\Constants\Query;
 use App\Http\Requests\StorePlantillasRequest;
 use App\Http\Requests\UpdatePlantillasRequest;
 use App\Http\Resources\ResourceCollection;
 use App\Http\Resources\ResourceObject;
-use App\Models\GoogleDrive;
 use App\Models\Plantillas;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-use App\Models\Proceso;
-use Illuminate\Support\Arr;
+use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
 class PlantillasController extends Controller
 {
-    protected GoogleDrive $googleDrive;
 
-    /**
-     * @param GoogleDrive $googleDrive
-     */
-    public function __construct(GoogleDrive $googleDrive)
+    public function __construct()
     {
         $this->authorizeResource(Plantillas::class, 'plantilla');
-        $this->googleDrive = $googleDrive;
     }
 
 
@@ -54,19 +45,19 @@ class PlantillasController extends Controller
     {
         $validated = $request->validated();
 
-        $plantilla = new Plantillas($validated);
-        $plantilla->proceso_id = $validated['proceso'];
-        $plantilla->user_id = \request()->user()->id;
+        try {
+            $plantilla = new Plantillas($validated);
+            $plantilla->proceso_id = $validated['proceso'];
+            $plantilla->user_id = \request()->user()->id;
 
-        $plantilla->drive_id = $this->googleDrive->create(
-            $validated["nombre"],
-            'document',
-            Proceso::find($validated['proceso'])->drive_id
-        )->id;
+            $plantilla->save();
 
-        $plantilla->save();
-
-        return ResourceObject::make($plantilla);
+            return ResourceObject::make($plantilla);
+        } catch (\Exception $e) {
+            return response()->json([
+                'errors' => $e->getMessage(),
+            ], ResponseAlias::HTTP_UNPROCESSABLE_ENTITY);
+        }
     }
 
     public function show(Plantillas $plantilla)
@@ -86,17 +77,6 @@ class PlantillasController extends Controller
                 'estado' => $validated['estado'],
                 'proceso_id' => $validated['proceso'],
             ]);
-
-            if ($plantilla->isDirty('nombre')) {
-                $this->googleDrive->rename($plantilla->drive_id, $plantilla->nombre);
-            }
-
-            if ($plantilla->isDirty('proceso_id')) {
-                $fromProceso = Proceso::find($plantilla->getOriginal('proceso_id'));
-                $toProceso = Proceso::find($plantilla->proceso_id);
-
-                $this->googleDrive->move($plantilla->drive_id, $toProceso->drive_id, $fromProceso->drive_id);
-            }
 
             $plantilla->save();
 

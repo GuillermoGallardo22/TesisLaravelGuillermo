@@ -16,23 +16,16 @@ class CreatePlantillasTable extends Migration
         Schema::create('plantillas', function (Blueprint $table) {
             $table->id();
 
-            $table->string("drive_id")->unique();
-
             $table->string("nombre");
             $table->boolean("estado")->default(false);
 
-            // $table->string("nombre_documento");
-            // $table->string("ruta_documento");
+            $table->foreignId("user_id")
+                ->references("id")
+                ->on("users");
 
-            // $table->string("variables");
-
-            // $table->string("descripcion");
-
-            $table->unsignedBigInteger("user_id");
-            $table->foreign("user_id")->references("id")->on("users");
-
-            $table->unsignedBigInteger("proceso_id");
-            $table->foreign("proceso_id")->references("id")->on("procesos");
+            $table->foreignId("proceso_id")
+                ->references("id")
+                ->on("procesos");
 
             $table->timestamps();
             $table->softDeletes();

@@ -2,30 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Constants\Pagination;
-use App\Constants\Query;
 use App\Http\Requests\StoreProcesoRequest;
 use App\Http\Requests\UpdateProcesoRequest;
 use App\Http\Resources\ResourceCollection;
 use App\Http\Resources\ResourceObject;
 use App\Models\Directorio;
-use App\Models\GoogleDrive;
 use App\Models\Proceso;
 use Illuminate\Http\Request;
-use Illuminate\Support\Arr;
+use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
 class ProcesoController extends Controller
 {
 
-    protected GoogleDrive $googleDrive;
-
-    /**
-     * @param GoogleDrive $googleDrive
-     */
-    public function __construct(GoogleDrive $googleDrive)
+    public function __construct()
     {
         $this->authorizeResource(Proceso::class);
-        $this->googleDrive = $googleDrive;
     }
 
     public function index(Request $request)
@@ -50,17 +41,22 @@ class ProcesoController extends Controller
 
     public function store(StoreProcesoRequest $request)
     {
-        $proceso = new Proceso($request->validated());
+        $validated = $request->validated();
 
-        $directorio = Directorio::query()->activeDirectory();
+        try {
+            $directorio = Directorio::query()->activeDirectory();
 
-        $proceso->directorio_id = $directorio->id;
+            $proceso = new Proceso($validated);
+            $proceso->directorio_id = $directorio->id;
 
-        $proceso->drive_id = $this->googleDrive->create($proceso->nombre, "folder", $directorio->drive_id)->id;
+            $proceso->save();
 
-        $proceso->save();
-
-        return ResourceObject::make($proceso);
+            return ResourceObject::make($proceso);
+        } catch (\Exception $e) {
+            return response()->json([
+                'errors' => $e->getMessage(),
+            ], ResponseAlias::HTTP_UNPROCESSABLE_ENTITY);
+        }
     }
 
     public function show(Proceso $proceso)
@@ -72,20 +68,19 @@ class ProcesoController extends Controller
     {
         $validated = $request->validated();
 
-        $needsUpdateOnDrive = $proceso->nombre != $validated['nombre'];
+        try {
+            $proceso->fill($validated);
 
-        $proceso->fill($validated);
-
-        if ($proceso->isDirty()) {
-
-            if ($needsUpdateOnDrive) {
-                $this->googleDrive->rename($proceso->drive_id, $validated['nombre']);
+            if ($proceso->isDirty()) {
+                $proceso->save();
             }
 
-            $proceso->save();
+            return ResourceObject::make($proceso);
+        } catch (\Exception $e) {
+            return response()->json([
+                'errors' => $e->getMessage(),
+            ], ResponseAlias::HTTP_UNPROCESSABLE_ENTITY);
         }
-
-        return ResourceObject::make($proceso);
     }
 
     public function destroy(Proceso $proceso)

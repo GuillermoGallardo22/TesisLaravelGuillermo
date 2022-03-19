@@ -33,7 +33,7 @@ class Proceso extends Model
 
     public function directorio()
     {
-        return $this->belongsTo(Directorio::class, 'directorio_id');
+        return $this->morphOne(DriveApi::class, 'model');
     }
 
     public function scopeFromActiveDirectory($query)
