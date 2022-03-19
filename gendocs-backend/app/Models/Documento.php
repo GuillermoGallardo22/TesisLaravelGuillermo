@@ -6,6 +6,7 @@ use App\Traits\Filterable;
 use App\Traits\Pageable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Documento extends Model
 {
@@ -41,12 +42,12 @@ class Documento extends Model
         return $this->morphOne(DriveApi::class, 'model');
     }
 
-    public function consejo()
+    public function consejo(): BelongsTo
     {
         return $this->belongsTo(Consejo::class, 'consejo_id');
     }
 
-    public function estudiante()
+    public function estudiante(): BelongsTo
     {
         return $this->belongsTo(Estudiante::class, 'estudiante_id');
     }

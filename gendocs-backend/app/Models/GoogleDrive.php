@@ -2,28 +2,34 @@
 
 namespace App\Models;
 
-use Google;
+use Google\Client;
+use Google\Service\Docs;
+use Google\Service\Docs\BatchUpdateDocumentRequest;
+use Google\Service\Docs\Request;
+use Google\Service\Drive;
+use Google\Service\Drive\DriveFile;
+use Google\Service\Drive\Permission;
 
 class GoogleDrive
 {
-    // private Google\Client $client;
-    private Google\Service\Drive $service;
+    private Drive $service;
+    private Docs $serviceDocs;
 
     public function __construct()
     {
-        $client = new Google\Client();
+        $client = new Client();
         $client->useApplicationDefaultCredentials();
-        $client->setScopes([Google\Service\Drive::DRIVE, Google\Service\Drive::DRIVE_FILE]);
+        $client->setScopes([Drive::DRIVE, Drive::DRIVE_FILE]);
 
         $client->setAuthConfig(config("services.google.credentials"));
 
-        $this->service = new Google\Service\Drive($client);
+        $this->service = new Drive($client);
+        $this->serviceDocs = new Docs($client);
     }
 
-
-    public function create($nameFile, $type = "document" | "folder", $parentDirectory = null): Google\Service\Drive\DriveFile
+    public function create($nameFile, $type = "document" | "folder", $parentDirectory = null): DriveFile
     {
-        $file = new Google\Service\Drive\DriveFile();
+        $file = new DriveFile();
 
         $file->setName($nameFile);
 
@@ -38,7 +44,7 @@ class GoogleDrive
 
     public function move($file, $addParents, $removeParents)
     {
-        $tempFile = new Google\Service\Drive\DriveFile();
+        $tempFile = new DriveFile();
 
         return $this->service->files->update($file, $tempFile, [
             'addParents' => $addParents,
@@ -48,7 +54,7 @@ class GoogleDrive
 
     public function rename($fileId, $newName)
     {
-        $tempFile = new Google\Service\Drive\DriveFile([
+        $tempFile = new DriveFile([
             'name' => $newName,
         ]);
 
@@ -57,7 +63,7 @@ class GoogleDrive
 
     public function shareFolder($userEmail, $folderId, $role)
     {
-        $userPermission = new Google\Service\Drive\Permission(array(
+        $userPermission = new Permission(array(
             'type' => 'user',
             'role' => $role,
             'emailAddress' => $userEmail
@@ -105,7 +111,7 @@ class GoogleDrive
 
     public function copyFile($nameFile, $parentDirectory, $idFile)
     {
-        $file = new Google\Service\Drive\DriveFile();
+        $file = new DriveFile();
 
         $file->setName($nameFile);
 

@@ -6,6 +6,7 @@ use App\Traits\Filterable;
 use App\Traits\Pageable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\DB;
 
 class Estudiante extends Model
@@ -44,7 +45,7 @@ class Estudiante extends Model
         ];
     }
 
-    public function carrera()
+    public function carrera(): BelongsTo|Carrera
     {
         return $this->belongsTo(Carrera::class, "carrera_id");
     }
