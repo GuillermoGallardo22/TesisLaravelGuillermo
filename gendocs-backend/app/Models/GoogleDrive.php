@@ -121,4 +121,25 @@ class GoogleDrive
 
         return $this->service->files->copy($idFile, $file);
     }
+
+    public function generateDoc($data, $fileId)
+    {
+        $requests = [];
+
+        foreach ($data as $key => $value) {
+            $replaceAllTextRequest = [
+                'replaceAllText' => [
+                    'replaceText' => $value,
+                    'containsText' => [
+                        'text' => $key,
+                        'matchCase' => true,
+                    ],
+                ],
+            ];
+            $requests[] = new Request($replaceAllTextRequest);
+        }
+
+        $batchUpdateRequest = new BatchUpdateDocumentRequest(['requests' => $requests]);
+        return $this->serviceDocs->documents->batchUpdate($fileId, $batchUpdateRequest);
+    }
 }

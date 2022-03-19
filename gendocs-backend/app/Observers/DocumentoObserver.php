@@ -6,6 +6,7 @@ use App\Models\Documento;
 use App\Models\GoogleDrive;
 use App\Models\Numeracion;
 use App\Traits\Nameable;
+use Carbon\Carbon;
 
 class DocumentoObserver
 {
@@ -56,6 +57,49 @@ class DocumentoObserver
                 'encolado' => false,
             ])
             ->save();
+
+        // SEGUNDO PLANO
+
+        $consejo = $documento->consejo;
+        $consejoFecha = Carbon::parse($consejo->fecha)->locale('es');
+
+        $generalData = [
+            '{{FECHA}}' => $consejoFecha->format('d/m/Y'),
+            '{{FECHAUP}}' => $consejoFecha->format('d M Y'),
+            '{{CREADOPOR}}' => auth()->user()->name,
+            '{{NUMDOC}}' => str_pad($documento->numero, 4, '0', STR_PAD_LEFT),
+            '{{SESION}}' => strtolower($consejo->tipoConsejo->nombre),
+            // '{{RESPONSABLE}}' => $request->responsable,
+        ];
+
+        $estudianteData = [];
+        $estudiante = $documento->estudiante;
+
+        if ($estudiante) {
+            $estudianteFullName = implode(' ', [$estudiante->nombres, $estudiante->apellidos]);
+            $carrera = $estudiante->carrera;
+
+            $estudianteData = [
+                '{{ESTUDIANTE}}' => mb_convert_encoding(mb_convert_case($estudianteFullName, MB_CASE_TITLE), 'UTF-8'),
+                '{{ESTUDIANTEUP}}' => mb_strtoupper($estudianteFullName, 'UTF-8'),
+                '{{CEDULA}}' => $estudiante->cedula,
+                '{{MATRICULA}}' => $estudiante->matricula,
+                '{{FOLIO}}' => $estudiante->folio,
+                '{{TELEFONO}}' => $estudiante->telefono,
+                '{{CELULAR}}' => $estudiante->celular,
+                '{{CORREO}}' => $estudiante->correo,
+                '{{CORREOUTA}}' => $estudiante->correo_uta,
+                '{{NOMBRECARRERA}}' => $carrera->nombre,
+                '{{NOMBRECARRERAUP}}' => mb_strtoupper($carrera->nombre, 'UTF-8'),
+            ];
+        }
+
+        $data = array_merge($generalData, $estudianteData);
+
+        $this->googleDrive->generateDoc(
+            $data,
+            $documentoDrive->id,
+        );
     }
 
     /**
