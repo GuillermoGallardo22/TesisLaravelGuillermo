@@ -53,32 +53,4 @@ class NumeracionController extends Controller
             ], ResponseAlias::HTTP_UNPROCESSABLE_ENTITY);
         }
     }
-
-    public function checkNumeracionConsejo($consejo, $numero)
-    {
-        $consejo = Consejo::find($consejo);
-
-        if (!$consejo) {
-            return response()->json([
-                'errors' => trans('validation.exists')
-            ], ResponseAlias::HTTP_UNPROCESSABLE_ENTITY);
-        }
-
-        $existsConsejoInNumeracion = Numeracion::where('consejo_id', $consejo->id)->exists();
-
-        if ($existsConsejoInNumeracion) {
-            $isValid = Numeracion::query()
-                ->where('consejo_id', $consejo->id)
-                ->where('numero', $numero)
-                ->exists();
-
-            if ($isValid) {
-                return response()->noContent(ResponseAlias::HTTP_OK);
-            } else {
-                return response()->json([
-                    'errors' => trans('validation.custom.documento.create.numero.numeroConsejoInconsistente')
-                ], ResponseAlias::HTTP_UNPROCESSABLE_ENTITY);
-            }
-        }
-    }
 }

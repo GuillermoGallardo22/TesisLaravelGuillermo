@@ -34,9 +34,7 @@ Route::middleware(["auth:sanctum", "isUserActive"])->group(function () {
     Route::apiResource('consejos', ConsejoController::class);
     Route::apiResource('tipo-consejos', TipoConsejoController::class);
     Route::apiResource('documentos', DocumentoController::class);
-    Route::get('numeracion', [NumeracionController::class, 'index']);
-    Route::post('numeracion', [NumeracionController::class, 'store']);
-    Route::get('numeracion/{consejo}/check/{numero}', [NumeracionController::class, 'checkNumeracionConsejo']);
+    Route::apiResource('numeracion', NumeracionController::class)->only(['index', 'store']);
 
     // AUTH
     Route::get('me', [UserController::class, 'me']);
