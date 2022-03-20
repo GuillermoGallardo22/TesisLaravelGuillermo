@@ -6,23 +6,16 @@ use App\Http\Requests\StoreDocumentoRequest;
 use App\Http\Requests\UpdateDocumentoRequest;
 use App\Http\Resources\ResourceCollection;
 use App\Http\Resources\ResourceObject;
-use App\Models\Consejo;
 use App\Models\Documento;
-use App\Models\Estudiante;
-use App\Models\GoogleDrive;
-use App\Models\Plantillas;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
 class DocumentoController extends Controller
 {
-    protected GoogleDrive $googleDrive;
-
-    public function __construct(GoogleDrive $googleDrive)
+    public function __construct()
     {
         $this->authorizeResource(Documento::class);
-        $this->googleDrive = $googleDrive;
     }
 
     public function index(Request $request)

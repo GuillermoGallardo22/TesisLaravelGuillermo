@@ -3,20 +3,20 @@
 namespace App\Observers;
 
 use App\Models\Directorio;
-use App\Models\GoogleDrive;
 use App\Models\Proceso;
+use App\Services\GoogleDriveService;
 use App\Traits\Nameable;
 
 class ProcesoObserver
 {
     use Nameable;
 
-    protected GoogleDrive $googleDrive;
+    protected GoogleDriveService $googleDrive;
 
     /**
-     * @param GoogleDrive $googleDrive
+     * @param GoogleDriveService $googleDrive
      */
-    public function __construct(GoogleDrive $googleDrive)
+    public function __construct(GoogleDriveService $googleDrive)
     {
         $this->googleDrive = $googleDrive;
         $this->setPrefix('PROCESO');

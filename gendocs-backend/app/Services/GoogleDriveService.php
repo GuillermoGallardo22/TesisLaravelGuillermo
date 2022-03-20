@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Services;
 
 use Google\Client;
 use Google\Service\Docs;
@@ -10,7 +10,7 @@ use Google\Service\Drive;
 use Google\Service\Drive\DriveFile;
 use Google\Service\Drive\Permission;
 
-class GoogleDrive
+class GoogleDriveService
 {
     private Drive $service;
     private Docs $serviceDocs;

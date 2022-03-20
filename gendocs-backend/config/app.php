@@ -176,7 +176,6 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         //
-        App\Providers\GoogleDriveServiceProvider::class,
         App\Providers\FortifyServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
 

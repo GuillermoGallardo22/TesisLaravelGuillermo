@@ -2,18 +2,18 @@
 
 namespace App\Observers;
 
-use App\Models\GoogleDrive;
 use App\Models\Plantillas;
 use App\Models\Proceso;
+use App\Services\GoogleDriveService;
 
 class PlantillaObserver
 {
-    protected GoogleDrive $googleDrive;
+    protected GoogleDriveService $googleDrive;
 
     /**
-     * @param GoogleDrive $googleDrive
+     * @param GoogleDriveService $googleDrive
      */
-    public function __construct(GoogleDrive $googleDrive)
+    public function __construct(GoogleDriveService $googleDrive)
     {
         $this->googleDrive = $googleDrive;
     }

@@ -2,18 +2,18 @@
 
 namespace Database\Seeders;
 
-use App\Models\GoogleDrive;
 use App\Models\Directorio;
+use App\Services\GoogleDriveService;
 use Illuminate\Database\Seeder;
 
 class DirectorioSeeder extends Seeder
 {
-    protected GoogleDrive $googleDrive;
+    protected GoogleDriveService $googleDrive;
 
     /**
-     * @param GoogleDrive $googleDrive
+     * @param GoogleDriveService $googleDrive
      */
-    public function __construct(GoogleDrive $googleDrive)
+    public function __construct(GoogleDriveService $googleDrive)
     {
         $this->googleDrive = $googleDrive;
     }

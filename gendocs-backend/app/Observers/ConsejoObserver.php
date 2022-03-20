@@ -3,19 +3,19 @@
 namespace App\Observers;
 
 use App\Models\Consejo;
-use App\Models\GoogleDrive;
+use App\Services\GoogleDriveService;
 use App\Traits\Nameable;
 
 class ConsejoObserver
 {
     use Nameable;
 
-    protected GoogleDrive $googleDrive;
+    protected GoogleDriveService $googleDrive;
 
     /**
-     * @param GoogleDrive $googleDrive
+     * @param GoogleDriveService $googleDrive
      */
-    public function __construct(GoogleDrive $googleDrive)
+    public function __construct(GoogleDriveService $googleDrive)
     {
         $this->googleDrive = $googleDrive;
         $this->setPrefix('CONSEJO');

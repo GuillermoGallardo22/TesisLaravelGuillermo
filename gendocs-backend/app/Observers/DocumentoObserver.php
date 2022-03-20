@@ -3,8 +3,7 @@
 namespace App\Observers;
 
 use App\Models\Documento;
-use App\Models\GoogleDrive;
-use App\Models\Numeracion;
+use App\Services\GoogleDriveService;
 use App\Services\NumeracionService;
 use App\Traits\Nameable;
 use Carbon\Carbon;
@@ -13,13 +12,13 @@ class DocumentoObserver
 {
     use Nameable;
 
-    protected GoogleDrive $googleDrive;
+    protected GoogleDriveService $googleDrive;
     protected NumeracionService $numeracionService;
 
     /**
-     * @param GoogleDrive $googleDrive
+     * @param GoogleDriveService $googleDrive
      */
-    public function __construct(GoogleDrive $googleDrive, NumeracionService $numeracionService)
+    public function __construct(GoogleDriveService $googleDrive, NumeracionService $numeracionService)
     {
         $this->googleDrive = $googleDrive;
         $this->numeracionService = $numeracionService;

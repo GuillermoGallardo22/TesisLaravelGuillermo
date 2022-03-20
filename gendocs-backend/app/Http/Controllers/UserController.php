@@ -9,13 +9,12 @@ use App\Http\Requests\UpdateUserRequest;
 use App\Http\Resources\ResourceCollection;
 use App\Http\Resources\ResourceObject;
 use App\Models\Directorio;
-use App\Models\DriveApi;
 use App\Models\User;
 use App\Notifications\UserCreated;
+use App\Services\GoogleDriveService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use App\Models\GoogleDrive;
 use Illuminate\Support\Str;
 use Spatie\Permission\Models\Role;
 use Symfony\Component\HttpFoundation\Response as ResponseAlias;
@@ -23,12 +22,12 @@ use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 class UserController extends Controller
 {
 
-    protected GoogleDrive $googleDrive;
+    protected GoogleDriveService $googleDriveService;
 
-    public function __construct(GoogleDrive $googleDrive)
+    public function __construct(GoogleDriveService $googleDriveService)
     {
         $this->authorizeResource(User::class);
-        $this->googleDrive = $googleDrive;
+        $this->googleDriveService = $googleDriveService;
     }
 
     public function me(Request $request)
@@ -63,7 +62,7 @@ class UserController extends Controller
 
             $userCreated->notify(new UserCreated($request->user(), $tempPassword));
 
-            $permission = $this->googleDrive->shareFolder(
+            $permission = $this->googleDriveService->shareFolder(
                 $userCreated->email_gmail,
                 Directorio::query()->activeDirectory()->drive_id,
                 $role->name_role_drive,
@@ -112,7 +111,7 @@ class UserController extends Controller
                     // Remove old email
                     $permission = $user->permission;
                     if ($permission) {
-                        $this->googleDrive->deletePermission(
+                        $this->googleDriveService->deletePermission(
                             Directorio::query()->activeDirectory()->drive_id,
                             $user->permission->google_drive_id
                         );
@@ -130,7 +129,7 @@ class UserController extends Controller
                 // Remove old email
                 $permission = $user->permission;
                 if ($permission) {
-                    $this->googleDrive->deletePermission(
+                    $this->googleDriveService->deletePermission(
                         Directorio::query()->activeDirectory()->drive_id,
                         $user->permission->google_drive_id
                     );
@@ -139,7 +138,7 @@ class UserController extends Controller
                 }
 
                 // Add new permissions to new email
-                $permission = $this->googleDrive->shareFolder(
+                $permission = $this->googleDriveService->shareFolder(
                     $user->email_gmail,
                     Directorio::query()->activeDirectory()->drive_id,
                     $role->name_role_drive,
