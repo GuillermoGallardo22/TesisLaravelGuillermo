@@ -65,7 +65,7 @@ class DocumentoObserver
 
         $generalData = [
             '{{FECHA}}' => $consejoFecha->format('d/m/Y'),
-            '{{FECHAUP}}' => $consejoFecha->format('d M Y'),
+            '{{FECHAUP}}' => $consejoFecha->translatedFormat('d \d\e F \d\e Y'),
             '{{CREADOPOR}}' => auth()->user()->name,
             '{{NUMDOC}}' => str_pad($documento->numero, 4, '0', STR_PAD_LEFT),
             '{{SESION}}' => strtolower($consejo->tipoConsejo->nombre),
