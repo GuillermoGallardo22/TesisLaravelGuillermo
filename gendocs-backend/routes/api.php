@@ -4,14 +4,12 @@ use App\Http\Controllers\CarreraController;
 use App\Http\Controllers\ConsejoController;
 use App\Http\Controllers\DocumentoController;
 use App\Http\Controllers\EstudianteController;
-use App\Http\Controllers\GoogleDriveController;
 use App\Http\Controllers\NumeracionController;
 use App\Http\Controllers\PlantillasController;
 use App\Http\Controllers\ProcesoController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TipoConsejoController;
 use App\Http\Controllers\UserController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -40,12 +38,8 @@ Route::middleware(["auth:sanctum", "isUserActive"])->group(function () {
     Route::get('me', [UserController::class, 'me']);
     Route::put('user/profile', [UserController::class, 'updateProfile']);
     Route::put('user/password', [UserController::class, 'updatePassword']);
-    Route::apiResource('user', UserController::class);
+    Route::apiResource('user', UserController::class)->except(['destroy']);
 
     Route::get('roles', [RoleController::class, 'index']);
 
-    // TEST
-    Route::get('my-permissions', [GoogleDriveController::class, 'myPermissions']);
-    Route::get('get-file', [GoogleDriveController::class, 'getFile']);
-    Route::get('export-file', [GoogleDriveController::class, 'exportFile']);
 });
