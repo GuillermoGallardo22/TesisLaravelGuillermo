@@ -15,7 +15,8 @@ class NumeracionSeeder extends Seeder
     public function run()
     {
         Numeracion::create([
-            'numero' => 1
+            'numero' => 0,
+            'usado' => 1,
         ]);
     }
 }
