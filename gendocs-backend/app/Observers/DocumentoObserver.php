@@ -5,6 +5,7 @@ namespace App\Observers;
 use App\Models\Documento;
 use App\Models\GoogleDrive;
 use App\Models\Numeracion;
+use App\Services\NumeracionService;
 use App\Traits\Nameable;
 use Carbon\Carbon;
 
@@ -13,13 +14,15 @@ class DocumentoObserver
     use Nameable;
 
     protected GoogleDrive $googleDrive;
+    protected NumeracionService $numeracionService;
 
     /**
      * @param GoogleDrive $googleDrive
      */
-    public function __construct(GoogleDrive $googleDrive)
+    public function __construct(GoogleDrive $googleDrive, NumeracionService $numeracionService)
     {
         $this->googleDrive = $googleDrive;
+        $this->numeracionService = $numeracionService;
     }
 
     /**
@@ -42,21 +45,9 @@ class DocumentoObserver
             'google_drive_id' => $documentoDrive->id,
         ]);
 
-        $numeracion = Numeracion::query()->where('numero', $documento->numero)->first();
-
-        if (!$numeracion) {
-            $numeracion = new  Numeracion([
-                'numero' => $documento->numero,
-            ]);
-        }
-
-        $numeracion
-            ->fill([
-                'usado' => true,
-                'reservado' => false,
-                'encolado' => false,
-            ])
-            ->save();
+        $this->numeracionService
+            ->setDocumento($documento)
+            ->checkNumeracion();
 
         // SEGUNDO PLANO
 

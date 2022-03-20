@@ -33,7 +33,7 @@ class NumeroConsejo implements Rule
 
         if (
             Numeracion::where('consejo_id', $consejo)->exists() ||
-            Numeracion::where('numero', $numero)->exists()
+            Numeracion::where('numero', $numero)->where('encolado', false)->exists()
         ) {
             return Numeracion::query()
                 ->where('numero', $numero)
