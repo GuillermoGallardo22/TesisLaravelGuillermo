@@ -108,6 +108,18 @@ class ConsejoController extends Controller
             ], ResponseAlias::HTTP_UNPROCESSABLE_ENTITY);
         }
 
+        if ($consejo->documentos()->exists()) {
+            return response()->json([
+                'errors' => trans('validation.custom.consejo.delete.documentos')
+            ], ResponseAlias::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        if ($consejo->numerosReservados()->exists()) {
+            return response()->json([
+                'errors' => trans('validation.custom.consejo.delete.numeracion')
+            ], ResponseAlias::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
         $wasDeleted = $consejo->delete();
 
         if ($wasDeleted) {

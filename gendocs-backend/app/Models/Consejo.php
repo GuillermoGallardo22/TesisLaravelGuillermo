@@ -6,6 +6,7 @@ use App\Traits\Filterable;
 use App\Traits\Pageable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Consejo extends Model
@@ -66,5 +67,15 @@ class Consejo extends Model
     public function directorio()
     {
         return $this->morphOne(DriveApi::class, 'model');
+    }
+
+    public function documentos(): HasMany
+    {
+        return $this->hasMany(Documento::class, 'consejo_id');
+    }
+
+    public function numerosReservados(): HasMany
+    {
+        return $this->hasMany(Numeracion::class, 'consejo_id');
     }
 }
