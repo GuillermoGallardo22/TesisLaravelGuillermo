@@ -3,19 +3,19 @@ import {
     DialogContentText,
     IconButton,
     Stack,
-    TextField,
+    TextField
 } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import ChipStatus from "components/ChipStatus";
 import Icon from "components/Icon";
+import { useDeleteItem } from "hooks/useDeleteItem";
 import { useFilterPagination } from "hooks/useFilterPagination";
+import { IConsejo } from "models/interfaces";
+import { useCallback, useState } from "react";
 import { Link } from "react-router-dom";
 import { deleteConsejo, getConsejos } from "services/consejos";
-import { format } from "date-fns";
-import { useCallback, useState } from "react";
+import { parseToDateTime } from "utils/date";
 import ConfirmationDialog from "./ConfirmationDialog";
-import { IConsejo } from "models/interfaces";
-import { useDeleteItem } from "hooks/useDeleteItem";
 
 export default function ListConsejos() {
     const [token, setToken] = useState(1);
@@ -62,8 +62,7 @@ export default function ListConsejos() {
                 field: "fecha",
                 headerName: "Fecha",
                 flex: 1,
-                renderCell: (item) =>
-                    format(new Date(item.value), "dd/MM/yyyy HH:mm a"),
+                renderCell: (item) => parseToDateTime(item.value),
             },
             {
                 field: "tipo_consejo",

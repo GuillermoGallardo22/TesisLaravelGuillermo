@@ -20,7 +20,7 @@ export const useFilterPagination = <T>({
 }: useFilterPaginationProps<T>) => {
     const [data, setData] = useState<IPagination<T>>(DEFAULT_PAGINATION_VALUES);
 
-    const [loading, setLoading] = useState<boolean>(true);
+    const [loading, setLoading] = useState<boolean>(false);
     const [search, setSearch] = useState("");
 
     const handlePageChange = (newPage: number) => {
@@ -55,6 +55,8 @@ export const useFilterPagination = <T>({
     const debouncedFetch = useMemo(() => debounce(handleFetch, 300), []);
 
     useEffect(() => {
+        if (token === -1) return;
+
         let active = true;
 
         setLoading(true);

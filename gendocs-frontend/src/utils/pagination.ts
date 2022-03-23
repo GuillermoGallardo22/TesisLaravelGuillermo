@@ -3,7 +3,7 @@ import { parseObjectToQueryParams } from "./libs";
 
 export const PAGE_SIZE = 50;
 
-const DEFAULT_META = {
+export const DEFAULT_META = {
     current_page: 0,
     last_page: 0,
     total: 0,

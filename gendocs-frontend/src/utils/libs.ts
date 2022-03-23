@@ -1,5 +1,11 @@
+import {
+    GridValueFormatterParams,
+    GridValueGetterParams,
+} from "@mui/x-data-grid";
+import { IDocumento, IProceso } from "models/interfaces";
 import { MultipleStudentForm } from "pages/private/student/hooks/useAddStudent";
 import * as xlsx from "xlsx";
+import { parseToDateTime } from "./date";
 
 export const DRAWERWIDTH = 240;
 
@@ -74,4 +80,69 @@ export function unique(
         message,
         (list = []) => list.length === new Set(list.map(mapper)).size
     );
+}
+
+export function getNombreCompleto(params: GridValueGetterParams<IDocumento>) {
+    if (!params.row.estudiante) return null;
+    return [
+        params.row.estudiante.apellidos,
+        params.row.estudiante.nombres,
+    ].join(" ");
+}
+
+export function getPlantilla(params: GridValueGetterParams<IDocumento>) {
+    return params.row.plantilla.nombre;
+}
+
+export function getProceso(params: GridValueGetterParams<IDocumento>) {
+    return (params.row.plantilla.proceso as IProceso).nombre;
+}
+
+export function getAutor(params: GridValueGetterParams<IDocumento>) {
+    return params.row.autor.name;
+}
+
+export function getCreado(params: GridValueFormatterParams) {
+    return parseToDateTime(params.value as string);
+}
+
+export function generateLink(data: IDocumento, user: string) {
+    const celular = data?.estudiante?.celular;
+
+    if (!celular) return "";
+
+    const text = `Me permito notificar a usted que su trámite ${
+        data.plantilla.nombre
+    } del proceso de ${
+        (data.plantilla.proceso as IProceso).nombre
+    } ha sido atendido. Pronto será despachado a su correo institucional.
+
+    Atentamente,
+    ${user}
+    Secretaria FISEI`;
+
+    const params = parseObjectToQueryParams({
+        phone: "+593" + celular.substring(1),
+        text,
+    });
+
+    return `https://api.whatsapp.com/send?${encodeURI(params)}`;
+}
+
+export function getDocumentosTableModel() {
+    const data = localStorage.getItem("documentosTableModel");
+
+    return data
+        ? JSON.parse(data)
+        : {
+            numero: true,
+            destinatario: true,
+            plantilla: true,
+            proceso: true,
+            autor: true,
+            descripcion: true,
+            creado: true,
+            notificaciones: true,
+            acciones: true,
+        };
 }
