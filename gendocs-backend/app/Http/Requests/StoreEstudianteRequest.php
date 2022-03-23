@@ -48,8 +48,8 @@ class StoreEstudianteRequest extends FormRequest
                 'telefono' => ['present', 'string', 'nullable', 'max:10'],
                 'correo' => ['present', 'string', 'nullable', 'max:100'],
                 'correo_uta' => ['required', 'string', 'max:100'],
-                'folio' => ['required', 'string', 'max:10'],
-                'matricula' => ['required', 'string', 'max:10'],
+                'folio' => ['nullable', 'string', 'max:10'],
+                'matricula' => ['nullable', 'string', 'max:10'],
                 'carrera' => ['required', 'exists:\App\Models\Carrera,id']
             ];
     }
