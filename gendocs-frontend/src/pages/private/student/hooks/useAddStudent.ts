@@ -77,11 +77,9 @@ export const useAddSimpleStudent = () => {
             .max(100, VALIDATION_MESSAGES.maxLength(100)),
         matricula: yup
             .string()
-            .required(VALIDATION_MESSAGES.required)
             .max(10, VALIDATION_MESSAGES.maxLength(10)),
         folio: yup
             .string()
-            .required(VALIDATION_MESSAGES.required)
             .max(10, VALIDATION_MESSAGES.maxLength(10)),
         carrera: yup
             .mixed()

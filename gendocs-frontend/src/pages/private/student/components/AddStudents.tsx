@@ -154,6 +154,7 @@ const AddSimpleStudent = () => {
                         id="celular"
                         name="celular"
                         label="Celular"
+                        placeholder="0987654321"
                         value={formik.values.celular}
                         onChange={formik.handleChange}
                         error={
@@ -229,7 +230,6 @@ const AddSimpleStudent = () => {
 
                 <Grid item xs={12} sm={6}>
                     <TextField
-                        required
                         fullWidth
                         margin="normal"
                         id="matricula"
@@ -249,7 +249,6 @@ const AddSimpleStudent = () => {
 
                 <Grid item xs={12} sm={6}>
                     <TextField
-                        required
                         fullWidth
                         margin="normal"
                         id="folio"

@@ -106,6 +106,8 @@ export const useEditEstudiante = ({ studentId }: { studentId: string }) => {
     }, [studentId]);
 
     const onSubmit = async (form: IEstudiante) => {
+        setErrorSummary(undefined);
+
         setSubmitting(true);
 
         const result = await updateEstudiante(form);
