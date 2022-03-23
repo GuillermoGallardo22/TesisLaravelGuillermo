@@ -17,7 +17,8 @@ class Consejo extends Model
         'nombre',
         'fecha',
         'tipo_consejo_id',
-        'directorio_id'
+        'directorio_id',
+        'estado'
     ];
 
     protected $hidden = [

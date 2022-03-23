@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Traits\Filterable;
 use App\Traits\Pageable;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -23,6 +24,10 @@ class Documento extends Model
         'descripcion',
     ];
 
+    protected $casts = [
+        'created_at' => 'datetime'
+    ];
+
     public function fields()
     {
         return [
@@ -33,8 +38,14 @@ class Documento extends Model
             'estudiante' => $this->estudiante,
             'plantilla' => $this->plantilla,
             'autor' => $this->autor,
-            'drive' => $this->archivo->google_drive_id
+            // 'drive' => $this->archivo->google_drive_id?,
+            'creado' => $this->created_at
         ];
+    }
+
+    public function scopeSearch(Builder $query, $value)
+    {
+        return $query->join();
     }
 
     public function archivo()
@@ -54,7 +65,7 @@ class Documento extends Model
 
     public function plantilla()
     {
-        return $this->belongsTo(Plantillas::class, 'plantilla_id');
+        return $this->belongsTo(Plantillas::class, 'plantilla_id')->with(['proceso']);
     }
 
     public function autor()
