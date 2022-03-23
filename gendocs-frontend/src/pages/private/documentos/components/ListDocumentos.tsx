@@ -2,24 +2,21 @@ import { Box, Button, Grid, Stack } from "@mui/material";
 import {
     DataGrid,
     GridActionsCellItem,
-    GridColumns,
-    GridColumnVisibilityModel,
-    GridToolbar,
+    GridColumns, GridToolbar
 } from "@mui/x-data-grid";
 import Icon from "components/Icon";
 import Select from "components/Select";
 import { useAuthContext } from "contexts/AuthContext";
+import { useGridColumnVisibilityModel } from "hooks/useGridColumnVisibilityModel";
 import { IDocumento } from "models/interfaces";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { Link } from "react-router-dom";
 import {
     generateLink,
     getAutor,
-    getCreado,
-    getDocumentosTableModel,
-    getNombreCompleto,
+    getCreado, getNombreCompleto,
     getPlantilla,
-    getProceso,
+    getProceso
 } from "utils/libs";
 import { useListDocumentos } from "../hooks/useListDocumentos";
 
@@ -124,8 +121,10 @@ export default function ListDocumentos() {
         []
     );
 
-    const [columnVisibilityModel, setColumnVisibilityModel] =
-        useState<GridColumnVisibilityModel>(getDocumentosTableModel());
+    const { columnVisibilityModel, onColumnVisibilityModelChange } =
+        useGridColumnVisibilityModel({
+            key: "documentosTableModel",
+        });
 
     return (
         <Stack spacing={2}>
@@ -159,13 +158,9 @@ export default function ListDocumentos() {
                 <DataGrid
                     disableColumnMenu
                     columnVisibilityModel={columnVisibilityModel}
-                    onColumnVisibilityModelChange={(model) => {
-                        localStorage.setItem(
-                            "documentosTableModel",
-                            JSON.stringify(model)
-                        );
-                        setColumnVisibilityModel(model);
-                    }}
+                    onColumnVisibilityModelChange={
+                        onColumnVisibilityModelChange
+                    }
                     components={{ Toolbar: GridToolbar }}
                     columns={columns}
                     loading={loading}

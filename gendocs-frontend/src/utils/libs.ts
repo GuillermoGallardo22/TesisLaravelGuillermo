@@ -129,8 +129,8 @@ export function generateLink(data: IDocumento, user: string) {
     return `https://api.whatsapp.com/send?${encodeURI(params)}`;
 }
 
-export function getDocumentosTableModel() {
-    const data = localStorage.getItem("documentosTableModel");
+export function getDocumentosTableModel(key: string) {
+    const data = localStorage.getItem(key);
 
     return data
         ? JSON.parse(data)
@@ -143,6 +143,25 @@ export function getDocumentosTableModel() {
             descripcion: true,
             creado: true,
             notificaciones: true,
+            acciones: true,
+        };
+}
+
+export function getEstudiantesTableModel(key: string) {
+    const data = localStorage.getItem(key);
+
+    return data
+        ? JSON.parse(data)
+        : {
+            cedula: true,
+            apellidos: true,
+            nombres: true,
+            celular: true,
+            telefono: true,
+            correo_uta: true,
+            correo: true,
+            matricula: true,
+            folio: true,
             acciones: true,
         };
 }

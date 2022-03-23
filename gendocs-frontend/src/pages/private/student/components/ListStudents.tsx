@@ -1,33 +1,37 @@
-import { Button, IconButton, Stack, TextField } from "@mui/material";
-import { DataGrid, GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
+import { Button, Stack, TextField } from "@mui/material";
+import { DataGrid, GridActionsCellItem, GridColumns } from "@mui/x-data-grid";
 import Icon from "components/Icon";
+import { GridToolbarColumns } from "components/ToolbarDataGrid";
 import { useFilterPagination } from "hooks/useFilterPagination";
+import { useGridColumnVisibilityModel } from "hooks/useGridColumnVisibilityModel";
 import { IEstudiante } from "models/interfaces";
 import { Link as RouterLink } from "react-router-dom";
 import { getEstudiantes } from "services/estudiantes";
 
-const columns: GridColDef[] = [
-    { field: "cedula", headerName: "Cédula", width: 110 },
-    { field: "apellidos", headerName: "Apellidos", width: 250 },
-    { field: "nombres", headerName: "Nombres", width: 250 },
-    { field: "celular", headerName: "Celular", width: 110 },
-    { field: "telefono", headerName: "Teléfono", width: 110 },
-    { field: "correo_uta", headerName: "Correo UTA", width: 250 },
-    { field: "correo", headerName: "Correo", width: 250 },
-    { field: "matricula", headerName: "Matrícula", width: 100 },
-    { field: "folio", headerName: "Folio", width: 100 },
+const columns: GridColumns = [
+    { field: "cedula", headerName: "Cédula", flex: 1 },
+    { field: "apellidos", headerName: "Apellidos", flex: 1 },
+    { field: "nombres", headerName: "Nombres", flex: 1 },
+    { field: "celular", headerName: "Celular", flex: 1 },
+    { field: "telefono", headerName: "Teléfono", flex: 1 },
+    { field: "correo_uta", headerName: "Correo UTA", flex: 1 },
+    { field: "correo", headerName: "Correo", flex: 1 },
+    { field: "matricula", headerName: "Matrícula" },
+    { field: "folio", headerName: "Folio" },
     {
-        field: "id",
+        type: "actions",
+        field: "acciones",
         headerName: "Acciones",
-        renderCell: (item: GridRenderCellParams) => (
-            <IconButton
+        getActions: (p) => [
+            <GridActionsCellItem
+                key={p.id}
                 color="primary"
-                component={RouterLink}
-                to={`${item.value}`}
-            >
-                <Icon icon="edit" />
-            </IconButton>
-        ),
+                icon={<Icon icon="edit" />}
+                label="Editar"
+                LinkComponent={RouterLink}
+                to={`${p.row.id}`}
+            />,
+        ],
     },
 ];
 
@@ -42,6 +46,11 @@ const ListStudents = () => {
     } = useFilterPagination<IEstudiante>({
         fetch: getEstudiantes,
     });
+
+    const { columnVisibilityModel, onColumnVisibilityModelChange } =
+        useGridColumnVisibilityModel({
+            key: "estudiantesTableModel",
+        });
 
     return (
         <Stack spacing={2}>
@@ -68,6 +77,13 @@ const ListStudents = () => {
             <div style={{ height: 600, width: "100%" }}>
                 <DataGrid
                     pagination
+                    components={{
+                        Toolbar: GridToolbarColumns,
+                    }}
+                    columnVisibilityModel={columnVisibilityModel}
+                    onColumnVisibilityModelChange={
+                        onColumnVisibilityModelChange
+                    }
                     paginationMode="server"
                     onPageSizeChange={handlePageSizeChange}
                     onPageChange={handlePageChange}
