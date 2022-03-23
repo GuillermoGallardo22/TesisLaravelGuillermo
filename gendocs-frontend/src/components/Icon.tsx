@@ -18,6 +18,8 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import TopicIcon from "@mui/icons-material/Topic";
 import AutorenewIcon from "@mui/icons-material/Autorenew";
 import NumbersIcon from "@mui/icons-material/Numbers";
+import WhatsAppIcon from "@mui/icons-material/WhatsApp";
+import EmailIcon from "@mui/icons-material/Email";
 
 export type IconTypes =
     | "article"
@@ -41,7 +43,9 @@ export type IconTypes =
     | "accountCircle"
     | "topic"
     | "autorenew"
-    | "numbers";
+    | "numbers"
+    | "whatsApp"
+    | "email";
 
 const ICONS = {
     article: <ArticleIcon />,
@@ -64,6 +68,8 @@ const ICONS = {
     topic: <TopicIcon />,
     autorenew: <AutorenewIcon />,
     numbers: <NumbersIcon />,
+    whatsApp: <WhatsAppIcon />,
+    email: <EmailIcon />,
 };
 
 interface IconProps {
