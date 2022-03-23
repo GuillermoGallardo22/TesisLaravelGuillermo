@@ -9,6 +9,7 @@ import { HTTP_STATUS } from "models/enums";
 import { SnackbarProvider } from "notistack";
 import AuthProvider from "providers/AuthProvider";
 import { lazy, Suspense, useCallback, useEffect } from "react";
+import { QueryClient, QueryClientProvider } from "react-query";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { AuthActionsEnum } from "reducers/AuthReducer";
 import { getUser } from "services/auth";
@@ -19,23 +20,27 @@ const PrivateLayout = lazy(() => import("layout/PrivateLayout"));
 const PrivateRoute = lazy(() => import("routes/PrivateRoute"));
 const PublicRoute = lazy(() => import("routes/PublicRoute"));
 
+const queryClient = new QueryClient();
+
 const App = () => {
     return (
-        <Router>
-            <SnackbarProvider maxSnack={5}>
-                <ThemeProvider theme={theme}>
+        <QueryClientProvider client={queryClient}>
+            <ThemeProvider theme={theme}>
+                <SnackbarProvider maxSnack={5}>
                     <LocalizationProvider
                         dateAdapter={DateAdapter}
                         locale={esLocale}
                     >
                         <CssBaseline />
-                        <AuthProvider>
-                            <AuthCheck />
-                        </AuthProvider>
+                        <Router>
+                            <AuthProvider>
+                                <AuthCheck />
+                            </AuthProvider>
+                        </Router>
                     </LocalizationProvider>
-                </ThemeProvider>
-            </SnackbarProvider>
-        </Router>
+                </SnackbarProvider>
+            </ThemeProvider>
+        </QueryClientProvider>
     );
 };
 
