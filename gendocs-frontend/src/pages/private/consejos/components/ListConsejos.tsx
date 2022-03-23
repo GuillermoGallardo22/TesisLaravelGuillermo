@@ -7,6 +7,7 @@ import {
 } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import ChipStatus from "components/ChipStatus";
+import ConfirmationDialog from "components/ConfirmationDialog";
 import Icon from "components/Icon";
 import { useDeleteItem } from "hooks/useDeleteItem";
 import { useFilterPagination } from "hooks/useFilterPagination";
@@ -15,7 +16,6 @@ import { useCallback, useState } from "react";
 import { Link } from "react-router-dom";
 import { deleteConsejo, getConsejos } from "services/consejos";
 import { parseToDateTime } from "utils/date";
-import ConfirmationDialog from "./ConfirmationDialog";
 
 export default function ListConsejos() {
     const [token, setToken] = useState(1);

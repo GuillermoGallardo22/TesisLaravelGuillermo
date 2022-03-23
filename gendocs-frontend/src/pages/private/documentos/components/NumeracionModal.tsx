@@ -8,7 +8,7 @@ import {
     Typography,
 } from "@mui/material";
 import { INumeracionBase } from "models/interfaces";
-import ConfirmationDialog from "pages/private/consejos/components/ConfirmationDialog";
+import ConfirmationDialog from "components/ConfirmationDialog";
 import { useCallback, useEffect, useState } from "react";
 import {
     Accordion,
