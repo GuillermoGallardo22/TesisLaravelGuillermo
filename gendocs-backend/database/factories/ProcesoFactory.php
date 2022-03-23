@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Directorio;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ProcesoFactory extends Factory
@@ -13,7 +14,12 @@ class ProcesoFactory extends Factory
      */
     public function definition()
     {
+        $directorio = Directorio::query()->activeDirectory();
+
         return [
+            'nombre' => $this->faker->sentence(10),
+            'estado' => $this->faker->boolean(),
+            'directorio_id' => $directorio->id,
             //
         ];
     }

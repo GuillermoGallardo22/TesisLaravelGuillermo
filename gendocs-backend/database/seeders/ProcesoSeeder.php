@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\Directorio;
 use App\Models\Proceso;
 use Illuminate\Database\Seeder;
 
@@ -15,26 +14,6 @@ class ProcesoSeeder extends Seeder
      */
     public function run()
     {
-        $directorio = Directorio::query()->activeDirectory();
-
-        // ACTIVOS
-
-        Proceso::create([
-            'nombre' => 'Aprobación y reforma Distributivos de Trabajo',
-            'estado' => true,
-            'directorio_id' => $directorio->id,
-        ]);
-
-        Proceso::create([
-            'nombre' => 'Titulación Aprobación Propuesta',
-            'estado' => true,
-            'directorio_id' => $directorio->id,
-        ]);
-
-        Proceso::create([
-            'nombre' => 'Titulación Examen Complexivo',
-            'estado' => true,
-            'directorio_id' => $directorio->id,
-        ]);
+        Proceso::factory(5)->create();
     }
 }

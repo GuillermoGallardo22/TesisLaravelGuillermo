@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Estudiante;
 use Illuminate\Database\Seeder;
 
 class EstudianteSeeder extends Seeder
@@ -13,6 +14,6 @@ class EstudianteSeeder extends Seeder
      */
     public function run()
     {
-        //
+        Estudiante::factory(100)->create();
     }
 }

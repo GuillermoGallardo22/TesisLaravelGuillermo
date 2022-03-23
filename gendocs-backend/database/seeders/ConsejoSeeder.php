@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Consejo;
 use Illuminate\Database\Seeder;
 
 class ConsejoSeeder extends Seeder
@@ -13,6 +14,6 @@ class ConsejoSeeder extends Seeder
      */
     public function run()
     {
-        //
+        Consejo::factory(10)->create();
     }
 }

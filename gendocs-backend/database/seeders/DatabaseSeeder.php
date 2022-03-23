@@ -13,9 +13,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
         $this->call([
-            // SEEDERS
             PermissionsSeeder::class,
             UserSeeder::class,
             DirectorioSeeder::class,
@@ -23,7 +21,11 @@ class DatabaseSeeder extends Seeder
             ProcesoSeeder::class,
             TipoConsejoSeeder::class,
             NumeracionSeeder::class,
-            // FACTORIES
+            //
+            EstudianteSeeder::class,
+            ConsejoSeeder::class,
+            PlantillasSeeder::class,
+            // DocumentoSeeder::class,
         ]);
     }
 }

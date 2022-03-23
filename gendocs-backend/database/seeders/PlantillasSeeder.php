@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\Plantillas;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class PlantillasSeeder extends Seeder
@@ -13,6 +15,6 @@ class PlantillasSeeder extends Seeder
      */
     public function run()
     {
-        //
+        Plantillas::factory(20)->create();
     }
 }

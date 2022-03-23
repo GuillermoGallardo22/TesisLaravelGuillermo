@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Directorio;
+use App\Models\TipoConsejo;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ConsejoFactory extends Factory
@@ -14,7 +16,11 @@ class ConsejoFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'nombre' => $this->faker->sentence(6),
+            'fecha' => $this->faker->dateTimeInInterval('+7 days'),
+            'tipo_consejo_id' => TipoConsejo::inRandomOrder()->first()->id,
+            'directorio_id' => Directorio::activeDirectory()->id,
+            'estado' => $this->faker->boolean()
         ];
     }
 }

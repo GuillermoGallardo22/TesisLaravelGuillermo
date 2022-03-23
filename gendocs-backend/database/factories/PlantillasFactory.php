@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Proceso;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class PlantillasFactory extends Factory
@@ -14,7 +16,10 @@ class PlantillasFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'nombre' => $this->faker->sentence(4),
+            'estado' => $this->faker->boolean(),
+            'proceso_id' => Proceso::inRandomOrder()->first()->id,
+            'user_id' => User::inRandomOrder()->first()->id,
         ];
     }
 }
