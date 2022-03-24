@@ -41,4 +41,10 @@ abstract class Permissions
         'update' => 'documento.update',
         'delete' => 'documento.delete'
     ];
+
+    const Numeracion = [
+        'index' => 'numeracion.index',
+        'create' => 'numeracion.create',
+        'update' => 'numeracion.update',
+    ];
 }

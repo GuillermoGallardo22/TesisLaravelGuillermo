@@ -12,6 +12,12 @@ use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
 class NumeracionController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->authorizeResource(Numeracion::class);
+    }
+
     public function index()
     {
         return response()->json([
