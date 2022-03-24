@@ -6,12 +6,13 @@ import {
     Grid,
     IconButton,
     InputAdornment,
-    TextField
+    TextField,
 } from "@mui/material";
 import ErrorSummary from "components/ErrorSummary";
 import Icon from "components/Icon";
 import Select from "components/Select";
 import { useAutocomplete } from "hooks/useAutocomplete";
+import { useConfirmationDialog } from "hooks/useConfirmationDialog";
 import { IEstudiante, IPlantilla, IProceso } from "models/interfaces";
 import React, { useEffect, useState } from "react";
 import { getEstudiantes } from "services/estudiantes";
@@ -21,19 +22,6 @@ import useAddDocumento from "../hooks/useAddDocumento";
 import { NumeracionModal } from "./NumeracionModal";
 
 export default function AddDocumento() {
-    const {
-        formik,
-        consejos,
-        reservados,
-        encolados,
-        loading,
-        refreshNumeracion,
-        errorSummary,
-        handleReset: handleResetForm,
-    } = useAddDocumento();
-
-    const submitting = formik.isSubmitting || loading;
-
     // PROCESOS
     const {
         items: itemsPRO,
@@ -99,10 +87,30 @@ export default function AddDocumento() {
         formik.setFieldValue("estudiante", valueEST?.id || null);
     }, [valueEST]);
 
-    const handleReset = () => {
+    const handleResetAutocomplete = () => {
         resetValueEST();
         resetValuePLA();
         resetValuePRO();
+    };
+
+    // FORM
+    const {
+        formik,
+        consejos,
+        reservados,
+        encolados,
+        loading,
+        refreshNumeracion,
+        errorSummary,
+        handleReset: handleResetForm,
+    } = useAddDocumento({
+        onReset: handleResetAutocomplete,
+    });
+
+    const submitting = formik.isSubmitting || loading;
+
+    const handleReset = () => {
+        handleResetAutocomplete();
         handleResetForm();
     };
 
@@ -110,10 +118,7 @@ export default function AddDocumento() {
         event.preventDefault();
     };
 
-    const [isVisibleModal, setIsVisibleModal] = useState(false);
-
-    const openModal = () => setIsVisibleModal(true);
-    const closeModal = () => setIsVisibleModal(false);
+    const { closeModal, isVisible, openModal } = useConfirmationDialog();
 
     return (
         <>
@@ -401,7 +406,7 @@ export default function AddDocumento() {
             </Box>
 
             <NumeracionModal
-                isVisible={isVisibleModal}
+                isVisible={isVisible}
                 onCancel={closeModal}
                 onApprove={(n) => formik.setFieldValue("numero", n)}
                 reservados={reservados}

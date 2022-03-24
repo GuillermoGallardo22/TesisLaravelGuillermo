@@ -19,7 +19,11 @@ const initialValues: IDocumentoForm = {
     numero: -1,
 };
 
-export default function useAddDocumento() {
+type useAddDocumentoProps = {
+    onReset: () => void;
+};
+
+export default function useAddDocumento({ onReset }: useAddDocumentoProps) {
     const [loading, setLoading] = useState(true);
     const { enqueueSnackbar } = useSnackbar();
     const [consejos, setConsejos] = useState<IConsejo[]>([]);
@@ -76,6 +80,7 @@ export default function useAddDocumento() {
             enqueueSnackbar(result.message, { variant: "error" });
             setErrorSummary(result.errors);
         }
+        refreshNumeracion();
     };
 
     const validationSchema = yup.object().shape({
@@ -131,6 +136,9 @@ export default function useAddDocumento() {
     const handleReset = () => {
         formik.resetForm();
         setErrorSummary(undefined);
+        if (onReset) {
+            onReset();
+        }
     };
 
     return {
