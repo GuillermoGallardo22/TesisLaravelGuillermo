@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Constants\Roles;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -59,9 +60,6 @@ class User extends Authenticatable
             'email_gmail' => $this->email_gmail,
             'roles' => $this->getRoleNames(),
             'status' => $this->status,
-            'permissions' => $this->getPermissionsViaRoles()->map(function ($item) {
-                return $item->name;
-            }),
         ];
     }
 

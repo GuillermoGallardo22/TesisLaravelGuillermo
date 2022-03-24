@@ -21,22 +21,22 @@ class PermissionsSeeder extends Seeder
     {
         $roleAdmin = Role::create([
             'name' => Roles::Admin,
-            'name_role_drive' => Str::lower(Roles::Writer),
+            'name_role_drive' => Str::lower(Roles::GWriter),
         ]);
 
         $roleAdminTemp = Role::create([
             'name' => Roles::AdminTemp,
-            'name_role_drive' => Str::lower(Roles::Writer),
+            'name_role_drive' => Str::lower(Roles::GWriter),
         ]);
 
         $roleWriter = Role::create([
             'name' => Roles::Writer,
-            'name_role_drive' => Str::lower(Roles::Writer),
+            'name_role_drive' => Str::lower(Roles::GWriter),
         ]);
 
         $roleReader = Role::create([
             'name' => Roles::Reader,
-            'name_role_drive' => Str::lower(Roles::Reader),
+            'name_role_drive' => Str::lower(Roles::GReader),
         ]);
 
         $permissions = array_merge(
