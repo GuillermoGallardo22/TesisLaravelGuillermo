@@ -2,7 +2,6 @@ import Icon from "components/Icon";
 import { RolEnum } from "models/enums";
 import { lazy } from "react";
 
-
 const Home = lazy(() => import("pages/private/home/Home"));
 
 const AddConsejo = lazy(
@@ -40,6 +39,8 @@ const AddTemplates = lazy(
 const DriveTemplate = lazy(
     () => import("pages/private/processes/components/DriveTemplate")
 );
+
+const DriveTemplateBase = lazy(() => import("components/DriveTemplate"));
 
 const ListProcess = lazy(
     () => import("pages/private/processes/components/ListProcess")
@@ -126,6 +127,11 @@ export const routes: IRoute[] = [
             {
                 path: "nuevo",
                 component: <AddDocumento />,
+                roles: [RolEnum.ADMIN, RolEnum.ADMINTEMP, RolEnum.WRITER],
+            },
+            {
+                path: "drive/:driveId",
+                component: <DriveTemplateBase />,
                 roles: [RolEnum.ADMIN, RolEnum.ADMINTEMP, RolEnum.WRITER],
             },
             { path: "", isIndex: true, component: <ListDocumentos /> },

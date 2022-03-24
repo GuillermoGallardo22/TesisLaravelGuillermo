@@ -117,6 +117,9 @@ export default function ListDocumentos() {
                     <GridActionsCellItem
                         key={p.id}
                         color="primary"
+                        LinkComponent={Link}
+                        disabled={!p.row.drive}
+                        to={`drive/${p.row.drive}`}
                         icon={<Icon icon="article" />}
                         label="Ver documento"
                     />,

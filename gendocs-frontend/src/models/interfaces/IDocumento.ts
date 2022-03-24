@@ -20,6 +20,6 @@ export interface IDocumento {
     estudiante: IEstudiante | null;
     plantilla: IPlantilla;
     autor: IUser;
-    drive: string;
+    drive: string | null;
     creado: string | Date;
 }
