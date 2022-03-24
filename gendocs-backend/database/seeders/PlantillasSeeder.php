@@ -15,6 +15,6 @@ class PlantillasSeeder extends Seeder
      */
     public function run()
     {
-        Plantillas::factory(20)->create();
+        Plantillas::factory(10)->create();
     }
 }

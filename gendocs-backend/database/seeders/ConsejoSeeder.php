@@ -14,6 +14,6 @@ class ConsejoSeeder extends Seeder
      */
     public function run()
     {
-        Consejo::factory(10)->create();
+        Consejo::factory(5)->create();
     }
 }
