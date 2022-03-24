@@ -77,6 +77,17 @@ class DocumentoController extends Controller
 
     public function destroy(Documento $documento)
     {
-        //
+        try {
+            DB::beginTransaction();
+            $documento->delete();
+            DB::commit();
+            return response()->noContent(ResponseAlias::HTTP_OK);
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return response()->json([
+                'errors' => $e->getMessage(),
+            ], ResponseAlias::HTTP_UNPROCESSABLE_ENTITY);
+        }
     }
 }

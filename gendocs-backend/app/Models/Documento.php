@@ -8,10 +8,11 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Documento extends Model
 {
-    use HasFactory, Pageable, Filterable;
+    use HasFactory, Pageable, Filterable, SoftDeletes;
 
     public const FILTERS = ["consejo", "search"];
 
@@ -38,7 +39,7 @@ class Documento extends Model
             'estudiante' => $this->estudiante,
             'plantilla' => $this->plantilla,
             'autor' => $this->autor,
-            // 'drive' => $this->archivo->google_drive_id?,
+            'drive' => $this->archivo?->google_drive_id,
             'creado' => $this->created_at
         ];
     }

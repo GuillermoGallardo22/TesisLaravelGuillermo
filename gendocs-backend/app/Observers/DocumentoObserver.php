@@ -3,6 +3,7 @@
 namespace App\Observers;
 
 use App\Models\Documento;
+use App\Models\Numeracion;
 use App\Services\GoogleDriveService;
 use App\Services\NumeracionService;
 use App\Traits\Nameable;
@@ -111,7 +112,12 @@ class DocumentoObserver
      */
     public function deleted(Documento $documento)
     {
-        //
+        $numeracion = Numeracion::where('numero', $documento->numero)->first();
+
+        $numeracion->update([
+            'usado' => false,
+            'encolado' => true,
+        ]);
     }
 
     /**
