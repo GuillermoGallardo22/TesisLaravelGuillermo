@@ -38,7 +38,7 @@ class CreateDocumentosTable extends Migration
             $table->text('descripcion')
                 ->nullable();
 
-            $table->unique(['numero', 'plantilla_id', 'consejo_id']);
+            // $table->unique(['numero', 'plantilla_id', 'consejo_id']);
 
             $table->timestamps();
             $table->softDeletes();
