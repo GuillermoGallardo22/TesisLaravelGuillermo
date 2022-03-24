@@ -1,6 +1,6 @@
 export enum RolEnum {
-    ADMIN = "Admin",
-    ADMINTEMP = "AdminTemp",
-    READER = "Reader",
-    WRITER = "Writer",
+    ADMIN = "Administrador",
+    ADMINTEMP = "Administrador-Temporal",
+    READER = "Escritor",
+    WRITER = "Lector",
 }
