@@ -132,7 +132,6 @@ export const routes: IRoute[] = [
             {
                 path: "drive/:driveId",
                 component: <DriveTemplateBase />,
-                roles: [RolEnum.ADMIN, RolEnum.ADMINTEMP, RolEnum.WRITER],
             },
             { path: "", isIndex: true, component: <ListDocumentos /> },
         ],
