@@ -1,9 +1,11 @@
-import { Box, Button, Grid, Stack } from "@mui/material";
+import { Box, Button, DialogContentText, Grid, Stack } from "@mui/material";
 import {
     DataGrid,
     GridActionsCellItem,
-    GridColumns, GridToolbar
+    GridColumns,
+    GridToolbar,
 } from "@mui/x-data-grid";
+import ConfirmationDialog from "components/ConfirmationDialog";
 import Icon from "components/Icon";
 import Select from "components/Select";
 import { useAuthContext } from "contexts/AuthContext";
@@ -14,15 +16,24 @@ import { Link } from "react-router-dom";
 import {
     generateLink,
     getAutor,
-    getCreado, getNombreCompleto,
+    getCreado,
+    getNombreCompleto,
     getPlantilla,
-    getProceso
+    getProceso,
 } from "utils/libs";
 import { useListDocumentos } from "../hooks/useListDocumentos";
 
 export default function ListDocumentos() {
-    const { consejos, documentos, consejo, loading, setConsejo } =
-        useListDocumentos();
+    const {
+        consejos,
+        documentos,
+        consejo,
+        loading,
+        setConsejo,
+        //
+        confirmationDialog: { isVisible, openModal, closeModal, itemSelected },
+        deleteItem: { handleDelete, deleting },
+    } = useListDocumentos();
 
     const {
         context: { user },
@@ -114,6 +125,7 @@ export default function ListDocumentos() {
                         color="error"
                         icon={<Icon icon="delete" />}
                         label="Eliminar documento"
+                        onClick={() => openModal(p.row as IDocumento)}
                     />,
                 ],
             },
@@ -167,6 +179,25 @@ export default function ListDocumentos() {
                     rows={documentos}
                 />
             </div>
+
+            {itemSelected && (
+                <ConfirmationDialog
+                    id="delete-documento-modal"
+                    keepMounted={true}
+                    isVisible={isVisible}
+                    title="Eliminar"
+                    onCancel={closeModal}
+                    onApprove={handleDelete}
+                    textApprove="ELIMINAR"
+                    buttonColorApprove="error"
+                    loading={deleting}
+                >
+                    <DialogContentText>
+                        ¿Está seguro que desea eliminar el documento número{" "}
+                        <strong>{itemSelected.numero}</strong>?
+                    </DialogContentText>
+                </ConfirmationDialog>
+            )}
         </Stack>
     );
 }

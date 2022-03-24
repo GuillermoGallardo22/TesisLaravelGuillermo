@@ -1,8 +1,10 @@
-import { IFilterPaginationProps } from "models/interfaces";
+import { useConfirmationDialog } from "hooks/useConfirmationDialog";
+import { useDeleteItem } from "hooks/useDeleteItem";
+import { IDocumento } from "models/interfaces";
 import { useState } from "react";
 import { useQuery } from "react-query";
 import { getConsejos } from "services/consejos";
-import { getDocumentos } from "services/documentos";
+import { deleteDocumento, getDocumentos } from "services/documentos";
 
 export function useListDocumentos() {
     const [consejo, setConsejo] = useState(-1);
@@ -15,15 +17,34 @@ export function useListDocumentos() {
         }).then((r) => r.data)
     );
 
-    const { data: documentos = [], isLoading: loading } = useQuery(
+    const {
+        data: documentos = [],
+        isLoading: loading,
+        refetch,
+    } = useQuery(
         ["documentos", consejo],
         () =>
             getDocumentos({
                 filters: {
                     consejo,
                 },
-            }).then((r) => r.data)
+            }).then((r) => r.data),
+        {
+            refetchOnWindowFocus: false,
+            enabled: consejo !== -1,
+        }
     );
+
+    const confirmationDialog = useConfirmationDialog<IDocumento>();
+
+    const deleteItem = useDeleteItem({
+        id: confirmationDialog.itemSelected?.id,
+        onDelete: deleteDocumento,
+        callback: () => {
+            confirmationDialog.closeModal();
+            refetch();
+        },
+    });
 
     return {
         consejos,
@@ -31,5 +52,8 @@ export function useListDocumentos() {
         documentos,
         consejo,
         loading,
+        //
+        confirmationDialog,
+        deleteItem,
     };
 }

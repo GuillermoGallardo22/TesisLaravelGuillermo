@@ -1,9 +1,19 @@
 import axios from "axios";
 import { HTTP_STATUS } from "models/enums";
-import { IDocumento, IDocumentoForm, IFilterPaginationProps, IPagination, IResponse } from "models/interfaces";
+import {
+    IDocumento,
+    IDocumentoForm,
+    IFilterPaginationProps,
+    IPagination,
+    IResponse,
+} from "models/interfaces";
 import { handleErrors } from "utils/axios";
 import { HTTP_MESSAGES } from "utils/messages";
-import { parseFilterPaginationProps, parsePaginationData, DEFAULT_PAGINATION_VALUES } from "utils/pagination";
+import {
+    parseFilterPaginationProps,
+    parsePaginationData,
+    DEFAULT_PAGINATION_VALUES,
+} from "utils/pagination";
 
 export async function saveDocumento(
     form: IDocumentoForm
@@ -32,5 +42,21 @@ export async function getDocumentos(
         return parsePaginationData(data);
     } catch (error) {
         return DEFAULT_PAGINATION_VALUES;
+    }
+}
+
+export async function deleteDocumento(
+    id: string | number
+): Promise<IResponse<null>> {
+    try {
+        await axios.delete("documentos/" + id);
+
+        return {
+            data: null,
+            status: HTTP_STATUS.ok,
+            message: HTTP_MESSAGES[200],
+        };
+    } catch (error) {
+        return handleErrors(error);
     }
 }
