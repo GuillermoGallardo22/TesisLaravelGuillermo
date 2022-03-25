@@ -68,7 +68,7 @@ export const useEditEstudiante = ({ studentId }: { studentId: string }) => {
             .typeError(VALIDATION_MESSAGES.required),
         correo_uta: yup
             .string()
-            .nullable()
+            .required()
             .matches(
                 CONSTANTS.email_uta_regex,
                 VALIDATION_MESSAGES.invalidFormat
@@ -116,7 +116,7 @@ export const useEditEstudiante = ({ studentId }: { studentId: string }) => {
         if (result.status === HTTP_STATUS.ok) {
             enqueueSnackbar(result.message, { variant: "success" });
         } else {
-            setErrorSummary(result.message);
+            setErrorSummary(result.errors || result.message);
         }
 
         setSubmitting(false);
