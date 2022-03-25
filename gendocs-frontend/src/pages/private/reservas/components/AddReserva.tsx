@@ -52,7 +52,7 @@ export default function AddReserva() {
                     />
                 </Grid>
 
-                <Grid item xs={12} sm={4}>
+                <Grid item xs={12} sm={6}>
                     <TextField
                         fullWidth
                         required
@@ -93,7 +93,7 @@ export default function AddReserva() {
                     />
                 </Grid>
 
-                <Grid item xs={12} sm={4}>
+                <Grid item xs={12} sm={6}>
                     <TextField
                         fullWidth
                         required
@@ -112,7 +112,7 @@ export default function AddReserva() {
                     />
                 </Grid>
 
-                <Grid item xs={12} sm={4}>
+                <Grid item xs={12} sm={6}>
                     <TextField
                         fullWidth
                         disabled
@@ -122,6 +122,20 @@ export default function AddReserva() {
                         label="Total de números reservados"
                         margin="normal"
                         value={formik.values.hasta - formik.values.desde + 1}
+                    />
+                </Grid>
+
+                <Grid item xs={12} sm={6}>
+                    <TextField
+                        fullWidth
+                        disabled
+                        id="total"
+                        name="total"
+                        type="number"
+                        label="Siguiente número disponible"
+                        margin="normal"
+                        value={formik.values.hasta + 1}
+                        helperText="Esté número no está dentro del rango seleccionado a reservar"
                     />
                 </Grid>
 
