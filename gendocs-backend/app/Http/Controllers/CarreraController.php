@@ -20,6 +20,8 @@ class CarreraController extends Controller
     public function index(Request $request)
     {
         $query = Carrera::query();
+
+        $query->orderBy('estado', 'DESC');
         $query->orderBy('nombre', 'asc');
 
         $query->applyFilters($request->all());
@@ -27,57 +29,27 @@ class CarreraController extends Controller
         return ResourceCollection::make($query->get());
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param \App\Http\Requests\StoreCarreraRequest $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(StoreCarreraRequest $request)
     {
-        //
+        $carrera = Carrera::create($request->validated());
+
+        return ResourceObject::make($carrera);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param \App\Models\Carrera $carrera
-     * @return \Illuminate\Http\Response
-     */
     public function show(Carrera $carrera)
     {
-        //
+        return ResourceObject::make($carrera);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param \App\Models\Carrera $carrera
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Carrera $carrera)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param \App\Http\Requests\UpdateCarreraRequest $request
-     * @param \App\Models\Carrera $carrera
-     * @return \Illuminate\Http\Response
-     */
     public function update(UpdateCarreraRequest $request, Carrera $carrera)
     {
-        //
+        $carrera
+            ->fill($request->validated())
+            ->save();
+
+        return ResourceObject::make($carrera);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param \App\Models\Carrera $carrera
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Carrera $carrera)
     {
         //

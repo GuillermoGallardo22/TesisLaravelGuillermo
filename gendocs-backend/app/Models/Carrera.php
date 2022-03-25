@@ -16,6 +16,10 @@ class Carrera extends Model
         "estado"
     ];
 
+    protected $casts = [
+        'estado' => 'boolean',
+    ];
+
     public const FILTERS = ['estado'];
 
     public function fields()

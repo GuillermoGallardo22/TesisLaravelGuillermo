@@ -13,7 +13,7 @@ class StoreCarreraRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,8 @@ class StoreCarreraRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'nombre' => ['required', 'string', 'max:512'],
+            'estado' => ['nullable', 'boolean']
         ];
     }
 }
