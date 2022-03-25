@@ -1,9 +1,9 @@
 import { useFormik } from "formik";
 import { useErrorsResponse } from "hooks/useErrorsResponse";
 import { HTTP_STATUS } from "models/enums";
-import { IConsejo, IReservaForm } from "models/interfaces";
+import { IReservaForm } from "models/interfaces";
 import { useSnackbar } from "notistack";
-import { useEffect, useState } from "react";
+import { useQuery } from "react-query";
 import { getConsejos } from "services/consejos";
 import { createReserva, getNumeracion } from "services/numeracion";
 import { VALIDATION_MESSAGES } from "utils/messages";
@@ -17,10 +17,20 @@ const initialValues: IReservaForm = {
 
 export function useAddReserva() {
     const { enqueueSnackbar } = useSnackbar();
-    const [loading, setLoading] = useState(true);
-    const [consejos, setConsejos] = useState<IConsejo[]>([]);
-    const [reserva, setReserva] = useState(initialValues);
     const { errorSummary, setErrorSummary } = useErrorsResponse();
+
+    const { data: consejos = [], isLoading: isLoadingC } = useQuery(
+        ["consejos"],
+        () =>
+            getConsejos({
+                filters: {
+                    estado: 1,
+                },
+            }),
+        {
+            select: (d) => d.data,
+        }
+    );
 
     const validationSchema = yup.object().shape({
         desde: yup
@@ -40,37 +50,6 @@ export function useAddReserva() {
         ),
     });
 
-    useEffect(() => {
-        let active = true;
-
-        (async () => {
-            setLoading(true);
-
-            const [r1, r2] = await Promise.all([
-                getConsejos({
-                    filters: {
-                        estado: 1,
-                    },
-                }),
-                getNumeracion(),
-            ]);
-
-            if (!active) return;
-
-            setConsejos(r1.data);
-            setReserva((p) => ({
-                ...p,
-                desde: r2.siguiente,
-            }));
-
-            setLoading(false);
-        })();
-
-        return () => {
-            active = false;
-        };
-    }, []);
-
     const onSubmit = async (form: IReservaForm) => {
         setErrorSummary(undefined);
 
@@ -87,26 +66,25 @@ export function useAddReserva() {
 
     const formik = useFormik<IReservaForm>({
         onSubmit,
-        initialValues: reserva,
+        initialValues: initialValues,
         enableReinitialize: true,
         validationSchema,
     });
 
-    const refreshNumeracion = () => {
-        setLoading(true);
-
-        getNumeracion()
-            .then((r) => {
-                formik.setFieldValue("desde", r.siguiente);
-            })
-            .finally(() => setLoading(false));
-    };
+    const { isLoading: isLoadingN, refetch } = useQuery(
+        ["numeracion"],
+        getNumeracion,
+        {
+            onSuccess: (r) => formik.setFieldValue("desde", r.siguiente),
+            refetchInterval: 2500,
+        }
+    );
 
     return {
         formik,
-        loading,
+        loading: isLoadingC || isLoadingN,
         consejos,
         errorSummary,
-        refreshNumeracion,
+        refreshNumeracion: refetch,
     };
 }
