@@ -20,6 +20,7 @@ import AutorenewIcon from "@mui/icons-material/Autorenew";
 import NumbersIcon from "@mui/icons-material/Numbers";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import EmailIcon from "@mui/icons-material/Email";
+import ApartmentIcon from "@mui/icons-material/Apartment";
 
 export type IconTypes =
     | "article"
@@ -45,7 +46,8 @@ export type IconTypes =
     | "autorenew"
     | "numbers"
     | "whatsApp"
-    | "email";
+    | "email"
+    | "apartment";
 
 const ICONS = {
     article: <ArticleIcon />,
@@ -70,6 +72,7 @@ const ICONS = {
     numbers: <NumbersIcon />,
     whatsApp: <WhatsAppIcon />,
     email: <EmailIcon />,
+    apartment: <ApartmentIcon />,
 };
 
 interface IconProps {
