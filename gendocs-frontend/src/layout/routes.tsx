@@ -1,6 +1,21 @@
 import Icon from "components/Icon";
 import { RolEnum } from "models/enums";
 import { lazy } from "react";
+import { Outlet } from "react-router-dom";
+
+const AddCarrera = lazy(
+    () => import("pages/private/carreras/components/AddCarrera")
+);
+
+const ListCarreras = lazy(
+    () => import("pages/private/carreras/components/ListCarreras")
+);
+
+const UpdateCarrera = lazy(
+    () => import("pages/private/carreras/components/UpdateCarrera")
+);
+
+const Facultades = lazy(() => import("pages/private/carreras/Carreras"));
 
 const Home = lazy(() => import("pages/private/home/Home"));
 
@@ -97,7 +112,6 @@ const UpdateUser = lazy(
 );
 
 const Users = lazy(() => import("pages/private/Users/Users"));
-import { Outlet } from "react-router-dom";
 
 export interface IRoute {
     path: string;
@@ -134,6 +148,25 @@ export const routes: IRoute[] = [
                 component: <DriveTemplateBase />,
             },
             { path: "", isIndex: true, component: <ListDocumentos /> },
+        ],
+    },
+    {
+        path: "carreras",
+        label: "Carreras",
+        component: <Facultades />,
+        icon: <Icon icon="apartment" />,
+        childrens: [
+            {
+                path: "nuevo",
+                component: <AddCarrera />,
+                roles: [RolEnum.ADMIN, RolEnum.ADMINTEMP],
+            },
+            {
+                path: ":carreraId",
+                component: <UpdateCarrera />,
+                roles: [RolEnum.ADMIN, RolEnum.ADMINTEMP],
+            },
+            { path: "", isIndex: true, component: <ListCarreras /> },
         ],
     },
     {
