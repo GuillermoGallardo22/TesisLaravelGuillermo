@@ -2,6 +2,8 @@
 
 namespace App\Policies;
 
+use App\Constants\Permissions;
+use App\Constants\Roles;
 use App\Models\Carrera;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
@@ -18,7 +20,7 @@ class CarreraPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return $user->getAllPermissions()->contains('name', Permissions::Carreras['index']);
     }
 
     /**
@@ -30,7 +32,7 @@ class CarreraPolicy
      */
     public function view(User $user, Carrera $carrera)
     {
-        //
+        return $user->getAllPermissions()->contains('name', Permissions::Carreras['index']);
     }
 
     /**
@@ -41,7 +43,7 @@ class CarreraPolicy
      */
     public function create(User $user)
     {
-        //
+        return $user->hasRole([Roles::Admin, Roles::AdminTemp]);
     }
 
     /**
@@ -53,7 +55,7 @@ class CarreraPolicy
      */
     public function update(User $user, Carrera $carrera)
     {
-        //
+        return $user->hasRole([Roles::Admin, Roles::AdminTemp]);
     }
 
     /**

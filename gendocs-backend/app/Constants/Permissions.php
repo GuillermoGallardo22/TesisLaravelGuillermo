@@ -47,4 +47,10 @@ abstract class Permissions
         'create' => 'numeracion.create',
         'update' => 'numeracion.update',
     ];
+
+    const Carreras = [
+        'index' => 'carrera.index',
+        'create' => 'carrera.create',
+        'update' => 'carrera.update',
+    ];
 }
