@@ -17,10 +17,7 @@ class CreateCarrerasTable extends Migration
             $table->id();
 
             $table->string("nombre");
-            $table->string("siglas", 10);
-
-            $table->unsignedBigInteger("directorio_id");
-            $table->foreign("directorio_id")->references("id")->on("directorios");
+            $table->boolean("estado")->default(true);
 
             $table->timestamps();
             $table->softDeletes();

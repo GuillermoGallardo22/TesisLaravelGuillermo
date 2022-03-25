@@ -4,29 +4,27 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreCarreraRequest;
 use App\Http\Requests\UpdateCarreraRequest;
+use App\Http\Resources\ResourceCollection;
+use App\Http\Resources\ResourceObject;
 use App\Models\Carrera;
+use Illuminate\Http\Request;
 
 class CarreraController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+
+    public function __construct()
     {
-        $query = Carrera::query();
-        return $query->orderBy('nombre', 'asc')->get();
+        $this->authorizeResource(Carrera::class);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function index(Request $request)
     {
-        //
+        $query = Carrera::query();
+        $query->orderBy('nombre', 'asc');
+
+        $query->applyFilters($request->all());
+
+        return ResourceCollection::make($query->get());
     }
 
     /**
