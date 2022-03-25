@@ -75,12 +75,8 @@ export const useAddSimpleStudent = () => {
             )
             .required(VALIDATION_MESSAGES.required)
             .max(100, VALIDATION_MESSAGES.maxLength(100)),
-        matricula: yup
-            .string()
-            .max(10, VALIDATION_MESSAGES.maxLength(10)),
-        folio: yup
-            .string()
-            .max(10, VALIDATION_MESSAGES.maxLength(10)),
+        matricula: yup.string().max(10, VALIDATION_MESSAGES.maxLength(10)),
+        folio: yup.string().max(10, VALIDATION_MESSAGES.maxLength(10)),
         carrera: yup
             .mixed()
             .oneOf(
@@ -113,10 +109,12 @@ export const useAddSimpleStudent = () => {
     });
 
     useEffect(() => {
-        Promise.all([getAllCarreras()]).then((results) => {
-            const [_carreras] = results;
-            setCarreras(_carreras);
-        });
+        Promise.all([getAllCarreras({ filters: { estado: 1 } })]).then(
+            (results) => {
+                const [_carreras] = results;
+                setCarreras(_carreras);
+            }
+        );
     }, []);
 
     return {
@@ -238,10 +236,12 @@ export const useAddMultipleStudent = () => {
     });
 
     useEffect(() => {
-        Promise.all([getAllCarreras()]).then((results) => {
-            const [_carreras] = results;
-            setCarreras(_carreras);
-        });
+        Promise.all([getAllCarreras({ filters: { estado: 1 } })]).then(
+            (results) => {
+                const [_carreras] = results;
+                setCarreras(_carreras);
+            }
+        );
     }, []);
 
     return {

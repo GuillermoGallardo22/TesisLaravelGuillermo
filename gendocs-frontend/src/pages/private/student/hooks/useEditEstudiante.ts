@@ -96,13 +96,14 @@ export const useEditEstudiante = ({ studentId }: { studentId: string }) => {
     });
 
     useEffect(() => {
-        Promise.all([getAllCarreras(), getEstudianteById(studentId)]).then(
-            (results) => {
-                const [_carreras, _estudiante] = results;
-                setCarreras(_carreras);
-                setEstudiante(_estudiante.data);
-            }
-        );
+        Promise.all([
+            getAllCarreras({ filters: { estado: 1 } }),
+            getEstudianteById(studentId),
+        ]).then((results) => {
+            const [_carreras, _estudiante] = results;
+            setCarreras(_carreras);
+            setEstudiante(_estudiante.data);
+        });
     }, [studentId]);
 
     const onSubmit = async (form: IEstudiante) => {
