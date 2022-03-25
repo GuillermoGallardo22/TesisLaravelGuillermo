@@ -76,6 +76,7 @@ const ListStudents = () => {
 
             <div style={{ height: 600, width: "100%" }}>
                 <DataGrid
+                    disableColumnMenu
                     pagination
                     components={{
                         Toolbar: GridToolbarColumns,

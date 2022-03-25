@@ -3,7 +3,7 @@ import {
     DialogContentText,
     IconButton,
     Stack,
-    TextField
+    TextField,
 } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import ChipStatus from "components/ChipStatus";
@@ -133,6 +133,7 @@ export default function ListConsejos() {
 
                 <div style={{ height: 600, width: "100%" }}>
                     <DataGrid
+                        disableColumnMenu
                         pagination
                         paginationMode="server"
                         onPageSizeChange={handlePageSizeChange}

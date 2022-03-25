@@ -78,6 +78,7 @@ const ListProcess = () => {
 
             <div style={{ height: 600, width: "100%" }}>
                 <DataGrid
+                    disableColumnMenu
                     pagination
                     paginationMode="server"
                     onPageSizeChange={handlePageSizeChange}
