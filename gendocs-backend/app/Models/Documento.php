@@ -4,7 +4,6 @@ namespace App\Models;
 
 use App\Traits\Filterable;
 use App\Traits\Pageable;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -42,11 +41,6 @@ class Documento extends Model
             'drive' => $this->archivo?->google_drive_id,
             'creado' => $this->created_at
         ];
-    }
-
-    public function scopeSearch(Builder $query, $value)
-    {
-        return $query->join();
     }
 
     public function archivo()
