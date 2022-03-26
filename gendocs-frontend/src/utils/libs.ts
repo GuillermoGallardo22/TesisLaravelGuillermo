@@ -2,7 +2,7 @@ import {
     GridValueFormatterParams,
     GridValueGetterParams,
 } from "@mui/x-data-grid";
-import { IDocumento, IProceso } from "models/interfaces";
+import { IDocente, IDocumento, IProceso } from "models/interfaces";
 import { MultipleStudentForm } from "pages/private/student/hooks/useAddStudent";
 import * as xlsx from "xlsx";
 import { parseToDateTime } from "./date";
@@ -127,41 +127,4 @@ export function generateLink(data: IDocumento, user: string) {
     });
 
     return `https://api.whatsapp.com/send?${encodeURI(params)}`;
-}
-
-export function getDocumentosTableModel(key: string) {
-    const data = localStorage.getItem(key);
-
-    return data
-        ? JSON.parse(data)
-        : {
-            numero: true,
-            destinatario: true,
-            plantilla: true,
-            proceso: true,
-            autor: true,
-            descripcion: true,
-            creado: true,
-            notificaciones: true,
-            acciones: true,
-        };
-}
-
-export function getEstudiantesTableModel(key: string) {
-    const data = localStorage.getItem(key);
-
-    return data
-        ? JSON.parse(data)
-        : {
-            cedula: true,
-            apellidos: true,
-            nombres: true,
-            celular: true,
-            telefono: true,
-            correo_uta: true,
-            correo: true,
-            matricula: true,
-            folio: true,
-            acciones: true,
-        };
 }

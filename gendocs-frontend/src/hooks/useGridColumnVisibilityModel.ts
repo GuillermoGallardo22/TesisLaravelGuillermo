@@ -1,29 +1,20 @@
 import { GridColumnVisibilityModel } from "@mui/x-data-grid";
 import { useState } from "react";
-import { getDocumentosTableModel, getEstudiantesTableModel } from "utils/libs";
 
 type useGridColumnVisibilityModelProps = {
-    key: "estudiantesTableModel" | "documentosTableModel";
-    // defaultValues: (key: string) => GridColumnVisibilityModel;
+    key:
+        | "estudiantesTableModel"
+        | "documentosTableModel"
+        | "docentesTableModel";
 };
 
 export function useGridColumnVisibilityModel({
     key,
-}: // defaultValues,
-useGridColumnVisibilityModelProps) {
-    const getDefaultValues = () => {
-        switch (key) {
-            case "documentosTableModel":
-                return getDocumentosTableModel(key);
-            case "estudiantesTableModel":
-                return getEstudiantesTableModel(key);
-            default:
-                return {};
-        }
-    };
-
+}: useGridColumnVisibilityModelProps) {
     const [columnVisibilityModel, setColumnVisibilityModel] =
-        useState<GridColumnVisibilityModel>(getDefaultValues());
+        useState<GridColumnVisibilityModel>(
+            JSON.parse(localStorage.getItem(key) || "{}")
+        );
 
     const onColumnVisibilityModelChange = (
         model: GridColumnVisibilityModel
