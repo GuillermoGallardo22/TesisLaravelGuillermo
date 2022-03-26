@@ -22,6 +22,7 @@ import {
     ListStudents,
     ListTemplates,
     ListUsers,
+    Profile,
     UpdateCarrera,
     UpdateConsejo,
     UpdateDocente,
@@ -244,7 +245,7 @@ export const routes: IRoute[] = [
     {
         path: "profile",
         label: "Perfil",
-        component: Outlet,
+        component: Profile,
         icon: "accountCircle",
     },
 ];
