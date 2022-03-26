@@ -112,7 +112,7 @@ export const routes: IRoute[] = [
         ],
     },
     {
-        path: "estudiante",
+        path: "estudiantes",
         label: "Estudiantes",
         component: Outlet,
         icon: "school",
@@ -221,7 +221,7 @@ export const routes: IRoute[] = [
         ],
     },
     {
-        path: "users",
+        path: "usuarios",
         label: "Usuarios",
         component: Outlet,
         icon: "groupAdd",
