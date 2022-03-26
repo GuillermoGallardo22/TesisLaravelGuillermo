@@ -21,9 +21,9 @@ import {
     getPlantilla,
     getProceso,
 } from "utils/libs";
-import { useListDocumentos } from "../hooks/useListDocumentos";
+import { useListDocumentos } from "./hooks/useListDocumentos";
 
-export default function ListDocumentos() {
+export default function Documentos() {
     const {
         consejos,
         documentos,

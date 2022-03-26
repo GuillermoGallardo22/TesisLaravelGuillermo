@@ -35,7 +35,7 @@ const columns: GridColumns = [
     },
 ];
 
-const ListStudents = () => {
+const Students = () => {
     const {
         data,
         handlePageChange,
@@ -102,4 +102,4 @@ const ListStudents = () => {
     );
 };
 
-export default ListStudents;
+export default Students;

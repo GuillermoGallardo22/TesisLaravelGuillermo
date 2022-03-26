@@ -8,7 +8,7 @@ import {
 import Icon from "components/Icon";
 import { useGridColumnVisibilityModel } from "hooks/useGridColumnVisibilityModel";
 import { Link as RouterLink } from "react-router-dom";
-import { useListDocentes } from "../hooks/useListDocentes";
+import { useListDocentes } from "./hooks/useListDocentes";
 
 const columns: GridColumns = [
     { field: "cedula", headerName: "Cédula", flex: 1 },
@@ -34,7 +34,7 @@ const columns: GridColumns = [
     },
 ];
 
-const ListDocentes = () => {
+const Docentes = () => {
     const { docentes, isLoading } = useListDocentes();
 
     const { columnVisibilityModel, onColumnVisibilityModelChange } =
@@ -70,4 +70,4 @@ const ListDocentes = () => {
     );
 };
 
-export default ListDocentes;
+export default Docentes;

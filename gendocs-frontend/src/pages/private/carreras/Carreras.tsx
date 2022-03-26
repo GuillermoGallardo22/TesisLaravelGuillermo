@@ -10,9 +10,9 @@ import ChipStatus from "components/ChipStatus";
 import Icon from "components/Icon";
 import { useMemo } from "react";
 import { Link } from "react-router-dom";
-import { useListCarreras } from "../hooks/useListCarreras";
+import { useListCarreras } from "./hooks/useListCarreras";
 
-export default function ListCarreras() {
+export default function Carreras() {
     const { carreras, isLoading } = useListCarreras();
 
     const columns = useMemo(

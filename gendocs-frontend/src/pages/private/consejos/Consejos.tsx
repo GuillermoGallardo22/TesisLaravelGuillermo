@@ -17,7 +17,7 @@ import { Link } from "react-router-dom";
 import { deleteConsejo, getConsejos } from "services/consejos";
 import { parseToDateTime } from "utils/date";
 
-export default function ListConsejos() {
+export default function Consejos() {
     const [token, setToken] = useState(1);
 
     const {

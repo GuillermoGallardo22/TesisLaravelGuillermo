@@ -42,7 +42,7 @@ const columns: GridColDef[] = [
     },
 ];
 
-const ListProcess = () => {
+const Process = () => {
     const {
         data,
         handlePageChange,
@@ -97,4 +97,4 @@ const ListProcess = () => {
     );
 };
 
-export default ListProcess;
+export default Process;
