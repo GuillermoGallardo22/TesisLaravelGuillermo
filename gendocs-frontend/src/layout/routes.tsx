@@ -151,6 +151,20 @@ export const routes: IRoute[] = [
         ],
     },
     {
+        path: "reservas",
+        label: "Reservar",
+        component: <Reservas />,
+        icon: <Icon icon="numbers" />,
+        childrens: [
+            {
+                path: "nuevo",
+                component: <AddReserva />,
+            },
+            { path: "", isIndex: true, component: <ListReservas /> },
+        ],
+        roles: [RolEnum.ADMIN, RolEnum.ADMINTEMP],
+    },
+    {
         path: "carreras",
         label: "Carreras",
         component: <Facultades />,
@@ -168,20 +182,6 @@ export const routes: IRoute[] = [
             },
             { path: "", isIndex: true, component: <ListCarreras /> },
         ],
-    },
-    {
-        path: "reservas",
-        label: "Reservar",
-        component: <Reservas />,
-        icon: <Icon icon="numbers" />,
-        childrens: [
-            {
-                path: "nuevo",
-                component: <AddReserva />,
-            },
-            { path: "", isIndex: true, component: <ListReservas /> },
-        ],
-        roles: [RolEnum.ADMIN, RolEnum.ADMINTEMP],
     },
     {
         path: "estudiante",
