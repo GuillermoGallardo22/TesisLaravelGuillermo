@@ -2,7 +2,7 @@ import { useConfirmationDialog } from "hooks/useConfirmationDialog";
 import { useDeleteItem } from "hooks/useDeleteItem";
 import { useConsejos } from "hooks/useQuery";
 import { IDocumento } from "models/interfaces";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { deleteDocumento, getDocumentos } from "services/documentos";
 
@@ -39,6 +39,12 @@ export function useListDocumentos() {
             refetch();
         },
     });
+
+    useEffect(() => {
+        if (consejos.length) {
+            setConsejo(consejos[0].id);
+        }
+    }, [consejos]);
 
     return {
         consejos,
