@@ -1,10 +1,10 @@
 import { useFormik } from "formik";
 import { useErrorsResponse } from "hooks/useErrorsResponse";
+import { useConsejos } from "hooks/useQuery";
 import { HTTP_STATUS } from "models/enums";
 import { IReservaForm } from "models/interfaces";
 import { useSnackbar } from "notistack";
 import { useQuery } from "react-query";
-import { getConsejos } from "services/consejos";
 import { createReserva, getNumeracion } from "services/numeracion";
 import { VALIDATION_MESSAGES } from "utils/messages";
 import * as yup from "yup";
@@ -19,18 +19,7 @@ export function useAddReserva() {
     const { enqueueSnackbar } = useSnackbar();
     const { errorSummary, setErrorSummary } = useErrorsResponse();
 
-    const { data: consejos = [], isLoading: isLoadingC } = useQuery(
-        ["consejos"],
-        () =>
-            getConsejos({
-                filters: {
-                    estado: 1,
-                },
-            }),
-        {
-            select: (d) => d.data,
-        }
-    );
+    const { data: consejos = [], isLoading: isLoadingC } = useConsejos();
 
     const validationSchema = yup.object().shape({
         desde: yup

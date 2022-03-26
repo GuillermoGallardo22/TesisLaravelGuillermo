@@ -3,6 +3,20 @@ import { RolEnum } from "models/enums";
 import { lazy } from "react";
 import { Outlet } from "react-router-dom";
 
+const AddDocente = lazy(
+    () => import("pages/private/docentes/components/AddDocente")
+);
+
+const UpdateDocente = lazy(
+    () => import("pages/private/docentes/components/UpdateDocente")
+);
+
+const ListDocentes = lazy(
+    () => import("pages/private/docentes/components/ListDocentes")
+);
+
+const Docentes = lazy(() => import("pages/private/docentes/Docentes"));
+
 const AddCarrera = lazy(
     () => import("pages/private/carreras/components/AddCarrera")
 );
@@ -200,6 +214,25 @@ export const routes: IRoute[] = [
                 roles: [RolEnum.ADMIN, RolEnum.ADMINTEMP, RolEnum.WRITER],
             },
             { path: "", isIndex: true, component: <ListStudents /> },
+        ],
+    },
+    {
+        path: "docentes",
+        label: "Docentes",
+        component: <Docentes />,
+        icon: <Icon icon="hail" />,
+        childrens: [
+            {
+                path: "nuevo",
+                component: <AddDocente />,
+                roles: [RolEnum.ADMIN, RolEnum.ADMINTEMP, RolEnum.WRITER],
+            },
+            {
+                path: ":docenteId",
+                component: <UpdateDocente />,
+                roles: [RolEnum.ADMIN, RolEnum.ADMINTEMP, RolEnum.WRITER],
+            },
+            { path: "", isIndex: true, component: <ListDocentes /> },
         ],
     },
     {
