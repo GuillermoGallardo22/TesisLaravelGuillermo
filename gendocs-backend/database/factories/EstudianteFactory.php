@@ -19,8 +19,6 @@ class EstudianteFactory extends Factory
             "nombres" => $this->faker->firstName(),
             "apellidos" => $this->faker->lastName(),
             "celular" => $this->faker->optional()->regexify('09(8|9)[0-9]{7}'),
-            "telefono" => $this->faker->optional()->numerify('0######'),
-            'correo' => $this->faker->optional()->email(),
             'correo_uta' => $this->faker->optional()->lexify('????@uta.edu.ec'),
             'carrera_id' => Carrera::inRandomOrder()->first()->id,
             'matricula' => $this->faker->optional()->numerify('0###'),
