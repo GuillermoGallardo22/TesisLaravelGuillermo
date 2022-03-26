@@ -53,4 +53,10 @@ abstract class Permissions
         'create' => 'carrera.create',
         'update' => 'carrera.update',
     ];
+
+    const Docentes = [
+        'index' => 'docente.index',
+        'create' => 'docente.create',
+        'update' => 'docente.update',
+    ];
 }
