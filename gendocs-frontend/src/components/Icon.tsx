@@ -21,6 +21,7 @@ import NumbersIcon from "@mui/icons-material/Numbers";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import EmailIcon from "@mui/icons-material/Email";
 import ApartmentIcon from "@mui/icons-material/Apartment";
+import HailIcon from "@mui/icons-material/Hail";
 
 export type IconTypes =
     | "article"
@@ -47,7 +48,8 @@ export type IconTypes =
     | "numbers"
     | "whatsApp"
     | "email"
-    | "apartment";
+    | "apartment"
+    | "hail";
 
 const ICONS = {
     article: <ArticleIcon />,
@@ -73,6 +75,7 @@ const ICONS = {
     whatsApp: <WhatsAppIcon />,
     email: <EmailIcon />,
     apartment: <ApartmentIcon />,
+    hail: <HailIcon />,
 };
 
 interface IconProps {
