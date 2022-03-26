@@ -198,25 +198,6 @@ export const routes: IRoute[] = [
         ],
     },
     {
-        path: "estudiante",
-        label: "Estudiantes",
-        component: <Student />,
-        icon: <Icon icon="school" />,
-        childrens: [
-            {
-                path: "nuevo",
-                component: <AddStudents />,
-                roles: [RolEnum.ADMIN, RolEnum.ADMINTEMP, RolEnum.WRITER],
-            },
-            {
-                path: ":studentId",
-                component: <UpdateStudent />,
-                roles: [RolEnum.ADMIN, RolEnum.ADMINTEMP, RolEnum.WRITER],
-            },
-            { path: "", isIndex: true, component: <ListStudents /> },
-        ],
-    },
-    {
         path: "docentes",
         label: "Docentes",
         component: <Docentes />,
@@ -233,6 +214,25 @@ export const routes: IRoute[] = [
                 roles: [RolEnum.ADMIN, RolEnum.ADMINTEMP, RolEnum.WRITER],
             },
             { path: "", isIndex: true, component: <ListDocentes /> },
+        ],
+    },
+    {
+        path: "estudiante",
+        label: "Estudiantes",
+        component: <Student />,
+        icon: <Icon icon="school" />,
+        childrens: [
+            {
+                path: "nuevo",
+                component: <AddStudents />,
+                roles: [RolEnum.ADMIN, RolEnum.ADMINTEMP, RolEnum.WRITER],
+            },
+            {
+                path: ":studentId",
+                component: <UpdateStudent />,
+                roles: [RolEnum.ADMIN, RolEnum.ADMINTEMP, RolEnum.WRITER],
+            },
+            { path: "", isIndex: true, component: <ListStudents /> },
         ],
     },
     {

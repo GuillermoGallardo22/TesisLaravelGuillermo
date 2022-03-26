@@ -5,7 +5,7 @@ import { Outlet } from "react-router-dom";
 export default function Facultades() {
     return (
         <Stack gap={2}>
-            <Title>Facultades</Title>
+            <Title>Carreras</Title>
             <Divider />
             <Box>
                 <Outlet />
