@@ -72,7 +72,7 @@ const Drawer: React.FC<DrawerProps> = ({ open, toggleDrawer }) => {
                             item.label && (
                                 <Link
                                     key={item.path}
-                                    icon={item.icon}
+                                    icon={<Icon icon={item.icon} />}
                                     label={item.label}
                                     path={item.path}
                                 />

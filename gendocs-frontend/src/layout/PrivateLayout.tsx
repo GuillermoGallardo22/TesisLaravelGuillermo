@@ -83,14 +83,14 @@ interface RoleCheckerRouteProps {
     item: IRoute;
 }
 
-const RoleCheckerRoute: React.FC<RoleCheckerRouteProps> = ({
-    item: { component, roles },
-}) => {
+const RoleCheckerRoute = ({
+    item: { roles, component: Component },
+}: RoleCheckerRouteProps) => {
     const {
         context: { user },
     } = useAuthContext();
 
-    if (!roles || roles?.includes(user.roles[0])) return component;
+    if (!roles || roles.includes(user.roles[0])) return <Component />;
 
     return <AccessDenied />;
 };
