@@ -65,11 +65,7 @@ export const UpdateTemplates = lazy(
 export const Profile = lazy(() => import("pages/private/profile/Profile"));
 
 export const AddReserva = lazy(
-    () => import("pages/private/reservas/components/AddReserva")
-);
-
-export const ListReservas = lazy(
-    () => import("pages/private/reservas/components/ListReservas")
+    () => import("pages/private/documentos/components/AddReserva")
 );
 
 export const AddStudents = lazy(

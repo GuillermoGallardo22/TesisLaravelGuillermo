@@ -143,14 +143,33 @@ export default function Documentos() {
 
     return (
         <Stack spacing={2}>
-            <Button
-                component={Link}
-                startIcon={<Icon icon="add" />}
-                to="nuevo"
-                variant="outlined"
-            >
-                CREAR DOCUMENTO
-            </Button>
+            <Box>
+                <Grid container spacing={2}>
+                    <Grid item xs={12} sm={6}>
+                        <Button
+                            fullWidth
+                            component={Link}
+                            startIcon={<Icon icon="add" />}
+                            to="nuevo"
+                            variant="outlined"
+                        >
+                            CREAR DOCUMENTO
+                        </Button>
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                        <Button
+                            fullWidth
+                            component={Link}
+                            startIcon={<Icon icon="numbers" />}
+                            to="reservar"
+                            variant="outlined"
+                        >
+                            RESERVAR NUMERACIÓN
+                        </Button>
+                    </Grid>
+                </Grid>
+            </Box>
+
             <Box>
                 <Grid container spacing={2}>
                     <Grid item xs={12}>

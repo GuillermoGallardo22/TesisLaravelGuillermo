@@ -79,7 +79,7 @@ export default function AddReserva() {
 
                                     <InputAdornment position="end">
                                         <IconButton
-                                            onClick={refreshNumeracion}
+                                            onClick={() => refreshNumeracion()}
                                             onMouseDown={preventDefault}
                                             edge="end"
                                             disabled={submitting}

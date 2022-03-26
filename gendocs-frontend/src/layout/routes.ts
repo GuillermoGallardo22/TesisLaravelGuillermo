@@ -11,18 +11,16 @@ import {
     AddStudents,
     AddTemplates,
     AddUser,
-    DriveTemplate,
-    Home,
     Carreras,
     Consejos,
     Docentes,
     Documentos,
-    Process,
-    ListReservas,
-    Students,
+    DriveTemplate,
+    Home,
     ListTemplates,
-    Users,
+    Process,
     Profile,
+    Students,
     UpdateCarrera,
     UpdateConsejo,
     UpdateDocente,
@@ -30,6 +28,7 @@ import {
     UpdateStudent,
     UpdateTemplates,
     UpdateUser,
+    Users,
 } from "./components";
 
 export interface IRoute {
@@ -63,25 +62,16 @@ export const routes: IRoute[] = [
                 roles: [RolEnum.ADMIN, RolEnum.ADMINTEMP, RolEnum.WRITER],
             },
             {
+                path: "reservar",
+                component: AddReserva,
+                roles: [RolEnum.ADMIN, RolEnum.ADMINTEMP],
+            },
+            {
                 path: "drive/:driveId",
                 component: DriveTemplate,
             },
             { path: "", isIndex: true, component: Documentos },
         ],
-    },
-    {
-        path: "reservas",
-        label: "Reservar",
-        component: Outlet,
-        icon: "numbers",
-        childrens: [
-            {
-                path: "nuevo",
-                component: AddReserva,
-            },
-            { path: "", isIndex: true, component: ListReservas },
-        ],
-        roles: [RolEnum.ADMIN, RolEnum.ADMINTEMP],
     },
     {
         path: "carreras",
