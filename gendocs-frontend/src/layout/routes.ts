@@ -12,7 +12,6 @@ import {
     AddTemplates,
     AddUser,
     DriveTemplate,
-    DriveTemplateBase,
     Home,
     ListCarreras,
     ListConsejos,
@@ -64,7 +63,7 @@ export const routes: IRoute[] = [
             },
             {
                 path: "drive/:driveId",
-                component: DriveTemplateBase,
+                component: DriveTemplate,
             },
             { path: "", isIndex: true, component: ListDocumentos },
         ],
@@ -155,34 +154,44 @@ export const routes: IRoute[] = [
                 path: ":processId",
                 component: Outlet,
                 childrens: [
-                    { path: "plantillas", component: ListTemplates },
                     {
-                        path: "plantillas/nuevo",
-                        component: AddTemplates,
-                        roles: [
-                            RolEnum.ADMIN,
-                            RolEnum.ADMINTEMP,
-                            RolEnum.WRITER,
-                        ],
-                    },
-                    {
-                        path: "plantillas/:templateId",
+                        path: "plantillas",
                         component: Outlet,
                         childrens: [
                             {
-                                path: "drive",
-                                isIndex: true,
-                                component: DriveTemplate,
-                            },
-                            {
-                                path: "",
-                                isIndex: true,
-                                component: UpdateTemplates,
+                                path: "nuevo",
+                                component: AddTemplates,
                                 roles: [
                                     RolEnum.ADMIN,
                                     RolEnum.ADMINTEMP,
                                     RolEnum.WRITER,
                                 ],
+                            },
+                            {
+                                path: ":templateId",
+                                component: Outlet,
+                                childrens: [
+                                    {
+                                        path: "drive/:driveId",
+                                        component: DriveTemplate,
+                                    },
+                                    {
+                                        path: "",
+                                        isIndex: true,
+                                        component: UpdateTemplates,
+                                        roles: [
+                                            RolEnum.ADMIN,
+                                            RolEnum.ADMINTEMP,
+                                            RolEnum.WRITER,
+                                        ],
+                                    },
+                                ],
+                            },
+                            {
+                                path: "",
+                                label: "",
+                                isIndex: true,
+                                component: ListTemplates,
                             },
                         ],
                     },

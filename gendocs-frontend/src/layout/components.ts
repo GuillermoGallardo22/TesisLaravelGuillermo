@@ -54,10 +54,6 @@ export const AddTemplates = lazy(
     () => import("pages/private/processes/components/AddTemplates")
 );
 
-export const DriveTemplate = lazy(
-    () => import("pages/private/processes/components/DriveTemplate")
-);
-
 export const ListProcess = lazy(
     () => import("pages/private/processes/components/ListProcess")
 );
@@ -108,4 +104,4 @@ export const UpdateUser = lazy(
     () => import("pages/private/Users/components/UpdateUser")
 );
 
-export const DriveTemplateBase = lazy(() => import("components/DriveTemplate"));
+export const DriveTemplate = lazy(() => import("components/DriveTemplate"));

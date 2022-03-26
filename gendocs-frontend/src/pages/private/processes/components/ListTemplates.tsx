@@ -31,7 +31,7 @@ const columns: GridColDef[] = [
                     <IconButton
                         color="primary"
                         component={RouterLink}
-                        to={`${item?.value}/drive`}
+                        to={`${item.value}/drive/${item?.row?.drive}`}
                     >
                         <Icon icon="article" />
                     </IconButton>
