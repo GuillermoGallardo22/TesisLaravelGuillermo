@@ -1,10 +1,11 @@
+import { IDocente } from "models/interfaces";
 import { useQuery } from "react-query";
 import { getDocentes } from "services/docentes";
 
 export function useListDocentes() {
-    const { data: docentes = [], isLoading } = useQuery(
+    const { data: docentes = [], isLoading } = useQuery<IDocente[]>(
         ["docentes"],
-        getDocentes
+        () => getDocentes()
     );
 
     return {
