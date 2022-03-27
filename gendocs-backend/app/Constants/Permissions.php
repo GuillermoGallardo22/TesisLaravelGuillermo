@@ -59,4 +59,11 @@ abstract class Permissions
         'create' => 'docente.create',
         'update' => 'docente.update',
     ];
+
+    const ConsejosMiembros = [
+        'index' => 'consejo.miembro.index',
+        'create' => 'consejo.miembro.create',
+        'update' => 'consejo.miembro.update',
+        'delete' => 'consejo.miembro.delete',
+    ];
 }

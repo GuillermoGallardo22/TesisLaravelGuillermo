@@ -4,83 +4,66 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreConsejosMiembrosRequest;
 use App\Http\Requests\UpdateConsejosMiembrosRequest;
+use App\Http\Resources\ResourceCollection;
+use App\Http\Resources\ResourceObject;
 use App\Models\ConsejosMiembros;
+use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
 class ConsejosMiembrosController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+
+    public function __construct()
     {
-        //
+        $this->authorizeResource(ConsejosMiembros::class);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function index(Request $request)
     {
-        //
+        $query = ConsejosMiembros::query();
+
+        $query->orderBy('responsable', 'DESC');
+
+        $query->applyFilters($request->all());
+
+        return ResourceCollection::make($query->get());
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoreConsejosMiembrosRequest  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(StoreConsejosMiembrosRequest $request)
     {
-        //
+        $validated = $request->validated();
+
+        // return response()->json($validated);
+
+        $consejosMiembros = ConsejosMiembros::create([
+            'consejo_id' => $validated['consejo_id'],
+            'miembro_id' => $validated['miembro_id'],
+            'responsable' => $validated['responsable'],
+        ]);
+
+        // TODO: NOTIFICAR POR CORREO
+
+        return ResourceObject::make($consejosMiembros);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\ConsejosMiembros  $consejosMiembros
-     * @return \Illuminate\Http\Response
-     */
     public function show(ConsejosMiembros $consejosMiembros)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\ConsejosMiembros  $consejosMiembros
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(ConsejosMiembros $consejosMiembros)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateConsejosMiembrosRequest  $request
-     * @param  \App\Models\ConsejosMiembros  $consejosMiembros
-     * @return \Illuminate\Http\Response
-     */
     public function update(UpdateConsejosMiembrosRequest $request, ConsejosMiembros $consejosMiembros)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\ConsejosMiembros  $consejosMiembros
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(ConsejosMiembros $consejosMiembros)
     {
-        //
+        $wasDeleted = $consejosMiembros->delete();
+
+        if ($wasDeleted) {
+            return response()->noContent(ResponseAlias::HTTP_OK);
+        }
+
+        return response()->noContent(ResponseAlias::HTTP_UNPROCESSABLE_ENTITY);
     }
 }

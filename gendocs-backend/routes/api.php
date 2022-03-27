@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CarreraController;
 use App\Http\Controllers\ConsejoController;
+use App\Http\Controllers\ConsejosMiembrosController;
 use App\Http\Controllers\DocenteController;
 use App\Http\Controllers\DocumentoController;
 use App\Http\Controllers\EstudianteController;
@@ -26,15 +27,16 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware(["auth:sanctum", "isUserActive"])->group(function () {
 
-    Route::apiResource('docentes', DocenteController::class);
-    Route::apiResource('carreras', CarreraController::class);
-    Route::apiResource('estudiantes', EstudianteController::class);
-    Route::apiResource('procesos', ProcesoController::class);
-    Route::apiResource('plantillas', PlantillasController::class);
+    Route::apiResource('docentes', DocenteController::class)->except(['destroy']);
+    Route::apiResource('carreras', CarreraController::class)->except(['destroy']);
+    Route::apiResource('estudiantes', EstudianteController::class)->except(['destroy']);
+    Route::apiResource('procesos', ProcesoController::class)->except(['destroy']);
+    Route::apiResource('plantillas', PlantillasController::class)->except(['destroy']);
     Route::apiResource('consejos', ConsejoController::class);
-    Route::apiResource('tipo-consejos', TipoConsejoController::class);
-    Route::apiResource('documentos', DocumentoController::class);
+    Route::apiResource('tipo-consejos', TipoConsejoController::class)->only(['index']);
+    Route::apiResource('documentos', DocumentoController::class)->except(['show', 'update']);
     Route::apiResource('numeracion', NumeracionController::class)->only(['index', 'store']);
+    Route::apiResource('consejos-miembros', ConsejosMiembrosController::class)->except(['show']);
 
     // AUTH
     Route::get('me', [UserController::class, 'me']);
@@ -43,5 +45,4 @@ Route::middleware(["auth:sanctum", "isUserActive"])->group(function () {
     Route::apiResource('user', UserController::class)->except(['destroy']);
 
     Route::get('roles', [RoleController::class, 'index']);
-
 });

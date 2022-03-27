@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateDocenteRequest;
 use App\Http\Resources\ResourceCollection;
 use App\Http\Resources\ResourceObject;
 use App\Models\Docente;
+use Illuminate\Http\Request;
 
 class DocenteController extends Controller
 {
@@ -16,10 +17,12 @@ class DocenteController extends Controller
         $this->authorizeResource(Docente::class);
     }
 
-    public function index()
+    public function index(Request $request)
     {
         $query = Docente::query();
         $query->orderBy('nombres');
+
+        $query->applyFilters($request->all());
 
         return ResourceCollection::make($query->get());
     }

@@ -16,15 +16,19 @@ class CreateConsejosMiembrosTable extends Migration
         Schema::create('consejos_miembros', function (Blueprint $table) {
             $table->id();
 
-            $table->unsignedBigInteger("consejo_id");
-            $table->foreign("consejo_id")->references("id")->on("consejos");
+            $table->foreignId("consejo_id")
+                ->references("id")
+                ->on("consejos");
 
-            $table->unsignedBigInteger("miembro_id");
-            $table->foreign("miembro_id")->references("id")->on("miembros");
+            $table->foreignId("miembro_id")
+                ->references("id")
+                ->on("docentes");
 
-            $table->boolean("responsable");
+            $table->boolean("notificado")->default(false);
+            $table->boolean("asistira")->default(false);
+            $table->boolean("responsable")->default(false);
 
-            $table->unique(["consejo_id", "miembro_id", "responsable"]);
+            $table->unique(["consejo_id", "miembro_id"]);
 
             $table->timestamps();
             $table->softDeletes();

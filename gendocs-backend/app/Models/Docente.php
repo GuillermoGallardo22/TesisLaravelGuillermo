@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use App\Traits\Filterable;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Docente extends Model
 {
-    use HasFactory;
+    use HasFactory, Filterable;
 
     protected $fillable = [
         'cedula',
@@ -17,6 +19,8 @@ class Docente extends Model
         'celular',
         'telefono',
     ];
+
+    public const FILTERS = ['search'];
 
     public function fields()
     {
@@ -29,5 +33,14 @@ class Docente extends Model
             "correo" => $this->correo,
             "correo_uta" => $this->correo_uta,
         ];
+    }
+
+    public function scopeSearch(Builder $query, $filter)
+    {
+        $filter = preg_replace('/\s+/', '%', $filter);
+
+        return $query
+            ->where('cedula', 'like', "%$filter%")
+            ->orWhere("nombres", 'like', "%$filter%");
     }
 }

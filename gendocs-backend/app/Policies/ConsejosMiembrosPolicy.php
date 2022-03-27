@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Constants\Permissions;
 use App\Models\ConsejosMiembros;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
@@ -18,7 +19,7 @@ class ConsejosMiembrosPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return $user->getAllPermissions()->contains('name', Permissions::ConsejosMiembros['index']);
     }
 
     /**
@@ -30,7 +31,7 @@ class ConsejosMiembrosPolicy
      */
     public function view(User $user, ConsejosMiembros $consejosMiembros)
     {
-        //
+        return $user->getAllPermissions()->contains('name', Permissions::ConsejosMiembros['index']);
     }
 
     /**
@@ -41,7 +42,7 @@ class ConsejosMiembrosPolicy
      */
     public function create(User $user)
     {
-        //
+        return $user->getAllPermissions()->contains('name', Permissions::ConsejosMiembros['create']);
     }
 
     /**
@@ -53,7 +54,7 @@ class ConsejosMiembrosPolicy
      */
     public function update(User $user, ConsejosMiembros $consejosMiembros)
     {
-        //
+        return $user->getAllPermissions()->contains('name', Permissions::ConsejosMiembros['update']);
     }
 
     /**
@@ -65,7 +66,7 @@ class ConsejosMiembrosPolicy
      */
     public function delete(User $user, ConsejosMiembros $consejosMiembros)
     {
-        //
+        return $user->getAllPermissions()->contains('name', Permissions::ConsejosMiembros['delete']);
     }
 
     /**
