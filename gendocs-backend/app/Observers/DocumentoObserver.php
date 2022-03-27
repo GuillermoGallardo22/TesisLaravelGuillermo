@@ -60,7 +60,7 @@ class DocumentoObserver
             '{{CREADOPOR}}' => auth()->user()->name,
             '{{NUMDOC}}' => str_pad($documento->numero, 4, '0', STR_PAD_LEFT),
             '{{SESION}}' => strtolower($consejo->tipoConsejo->nombre),
-            // '{{RESPONSABLE}}' => $request->responsable,
+            '{{RESPONSABLE}}' => $consejo->responsable->docente->nombres,
         ];
 
         $estudianteData = [];

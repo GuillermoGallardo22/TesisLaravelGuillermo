@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use App\Rules\NumeroAsignado;
 use App\Rules\NumeroConsejo;
+use App\Rules\Responsable;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreDocumentoRequest extends FormRequest
@@ -29,7 +30,8 @@ class StoreDocumentoRequest extends FormRequest
             'consejo' => [
                 'bail',
                 'required',
-                'exists:\App\Models\Consejo,id'
+                'exists:\App\Models\Consejo,id',
+                new Responsable(),
             ],
             'numero' => [
                 'bail',

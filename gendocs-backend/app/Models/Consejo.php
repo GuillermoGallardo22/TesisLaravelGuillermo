@@ -79,4 +79,14 @@ class Consejo extends Model
     {
         return $this->hasMany(Numeracion::class, 'consejo_id');
     }
+
+    public function miembros()
+    {
+        return $this->hasMany(Miembro::class);
+    }
+
+    public function responsable()
+    {
+        return $this->hasOne(Miembro::class)->where('responsable', true);
+    }
 }
