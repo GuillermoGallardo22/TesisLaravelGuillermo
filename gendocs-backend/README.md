@@ -6,7 +6,11 @@
 
 ![pasos para crear proyecto](docs/img/Screenshot%20from%202022-01-29%2018-12-22.png "Crear proyecto")
 
-2. Habilidar la API de Google Drive en la [Biblioteca de API](https://console.cloud.google.com/apis/library)
+2. Habilidar la API de Google Docs en la [Biblioteca de API](https://console.cloud.google.com/apis/library)
+
+![google drive api](docs/img/Screenshot%20from%202022-03-27%2016-12-18.png 'Google Drive API' )
+
+3. Habilidar la API de Google Drive en la [Biblioteca de API](https://console.cloud.google.com/apis/library)
 
 ![google drive api](docs/img/Screenshot%20from%202022-01-29%2018-20-16.png 'Google Drive API' )
 
