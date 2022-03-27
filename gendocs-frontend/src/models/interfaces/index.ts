@@ -11,3 +11,4 @@ export * from "./IConsejo";
 export * from "./INumeracion";
 export * from "./IDocumento";
 export * from "./IDocente";
+export * from "./IConsejoMiembro";

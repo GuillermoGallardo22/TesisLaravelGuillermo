@@ -10,6 +10,10 @@ export function useConfirmationDialog<T>() {
         setIsVisible(true);
     };
 
+    const openJustModal = () => {
+        setIsVisible(true);
+    };
+
     const closeModal = () => {
         setItemSelected(null);
         setIsVisible(false);
@@ -20,5 +24,6 @@ export function useConfirmationDialog<T>() {
         openModal,
         closeModal,
         itemSelected,
+        openJustModal,
     };
 }

@@ -2,7 +2,12 @@ import {
     GridValueFormatterParams,
     GridValueGetterParams,
 } from "@mui/x-data-grid";
-import { IDocente, IDocumento, IProceso } from "models/interfaces";
+import {
+    IConsejoMiembro,
+    IDocente,
+    IDocumento,
+    IProceso,
+} from "models/interfaces";
 import { MultipleStudentForm } from "pages/private/student/hooks/useAddStudent";
 import * as xlsx from "xlsx";
 import { parseToDateTime } from "./date";
@@ -127,4 +132,11 @@ export function generateLink(data: IDocumento, user: string) {
     });
 
     return `https://api.whatsapp.com/send?${encodeURI(params)}`;
+}
+
+export function getNombreCompletoMiembro(
+    params: GridValueGetterParams<IConsejoMiembro>
+) {
+    if (!params?.row?.miembro?.nombres) return null;
+    return params.row.miembro.nombres;
 }

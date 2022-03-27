@@ -1,4 +1,4 @@
-import { LoadingButton } from "@mui/lab";
+import { LoadingButton, LoadingButtonProps } from "@mui/lab";
 import {
     Breakpoint,
     Dialog,
@@ -16,11 +16,11 @@ type ButtonColor =
     | "info"
     | "warning";
 
-type ConfirmationDialogProps = {
+export type ConfirmationDialogProps = {
     id: string;
     isVisible: boolean;
     onCancel: React.MouseEventHandler<HTMLButtonElement>;
-    onApprove: React.MouseEventHandler<HTMLButtonElement>;
+    onApprove?: React.MouseEventHandler<HTMLButtonElement>;
     title: React.ReactNode;
     keepMounted?: boolean;
     loading?: boolean;
@@ -31,6 +31,8 @@ type ConfirmationDialogProps = {
     width?: string;
     maxHeight?: string;
     maxWidth?: Breakpoint;
+    onCancelButtonProps?: LoadingButtonProps;
+    onApproveButtonProps?: LoadingButtonProps;
 };
 
 const ConfirmationDialog: React.FC<ConfirmationDialogProps> = ({
@@ -49,6 +51,8 @@ const ConfirmationDialog: React.FC<ConfirmationDialogProps> = ({
     maxHeight = "80%",
     maxWidth = "sm",
     children,
+    onCancelButtonProps,
+    onApproveButtonProps,
 }) => {
     return (
         <Dialog
@@ -66,6 +70,7 @@ const ConfirmationDialog: React.FC<ConfirmationDialogProps> = ({
                     onClick={onCancel}
                     color={buttonColorCancel}
                     disabled={loading}
+                    {...onCancelButtonProps}
                 >
                     {textCancel}
                 </LoadingButton>
@@ -75,6 +80,7 @@ const ConfirmationDialog: React.FC<ConfirmationDialogProps> = ({
                     color={buttonColorApprove}
                     disabled={loading}
                     loading={loading}
+                    {...onApproveButtonProps}
                 >
                     {textApprove}
                 </LoadingButton>
