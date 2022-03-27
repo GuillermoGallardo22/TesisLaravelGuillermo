@@ -68,6 +68,7 @@ export default function ListMiembros() {
                     <GridActionsCellItem
                         key={p.id}
                         color="error"
+                        disabled={!consejo?.estado}
                         icon={<Icon icon="delete" />}
                         label="Eliminar documento"
                         onClick={() => {
@@ -95,7 +96,7 @@ export default function ListMiembros() {
     return (
         <Stack spacing={2}>
             <Button
-                disabled={!consejo}
+                disabled={!consejo || !consejo?.estado}
                 startIcon={<Icon icon="add" />}
                 variant="outlined"
                 onClick={openAddMiembroModal}

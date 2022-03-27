@@ -4,6 +4,7 @@ export interface IConsejo {
     id: number;
     nombre: string;
     fecha: string;
+    estado: boolean;
     tipo_consejo: number | ITipoConsejo;
 }
 
