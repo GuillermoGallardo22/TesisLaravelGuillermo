@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\CarreraController;
 use App\Http\Controllers\ConsejoController;
-use App\Http\Controllers\ConsejosMiembrosController;
 use App\Http\Controllers\DocenteController;
 use App\Http\Controllers\DocumentoController;
 use App\Http\Controllers\EstudianteController;
