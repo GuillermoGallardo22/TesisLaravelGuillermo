@@ -58,6 +58,15 @@ class ConsejosMiembrosController extends Controller
 
     public function destroy(ConsejosMiembros $consejosMiembros)
     {
+        // $this->authorize('delete', $consejosMiembros);
+        dd('borrando...');
+
+        if ($consejosMiembros->consejo->estado) {
+            return response()->json([
+                'errors' => trans('validation.custom.consejoMiembro.delete.consejo.estado')
+            ], ResponseAlias::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
         $wasDeleted = $consejosMiembros->delete();
 
         if ($wasDeleted) {

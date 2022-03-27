@@ -64,8 +64,9 @@ class ConsejosMiembrosPolicy
      * @param  \App\Models\ConsejosMiembros  $consejosMiembros
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, ConsejosMiembros $consejosMiembros)
+    public function delete(User $user, ?ConsejosMiembros $consejoMiembros)
     {
+        dd('comprobando...');
         return $user->getAllPermissions()->contains('name', Permissions::ConsejosMiembros['delete']);
     }
 

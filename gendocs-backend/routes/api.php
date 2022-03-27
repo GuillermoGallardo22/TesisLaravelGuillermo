@@ -6,6 +6,7 @@ use App\Http\Controllers\ConsejosMiembrosController;
 use App\Http\Controllers\DocenteController;
 use App\Http\Controllers\DocumentoController;
 use App\Http\Controllers\EstudianteController;
+use App\Http\Controllers\MiembroController;
 use App\Http\Controllers\NumeracionController;
 use App\Http\Controllers\PlantillasController;
 use App\Http\Controllers\ProcesoController;
@@ -36,7 +37,7 @@ Route::middleware(["auth:sanctum", "isUserActive"])->group(function () {
     Route::apiResource('tipo-consejos', TipoConsejoController::class)->only(['index']);
     Route::apiResource('documentos', DocumentoController::class)->except(['show', 'update']);
     Route::apiResource('numeracion', NumeracionController::class)->only(['index', 'store']);
-    Route::apiResource('consejos-miembros', ConsejosMiembrosController::class)->except(['show']);
+    Route::apiResource('miembros', MiembroController::class)->except(['show']);
 
     // AUTH
     Route::get('me', [UserController::class, 'me']);

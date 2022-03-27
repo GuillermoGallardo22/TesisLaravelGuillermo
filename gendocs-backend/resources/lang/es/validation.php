@@ -165,6 +165,13 @@ return [
                 'numeroReservado' => 'El número (:attribute) seleccionado ya ha sido reservado',
                 'numeroInicio' => 'El número de inicio no es válido'
             ]
-        ]
+        ],
+        'miembro' => [
+            'delete' => [
+                'consejo' => [
+                    'estado' => 'No se puede eliminar el registro con el estado del consejo actual.'
+                ],
+            ]
+        ],
     ],
 ];

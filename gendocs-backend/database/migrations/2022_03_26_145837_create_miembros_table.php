@@ -16,8 +16,17 @@ class CreateMiembrosTable extends Migration
         Schema::create('miembros', function (Blueprint $table) {
             $table->id();
 
-            $table->string("nombres_completos", 100);
-            $table->string("abreviatura_titulo", 20);
+            $table->foreignId("consejo_id")
+                ->references("id")
+                ->on("consejos");
+
+            $table->foreignId("docente_id")
+                ->references("id")
+                ->on("docentes");
+
+            $table->boolean("notificado")->default(false);
+            $table->boolean("asistira")->default(false);
+            $table->boolean("responsable")->default(false);
 
             $table->timestamps();
             $table->softDeletes();

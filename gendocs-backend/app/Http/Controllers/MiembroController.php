@@ -4,83 +4,64 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreMiembroRequest;
 use App\Http\Requests\UpdateMiembroRequest;
+use App\Http\Resources\ResourceCollection;
+use App\Http\Resources\ResourceObject;
 use App\Models\Miembro;
+use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
 class MiembroController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function __construct()
     {
-        //
+        $this->authorizeResource(Miembro::class);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function index(Request $request)
     {
-        //
+        $query = Miembro::query();
+
+        $query->orderBy('responsable', 'DESC');
+
+        $query->applyFilters($request->all());
+
+        return ResourceCollection::make($query->get());
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoreMiembroRequest  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(StoreMiembroRequest $request)
     {
-        //
+        $validated = $request->validated();
+
+        $miembro = Miembro::create($validated);
+
+        return ResourceObject::make($miembro);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Miembro  $miembro
-     * @return \Illuminate\Http\Response
-     */
     public function show(Miembro $miembro)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Miembro  $miembro
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Miembro $miembro)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateMiembroRequest  $request
-     * @param  \App\Models\Miembro  $miembro
-     * @return \Illuminate\Http\Response
-     */
     public function update(UpdateMiembroRequest $request, Miembro $miembro)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Miembro  $miembro
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Miembro $miembro)
     {
-        //
+
+        if (!$miembro->consejo->estado) {
+            return response()->json([
+                'errors' => trans('validation.custom.miembro.delete.consejo.estado')
+            ], ResponseAlias::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        $wasDeleted = $miembro->delete();
+
+        if ($wasDeleted) {
+            return response()->noContent(ResponseAlias::HTTP_OK);
+        }
+
+        return response()->noContent(ResponseAlias::HTTP_UNPROCESSABLE_ENTITY);
     }
 }
