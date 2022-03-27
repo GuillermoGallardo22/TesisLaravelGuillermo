@@ -17,7 +17,7 @@ import {
     Documentos,
     DriveTemplate,
     Home,
-    ListAsistencia,
+    ListMiembros,
     ListTemplates,
     Process,
     Profile,
@@ -219,7 +219,7 @@ export const routes: IRoute[] = [
                 childrens: [
                     {
                         path: "asistencia",
-                        component: ListAsistencia,
+                        component: ListMiembros,
                         roles: [RolEnum.ADMIN, RolEnum.ADMINTEMP],
                     },
                     {

@@ -9,7 +9,7 @@ import { getNombreCompletoMiembro } from "utils/libs";
 import { useMiembros } from "../hooks/useMiembros";
 import { AddMiembro } from "./AddMiembro";
 
-export default function ListAsistencia() {
+export default function ListMiembros() {
     const { miembros, isLoading, consejo } = useMiembros();
 
     const columns = useMemo(

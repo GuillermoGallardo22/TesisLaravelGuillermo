@@ -28,8 +28,8 @@ export const AddConsejo = lazy(
 
 export const Consejos = lazy(() => import("pages/private/consejos/Consejos"));
 
-export const ListAsistencia = lazy(
-    () => import("pages/private/consejos/components/ListAsistencia")
+export const ListMiembros = lazy(
+    () => import("pages/private/consejos/components/ListMiembros")
 );
 
 export const UpdateConsejo = lazy(
