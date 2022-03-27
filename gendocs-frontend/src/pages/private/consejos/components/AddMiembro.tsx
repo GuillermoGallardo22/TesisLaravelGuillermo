@@ -113,7 +113,7 @@ export const AddMiembro: React.FunctionComponent<AddMiembroProps> = ({
                                     <TextField
                                         {...params}
                                         required
-                                        label="Docentes"
+                                        label="Docente"
                                         margin="normal"
                                         placeholder="Cédula | Nombres | Apellidos"
                                         error={
