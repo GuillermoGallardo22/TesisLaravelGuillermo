@@ -5,7 +5,8 @@ type useGridColumnVisibilityModelProps = {
     key:
         | "estudiantesTableModel"
         | "documentosTableModel"
-        | "docentesTableModel";
+        | "docentesTableModel"
+        | "asistentesTableModel";
 };
 
 export function useGridColumnVisibilityModel({

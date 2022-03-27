@@ -216,6 +216,9 @@ export default function AddDocumento() {
                             onOpen={openModalPRO}
                             onClose={closeModalPRO}
                             options={itemsPRO}
+                            isOptionEqualToValue={(option, value) =>
+                                option.nombre === value.nombre
+                            }
                             getOptionLabel={(option) => option.nombre}
                             loading={searchingPRO}
                             filterOptions={(x) => x}
@@ -268,6 +271,9 @@ export default function AddDocumento() {
                             onOpen={openModalPLA}
                             onClose={closeModalPLA}
                             options={itemsPLA}
+                            isOptionEqualToValue={(option, value) =>
+                                option.nombre === value.nombre
+                            }
                             getOptionLabel={(option) => option.nombre}
                             loading={searchingPLA}
                             filterOptions={(x) => x}
@@ -318,6 +324,16 @@ export default function AddDocumento() {
                             onOpen={openModalEST}
                             onClose={closeModalEST}
                             options={itemsEST}
+                            isOptionEqualToValue={(option, value) =>
+                                option.cedula +
+                                    " - " +
+                                    [option.nombres, option.apellidos].join(
+                                        " "
+                                    ) ===
+                                value.cedula +
+                                    " - " +
+                                    [value.nombres, value.apellidos].join(" ")
+                            }
                             getOptionLabel={({ cedula, nombres, apellidos }) =>
                                 cedula + " - " + [nombres, apellidos].join(" ")
                             }

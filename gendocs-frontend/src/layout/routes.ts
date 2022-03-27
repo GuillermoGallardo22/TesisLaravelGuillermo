@@ -17,6 +17,7 @@ import {
     Documentos,
     DriveTemplate,
     Home,
+    ListAsistencia,
     ListTemplates,
     Process,
     Profile,
@@ -214,8 +215,20 @@ export const routes: IRoute[] = [
             },
             {
                 path: ":consejoId",
-                component: UpdateConsejo,
-                roles: [RolEnum.ADMIN, RolEnum.ADMINTEMP],
+                component: Outlet,
+                childrens: [
+                    {
+                        path: "asistencia",
+                        component: ListAsistencia,
+                        roles: [RolEnum.ADMIN, RolEnum.ADMINTEMP],
+                    },
+                    {
+                        path: "",
+                        isIndex: true,
+                        component: UpdateConsejo,
+                        roles: [RolEnum.ADMIN, RolEnum.ADMINTEMP],
+                    },
+                ],
             },
             { path: "", isIndex: true, component: Consejos },
         ],

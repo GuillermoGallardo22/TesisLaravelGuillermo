@@ -7,7 +7,7 @@ import {
 import { useEffect, useMemo, useState } from "react";
 
 type useAutocompleteProps<T> = {
-    fetch: (props: IFilterPaginationProps) => Promise<IPagination<T>>;
+    fetch: (props: IFilterPaginationProps) => Promise<any>;
     filters?: IFilterProps;
     preventSubmitOnOpen?: boolean;
 };
@@ -31,7 +31,7 @@ export const useAutocomplete = <T>({
 
     const handleFetch = async (
         props: IFilterPaginationProps,
-        callback: (results: IPagination<T>) => void
+        callback: (results: any) => void
     ) => {
         const result = await fetch(props);
         callback(result);
@@ -74,17 +74,21 @@ export const useAutocomplete = <T>({
                     size: 10,
                 },
             },
-            (results: IPagination<T>) => {
+            (results: any) => {
                 if (!active) return;
 
                 let newOptions: Array<T> = [];
 
-                if (value) {
-                    newOptions = [value];
-                }
+                // if (value) {
+                //     newOptions = [value];
+                // }
 
                 if (results) {
-                    newOptions = [...newOptions, ...results.data];
+                    if (Array.isArray(results)) {
+                        newOptions = [...newOptions, ...results];
+                    } else {
+                        newOptions = [...newOptions, ...results.data];
+                    }
                 }
 
                 setItems(newOptions);
@@ -98,7 +102,7 @@ export const useAutocomplete = <T>({
     }, [inputValue, isOpen]);
 
     const onChange = (event: React.SyntheticEvent, value: T | null) => {
-        setItems(value ? [value, ...items] : items);
+        // setItems(value ? [value, ...items] : items);
         setValue(value);
     };
 

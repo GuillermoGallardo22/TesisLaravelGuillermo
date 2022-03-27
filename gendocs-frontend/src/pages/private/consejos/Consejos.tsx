@@ -5,14 +5,19 @@ import {
     Stack,
     TextField,
 } from "@mui/material";
-import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import {
+    DataGrid,
+    GridActionsCellItem,
+    GridColDef,
+    GridColumns,
+} from "@mui/x-data-grid";
 import ChipStatus from "components/ChipStatus";
 import ConfirmationDialog from "components/ConfirmationDialog";
 import Icon from "components/Icon";
 import { useDeleteItem } from "hooks/useDeleteItem";
 import { useFilterPagination } from "hooks/useFilterPagination";
 import { IConsejo } from "models/interfaces";
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { deleteConsejo, getConsejos } from "services/consejos";
 import { parseToDateTime } from "utils/date";
@@ -55,8 +60,8 @@ export default function Consejos() {
         },
     });
 
-    const columns = useCallback((): GridColDef[] => {
-        return [
+    const columns = useMemo(
+        (): GridColumns => [
             { field: "nombre", headerName: "Nombre", flex: 1 },
             {
                 field: "fecha",
@@ -83,30 +88,41 @@ export default function Consejos() {
                 ),
             },
             {
-                field: "id",
+                type: "actions",
+                field: "actions",
                 headerName: "Acciones",
-                renderCell: (item) =>
-                    item.row.estado && (
-                        <>
-                            <IconButton
-                                color="primary"
-                                component={Link}
-                                to={item.value + ""}
-                            >
-                                <Icon icon="edit" />
-                            </IconButton>
-
-                            <IconButton
-                                color="error"
-                                onClick={() => openModal(item.row)}
-                            >
-                                <Icon icon="delete" />
-                            </IconButton>
-                        </>
-                    ),
+                width: 180,
+                getActions: (p) => [
+                    <GridActionsCellItem
+                        key={p.id}
+                        disabled={!p.row.estado}
+                        color="primary"
+                        label="Editar"
+                        LinkComponent={Link}
+                        to={p.row?.id + ""}
+                        icon={<Icon icon="edit" />}
+                    />,
+                    <GridActionsCellItem
+                        key={p.id}
+                        color="primary"
+                        label="Asistencia"
+                        LinkComponent={Link}
+                        to={p.row?.id + "/asistencia"}
+                        icon={<Icon icon="factCheck" />}
+                    />,
+                    <GridActionsCellItem
+                        key={p.id}
+                        disabled={!p.row.estado}
+                        color="error"
+                        label="Eliminar"
+                        icon={<Icon icon="delete" />}
+                        onClick={() => openModal(p.row as IConsejo)}
+                    />,
+                ],
             },
-        ];
-    }, []);
+        ],
+        []
+    );
 
     return (
         <>
@@ -139,7 +155,7 @@ export default function Consejos() {
                         onPageSizeChange={handlePageSizeChange}
                         onPageChange={handlePageChange}
                         //
-                        columns={columns()}
+                        columns={columns}
                         loading={loading}
                         //
                         rows={data.data}

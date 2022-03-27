@@ -25,8 +25,6 @@ export function useDeleteItem({ id, onDelete, callback }: useDeleteItemProps) {
         } else {
             const { errors, message } = result;
 
-            console.log({ errors, message });
-
             enqueueSnackbar(errors?.length ? errors[0] : message, {
                 variant: "error",
             });
