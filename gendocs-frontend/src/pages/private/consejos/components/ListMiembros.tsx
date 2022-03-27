@@ -1,16 +1,38 @@
-import { Button, Stack } from "@mui/material";
-import { DataGrid, GridColumns } from "@mui/x-data-grid";
+import { Button, DialogContentText, Stack } from "@mui/material";
+import { DataGrid, GridActionsCellItem, GridColumns } from "@mui/x-data-grid";
+import ConfirmationDialog from "components/ConfirmationDialog";
 import Icon from "components/Icon";
 import { GridToolbarColumns } from "components/ToolbarDataGrid";
 import { useConfirmationDialog } from "hooks/useConfirmationDialog";
+import { useDeleteItem } from "hooks/useDeleteItem";
 import { useGridColumnVisibilityModel } from "hooks/useGridColumnVisibilityModel";
+import { IMiembro } from "models/interfaces";
 import { useMemo } from "react";
+import { useQueryClient } from "react-query";
+import { deleteMiembro } from "services/miembros";
 import { getNombreCompletoMiembro } from "utils/libs";
 import { useMiembros } from "../hooks/useMiembros";
 import { AddMiembro } from "./AddMiembro";
 
 export default function ListMiembros() {
     const { miembros, isLoading, consejo } = useMiembros();
+    const client = useQueryClient();
+
+    const {
+        isVisible: isVisibleDeleteMiembroModal,
+        openModal: openDeleteMiembroModal,
+        closeModal: closeDeleteMiembroModal,
+        itemSelected: itemMiembroSelected,
+    } = useConfirmationDialog<IMiembro>();
+
+    const { deleting, handleDelete } = useDeleteItem({
+        id: itemMiembroSelected?.id,
+        onDelete: deleteMiembro,
+        callback: () => {
+            client.invalidateQueries(["consejos-miembros"]);
+            closeDeleteMiembroModal();
+        },
+    });
 
     const columns = useMemo(
         (): GridColumns => [
@@ -43,29 +65,27 @@ export default function ListMiembros() {
                 field: "acciones",
                 headerName: "Acciones",
                 getActions: (p) => [
-                    // <GridActionsCellItem
-                    //     key={p.id}
-                    //     color="primary"
-                    //     LinkComponent={Link}
-                    //     disabled={!p.row.drive}
-                    //     to={`drive/${p.row.drive}`}
-                    //     icon={<Icon icon="article" />}
-                    //     label="Ver documento"
-                    // />,
-                    // <GridActionsCellItem
-                    //     key={p.id}
-                    //     color="error"
-                    //     icon={<Icon icon="delete" />}
-                    //     label="Eliminar documento"
-                    //     onClick={() => openModal(p.row as IDocumento)}
-                    // />,
+                    <GridActionsCellItem
+                        key={p.id}
+                        color="error"
+                        icon={<Icon icon="delete" />}
+                        label="Eliminar documento"
+                        onClick={() => {
+                            console.log({ row: p.row });
+                            openDeleteMiembroModal(p.row as IMiembro);
+                        }}
+                    />,
                 ],
             },
         ],
         []
     );
 
-    const { isVisible, openJustModal, closeModal } = useConfirmationDialog();
+    const {
+        isVisible: isVisibleAddMiembroModal,
+        openJustModal: openAddMiembroModal,
+        closeModal: closeAddMiembroModal,
+    } = useConfirmationDialog();
 
     const { columnVisibilityModel, onColumnVisibilityModelChange } =
         useGridColumnVisibilityModel({
@@ -78,7 +98,7 @@ export default function ListMiembros() {
                 disabled={!consejo}
                 startIcon={<Icon icon="add" />}
                 variant="outlined"
-                onClick={openJustModal}
+                onClick={openAddMiembroModal}
             >
                 AGREGAR MIEMBRO
             </Button>
@@ -97,12 +117,31 @@ export default function ListMiembros() {
                 />
             </div>
 
-            {consejo && isVisible && (
+            {consejo && isVisibleAddMiembroModal && (
                 <AddMiembro
                     consejo={consejo}
-                    isVisible={isVisible}
-                    onCancel={closeModal}
+                    isVisible={isVisibleAddMiembroModal}
+                    onCancel={closeAddMiembroModal}
                 />
+            )}
+
+            {itemMiembroSelected && isVisibleDeleteMiembroModal && (
+                <ConfirmationDialog
+                    id="delete-miembro-modal"
+                    title="Eliminar"
+                    keepMounted={true}
+                    isVisible={isVisibleDeleteMiembroModal}
+                    onCancel={closeDeleteMiembroModal}
+                    onApprove={handleDelete}
+                    textApprove="ELIMINAR"
+                    buttonColorApprove="error"
+                    loading={deleting}
+                >
+                    <DialogContentText>
+                        ¿Está seguro que desea eliminar el registro{" "}
+                        <strong>{itemMiembroSelected.docente.nombres}</strong>?
+                    </DialogContentText>
+                </ConfirmationDialog>
             )}
         </Stack>
     );

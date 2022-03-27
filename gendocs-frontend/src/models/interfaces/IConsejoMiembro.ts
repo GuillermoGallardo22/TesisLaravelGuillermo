@@ -1,21 +1,21 @@
 import { IConsejo } from ".";
 import { IDocente } from "./IDocente";
 
-export interface IConsejoMiembro {
+export interface IMiembro {
     id: number;
     consejo: IConsejo;
-    miembro: IDocente;
+    docente: IDocente;
     asistira: boolean;
     notificado: boolean;
     responsable: boolean;
 }
 
 type PreConsejoMiembroForm = Omit<
-    IConsejoMiembro,
-    "id" | "asistira" | "notificado" | "consejo" | "miembro"
+    IMiembro,
+    "id" | "asistira" | "notificado" | "consejo" | "docente"
 >;
 
 export interface ConsejoMiembroForm extends PreConsejoMiembroForm {
     consejo: number;
-    miembro: number;
+    docente: number;
 }

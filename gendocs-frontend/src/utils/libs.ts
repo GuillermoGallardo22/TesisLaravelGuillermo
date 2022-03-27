@@ -3,7 +3,7 @@ import {
     GridValueGetterParams,
 } from "@mui/x-data-grid";
 import {
-    IConsejoMiembro,
+    IMiembro,
     IDocente,
     IDocumento,
     IProceso,
@@ -135,8 +135,8 @@ export function generateLink(data: IDocumento, user: string) {
 }
 
 export function getNombreCompletoMiembro(
-    params: GridValueGetterParams<IConsejoMiembro>
+    params: GridValueGetterParams<IMiembro>
 ) {
-    if (!params?.row?.miembro?.nombres) return null;
-    return params.row.miembro.nombres;
+    if (!params?.row?.docente?.nombres) return null;
+    return params.row.docente.nombres;
 }

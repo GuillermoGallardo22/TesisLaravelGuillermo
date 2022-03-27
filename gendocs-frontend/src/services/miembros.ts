@@ -2,7 +2,7 @@ import axios from "axios";
 import { HTTP_STATUS } from "models/enums";
 import {
     ConsejoMiembroForm,
-    IConsejoMiembro,
+    IMiembro,
     IFilterPaginationProps,
     IResponse,
 } from "models/interfaces";
@@ -12,13 +12,13 @@ import { parseFilterPaginationProps } from "utils/pagination";
 
 export async function getMiembros(
     props: IFilterPaginationProps
-): Promise<IConsejoMiembro[]> {
+): Promise<IMiembro[]> {
     try {
         const params = parseFilterPaginationProps(props);
 
         const {
             data: { data },
-        } = await axios.get(`consejos-miembros?${params}`);
+        } = await axios.get(`miembros?${params}`);
 
         return data;
     } catch (error) {
@@ -28,18 +28,34 @@ export async function getMiembros(
 
 export async function saveMiembros(
     form: ConsejoMiembroForm
-): Promise<IResponse<IConsejoMiembro>> {
+): Promise<IResponse<IMiembro>> {
     try {
         // const params = parseFilterPaginationProps(props);
 
         const {
             data: { data },
-        } = await axios.post("consejos-miembros", form);
+        } = await axios.post("miembros", form);
 
         return {
             data,
             message: HTTP_MESSAGES[201],
             status: HTTP_STATUS.created,
+        };
+    } catch (error) {
+        return handleErrors(error);
+    }
+}
+
+export async function deleteMiembro(
+    id: string | number
+): Promise<IResponse<null>> {
+    try {
+        await axios.delete("miembros/" + id);
+
+        return {
+            data: null,
+            status: HTTP_STATUS.ok,
+            message: HTTP_MESSAGES[200],
         };
     } catch (error) {
         return handleErrors(error);

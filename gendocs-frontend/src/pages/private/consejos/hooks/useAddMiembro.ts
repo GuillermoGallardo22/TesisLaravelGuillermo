@@ -8,7 +8,7 @@ import { VALIDATION_MESSAGES } from "utils/messages";
 import * as yup from "yup";
 
 const validationSchema = yup.object().shape({
-    miembro: yup
+    docente: yup
         .number()
         .positive(VALIDATION_MESSAGES.invalidOption)
         .required(VALIDATION_MESSAGES.required),
@@ -56,7 +56,7 @@ export function useAddMiembro({
     const formik = useFormik<ConsejoMiembroForm>({
         initialValues: {
             consejo: consejo.id,
-            miembro: -1,
+            docente: -1,
             responsable: false,
         },
         onSubmit,

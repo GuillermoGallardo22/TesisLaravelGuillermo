@@ -57,7 +57,7 @@ export const AddMiembro: React.FunctionComponent<AddMiembroProps> = ({
     });
 
     useEffect(() => {
-        formik.setFieldValue("miembro", valueMIEM?.id || -1);
+        formik.setFieldValue("docente", valueMIEM?.id || -1);
     }, [valueMIEM]);
 
     const submitting = formik.isSubmitting;
@@ -113,16 +113,16 @@ export const AddMiembro: React.FunctionComponent<AddMiembroProps> = ({
                                     <TextField
                                         {...params}
                                         required
-                                        label="Miembro"
+                                        label="Docentes"
                                         margin="normal"
                                         placeholder="Cédula | Nombres | Apellidos"
                                         error={
-                                            formik.touched.miembro &&
-                                            Boolean(formik.errors.miembro)
+                                            formik.touched.docente &&
+                                            Boolean(formik.errors.docente)
                                         }
                                         helperText={
-                                            formik.touched.miembro &&
-                                            formik.errors.miembro
+                                            formik.touched.docente &&
+                                            formik.errors.docente
                                         }
                                         InputProps={{
                                             ...params.InputProps,
