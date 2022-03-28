@@ -1,8 +1,7 @@
 import { Button, Stack, TextField } from "@mui/material";
 import { DataGrid, GridActionsCellItem, GridColumns } from "@mui/x-data-grid";
 import { GridToolbarColumns, Icon } from "components";
-import { useFilterPagination } from "hooks/useFilterPagination";
-import { useGridColumnVisibilityModel } from "hooks/useGridColumnVisibilityModel";
+import { useFilterPagination, useGridColumnVisibilityModel } from "hooks";
 import { IEstudiante } from "models/interfaces";
 import { Link as RouterLink } from "react-router-dom";
 import { getEstudiantes } from "services";

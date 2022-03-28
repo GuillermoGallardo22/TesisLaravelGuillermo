@@ -9,8 +9,7 @@ import {
     TextField,
 } from "@mui/material";
 import { ErrorSummary, Icon, Select } from "components";
-import { useAutocomplete } from "hooks/useAutocomplete";
-import { useConfirmationDialog } from "hooks/useConfirmationDialog";
+import { useAutocomplete, useConfirmationDialog } from "hooks";
 import { IEstudiante, IPlantilla, IProceso } from "models/interfaces";
 import React, { useEffect } from "react";
 import {

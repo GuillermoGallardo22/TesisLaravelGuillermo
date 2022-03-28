@@ -1,6 +1,4 @@
-import { useConfirmationDialog } from "hooks/useConfirmationDialog";
-import { useDeleteItem } from "hooks/useDeleteItem";
-import { useConsejos } from "hooks/useQuery";
+import { useConfirmationDialog, useConsejos, useDeleteItem } from "hooks";
 import { IDocumento } from "models/interfaces";
 import { useEffect, useState } from "react";
 import { useQuery } from "react-query";

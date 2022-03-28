@@ -1,9 +1,11 @@
 import { Button, DialogContentText, Stack } from "@mui/material";
 import { DataGrid, GridActionsCellItem, GridColumns } from "@mui/x-data-grid";
 import { ConfirmationDialog, GridToolbarColumns, Icon } from "components";
-import { useConfirmationDialog } from "hooks/useConfirmationDialog";
-import { useDeleteItem } from "hooks/useDeleteItem";
-import { useGridColumnVisibilityModel } from "hooks/useGridColumnVisibilityModel";
+import {
+    useConfirmationDialog,
+    useDeleteItem,
+    useGridColumnVisibilityModel,
+} from "hooks";
 import { IMiembro } from "models/interfaces";
 import { useMemo } from "react";
 import { useQueryClient } from "react-query";

@@ -1,6 +1,5 @@
 import { useFormik } from "formik";
-import { useErrorsResponse } from "hooks/useErrorsResponse";
-import { useConsejos } from "hooks/useQuery";
+import { useConsejos, useErrorsResponse } from "hooks";
 import { HTTP_STATUS } from "models/enums";
 import { IReservaForm } from "models/interfaces";
 import { useSnackbar } from "notistack";

@@ -1,7 +1,7 @@
 import { Button, IconButton, Stack, TextField, Tooltip } from "@mui/material";
 import { DataGrid, GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
 import { ChipStatus, Icon } from "components";
-import { useFilterPagination } from "hooks/useFilterPagination";
+import { useFilterPagination } from "hooks";
 import { Link as RouterLink, useParams } from "react-router-dom";
 import { getPlantillasByProcesoId } from "services";
 

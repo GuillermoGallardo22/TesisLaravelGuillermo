@@ -7,7 +7,7 @@ import {
 } from "@mui/x-data-grid";
 import { ConfirmationDialog, Icon, Select } from "components";
 import { useAuthContext } from "contexts/AuthContext";
-import { useGridColumnVisibilityModel } from "hooks/useGridColumnVisibilityModel";
+import { useGridColumnVisibilityModel } from "hooks";
 import { IDocumento } from "models/interfaces";
 import { useMemo } from "react";
 import { Link } from "react-router-dom";

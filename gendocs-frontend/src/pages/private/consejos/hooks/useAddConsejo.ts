@@ -1,5 +1,5 @@
 import { useFormik } from "formik";
-import { useErrorsResponse } from "hooks/useErrorsResponse";
+import { useErrorsResponse } from "hooks";
 import { HTTP_STATUS } from "models/enums";
 import { IConsejoForm, ITipoConsejo } from "models/interfaces";
 import { useSnackbar } from "notistack";

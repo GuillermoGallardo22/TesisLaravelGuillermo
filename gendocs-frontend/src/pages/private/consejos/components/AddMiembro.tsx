@@ -13,7 +13,7 @@ import {
     ConfirmationDialog,
     ErrorSummary,
 } from "components";
-import { useAutocomplete } from "hooks/useAutocomplete";
+import { useAutocomplete } from "hooks";
 import { IConsejo, IDocente } from "models/interfaces";
 import React, { useEffect } from "react";
 import { useQueryClient } from "react-query";

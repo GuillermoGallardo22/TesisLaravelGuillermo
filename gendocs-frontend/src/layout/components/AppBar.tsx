@@ -1,8 +1,8 @@
-import { Icon } from "components";
 import { IconButton, Toolbar, Typography } from "@mui/material";
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 import { styled } from "@mui/material/styles";
-import { useAuth } from "hooks/useAuth";
+import { Icon } from "components";
+import { useAuth } from "hooks";
 import { DRAWERWIDTH } from "utils";
 
 const drawerWidth = DRAWERWIDTH;

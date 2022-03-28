@@ -1,8 +1,7 @@
 import { Button, DialogContentText, Stack, TextField } from "@mui/material";
 import { DataGrid, GridActionsCellItem, GridColumns } from "@mui/x-data-grid";
 import { ChipStatus, ConfirmationDialog, Icon } from "components";
-import { useDeleteItem } from "hooks/useDeleteItem";
-import { useFilterPagination } from "hooks/useFilterPagination";
+import { useDeleteItem, useFilterPagination } from "hooks";
 import { IConsejo } from "models/interfaces";
 import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
