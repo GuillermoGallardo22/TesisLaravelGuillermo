@@ -71,7 +71,7 @@ const UpdateDocente = () => {
             id="telefono"
             name="telefono"
             label="Teléfono"
-            value={formik.values.telefono}
+            value={formik.values.telefono || ""}
             onChange={formik.handleChange}
             error={formik.touched.telefono && Boolean(formik.errors.telefono)}
             helperText={formik.touched.telefono && formik.errors.telefono}
@@ -104,7 +104,7 @@ const UpdateDocente = () => {
             name="correo"
             label="Correo"
             autoComplete="correo"
-            value={formik.values.correo}
+            value={formik.values.correo || ""}
             onChange={formik.handleChange}
             error={formik.touched.correo && Boolean(formik.errors.correo)}
             helperText={formik.touched.correo && formik.errors.correo}
