@@ -8,7 +8,7 @@ import {
     IDocumento,
     IProceso,
 } from "models/interfaces";
-import { MultipleStudentForm } from "pages/private/student/hooks/useAddStudent";
+import { MultipleStudentForm } from "pages/private/estudiantes/hooks/useAddEstudiante";
 import * as xlsx from "xlsx";
 import { parseToDateTime } from "./date";
 

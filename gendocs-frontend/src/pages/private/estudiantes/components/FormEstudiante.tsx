@@ -1,16 +1,15 @@
-import { LoadingButton } from "@mui/lab";
-import { Box, Grid, TextField } from "@mui/material";
+import LoadingButton from "@mui/lab/LoadingButton";
+import {
+    Box,
+    Grid, TextField
+} from "@mui/material";
 import { ErrorSummary, Select } from "components";
-import React from "react";
-import { useParams } from "react-router-dom";
-import { useEditEstudiante } from "../hooks/useEditEstudiante";
+import { useAddEstudiante } from "../hooks/useAddEstudiante";
 
-const UpdateStudent = () => {
-    const { studentId = "" } = useParams<{ studentId: string }>();
+export const FormEstudiante = () => {
+    const { formik, carreras, errorSummary } = useAddEstudiante();
 
-    const { formik, carreras, submitting, errorSummary } = useEditEstudiante({
-        studentId,
-    });
+    const submitting = formik.isSubmitting;
 
     return (
         <Box
@@ -29,7 +28,7 @@ const UpdateStudent = () => {
                             id: item.id,
                             label: item.nombre,
                         }))}
-                        value={formik.values.carrera as number}
+                        value={formik.values.carrera}
                         onChange={formik.handleChange}
                         error={
                             formik.touched.carrera &&
@@ -218,13 +217,22 @@ const UpdateStudent = () => {
                     />
                 </Grid>
 
-                {errorSummary && (
-                    <Grid item xs={12}>
-                        <ErrorSummary errors={errorSummary} />
-                    </Grid>
-                )}
+                {errorSummary && <ErrorSummary errors={errorSummary} />}
 
-                <Grid item xs={12}>
+                <Grid item xs={12} sm={6}>
+                    <LoadingButton
+                        fullWidth
+                        type="reset"
+                        color="warning"
+                        variant="contained"
+                        sx={{ mt: 3, mb: 2 }}
+                        disabled={submitting}
+                    >
+                        Limpiar
+                    </LoadingButton>
+                </Grid>
+
+                <Grid item xs={12} sm={6}>
                     <LoadingButton
                         fullWidth
                         type="submit"
@@ -233,12 +241,10 @@ const UpdateStudent = () => {
                         disabled={submitting}
                         loading={submitting}
                     >
-                        Actualizar
+                        Guardar
                     </LoadingButton>
                 </Grid>
             </Grid>
         </Box>
     );
 };
-
-export default UpdateStudent;

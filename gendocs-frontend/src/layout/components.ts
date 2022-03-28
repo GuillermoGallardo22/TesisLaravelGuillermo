@@ -72,14 +72,14 @@ export const AddReserva = lazy(
     () => import("pages/private/documentos/components/AddReserva")
 );
 
-export const AddStudents = lazy(
-    () => import("pages/private/student/components/AddStudents")
+export const AddEstudiante = lazy(
+    () => import("pages/private/estudiantes/components/AddEstudiante")
 );
 
-export const Students = lazy(() => import("pages/private/student/Students"));
+export const Estudiantes = lazy(() => import("pages/private/estudiantes/Estudiantes"));
 
-export const UpdateStudent = lazy(
-    () => import("pages/private/student/components/UpdateStudent")
+export const UpdateEstudiante = lazy(
+    () => import("pages/private/estudiantes/components/UpdateEstudiante")
 );
 
 export const AddUser = lazy(

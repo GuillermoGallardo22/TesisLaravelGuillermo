@@ -6,7 +6,7 @@ import {
     IPagination,
     IResponse,
 } from "models/interfaces";
-import { BaseMultipleStudentForm } from "pages/private/student/hooks/useAddStudent";
+import { BaseMultipleStudentForm } from "pages/private/estudiantes/hooks/useAddEstudiante";
 import { handleErrors } from "utils/axios";
 import { HTTP_MESSAGES } from "utils/messages";
 import {

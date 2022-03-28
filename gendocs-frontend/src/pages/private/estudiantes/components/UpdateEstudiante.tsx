@@ -1,59 +1,15 @@
-import LoadingButton from "@mui/lab/LoadingButton";
-import {
-    Accordion,
-    AccordionDetails,
-    AccordionSummary,
-    Box,
-    Grid,
-    Stack,
-    TextField,
-    Typography,
-} from "@mui/material";
-import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import { ErrorSummary, Icon, Select } from "components";
-import { useState } from "react";
-import { readFile } from "utils/libs";
-import {
-    useAddMultipleStudent,
-    useAddSimpleStudent,
-} from "../hooks/useAddStudent";
-import ListStudentsErrors from "./ListStudentsErrors";
+import { LoadingButton } from "@mui/lab";
+import { Box, Grid, TextField } from "@mui/material";
+import { ErrorSummary, Select } from "components";
+import { useParams } from "react-router-dom";
+import { useUpdateEstudiante } from "../hooks/useUpdateEstudiante";
 
-const AddStudents = () => {
-    return (
-        <>
-            <Accordion>
-                <AccordionSummary
-                    expandIcon={<Icon icon="expandMore" />}
-                    aria-controls="panel1a-content"
-                    id="panel1a-header"
-                >
-                    <Typography>Agregar estudiante</Typography>
-                </AccordionSummary>
-                <AccordionDetails>
-                    <AddSimpleStudent />
-                </AccordionDetails>
-            </Accordion>
-            <Accordion>
-                <AccordionSummary
-                    expandIcon={<Icon icon="expandMore" />}
-                    aria-controls="panel2a-content"
-                    id="panel2a-header"
-                >
-                    <Typography>Agregar multiples estudiantes</Typography>
-                </AccordionSummary>
-                <AccordionDetails>
-                    <AddMultipleStudents />
-                </AccordionDetails>
-            </Accordion>
-        </>
-    );
-};
+const UpdateEstudiante = () => {
+    const { studentId = "" } = useParams<{ studentId: string }>();
 
-const AddSimpleStudent = () => {
-    const { formik, carreras, errorSummary } = useAddSimpleStudent();
-
-    const submitting = formik.isSubmitting;
+    const { formik, carreras, submitting, errorSummary } = useUpdateEstudiante({
+        studentId,
+    });
 
     return (
         <Box
@@ -72,7 +28,7 @@ const AddSimpleStudent = () => {
                             id: item.id,
                             label: item.nombre,
                         }))}
-                        value={formik.values.carrera}
+                        value={formik.values.carrera as number}
                         onChange={formik.handleChange}
                         error={
                             formik.touched.carrera &&
@@ -261,22 +217,13 @@ const AddSimpleStudent = () => {
                     />
                 </Grid>
 
-                {errorSummary && <ErrorSummary errors={errorSummary} />}
+                {errorSummary && (
+                    <Grid item xs={12}>
+                        <ErrorSummary errors={errorSummary} />
+                    </Grid>
+                )}
 
-                <Grid item xs={12} sm={6}>
-                    <LoadingButton
-                        fullWidth
-                        type="reset"
-                        color="warning"
-                        variant="contained"
-                        sx={{ mt: 3, mb: 2 }}
-                        disabled={submitting}
-                    >
-                        Limpiar
-                    </LoadingButton>
-                </Grid>
-
-                <Grid item xs={12} sm={6}>
+                <Grid item xs={12}>
                     <LoadingButton
                         fullWidth
                         type="submit"
@@ -285,7 +232,7 @@ const AddSimpleStudent = () => {
                         disabled={submitting}
                         loading={submitting}
                     >
-                        Guardar
+                        Actualizar
                     </LoadingButton>
                 </Grid>
             </Grid>
@@ -293,160 +240,4 @@ const AddSimpleStudent = () => {
     );
 };
 
-const columns: GridColDef[] = [
-    { field: "id", headerName: "#", width: 30 },
-    { field: "cedula", headerName: "Cédula", width: 110 },
-    { field: "apellidos", headerName: "Apellidos", width: 250 },
-    { field: "nombres", headerName: "Nombres", width: 250 },
-    { field: "telefono", headerName: "Teléfono", width: 110 },
-    { field: "celular", headerName: "Celular", width: 110 },
-    { field: "correo", headerName: "Correo", width: 250 },
-    { field: "correo_uta", headerName: "Correo UTA", width: 250 },
-    { field: "matricula", headerName: "Matrícula", width: 100 },
-    { field: "folio", headerName: "Folio", width: 100 },
-];
-
-const AddMultipleStudents = () => {
-    const { formik, submitting, carreras } = useAddMultipleStudent();
-
-    const [file, setFile] = useState<File>();
-
-    const [reading, setReading] = useState(false);
-
-    const handleChangeFile = (event: React.ChangeEvent<HTMLInputElement>) => {
-        handleReset();
-        setReading(true);
-
-        try {
-            const _file = event?.target?.files
-                ? event.target.files[0]
-                : undefined;
-
-            if (!_file) {
-                setReading(false);
-                return;
-            }
-
-            setFile(_file);
-
-            readFile(_file)
-                .then((students) => {
-                    formik.setFieldValue("estudiantes", students);
-                })
-                .finally(() => setReading(false));
-        } catch (error) {
-            setReading(false);
-        }
-    };
-
-    const handleReset = () => {
-        setFile(undefined);
-        formik.resetForm();
-    };
-
-    return (
-        <Stack spacing={2}>
-            <Box>
-                <LoadingButton
-                    variant="contained"
-                    disabled={reading || submitting}
-                    loading={reading || submitting}
-                    component="label"
-                >
-                    Subir archivo...
-                    <input
-                        id="contained-button-file"
-                        type="file"
-                        disabled={reading}
-                        onChange={handleChangeFile}
-                        accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,text/csv"
-                        hidden
-                    />
-                </LoadingButton>
-                <label
-                    style={{ marginLeft: "1rem" }}
-                    htmlFor="contained-button-file"
-                >
-                    {file?.name && !reading && file.name}
-                </label>
-            </Box>
-
-            <Box>
-                <Box
-                    component="form"
-                    onSubmit={formik.handleSubmit}
-                    onReset={handleReset}
-                    noValidate
-                >
-                    <Grid container spacing={2}>
-                        <Grid item xs={12}>
-                            <Select
-                                id="carrera"
-                                name="carrera"
-                                label="Carrera"
-                                items={carreras.map((item) => ({
-                                    id: item.id,
-                                    label: item.nombre,
-                                }))}
-                                value={formik.values.carrera}
-                                onChange={formik.handleChange}
-                                error={
-                                    formik.touched.carrera &&
-                                    Boolean(formik.errors.carrera)
-                                }
-                                errorMessage={
-                                    formik.touched.carrera &&
-                                    formik.errors.carrera
-                                }
-                            />
-                        </Grid>
-
-                        <Grid item xs={12}>
-                            <div style={{ height: 600, width: "100%" }}>
-                                <DataGrid
-                                    rows={formik.values.estudiantes}
-                                    columns={columns}
-                                />
-                            </div>
-                        </Grid>
-
-                        {formik?.errors?.estudiantes && (
-                            <ListStudentsErrors
-                                errors={formik?.errors?.estudiantes}
-                            />
-                        )}
-
-                        <Grid item xs={12} sm={6}>
-                            <LoadingButton
-                                fullWidth
-                                type="reset"
-                                color="warning"
-                                onClick={handleReset}
-                                variant="contained"
-                                sx={{ mt: 3, mb: 2 }}
-                                disabled={submitting || reading}
-                            >
-                                Limpiar
-                            </LoadingButton>
-                        </Grid>
-
-                        <Grid item xs={12} sm={6}>
-                            <LoadingButton
-                                fullWidth
-                                type="submit"
-                                variant="contained"
-                                sx={{ mt: 3, mb: 2 }}
-                                disabled={submitting || reading}
-                                loading={submitting || reading}
-                            >
-                                Guardar
-                            </LoadingButton>
-                        </Grid>
-                    </Grid>
-                </Box>
-            </Box>
-        </Stack>
-    );
-};
-
-export default AddStudents;
+export default UpdateEstudiante;

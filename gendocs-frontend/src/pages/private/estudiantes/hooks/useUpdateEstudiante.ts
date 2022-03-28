@@ -22,7 +22,7 @@ const initialValues: IEstudiante = {
     carrera: -1,
 };
 
-export const useEditEstudiante = ({ studentId }: { studentId: string }) => {
+export const useUpdateEstudiante = ({ studentId }: { studentId: string }) => {
     const { enqueueSnackbar } = useSnackbar();
     const [submitting, setSubmitting] = useState(false);
     const [carreras, setCarreras] = useState<ICarrera[]>([]);
