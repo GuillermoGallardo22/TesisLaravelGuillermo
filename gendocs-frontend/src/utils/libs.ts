@@ -1,10 +1,10 @@
 import {
     GridValueFormatterParams,
-    GridValueGetterParams
+    GridValueGetterParams,
 } from "@mui/x-data-grid";
 import { IDocumento, IMiembro, IProceso } from "models/interfaces";
 import { MultipleStudentForm } from "pages/private/estudiantes/hooks/useAddEstudiantes";
-import * as xlsx from "xlsx";
+import { read, utils } from "xlsx";
 import { parseToDateTime } from "./date";
 
 export const DRAWERWIDTH = 240;
@@ -29,11 +29,11 @@ export async function readFile(file: File): Promise<MultipleStudentForm[]> {
     try {
         const data = await file.arrayBuffer();
 
-        const workbook = xlsx.read(data);
+        const workbook = read(data);
 
         const sheet = workbook.Sheets[workbook.SheetNames[0]];
 
-        const parseData = xlsx.utils.sheet_to_json<SheetType>(sheet, {
+        const parseData = utils.sheet_to_json<SheetType>(sheet, {
             header: ["A", "B", "C", "D", "E", "F", "G", "H", "I"],
         });
 
