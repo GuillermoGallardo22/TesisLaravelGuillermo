@@ -13,7 +13,7 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { AuthActionsEnum } from "reducers/AuthReducer";
 import { getUser } from "services";
-import { theme } from "utils/theme";
+import { theme } from "utils";
 
 const Login = lazy(() => import("pages/public/Login"));
 const PrivateLayout = lazy(() => import("layout/PrivateLayout"));

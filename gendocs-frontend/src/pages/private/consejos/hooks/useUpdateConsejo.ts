@@ -7,7 +7,7 @@ import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getConsejo, updateConsejo } from "services";
 import { getTipoConsejos } from "services/tipo-consejos";
-import { VALIDATION_MESSAGES } from "utils/messages";
+import { VALIDATION_MESSAGES } from "utils";
 import * as yup from "yup";
 
 const initialValues: IConsejoForm = {

@@ -1,8 +1,7 @@
 import axios from "axios";
 import { HTTP_STATUS } from "models/enums";
 import { INumeracion, IReservaForm, IResponse } from "models/interfaces";
-import { handleErrors } from "utils/axios";
-import { HTTP_MESSAGES } from "utils/messages";
+import { handleErrors, HTTP_MESSAGES } from "utils";
 
 export async function getNumeracion(): Promise<INumeracion> {
     try {

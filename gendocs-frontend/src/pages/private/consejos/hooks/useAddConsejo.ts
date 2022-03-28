@@ -6,7 +6,7 @@ import { useSnackbar } from "notistack";
 import { useCallback, useEffect, useState } from "react";
 import { saveConsejo } from "services";
 import { getTipoConsejos } from "services/tipo-consejos";
-import { VALIDATION_MESSAGES } from "utils/messages";
+import { VALIDATION_MESSAGES } from "utils";
 import * as yup from "yup";
 
 const initialValues: IConsejoForm = {

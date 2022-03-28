@@ -4,7 +4,7 @@ import {
     IPagination,
 } from "models/interfaces";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { DEFAULT_PAGINATION_VALUES } from "utils/pagination";
+import { DEFAULT_PAGINATION_VALUES } from "utils";
 import { debounce } from "lodash";
 
 type useFilterPaginationProps<T> = {

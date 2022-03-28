@@ -4,7 +4,7 @@ import { HTTP_STATUS } from "models/enums";
 import { ICarrera } from "models/interfaces";
 import { useSnackbar } from "notistack";
 import { saveCarrera } from "services";
-import { VALIDATION_MESSAGES } from "utils/messages";
+import { VALIDATION_MESSAGES } from "utils";
 import * as yup from "yup";
 
 const initialValues: ICarrera = {

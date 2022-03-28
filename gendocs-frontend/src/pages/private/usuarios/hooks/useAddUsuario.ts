@@ -4,9 +4,7 @@ import { IRole, IUserForm } from "models/interfaces";
 import { useSnackbar } from "notistack";
 import { useCallback, useEffect, useState } from "react";
 import { createUser, getRoles } from "services";
-import { CONSTANTS } from "utils/constants";
-import { VALIDATION_MESSAGES } from "utils/messages";
-
+import { CONSTANTS, VALIDATION_MESSAGES } from "utils";
 import * as yup from "yup";
 
 const initialValues: IUserForm = {
@@ -42,7 +40,6 @@ export const useAddUsuario = () => {
             enqueueSnackbar(message, { variant: "error" });
             setErrors(errors);
         }
-
     };
 
     const validationSchema = yup.object().shape({

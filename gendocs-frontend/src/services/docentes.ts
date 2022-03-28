@@ -6,9 +6,7 @@ import {
     IFilterPaginationProps,
     IResponse,
 } from "models/interfaces";
-import { handleErrors } from "utils/axios";
-import { HTTP_MESSAGES } from "utils/messages";
-import { parseFilterPaginationProps } from "utils/pagination";
+import { handleErrors, HTTP_MESSAGES, parseFilterPaginationProps } from "utils";
 
 export async function saveDocente(
     form: DocenteForm

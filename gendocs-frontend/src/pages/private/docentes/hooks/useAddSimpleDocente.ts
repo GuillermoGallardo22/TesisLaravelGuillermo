@@ -4,8 +4,7 @@ import { HTTP_STATUS } from "models/enums";
 import { DocenteForm } from "models/interfaces";
 import { useSnackbar } from "notistack";
 import { saveDocente } from "services";
-import { CONSTANTS } from "utils/constants";
-import { VALIDATION_MESSAGES } from "utils/messages";
+import { CONSTANTS, VALIDATION_MESSAGES } from "utils";
 import * as yup from "yup";
 
 const initialValues: DocenteForm = {

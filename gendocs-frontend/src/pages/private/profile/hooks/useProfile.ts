@@ -5,7 +5,7 @@ import { IUser } from "models/interfaces";
 import { useSnackbar } from "notistack";
 import { AuthActionsEnum } from "reducers/AuthReducer";
 import { updateProfile } from "services";
-import { VALIDATION_MESSAGES } from "utils/messages";
+import { VALIDATION_MESSAGES } from "utils";
 import * as yup from "yup";
 
 const validationSchema = yup.object().shape({

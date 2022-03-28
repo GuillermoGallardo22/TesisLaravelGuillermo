@@ -7,7 +7,7 @@ import { IConsejo } from "models/interfaces";
 import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { deleteConsejo, getConsejos } from "services";
-import { parseToDateTime } from "utils/date";
+import { parseToDateTime } from "utils";
 
 export default function Consejos() {
     const [token, setToken] = useState(1);

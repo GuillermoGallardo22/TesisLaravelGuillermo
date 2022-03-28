@@ -6,8 +6,7 @@ import { useSnackbar } from "notistack";
 import { useQuery } from "react-query";
 import { useNavigate, useParams } from "react-router-dom";
 import { getDocente, updateDocente } from "services";
-import { CONSTANTS } from "utils/constants";
-import { VALIDATION_MESSAGES } from "utils/messages";
+import { CONSTANTS, VALIDATION_MESSAGES } from "utils";
 import * as yup from "yup";
 
 const initialValues: IDocente = {

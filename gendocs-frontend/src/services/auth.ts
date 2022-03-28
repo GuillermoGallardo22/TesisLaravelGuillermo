@@ -7,8 +7,7 @@ import {
     IUser,
     IUserForm,
 } from "models/interfaces";
-import { handleErrors } from "utils/axios";
-import { HTTP_MESSAGES } from "utils/messages";
+import { handleErrors, HTTP_MESSAGES } from "utils";
 
 async function getCsrf() {
     try {

@@ -1,14 +1,9 @@
 import {
     GridValueFormatterParams,
-    GridValueGetterParams,
+    GridValueGetterParams
 } from "@mui/x-data-grid";
-import {
-    IMiembro,
-    IDocente,
-    IDocumento,
-    IProceso,
-} from "models/interfaces";
-import { MultipleStudentForm } from "pages/private/estudiantes/hooks/useAddEstudiante";
+import { IDocumento, IMiembro, IProceso } from "models/interfaces";
+import { MultipleStudentForm } from "pages/private/estudiantes/hooks/useAddEstudiantes";
 import * as xlsx from "xlsx";
 import { parseToDateTime } from "./date";
 

@@ -6,7 +6,7 @@ import { IReservaForm } from "models/interfaces";
 import { useSnackbar } from "notistack";
 import { useQuery } from "react-query";
 import { createReserva, getNumeracion } from "services";
-import { VALIDATION_MESSAGES } from "utils/messages";
+import { VALIDATION_MESSAGES } from "utils";
 import * as yup from "yup";
 
 const initialValues: IReservaForm = {

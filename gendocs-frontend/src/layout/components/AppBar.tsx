@@ -3,7 +3,7 @@ import { IconButton, Toolbar, Typography } from "@mui/material";
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 import { styled } from "@mui/material/styles";
 import { useAuth } from "hooks/useAuth";
-import { DRAWERWIDTH } from "utils/libs";
+import { DRAWERWIDTH } from "utils";
 
 const drawerWidth = DRAWERWIDTH;
 

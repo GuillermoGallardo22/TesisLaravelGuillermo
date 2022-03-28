@@ -4,7 +4,7 @@ import { IProceso } from "models/interfaces";
 import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
 import { getProcesoById, updateProceso } from "services";
-import { VALIDATION_MESSAGES } from "utils/messages";
+import { VALIDATION_MESSAGES } from "utils";
 import * as yup from "yup";
 
 const validationSchema = yup.object().shape({

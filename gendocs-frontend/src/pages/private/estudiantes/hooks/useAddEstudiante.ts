@@ -5,8 +5,7 @@ import { ICarrera } from "models/interfaces";
 import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
 import { getAllCarreras, saveEstudiante } from "services";
-import { CONSTANTS } from "utils/constants";
-import { VALIDATION_MESSAGES } from "utils/messages";
+import { CONSTANTS, VALIDATION_MESSAGES } from "utils";
 import * as yup from "yup";
 
 export interface SimpleStudentForm {

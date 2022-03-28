@@ -8,7 +8,7 @@ import { IMiembro } from "models/interfaces";
 import { useMemo } from "react";
 import { useQueryClient } from "react-query";
 import { deleteMiembro } from "services";
-import { getNombreCompletoMiembro } from "utils/libs";
+import { getNombreCompletoMiembro } from "utils";
 import { useMiembros } from "../hooks/useMiembros";
 import { AddMiembro } from "./AddMiembro";
 

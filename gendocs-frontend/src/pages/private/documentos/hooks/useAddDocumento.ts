@@ -5,7 +5,7 @@ import { IConsejo, IDocumentoForm, INumeracionBase } from "models/interfaces";
 import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
 import { getConsejos, getNumeracion, saveDocumento } from "services";
-import { VALIDATION_MESSAGES } from "utils/messages";
+import { VALIDATION_MESSAGES } from "utils";
 import * as yup from "yup";
 
 const initialValues: IDocumentoForm = {

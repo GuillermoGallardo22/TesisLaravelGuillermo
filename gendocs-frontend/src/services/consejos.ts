@@ -7,13 +7,13 @@ import {
     IPagination,
     IResponse,
 } from "models/interfaces";
-import { handleErrors } from "utils/axios";
-import { HTTP_MESSAGES } from "utils/messages";
 import {
     DEFAULT_PAGINATION_VALUES,
+    handleErrors,
+    HTTP_MESSAGES,
     parseFilterPaginationProps,
     parsePaginationData,
-} from "utils/pagination";
+} from "utils";
 
 export async function getConsejo(
     consejoId: string

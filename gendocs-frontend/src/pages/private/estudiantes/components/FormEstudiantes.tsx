@@ -3,7 +3,7 @@ import { Box, Grid, Stack } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { Select } from "components";
 import { useState } from "react";
-import { readFile } from "utils/libs";
+import { readFile } from "utils";
 import { useAddEstudiantes } from "../hooks/useAddEstudiantes";
 import ListStudentsErrors from "./ListEstudianteErrors";
 

@@ -4,9 +4,7 @@ import { ICarrera } from "models/interfaces";
 import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
 import { getAllCarreras, saveListEstudiante } from "services";
-import { CONSTANTS } from "utils/constants";
-import { unique } from "utils/libs";
-import { VALIDATION_MESSAGES } from "utils/messages";
+import { CONSTANTS, unique, VALIDATION_MESSAGES } from "utils";
 import * as yup from "yup";
 
 export interface MultipleStudentForm {

@@ -6,7 +6,7 @@ import { useSnackbar } from "notistack";
 import { useNavigate } from "react-router-dom";
 import { AuthActionsEnum } from "reducers/AuthReducer";
 import { login, logout as _logout } from "services";
-import { VALIDATION_MESSAGES } from "utils/messages";
+import { VALIDATION_MESSAGES } from "utils";
 import * as yup from "yup";
 
 interface IAuth {

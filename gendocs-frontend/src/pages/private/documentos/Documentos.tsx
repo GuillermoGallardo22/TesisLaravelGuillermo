@@ -18,7 +18,7 @@ import {
     getNombreCompleto,
     getPlantilla,
     getProceso,
-} from "utils/libs";
+} from "utils";
 import { useListDocumentos } from "./hooks/useListDocumentos";
 
 export default function Documentos() {

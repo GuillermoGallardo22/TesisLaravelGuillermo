@@ -4,16 +4,16 @@ import {
     IEstudiante,
     IFilterPaginationProps,
     IPagination,
-    IResponse,
+    IResponse
 } from "models/interfaces";
-import { BaseMultipleStudentForm } from "pages/private/estudiantes/hooks/useAddEstudiante";
-import { handleErrors } from "utils/axios";
-import { HTTP_MESSAGES } from "utils/messages";
+import { BaseMultipleStudentForm } from "pages/private/estudiantes/hooks/useAddEstudiantes";
 import {
     DEFAULT_PAGINATION_VALUES,
+    handleErrors,
+    HTTP_MESSAGES,
     parseFilterPaginationProps,
-    parsePaginationData,
-} from "utils/pagination";
+    parsePaginationData
+} from "utils";
 
 export async function getEstudiantes(
     props: IFilterPaginationProps

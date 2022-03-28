@@ -7,7 +7,7 @@ import Toolbar from "@mui/material/Toolbar";
 import { Icon } from "components";
 import { useAuthContext } from "contexts/AuthContext";
 import { routes } from "layout/routes";
-import { DRAWERWIDTH } from "utils/libs";
+import { DRAWERWIDTH } from "utils";
 import Link from "./Link";
 
 const drawerWidth = DRAWERWIDTH;
