@@ -8,10 +8,13 @@ import {
     TextField,
 } from "@mui/material";
 import React from "react";
-import { useAddProcess } from "../hooks/useAddProcess";
+import { useParams } from "react-router-dom";
+import { useAddPlantilla } from "../hooks/useAddPlantilla";
 
-const AddProcess = () => {
-    const { formik } = useAddProcess();
+const AddPlantilla = () => {
+    const { processId = "" } = useParams<{ processId: string }>();
+
+    const { formik } = useAddPlantilla({ processId: +processId });
 
     const submitting = formik.isSubmitting;
 
@@ -43,7 +46,7 @@ const AddProcess = () => {
                     />
                 </Grid>
 
-                <Grid item xs={12} sx={{ mb: 2 }}>
+                <Grid item xs={12}>
                     <FormLabel component="legend">Estado</FormLabel>
                     <FormControlLabel
                         control={
@@ -98,4 +101,4 @@ const AddProcess = () => {
     );
 };
 
-export default AddProcess;
+export default AddPlantilla;

@@ -44,26 +44,26 @@ export const Documentos = lazy(
     () => import("pages/private/documentos/Documentos")
 );
 
-export const AddProcess = lazy(
-    () => import("pages/private/processes/components/AddProcess")
+export const AddProceso = lazy(
+    () => import("pages/private/procesos/components/AddProceso")
 );
 
-export const AddTemplates = lazy(
-    () => import("pages/private/processes/components/AddTemplates")
+export const AddPlantilla = lazy(
+    () => import("pages/private/procesos/components/AddPlantilla")
 );
 
-export const Process = lazy(() => import("pages/private/processes/Process"));
+export const Procesos = lazy(() => import("pages/private/procesos/Procesos"));
 
-export const ListTemplates = lazy(
-    () => import("pages/private/processes/components/ListTemplates")
+export const ListPlantillas = lazy(
+    () => import("pages/private/procesos/components/ListPlantillas")
 );
 
-export const UpdateProcess = lazy(
-    () => import("pages/private/processes/components/UpdateProcess")
+export const UpdateProceso = lazy(
+    () => import("pages/private/procesos/components/UpdateProceso")
 );
 
-export const UpdateTemplates = lazy(
-    () => import("pages/private/processes/components/UpdateTemplates")
+export const UpdatePlantilla = lazy(
+    () => import("pages/private/procesos/components/UpdatePlantilla")
 );
 
 export const Profile = lazy(() => import("pages/private/profile/Profile"));
@@ -76,7 +76,9 @@ export const AddEstudiante = lazy(
     () => import("pages/private/estudiantes/components/AddEstudiante")
 );
 
-export const Estudiantes = lazy(() => import("pages/private/estudiantes/Estudiantes"));
+export const Estudiantes = lazy(
+    () => import("pages/private/estudiantes/Estudiantes")
+);
 
 export const UpdateEstudiante = lazy(
     () => import("pages/private/estudiantes/components/UpdateEstudiante")

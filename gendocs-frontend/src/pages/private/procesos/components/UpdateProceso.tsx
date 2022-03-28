@@ -9,12 +9,12 @@ import {
 } from "@mui/material";
 import React from "react";
 import { useParams } from "react-router-dom";
-import { useUpdateProcess } from "../hooks/useUpdateProcess";
+import { useUpdateProceso } from "../hooks/useUpdateProceso";
 
-const UpdateProcess = () => {
+const UpdateProceso = () => {
     const { processId = "" } = useParams<{ processId: string }>();
 
-    const { formik } = useUpdateProcess({ processId });
+    const { formik } = useUpdateProceso({ processId });
 
     const submitting = formik.isSubmitting;
 
@@ -101,4 +101,4 @@ const UpdateProcess = () => {
     );
 };
 
-export default UpdateProcess;
+export default UpdateProceso;

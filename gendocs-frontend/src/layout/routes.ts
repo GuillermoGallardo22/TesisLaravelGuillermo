@@ -5,10 +5,10 @@ import {
     AddConsejo,
     AddDocente,
     AddDocumento,
-    AddProcess,
+    AddProceso,
     AddReserva,
     AddEstudiante,
-    AddTemplates,
+    AddPlantilla,
     AddUsuario,
     Carreras,
     Consejos,
@@ -17,16 +17,16 @@ import {
     DriveTemplate,
     Home,
     ListMiembros,
-    ListTemplates,
-    Process,
+    ListPlantillas,
+    Procesos,
     Profile,
     Estudiantes,
     UpdateCarrera,
     UpdateConsejo,
     UpdateDocente,
-    UpdateProcess,
+    UpdateProceso,
     UpdateEstudiante,
-    UpdateTemplates,
+    UpdatePlantilla,
     UpdateUsuario,
     Usuarios,
 } from "./components";
@@ -138,7 +138,7 @@ export const routes: IRoute[] = [
         childrens: [
             {
                 path: "nuevo",
-                component: AddProcess,
+                component: AddProceso,
                 roles: [RolEnum.ADMIN, RolEnum.ADMINTEMP, RolEnum.WRITER],
             },
             {
@@ -151,7 +151,7 @@ export const routes: IRoute[] = [
                         childrens: [
                             {
                                 path: "nuevo",
-                                component: AddTemplates,
+                                component: AddPlantilla,
                                 roles: [
                                     RolEnum.ADMIN,
                                     RolEnum.ADMINTEMP,
@@ -169,7 +169,7 @@ export const routes: IRoute[] = [
                                     {
                                         path: "",
                                         isIndex: true,
-                                        component: UpdateTemplates,
+                                        component: UpdatePlantilla,
                                         roles: [
                                             RolEnum.ADMIN,
                                             RolEnum.ADMINTEMP,
@@ -182,14 +182,14 @@ export const routes: IRoute[] = [
                                 path: "",
                                 label: "",
                                 isIndex: true,
-                                component: ListTemplates,
+                                component: ListPlantillas,
                             },
                         ],
                     },
                     {
                         path: "",
                         isIndex: true,
-                        component: UpdateProcess,
+                        component: UpdateProceso,
                         roles: [
                             RolEnum.ADMIN,
                             RolEnum.ADMINTEMP,
@@ -198,7 +198,7 @@ export const routes: IRoute[] = [
                     },
                 ],
             },
-            { path: "", isIndex: true, component: Process },
+            { path: "", isIndex: true, component: Procesos },
         ],
     },
     {

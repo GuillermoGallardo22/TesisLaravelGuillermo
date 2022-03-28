@@ -2,17 +2,12 @@ import { Button, IconButton, Stack, TextField, Tooltip } from "@mui/material";
 import { DataGrid, GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
 import { ChipStatus, Icon } from "components";
 import { useFilterPagination } from "hooks/useFilterPagination";
-import { Link as RouterLink, useParams } from "react-router-dom";
-import { getPlantillasByProcesoId } from "services";
+import { IProceso } from "models/interfaces";
+import { Link as RouterLink } from "react-router-dom";
+import { getProcesos } from "services";
 
 const columns: GridColDef[] = [
     { field: "nombre", headerName: "Nombre", flex: 1 },
-    {
-        field: "autor",
-        headerName: "Autor",
-        flex: 1,
-        renderCell: (item) => item?.value.name,
-    },
     {
         field: "estado",
         headerName: "Estado",
@@ -26,11 +21,11 @@ const columns: GridColDef[] = [
         headerName: "Acciones",
         renderCell: (item: GridRenderCellParams) => (
             <>
-                <Tooltip title="Ver documento">
+                <Tooltip title="Plantillas">
                     <IconButton
                         color="primary"
                         component={RouterLink}
-                        to={`${item.value}/drive/${item?.row?.drive}`}
+                        to={`${item?.value}/plantillas`}
                     >
                         <Icon icon="article" />
                     </IconButton>
@@ -46,9 +41,7 @@ const columns: GridColDef[] = [
     },
 ];
 
-const ListTemplates = () => {
-    const { processId = "" } = useParams<{ processId: string }>();
-
+const Procesos = () => {
     const {
         data,
         handlePageChange,
@@ -56,11 +49,8 @@ const ListTemplates = () => {
         loading,
         search,
         setSearch,
-    } = useFilterPagination({
-        fetch: getPlantillasByProcesoId,
-        filters: {
-            proceso: processId,
-        },
+    } = useFilterPagination<IProceso>({
+        fetch: getProcesos,
     });
 
     return (
@@ -71,7 +61,7 @@ const ListTemplates = () => {
                 to="nuevo"
                 variant="outlined"
             >
-                AÑADIR PLANTILLA
+                AÑADIR PROCESOS
             </Button>
 
             <TextField
@@ -106,4 +96,4 @@ const ListTemplates = () => {
     );
 };
 
-export default ListTemplates;
+export default Procesos;

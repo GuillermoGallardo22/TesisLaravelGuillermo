@@ -2,15 +2,10 @@ import { useFormik } from "formik";
 import { HTTP_STATUS } from "models/enums";
 import { IProceso } from "models/interfaces";
 import { useSnackbar } from "notistack";
-import { saveProceso } from "services";
+import { useEffect, useState } from "react";
+import { getProcesoById, updateProceso } from "services";
 import { VALIDATION_MESSAGES } from "utils/messages";
 import * as yup from "yup";
-
-const initialValues: IProceso = {
-    id: -1,
-    nombre: "",
-    estado: true,
-};
 
 const validationSchema = yup.object().shape({
     nombre: yup
@@ -20,13 +15,27 @@ const validationSchema = yup.object().shape({
     estado: yup.boolean().required(VALIDATION_MESSAGES.required),
 });
 
-export const useAddProcess = () => {
+export const useUpdateProceso = ({ processId }: { processId: string }) => {
     const { enqueueSnackbar } = useSnackbar();
+    const [process, setProcess] = useState<IProceso>({
+        id: -1,
+        nombre: "",
+        estado: false,
+    });
+
+    useEffect(() => {
+        getProcesoById(processId).then((result) => {
+            if (result.status === HTTP_STATUS.ok) {
+                setProcess(result.data);
+            }
+        });
+    }, []);
 
     const onSubmit = async (form: IProceso) => {
-        const result = await saveProceso(form);
+        const result = await updateProceso(form);
 
-        if (result.status === HTTP_STATUS.created) {
+        if (result.status === HTTP_STATUS.ok) {
+            setProcess(result.data);
             enqueueSnackbar(result.message, { variant: "success" });
         } else {
             enqueueSnackbar(result.message, { variant: "error" });
@@ -36,7 +45,8 @@ export const useAddProcess = () => {
     };
 
     const formik = useFormik({
-        initialValues,
+        enableReinitialize: true,
+        initialValues: process,
         onSubmit,
         validationSchema,
     });

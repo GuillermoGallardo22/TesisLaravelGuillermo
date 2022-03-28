@@ -7,17 +7,13 @@ import {
     Switch,
     TextField,
 } from "@mui/material";
-import { Select } from "components";
-import { useParams } from "react-router-dom";
-import { useUpdateTemplate } from "../hooks/useUpdateTemplate";
+import React from "react";
+import { useAddProceso } from "../hooks/useAddProceso";
 
-const UpdateTemplates = () => {
-    const { templateId = "" } = useParams<{ templateId: string }>();
-    const { formik, procesos, loading } = useUpdateTemplate({
-        templateId: +templateId,
-    });
+const AddProceso = () => {
+    const { formik } = useAddProceso();
 
-    const submitting = formik.isSubmitting || loading;
+    const submitting = formik.isSubmitting;
 
     return (
         <Box
@@ -27,27 +23,6 @@ const UpdateTemplates = () => {
             noValidate
         >
             <Grid container spacing={2}>
-                <Grid item xs={12}>
-                    <Select
-                        id="proceso"
-                        name="proceso"
-                        label="Procesos"
-                        items={procesos.map((item) => ({
-                            id: item.id,
-                            label: item.nombre,
-                        }))}
-                        value={formik.values.proceso as number}
-                        onChange={formik.handleChange}
-                        error={
-                            formik.touched.proceso &&
-                            Boolean(formik.errors.proceso)
-                        }
-                        errorMessage={
-                            formik.touched.proceso && formik.errors.proceso
-                        }
-                    />
-                </Grid>
-
                 <Grid item xs={12}>
                     <TextField
                         required
@@ -68,7 +43,7 @@ const UpdateTemplates = () => {
                     />
                 </Grid>
 
-                <Grid item xs={12}>
+                <Grid item xs={12} sx={{ mb: 2 }}>
                     <FormLabel component="legend">Estado</FormLabel>
                     <FormControlLabel
                         control={
@@ -88,6 +63,10 @@ const UpdateTemplates = () => {
                         labelPlacement="start"
                     />
                 </Grid>
+
+                {/* <Grid item xs={12}>
+                    <ErrorSummary errors={errorSummary} />
+                </Grid> */}
 
                 <Grid item xs={12} sm={6}>
                     <LoadingButton
@@ -119,4 +98,4 @@ const UpdateTemplates = () => {
     );
 };
 
-export default UpdateTemplates;
+export default AddProceso;

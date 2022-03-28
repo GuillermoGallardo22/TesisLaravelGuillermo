@@ -7,16 +7,17 @@ import {
     Switch,
     TextField,
 } from "@mui/material";
-import React from "react";
+import { Select } from "components";
 import { useParams } from "react-router-dom";
-import { useAddTemplates } from "../hooks/useAddTemplates";
+import { useUpdatePlantilla } from "../hooks/useUpdatePlantilla";
 
-const AddTemplates = () => {
-    const { processId = "" } = useParams<{ processId: string }>();
+const UpdatePlantilla = () => {
+    const { templateId = "" } = useParams<{ templateId: string }>();
+    const { formik, procesos, loading } = useUpdatePlantilla({
+        templateId: +templateId,
+    });
 
-    const { formik } = useAddTemplates({ processId: +processId });
-
-    const submitting = formik.isSubmitting;
+    const submitting = formik.isSubmitting || loading;
 
     return (
         <Box
@@ -26,6 +27,27 @@ const AddTemplates = () => {
             noValidate
         >
             <Grid container spacing={2}>
+                <Grid item xs={12}>
+                    <Select
+                        id="proceso"
+                        name="proceso"
+                        label="Procesos"
+                        items={procesos.map((item) => ({
+                            id: item.id,
+                            label: item.nombre,
+                        }))}
+                        value={formik.values.proceso as number}
+                        onChange={formik.handleChange}
+                        error={
+                            formik.touched.proceso &&
+                            Boolean(formik.errors.proceso)
+                        }
+                        errorMessage={
+                            formik.touched.proceso && formik.errors.proceso
+                        }
+                    />
+                </Grid>
+
                 <Grid item xs={12}>
                     <TextField
                         required
@@ -67,10 +89,6 @@ const AddTemplates = () => {
                     />
                 </Grid>
 
-                {/* <Grid item xs={12}>
-                    <ErrorSummary errors={errorSummary} />
-                </Grid> */}
-
                 <Grid item xs={12} sm={6}>
                     <LoadingButton
                         fullWidth
@@ -101,4 +119,4 @@ const AddTemplates = () => {
     );
 };
 
-export default AddTemplates;
+export default UpdatePlantilla;

@@ -4,7 +4,7 @@ import { IPlantilla } from "models/interfaces";
 import { useSnackbar } from "notistack";
 import { savePlantilla } from "services";
 
-export const useAddTemplates = ({ processId }: { processId: number }) => {
+export const useAddPlantilla = ({ processId }: { processId: number }) => {
     const { enqueueSnackbar } = useSnackbar();
 
     const onSubmit = async (form: IPlantilla) => {

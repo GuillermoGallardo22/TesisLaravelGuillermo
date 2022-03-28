@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getPlantillaById, getProcesos, updatePlantilla } from "services";
 
-export const useUpdateTemplate = ({ templateId }: { templateId: number }) => {
+export const useUpdatePlantilla = ({ templateId }: { templateId: number }) => {
     const navigate = useNavigate();
     const { enqueueSnackbar } = useSnackbar();
     const [template, setTemplate] = useState<IPlantilla>({
