@@ -1,11 +1,9 @@
-import { LoadingButton, LoadingButtonProps } from "@mui/lab";
-import {
-    Breakpoint,
-    Dialog,
-    DialogActions,
-    DialogContent,
-    DialogTitle,
-} from "@mui/material";
+import LoadingButton, { LoadingButtonProps } from "@mui/lab/LoadingButton";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogTitle from "@mui/material/DialogTitle";
+import { Breakpoint } from "@mui/material/styles";
 
 type ButtonColor =
     | "inherit"

@@ -1,4 +1,6 @@
-import { Button, IconButton, Stack } from "@mui/material";
+import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
+import Stack from "@mui/material/Stack";
 import { DataGrid, GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
 import { ChipStatus, Icon } from "components";
 import { IUser } from "models/interfaces";

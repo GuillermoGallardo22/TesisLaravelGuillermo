@@ -1,5 +1,7 @@
 import LoadingButton from "@mui/lab/LoadingButton";
-import { Box, Grid, Stack } from "@mui/material";
+import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
+import Stack from "@mui/material/Stack";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { Select } from "components";
 import { useState } from "react";

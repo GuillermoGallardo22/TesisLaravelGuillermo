@@ -1,4 +1,6 @@
-import { Button, DialogContentText, Stack } from "@mui/material";
+import Button from "@mui/material/Button";
+import DialogContentText from "@mui/material/DialogContentText";
+import Stack from "@mui/material/Stack";
 import { DataGrid, GridActionsCellItem, GridColumns } from "@mui/x-data-grid";
 import { ConfirmationDialog, GridToolbarColumns, Icon } from "components";
 import {

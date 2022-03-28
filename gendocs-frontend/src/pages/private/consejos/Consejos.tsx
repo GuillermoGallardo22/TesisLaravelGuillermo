@@ -1,4 +1,7 @@
-import { Button, DialogContentText, Stack, TextField } from "@mui/material";
+import Button from "@mui/material/Button";
+import DialogContentText from "@mui/material/DialogContentText";
+import Stack from "@mui/material/Stack";
+import TextField from "@mui/material/TextField";
 import { DataGrid, GridActionsCellItem, GridColumns } from "@mui/x-data-grid";
 import { ChipStatus, ConfirmationDialog, Icon } from "components";
 import { useDeleteItem, useFilterPagination } from "hooks";

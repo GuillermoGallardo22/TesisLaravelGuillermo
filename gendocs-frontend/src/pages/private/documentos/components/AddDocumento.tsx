@@ -1,17 +1,15 @@
-import { LoadingButton } from "@mui/lab";
-import {
-    Autocomplete,
-    Box,
-    CircularProgress,
-    Grid,
-    IconButton,
-    InputAdornment,
-    TextField,
-} from "@mui/material";
+import LoadingButton from "@mui/lab/LoadingButton";
+import Autocomplete from "@mui/material/Autocomplete";
+import Box from "@mui/material/Box";
+import CircularProgress from "@mui/material/CircularProgress";
+import Grid from "@mui/material/Grid";
+import IconButton from "@mui/material/IconButton";
+import InputAdornment from "@mui/material/InputAdornment";
+import TextField from "@mui/material/TextField";
 import { ErrorSummary, Icon, Select } from "components";
 import { useAutocomplete, useConfirmationDialog } from "hooks";
 import { IEstudiante, IPlantilla, IProceso } from "models/interfaces";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import {
     getEstudiantes,
     getPlantillasByProcesoId,
@@ -245,7 +243,7 @@ export default function AddDocumento() {
                                     InputProps={{
                                         ...params.InputProps,
                                         endAdornment: (
-                                            <React.Fragment>
+                                            <>
                                                 {searchingPRO ? (
                                                     <CircularProgress
                                                         color="inherit"
@@ -253,7 +251,7 @@ export default function AddDocumento() {
                                                     />
                                                 ) : null}
                                                 {params.InputProps.endAdornment}
-                                            </React.Fragment>
+                                            </>
                                         ),
                                     }}
                                 />
@@ -299,7 +297,7 @@ export default function AddDocumento() {
                                     InputProps={{
                                         ...params.InputProps,
                                         endAdornment: (
-                                            <React.Fragment>
+                                            <>
                                                 {searchingPLA ? (
                                                     <CircularProgress
                                                         color="inherit"
@@ -307,7 +305,7 @@ export default function AddDocumento() {
                                                     />
                                                 ) : null}
                                                 {params.InputProps.endAdornment}
-                                            </React.Fragment>
+                                            </>
                                         ),
                                     }}
                                 />
@@ -353,7 +351,7 @@ export default function AddDocumento() {
                                     InputProps={{
                                         ...params.InputProps,
                                         endAdornment: (
-                                            <React.Fragment>
+                                            <>
                                                 {searchingEST ? (
                                                     <CircularProgress
                                                         color="inherit"
@@ -361,7 +359,7 @@ export default function AddDocumento() {
                                                     />
                                                 ) : null}
                                                 {params.InputProps.endAdornment}
-                                            </React.Fragment>
+                                            </>
                                         ),
                                     }}
                                 />

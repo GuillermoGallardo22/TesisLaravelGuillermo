@@ -1,5 +1,7 @@
+import ListItem from "@mui/material/ListItem";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
 import { Link as RouterLink } from "react-router-dom";
-import { ListItem, ListItemIcon, ListItemText } from "@mui/material";
 
 interface LinkProps {
     path: string;

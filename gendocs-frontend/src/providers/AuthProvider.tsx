@@ -1,5 +1,5 @@
 import { AuthContext, initialState } from "contexts/AuthContext";
-import React, { useReducer } from "react";
+import { useReducer } from "react";
 import { authReducer } from "reducers/AuthReducer";
 
 const AuthProvider: React.FC = ({ children }) => {

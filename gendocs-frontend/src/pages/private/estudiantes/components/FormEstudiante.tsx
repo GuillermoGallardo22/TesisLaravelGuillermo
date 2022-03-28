@@ -1,8 +1,7 @@
 import LoadingButton from "@mui/lab/LoadingButton";
-import {
-    Box,
-    Grid, TextField
-} from "@mui/material";
+import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
+import TextField from "@mui/material/TextField";
 import { ErrorSummary, Select } from "components";
 import { useAddEstudiante } from "../hooks/useAddEstudiante";
 

@@ -1,9 +1,5 @@
-import { debounce } from "@mui/material";
-import {
-    IFilterPaginationProps,
-    IFilterProps,
-    IPagination,
-} from "models/interfaces";
+import { debounce } from "lodash";
+import { IFilterPaginationProps, IFilterProps } from "models/interfaces";
 import { useEffect, useMemo, useState } from "react";
 
 type useAutocompleteProps<T> = {

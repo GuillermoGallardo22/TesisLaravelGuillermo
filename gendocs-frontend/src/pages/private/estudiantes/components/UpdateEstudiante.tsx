@@ -1,5 +1,7 @@
-import { LoadingButton } from "@mui/lab";
-import { Box, Grid, TextField } from "@mui/material";
+import LoadingButton from "@mui/lab/LoadingButton";
+import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
+import TextField from "@mui/material/TextField";
 import { ErrorSummary, Select } from "components";
 import { useParams } from "react-router-dom";
 import { useUpdateEstudiante } from "../hooks/useUpdateEstudiante";

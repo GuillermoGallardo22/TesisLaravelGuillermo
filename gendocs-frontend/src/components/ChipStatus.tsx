@@ -1,4 +1,4 @@
-import { Chip, ChipProps } from "@mui/material";
+import Chip, { ChipProps } from "@mui/material/Chip";
 
 type ChipColors =
     | "default"

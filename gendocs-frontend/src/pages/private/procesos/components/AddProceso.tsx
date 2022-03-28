@@ -1,13 +1,10 @@
-import { LoadingButton } from "@mui/lab";
-import {
-    Box,
-    FormControlLabel,
-    FormLabel,
-    Grid,
-    Switch,
-    TextField,
-} from "@mui/material";
-import React from "react";
+import LoadingButton from "@mui/lab/LoadingButton";
+import Box from "@mui/material/Box";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import FormLabel from "@mui/material/FormLabel";
+import Grid from "@mui/material/Grid";
+import Switch from "@mui/material/Switch";
+import TextField from "@mui/material/TextField";
 import { useAddProceso } from "../hooks/useAddProceso";
 
 const AddProceso = () => {

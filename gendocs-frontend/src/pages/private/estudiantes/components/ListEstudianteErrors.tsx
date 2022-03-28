@@ -1,4 +1,6 @@
-import { Grid, Alert, AlertTitle } from "@mui/material";
+import Alert from "@mui/material/Alert";
+import AlertTitle from "@mui/material/AlertTitle";
+import Grid from "@mui/material/Grid";
 
 interface ListStudentsErrorsProps {
     errors: any;

@@ -1,6 +1,8 @@
-import { IconButton, Toolbar, Typography } from "@mui/material";
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
+import IconButton from "@mui/material/IconButton";
 import { styled } from "@mui/material/styles";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
 import { Icon } from "components";
 import { useAuth } from "hooks";
 import { DRAWERWIDTH } from "utils";

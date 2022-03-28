@@ -1,12 +1,10 @@
-import { LoadingButton } from "@mui/lab";
-import {
-    Box,
-    Grid,
-    TextField,
-    FormLabel,
-    FormControlLabel,
-    Switch,
-} from "@mui/material";
+import LoadingButton from "@mui/lab/LoadingButton";
+import Box from "@mui/material/Box";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import FormLabel from "@mui/material/FormLabel";
+import Grid from "@mui/material/Grid";
+import Switch from "@mui/material/Switch";
+import TextField from "@mui/material/TextField";
 import { ErrorSummary } from "components";
 import { useAddCarrera } from "../hooks/useAddCarrera";
 

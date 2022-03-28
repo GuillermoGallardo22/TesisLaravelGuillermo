@@ -1,21 +1,19 @@
+import Autocomplete from "@mui/material/Autocomplete";
+import Box from "@mui/material/Box";
+import CircularProgress from "@mui/material/CircularProgress";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import FormLabel from "@mui/material/FormLabel";
+import Grid from "@mui/material/Grid";
+import Switch from "@mui/material/Switch";
+import TextField from "@mui/material/TextField";
 import {
-    Autocomplete,
-    Box,
-    CircularProgress,
-    FormControlLabel,
-    FormLabel,
-    Grid,
-    Switch,
-    TextField,
-} from "@mui/material";
-import {
-    ConfirmationDialogProps,
     ConfirmationDialog,
+    ConfirmationDialogProps,
     ErrorSummary,
 } from "components";
 import { useAutocomplete } from "hooks";
 import { IConsejo, IDocente } from "models/interfaces";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useQueryClient } from "react-query";
 import { getDocentes } from "services";
 import { useAddMiembro } from "../hooks/useAddMiembro";

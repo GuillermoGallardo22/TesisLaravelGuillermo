@@ -1,4 +1,6 @@
-import { Box, Skeleton as SkeletonBase, Stack } from "@mui/material";
+import Box from "@mui/material/Box";
+import SkeletonBase from "@mui/material/Skeleton";
+import Stack from "@mui/material/Stack";
 
 export default function Skeleton() {
     return (

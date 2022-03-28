@@ -1,5 +1,4 @@
 import { useAuthContext } from "contexts/AuthContext";
-import React from "react";
 import { Navigate, useLocation } from "react-router-dom";
 
 const PrivateRoute: React.FC = ({ children }) => {
