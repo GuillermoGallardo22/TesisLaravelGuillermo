@@ -4,7 +4,7 @@ import { HTTP_STATUS } from "models/enums";
 import { IConsejoForm, ITipoConsejo } from "models/interfaces";
 import { useSnackbar } from "notistack";
 import { useCallback, useEffect, useState } from "react";
-import { saveConsejo } from "services/consejos";
+import { saveConsejo } from "services";
 import { getTipoConsejos } from "services/tipo-consejos";
 import { VALIDATION_MESSAGES } from "utils/messages";
 import * as yup from "yup";

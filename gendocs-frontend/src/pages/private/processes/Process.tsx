@@ -4,7 +4,7 @@ import { ChipStatus, Icon } from "components";
 import { useFilterPagination } from "hooks/useFilterPagination";
 import { IProceso } from "models/interfaces";
 import { Link as RouterLink } from "react-router-dom";
-import { getProcesos } from "services/proceso";
+import { getProcesos } from "services";
 
 const columns: GridColDef[] = [
     { field: "nombre", headerName: "Nombre", flex: 1 },

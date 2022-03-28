@@ -1,11 +1,8 @@
 import { HTTP_STATUS } from "models/enums";
-import { ConsejoMiembroForm } from "models/interfaces";
 import { useSnackbar } from "notistack";
-import { useState } from "react";
 import { useQuery } from "react-query";
 import { useNavigate, useParams } from "react-router-dom";
-import { getMiembros } from "services/miembros";
-import { getConsejo } from "services/consejos";
+import { getConsejo, getMiembros } from "services";
 
 export function useMiembros() {
     const { consejoId = "" } = useParams<{ consejoId: string }>();

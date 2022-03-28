@@ -3,7 +3,7 @@ import { HTTP_STATUS } from "models/enums";
 import { IProceso } from "models/interfaces";
 import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
-import { getProcesoById, updateProceso } from "services/proceso";
+import { getProcesoById, updateProceso } from "services";
 import { VALIDATION_MESSAGES } from "utils/messages";
 import * as yup from "yup";
 

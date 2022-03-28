@@ -4,7 +4,7 @@ import { ChipStatus, Icon } from "components";
 import { IUser } from "models/interfaces";
 import { useCallback, useEffect, useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
-import { getUsers } from "services/auth";
+import { getUsers } from "services";
 
 const columns: GridColDef[] = [
     { field: "name", headerName: "Nombre", flex: 1 },

@@ -4,9 +4,7 @@ import { HTTP_STATUS } from "models/enums";
 import { IConsejo, IDocumentoForm, INumeracionBase } from "models/interfaces";
 import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
-import { getConsejos } from "services/consejos";
-import { saveDocumento } from "services/documentos";
-import { getNumeracion } from "services/numeracion";
+import { getConsejos, getNumeracion, saveDocumento } from "services";
 import { VALIDATION_MESSAGES } from "utils/messages";
 import * as yup from "yup";
 

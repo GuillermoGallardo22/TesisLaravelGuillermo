@@ -2,7 +2,7 @@ import { useFormik } from "formik";
 import { HTTP_STATUS } from "models/enums";
 import { IPlantilla } from "models/interfaces";
 import { useSnackbar } from "notistack";
-import { savePlantilla } from "services/plantillas";
+import { savePlantilla } from "services";
 
 export const useAddTemplates = ({ processId }: { processId: number }) => {
     const { enqueueSnackbar } = useSnackbar();

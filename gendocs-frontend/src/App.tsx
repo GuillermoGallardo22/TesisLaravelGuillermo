@@ -12,7 +12,7 @@ import { lazy, Suspense, useCallback, useEffect } from "react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { AuthActionsEnum } from "reducers/AuthReducer";
-import { getUser } from "services/auth";
+import { getUser } from "services";
 import { theme } from "utils/theme";
 
 const Login = lazy(() => import("pages/public/Login"));

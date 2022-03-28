@@ -3,7 +3,7 @@ import { useErrorsResponse } from "hooks/useErrorsResponse";
 import { HTTP_STATUS } from "models/enums";
 import { DocenteForm } from "models/interfaces";
 import { useSnackbar } from "notistack";
-import { saveDocente } from "services/docentes";
+import { saveDocente } from "services";
 import { CONSTANTS } from "utils/constants";
 import { VALIDATION_MESSAGES } from "utils/messages";
 import * as yup from "yup";

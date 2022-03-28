@@ -4,8 +4,7 @@ import { IPlantilla, IProceso } from "models/interfaces";
 import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getPlantillaById, updatePlantilla } from "services/plantillas";
-import { getProcesos } from "services/proceso";
+import { getPlantillaById, getProcesos, updatePlantilla } from "services";
 
 export const useUpdateTemplate = ({ templateId }: { templateId: number }) => {
     const navigate = useNavigate();

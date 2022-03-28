@@ -3,7 +3,7 @@ import { HTTP_STATUS } from "models/enums";
 import { IRole, IUserForm } from "models/interfaces";
 import { useSnackbar } from "notistack";
 import { useCallback, useEffect, useState } from "react";
-import { createUser, getRoles } from "services/auth";
+import { createUser, getRoles } from "services";
 import { CONSTANTS } from "utils/constants";
 import { VALIDATION_MESSAGES } from "utils/messages";
 

@@ -5,7 +5,7 @@ import { HTTP_STATUS } from "models/enums";
 import { IReservaForm } from "models/interfaces";
 import { useSnackbar } from "notistack";
 import { useQuery } from "react-query";
-import { createReserva, getNumeracion } from "services/numeracion";
+import { createReserva, getNumeracion } from "services";
 import { VALIDATION_MESSAGES } from "utils/messages";
 import * as yup from "yup";
 

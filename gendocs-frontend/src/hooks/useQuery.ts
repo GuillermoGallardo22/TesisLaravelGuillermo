@@ -1,6 +1,6 @@
 import { IConsejo } from "models/interfaces";
 import { useQuery, UseQueryResult } from "react-query";
-import { getConsejos } from "services/consejos";
+import { getConsejos } from "services";
 
 /**
  * Retorna consejos activos

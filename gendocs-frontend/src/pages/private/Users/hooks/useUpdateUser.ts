@@ -5,7 +5,7 @@ import { IRole, IUser, IUserForm } from "models/interfaces";
 import { useSnackbar } from "notistack";
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { updateUser, getRoles, getUserById } from "services/auth";
+import { updateUser, getRoles, getUserById } from "services";
 import { CONSTANTS } from "utils/constants";
 import { VALIDATION_MESSAGES } from "utils/messages";
 

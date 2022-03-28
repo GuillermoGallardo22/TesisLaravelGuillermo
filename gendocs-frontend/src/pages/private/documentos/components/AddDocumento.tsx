@@ -13,9 +13,11 @@ import { useAutocomplete } from "hooks/useAutocomplete";
 import { useConfirmationDialog } from "hooks/useConfirmationDialog";
 import { IEstudiante, IPlantilla, IProceso } from "models/interfaces";
 import React, { useEffect } from "react";
-import { getEstudiantes } from "services/estudiantes";
-import { getPlantillasByProcesoId } from "services/plantillas";
-import { getProcesos } from "services/proceso";
+import {
+    getEstudiantes,
+    getPlantillasByProcesoId,
+    getProcesos,
+} from "services";
 import useAddDocumento from "../hooks/useAddDocumento";
 import { NumeracionModal } from "./NumeracionModal";
 

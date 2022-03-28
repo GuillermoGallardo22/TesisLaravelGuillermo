@@ -2,7 +2,7 @@ import { useFormik } from "formik";
 import { HTTP_STATUS } from "models/enums";
 import { IProceso } from "models/interfaces";
 import { useSnackbar } from "notistack";
-import { saveProceso } from "services/proceso";
+import { saveProceso } from "services";
 import { VALIDATION_MESSAGES } from "utils/messages";
 import * as yup from "yup";
 

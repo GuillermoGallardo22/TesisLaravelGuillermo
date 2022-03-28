@@ -3,7 +3,7 @@ import { useErrorsResponse } from "hooks/useErrorsResponse";
 import { HTTP_STATUS } from "models/enums";
 import { ConsejoMiembroForm, IConsejo } from "models/interfaces";
 import { useSnackbar } from "notistack";
-import { saveMiembros } from "services/miembros";
+import { saveMiembros } from "services";
 import { VALIDATION_MESSAGES } from "utils/messages";
 import * as yup from "yup";
 

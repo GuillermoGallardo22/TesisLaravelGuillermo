@@ -5,7 +5,7 @@ import { ICarrera } from "models/interfaces";
 import { useSnackbar } from "notistack";
 import { useQuery } from "react-query";
 import { useNavigate, useParams } from "react-router-dom";
-import { getCarrera, updateCarrera } from "services/carreras";
+import { getCarrera, updateCarrera } from "services";
 import { VALIDATION_MESSAGES } from "utils/messages";
 import * as yup from "yup";
 

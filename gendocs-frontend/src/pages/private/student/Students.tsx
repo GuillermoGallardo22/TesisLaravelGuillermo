@@ -5,7 +5,7 @@ import { useFilterPagination } from "hooks/useFilterPagination";
 import { useGridColumnVisibilityModel } from "hooks/useGridColumnVisibilityModel";
 import { IEstudiante } from "models/interfaces";
 import { Link as RouterLink } from "react-router-dom";
-import { getEstudiantes } from "services/estudiantes";
+import { getEstudiantes } from "services";
 
 const columns: GridColumns = [
     { field: "cedula", headerName: "Cédula", flex: 1 },

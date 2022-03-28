@@ -5,7 +5,7 @@ import { IConsejo, IConsejoForm, ITipoConsejo } from "models/interfaces";
 import { useSnackbar } from "notistack";
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getConsejo, updateConsejo } from "services/consejos";
+import { getConsejo, updateConsejo } from "services";
 import { getTipoConsejos } from "services/tipo-consejos";
 import { VALIDATION_MESSAGES } from "utils/messages";
 import * as yup from "yup";

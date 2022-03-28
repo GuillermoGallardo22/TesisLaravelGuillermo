@@ -2,7 +2,7 @@ import { CircularProgress } from "@mui/material";
 import { IPlantilla } from "models/interfaces";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getPlantillaById } from "services/plantillas";
+import { getPlantillaById } from "services";
 
 const DriveTemplate = () => {
     const { templateId } = useParams<{ templateId: string }>();

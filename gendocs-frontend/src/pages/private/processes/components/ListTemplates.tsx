@@ -3,7 +3,7 @@ import { DataGrid, GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
 import { ChipStatus, Icon } from "components";
 import { useFilterPagination } from "hooks/useFilterPagination";
 import { Link as RouterLink, useParams } from "react-router-dom";
-import { getPlantillasByProcesoId } from "services/plantillas";
+import { getPlantillasByProcesoId } from "services";
 
 const columns: GridColDef[] = [
     { field: "nombre", headerName: "Nombre", flex: 1 },

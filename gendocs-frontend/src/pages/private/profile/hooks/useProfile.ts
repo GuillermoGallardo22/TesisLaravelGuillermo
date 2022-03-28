@@ -4,7 +4,7 @@ import { HTTP_STATUS } from "models/enums";
 import { IUser } from "models/interfaces";
 import { useSnackbar } from "notistack";
 import { AuthActionsEnum } from "reducers/AuthReducer";
-import { updateProfile } from "services/auth";
+import { updateProfile } from "services";
 import { VALIDATION_MESSAGES } from "utils/messages";
 import * as yup from "yup";
 

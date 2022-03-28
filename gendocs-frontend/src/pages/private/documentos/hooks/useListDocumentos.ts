@@ -4,7 +4,7 @@ import { useConsejos } from "hooks/useQuery";
 import { IDocumento } from "models/interfaces";
 import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
-import { deleteDocumento, getDocumentos } from "services/documentos";
+import { deleteDocumento, getDocumentos } from "services";
 
 export function useListDocumentos() {
     const [consejo, setConsejo] = useState(-1);

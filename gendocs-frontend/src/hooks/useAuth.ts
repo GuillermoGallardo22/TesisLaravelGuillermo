@@ -5,7 +5,7 @@ import { IUser } from "models/interfaces";
 import { useSnackbar } from "notistack";
 import { useNavigate } from "react-router-dom";
 import { AuthActionsEnum } from "reducers/AuthReducer";
-import { login, logout as _logout } from "services/auth";
+import { login, logout as _logout } from "services";
 import { VALIDATION_MESSAGES } from "utils/messages";
 import * as yup from "yup";
 

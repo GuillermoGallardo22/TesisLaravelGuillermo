@@ -6,7 +6,7 @@ import { useFilterPagination } from "hooks/useFilterPagination";
 import { IConsejo } from "models/interfaces";
 import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
-import { deleteConsejo, getConsejos } from "services/consejos";
+import { deleteConsejo, getConsejos } from "services";
 import { parseToDateTime } from "utils/date";
 
 export default function Consejos() {
