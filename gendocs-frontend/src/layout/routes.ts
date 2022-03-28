@@ -9,7 +9,7 @@ import {
     AddReserva,
     AddEstudiante,
     AddTemplates,
-    AddUser,
+    AddUsuario,
     Carreras,
     Consejos,
     Docentes,
@@ -27,8 +27,8 @@ import {
     UpdateProcess,
     UpdateEstudiante,
     UpdateTemplates,
-    UpdateUser,
-    Users,
+    UpdateUsuario,
+    Usuarios,
 } from "./components";
 
 export interface IRoute {
@@ -238,9 +238,9 @@ export const routes: IRoute[] = [
         component: Outlet,
         icon: "groupAdd",
         childrens: [
-            { path: "nuevo", component: AddUser },
-            { path: ":userId", component: UpdateUser },
-            { path: "", isIndex: true, component: Users },
+            { path: "nuevo", component: AddUsuario },
+            { path: ":userId", component: UpdateUsuario },
+            { path: "", isIndex: true, component: Usuarios },
         ],
         roles: [RolEnum.ADMIN],
     },

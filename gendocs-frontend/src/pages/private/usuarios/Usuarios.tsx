@@ -33,7 +33,7 @@ const columns: GridColDef[] = [
     },
 ];
 
-const Users = () => {
+const Usuarios = () => {
     const [loading, setLoading] = useState(true);
     const [users, setUsers] = useState<IUser[]>([]);
 
@@ -66,4 +66,4 @@ const Users = () => {
     );
 };
 
-export default Users;
+export default Usuarios;

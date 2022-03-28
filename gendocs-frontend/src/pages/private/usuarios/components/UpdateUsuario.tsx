@@ -1,12 +1,24 @@
 import { LoadingButton } from "@mui/lab";
-import { Box, Grid, TextField } from "@mui/material";
+import {
+    Box,
+    FormControlLabel,
+    FormLabel,
+    Grid,
+    Switch,
+    TextField
+} from "@mui/material";
 import { ErrorSummary, Select } from "components";
-import { useAddUser } from "../hooks/useAddUser";
+import { useParams } from "react-router-dom";
+import { useUpdateUsuario } from "../hooks/useUpdateUsuario";
 
-const AddUser = () => {
-    const { formik, handleReset, errorsResponse, roles } = useAddUser();
+const UpdateUsuario = () => {
+    const { userId = "" } = useParams<{ userId: string }>();
+    const { formik, handleReset, errorsResponse, roles, loading } =
+        useUpdateUsuario({
+            userId,
+        });
 
-    const submitting = formik.isSubmitting;
+    const submitting = formik.isSubmitting || loading;
 
     return (
         <Box
@@ -100,6 +112,27 @@ const AddUser = () => {
                     />
                 </Grid>
 
+                <Grid item xs={12}>
+                    <FormLabel component="legend">Estado</FormLabel>
+                    <FormControlLabel
+                        control={
+                            <Switch
+                                checked={formik.values.status}
+                                onChange={(e) =>
+                                    formik.setFieldValue(
+                                        "status",
+                                        e.target.checked
+                                    )
+                                }
+                            />
+                        }
+                        label={
+                            formik.values.status ? "Activado" : "Desactivado"
+                        }
+                        labelPlacement="start"
+                    />
+                </Grid>
+
                 {errorsResponse && <ErrorSummary errors={errorsResponse} />}
 
                 <Grid item xs={12} sm={6}>
@@ -132,4 +165,4 @@ const AddUser = () => {
     );
 };
 
-export default AddUser;
+export default UpdateUsuario;

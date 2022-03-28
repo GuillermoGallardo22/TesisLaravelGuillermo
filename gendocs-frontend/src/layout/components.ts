@@ -82,14 +82,14 @@ export const UpdateEstudiante = lazy(
     () => import("pages/private/estudiantes/components/UpdateEstudiante")
 );
 
-export const AddUser = lazy(
-    () => import("pages/private/Users/components/AddUser")
+export const AddUsuario = lazy(
+    () => import("pages/private/usuarios/components/AddUsuario")
 );
 
-export const Users = lazy(() => import("pages/private/Users/Users"));
+export const Usuarios = lazy(() => import("pages/private/usuarios/Usuarios"));
 
-export const UpdateUser = lazy(
-    () => import("pages/private/Users/components/UpdateUser")
+export const UpdateUsuario = lazy(
+    () => import("pages/private/usuarios/components/UpdateUsuario")
 );
 
 export const DriveTemplate = lazy(() =>

@@ -1,11 +1,9 @@
 import { useFormik } from "formik";
-import { useErrorsResponse } from "hooks/useErrorsResponse";
 import { HTTP_STATUS } from "models/enums";
-import { IRole, IUser, IUserForm } from "models/interfaces";
+import { IRole, IUserForm } from "models/interfaces";
 import { useSnackbar } from "notistack";
 import { useCallback, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { updateUser, getRoles, getUserById } from "services";
+import { createUser, getRoles } from "services";
 import { CONSTANTS } from "utils/constants";
 import { VALIDATION_MESSAGES } from "utils/messages";
 
@@ -17,72 +15,34 @@ const initialValues: IUserForm = {
     correo_secundario: "",
     id: -1,
     rol: -1,
-    status: true,
 };
 
-type useUpdateUserProps = {
-    userId: string;
-};
-
-export const useUpdateUser = ({ userId }: useUpdateUserProps) => {
-    const navigate = useNavigate();
-
-    const [loading, setLoading] = useState(true);
-    const [user, setUser] = useState(initialValues);
+export const useAddUsuario = () => {
     const [roles, setRoles] = useState<IRole[]>([]);
-    const { errorSummary, setErrorSummary, cleanErrorsSumary } =
-        useErrorsResponse();
-
     const { enqueueSnackbar } = useSnackbar();
-
-    const handleSetUser = (user: IUser, roles: IRole[]) =>
-        setUser({
-            nombre: user.name,
-            correo_principal: user.email,
-            correo_secundario: user.email_gmail,
-            status: user.status,
-            id: user.id,
-            rol: roles.find((i) => i.nombre === user.roles[0])?.id || -1,
-        });
+    const [errors, setErrors] = useState<string[] | undefined>();
 
     const loadInitData = useCallback(() => {
-        if (!userId) navigate(-1);
-
-        setLoading(true);
-        Promise.all([getUserById(userId), getRoles()])
-            .then((r) => {
-                const [userResult, _roles] = r;
-
-                if (userResult.status !== HTTP_STATUS.ok) {
-                    enqueueSnackbar(userResult.message, { variant: "warning" });
-                    navigate(-1);
-                }
-
-                handleSetUser(userResult.data, _roles);
-                setRoles(_roles);
-            })
-            .finally(() => setLoading(false));
-    }, [userId]);
+        getRoles().then((r) => setRoles(r));
+    }, []);
 
     useEffect(() => {
         loadInitData();
-    }, [loadInitData]);
+    }, []);
 
     const onSubmit = async (form: IUserForm): Promise<void> => {
-        cleanErrorsSumary();
+        setErrors(undefined);
 
-        const { status, message, errors, data } = await updateUser(form);
+        const { status, message, errors } = await createUser(form);
 
-        console.log({ status, message, errors, data });
-
-        if (status === HTTP_STATUS.ok) {
-            handleSetUser(data, roles);
+        if (status === HTTP_STATUS.created) {
             enqueueSnackbar(message, { variant: "success" });
             formik.resetForm();
         } else {
             enqueueSnackbar(message, { variant: "error" });
-            setErrorSummary(errors);
+            setErrors(errors);
         }
+
     };
 
     const validationSchema = yup.object().shape({
@@ -117,21 +77,20 @@ export const useUpdateUser = ({ userId }: useUpdateUserProps) => {
 
     const formik = useFormik({
         onSubmit,
+        initialValues,
         validationSchema,
-        initialValues: user,
         enableReinitialize: true,
     });
 
     const handleReset = () => {
-        cleanErrorsSumary();
+        setErrors(undefined);
         formik.resetForm();
     };
 
     return {
         formik,
-        errorsResponse: errorSummary,
+        errorsResponse: errors,
         handleReset,
         roles,
-        loading,
     };
 };
