@@ -5,9 +5,7 @@ import {
     GridColumns,
     GridToolbar,
 } from "@mui/x-data-grid";
-import ConfirmationDialog from "components/ConfirmationDialog";
-import Icon from "components/Icon";
-import Select from "components/Select";
+import { ConfirmationDialog, Icon, Select } from "components";
 import { useAuthContext } from "contexts/AuthContext";
 import { useGridColumnVisibilityModel } from "hooks/useGridColumnVisibilityModel";
 import { IDocumento } from "models/interfaces";

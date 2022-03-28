@@ -5,7 +5,7 @@ import {
     GridColumns,
     GridToolbar,
 } from "@mui/x-data-grid";
-import Icon from "components/Icon";
+import { Icon } from "components";
 import { useGridColumnVisibilityModel } from "hooks/useGridColumnVisibilityModel";
 import { Link as RouterLink } from "react-router-dom";
 import { useListDocentes } from "./hooks/useListDocentes";

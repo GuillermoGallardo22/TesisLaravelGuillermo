@@ -1,8 +1,6 @@
 import { Button, DialogContentText, Stack } from "@mui/material";
 import { DataGrid, GridActionsCellItem, GridColumns } from "@mui/x-data-grid";
-import ConfirmationDialog from "components/ConfirmationDialog";
-import Icon from "components/Icon";
-import { GridToolbarColumns } from "components/ToolbarDataGrid";
+import { ConfirmationDialog, GridToolbarColumns, Icon } from "components";
 import { useConfirmationDialog } from "hooks/useConfirmationDialog";
 import { useDeleteItem } from "hooks/useDeleteItem";
 import { useGridColumnVisibilityModel } from "hooks/useGridColumnVisibilityModel";

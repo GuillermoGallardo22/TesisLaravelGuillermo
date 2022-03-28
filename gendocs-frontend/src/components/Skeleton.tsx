@@ -1,6 +1,6 @@
 import { Box, Skeleton as SkeletonBase, Stack } from "@mui/material";
 
-export function Skeleton() {
+export default function Skeleton() {
     return (
         <Stack gap={2}>
             <SkeletonBase variant="text" />

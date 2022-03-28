@@ -7,9 +7,9 @@ import {
     Tooltip,
     Typography,
 } from "@mui/material";
+import { ConfirmationDialog } from "components";
 import { INumeracionBase } from "models/interfaces";
-import ConfirmationDialog from "components/ConfirmationDialog";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
     Accordion,
     AccordionDetails,

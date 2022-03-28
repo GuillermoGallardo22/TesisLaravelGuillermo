@@ -2,7 +2,7 @@ import DateAdapter from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import { CssBaseline } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
-import LoadingScreen from "components/LoadingScreen";
+import { LoadingScreen } from "components";
 import { useAuthContext } from "contexts/AuthContext";
 import esLocale from "date-fns/locale/es";
 import { HTTP_STATUS } from "models/enums";

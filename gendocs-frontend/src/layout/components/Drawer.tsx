@@ -4,7 +4,7 @@ import IconButton from "@mui/material/IconButton";
 import List from "@mui/material/List";
 import { styled } from "@mui/material/styles";
 import Toolbar from "@mui/material/Toolbar";
-import Icon from "components/Icon";
+import { Icon } from "components";
 import { useAuthContext } from "contexts/AuthContext";
 import { routes } from "layout/routes";
 import { DRAWERWIDTH } from "utils/libs";

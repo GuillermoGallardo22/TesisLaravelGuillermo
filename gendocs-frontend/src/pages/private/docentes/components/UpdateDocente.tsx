@@ -1,6 +1,6 @@
 import LoadingButton from "@mui/lab/LoadingButton";
 import { Box, Grid, TextField } from "@mui/material";
-import ErrorSummary from "components/ErrorSummary";
+import { ErrorSummary } from "components";
 import { useUpdateDocente } from "../hooks/usUpdateDocente";
 
 const UpdateDocente = () => {

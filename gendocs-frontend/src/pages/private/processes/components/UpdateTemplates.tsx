@@ -7,8 +7,7 @@ import {
     Switch,
     TextField,
 } from "@mui/material";
-import Select from "components/Select";
-import React from "react";
+import { Select } from "components";
 import { useParams } from "react-router-dom";
 import { useUpdateTemplate } from "../hooks/useUpdateTemplate";
 

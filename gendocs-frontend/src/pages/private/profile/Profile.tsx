@@ -1,6 +1,6 @@
 import { LoadingButton } from "@mui/lab";
 import { Box, Divider, Grid, Stack, TextField } from "@mui/material";
-import Title from "components/Title";
+import { Title } from "components";
 import usePassword from "./hooks/usePassword";
 import useProfile from "./hooks/useProfile";
 

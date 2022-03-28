@@ -7,7 +7,7 @@ import {
     FormControlLabel,
     Switch,
 } from "@mui/material";
-import ErrorSummary from "components/ErrorSummary";
+import { ErrorSummary } from "components";
 import { useAddCarrera } from "../hooks/useAddCarrera";
 
 export default function AddCarrera() {

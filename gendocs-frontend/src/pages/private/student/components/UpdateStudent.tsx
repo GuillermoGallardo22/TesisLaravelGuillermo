@@ -1,7 +1,6 @@
 import { LoadingButton } from "@mui/lab";
 import { Box, Grid, TextField } from "@mui/material";
-import ErrorSummary from "components/ErrorSummary";
-import Select from "components/Select";
+import { ErrorSummary, Select } from "components";
 import React from "react";
 import { useParams } from "react-router-dom";
 import { useEditEstudiante } from "../hooks/useEditEstudiante";

@@ -1,7 +1,6 @@
 import { Button, IconButton, Stack } from "@mui/material";
 import { DataGrid, GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
-import ChipStatus from "components/ChipStatus";
-import Icon from "components/Icon";
+import { ChipStatus, Icon } from "components";
 import { IUser } from "models/interfaces";
 import { useCallback, useEffect, useState } from "react";
 import { Link as RouterLink } from "react-router-dom";

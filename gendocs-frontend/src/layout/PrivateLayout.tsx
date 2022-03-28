@@ -3,8 +3,7 @@ import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Toolbar from "@mui/material/Toolbar";
-import AccessDenied from "components/AccesDenied";
-import { Skeleton } from "components/Skeleton";
+import { Skeleton, AccesDenied } from "components";
 import { useAuthContext } from "contexts/AuthContext";
 import { Suspense, useState } from "react";
 import { Navigate, Route, Routes } from "react-router";
@@ -92,7 +91,7 @@ const RoleCheckerRoute = ({
 
     if (!roles || roles.includes(user.roles[0])) return <Component />;
 
-    return <AccessDenied />;
+    return <AccesDenied />;
 };
 
 export default PrivateLayout;

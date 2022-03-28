@@ -8,10 +8,11 @@ import {
     Switch,
     TextField,
 } from "@mui/material";
-import ConfirmationDialog, {
+import {
     ConfirmationDialogProps,
-} from "components/ConfirmationDialog";
-import ErrorSummary from "components/ErrorSummary";
+    ConfirmationDialog,
+    ErrorSummary,
+} from "components";
 import { useAutocomplete } from "hooks/useAutocomplete";
 import { IConsejo, IDocente } from "models/interfaces";
 import React, { useEffect } from "react";

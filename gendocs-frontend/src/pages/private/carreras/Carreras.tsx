@@ -6,8 +6,7 @@ import {
     GridToolbar,
     GridValueFormatterParams,
 } from "@mui/x-data-grid";
-import ChipStatus from "components/ChipStatus";
-import Icon from "components/Icon";
+import { ChipStatus, Icon } from "components";
 import { useMemo } from "react";
 import { Link } from "react-router-dom";
 import { useListCarreras } from "./hooks/useListCarreras";

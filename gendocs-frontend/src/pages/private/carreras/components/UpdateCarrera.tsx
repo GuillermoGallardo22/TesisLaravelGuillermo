@@ -1,8 +1,13 @@
 import { LoadingButton } from "@mui/lab";
 import {
-    Box, FormControlLabel, FormLabel, Grid, Switch, TextField
+    Box,
+    FormControlLabel,
+    FormLabel,
+    Grid,
+    Switch,
+    TextField,
 } from "@mui/material";
-import ErrorSummary from "components/ErrorSummary";
+import { ErrorSummary } from "components";
 import { useUpdateCarrera } from "../hooks/useUpdateCarrera";
 
 export default function UpdateCarrera() {

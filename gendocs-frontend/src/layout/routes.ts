@@ -1,5 +1,4 @@
-import { IconTypes } from "components/Icon";
-import Outlet from "components/Outlet";
+import { IconTypes, Outlet } from "components";
 import { RolEnum } from "models/enums";
 import {
     AddCarrera,

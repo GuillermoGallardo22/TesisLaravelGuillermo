@@ -1,7 +1,6 @@
 import { Button, Stack, TextField } from "@mui/material";
 import { DataGrid, GridActionsCellItem, GridColumns } from "@mui/x-data-grid";
-import Icon from "components/Icon";
-import { GridToolbarColumns } from "components/ToolbarDataGrid";
+import { GridToolbarColumns, Icon } from "components";
 import { useFilterPagination } from "hooks/useFilterPagination";
 import { useGridColumnVisibilityModel } from "hooks/useGridColumnVisibilityModel";
 import { IEstudiante } from "models/interfaces";

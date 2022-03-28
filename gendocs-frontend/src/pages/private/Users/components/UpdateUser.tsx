@@ -5,10 +5,9 @@ import {
     FormLabel,
     Grid,
     Switch,
-    TextField,
+    TextField
 } from "@mui/material";
-import ErrorSummary from "components/ErrorSummary";
-import Select from "components/Select";
+import { ErrorSummary, Select } from "components";
 import { useParams } from "react-router-dom";
 import { useUpdateUser } from "../hooks/useUpdateUser";
 

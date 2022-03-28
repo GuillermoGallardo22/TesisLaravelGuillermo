@@ -10,9 +10,7 @@ import {
     Typography,
 } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import ErrorSummary from "components/ErrorSummary";
-import Icon from "components/Icon";
-import Select from "components/Select";
+import { ErrorSummary, Icon, Select } from "components";
 import { useState } from "react";
 import { readFile } from "utils/libs";
 import {

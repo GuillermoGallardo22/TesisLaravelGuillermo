@@ -5,11 +5,9 @@ import {
     Grid,
     IconButton,
     InputAdornment,
-    TextField,
+    TextField
 } from "@mui/material";
-import ErrorSummary from "components/ErrorSummary";
-import Icon from "components/Icon";
-import Select from "components/Select";
+import { ErrorSummary, Icon, Select } from "components";
 import { useAddReserva } from "../hooks/useAddReserva";
 
 export default function AddReserva() {

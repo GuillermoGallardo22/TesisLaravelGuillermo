@@ -92,4 +92,8 @@ export const UpdateUser = lazy(
     () => import("pages/private/Users/components/UpdateUser")
 );
 
-export const DriveTemplate = lazy(() => import("components/DriveTemplate"));
+export const DriveTemplate = lazy(() =>
+    import("components").then((module) => ({
+        default: module.DriveTemplate,
+    }))
+);

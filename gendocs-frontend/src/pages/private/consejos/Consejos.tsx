@@ -1,23 +1,10 @@
-import {
-    Button,
-    DialogContentText,
-    IconButton,
-    Stack,
-    TextField,
-} from "@mui/material";
-import {
-    DataGrid,
-    GridActionsCellItem,
-    GridColDef,
-    GridColumns,
-} from "@mui/x-data-grid";
-import ChipStatus from "components/ChipStatus";
-import ConfirmationDialog from "components/ConfirmationDialog";
-import Icon from "components/Icon";
+import { Button, DialogContentText, Stack, TextField } from "@mui/material";
+import { DataGrid, GridActionsCellItem, GridColumns } from "@mui/x-data-grid";
+import { ChipStatus, ConfirmationDialog, Icon } from "components";
 import { useDeleteItem } from "hooks/useDeleteItem";
 import { useFilterPagination } from "hooks/useFilterPagination";
 import { IConsejo } from "models/interfaces";
-import { useCallback, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { deleteConsejo, getConsejos } from "services/consejos";
 import { parseToDateTime } from "utils/date";
