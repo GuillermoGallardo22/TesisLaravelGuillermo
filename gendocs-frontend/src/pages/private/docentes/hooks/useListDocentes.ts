@@ -3,13 +3,13 @@ import { useQuery } from "react-query";
 import { getDocentes } from "services";
 
 export function useListDocentes() {
-    const { data: docentes = [], isLoading } = useQuery<IDocente[]>(
-        ["docentes"],
-        () => getDocentes()
-    );
+  const { data: docentes = [], isLoading } = useQuery<IDocente[]>(
+    ["docentes"],
+    () => getDocentes()
+  );
 
-    return {
-        docentes,
-        isLoading,
-    };
+  return {
+    docentes,
+    isLoading,
+  };
 }

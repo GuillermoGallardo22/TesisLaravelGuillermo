@@ -4,22 +4,22 @@ import { IPlantilla } from "./IPlantilla";
 import { IUser } from "./IUser";
 
 export interface IDocumentoForm {
-    consejo: number;
-    proceso: number;
-    plantilla: number;
-    estudiante: number | null;
-    descripcion: string | null;
-    numero: number;
+  consejo: number;
+  proceso: number;
+  plantilla: number;
+  estudiante: number | null;
+  descripcion: string | null;
+  numero: number;
 }
 
 export interface IDocumento {
-    id: number;
-    numero: number;
-    descripcion: string | null;
-    consejo: IConsejo;
-    estudiante: IEstudiante | null;
-    plantilla: IPlantilla;
-    autor: IUser;
-    drive: string | null;
-    creado: string | Date;
+  id: number;
+  numero: number;
+  descripcion: string | null;
+  consejo: IConsejo;
+  estudiante: IEstudiante | null;
+  plantilla: IPlantilla;
+  autor: IUser;
+  drive: string | null;
+  creado: string | Date;
 }

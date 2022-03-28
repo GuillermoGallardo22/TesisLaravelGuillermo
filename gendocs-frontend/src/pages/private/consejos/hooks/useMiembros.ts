@@ -5,40 +5,36 @@ import { useNavigate, useParams } from "react-router-dom";
 import { getConsejo, getMiembros } from "services";
 
 export function useMiembros() {
-    const { consejoId = "" } = useParams<{ consejoId: string }>();
-    const { enqueueSnackbar } = useSnackbar();
-    const navigate = useNavigate();
+  const { consejoId = "" } = useParams<{ consejoId: string }>();
+  const { enqueueSnackbar } = useSnackbar();
+  const navigate = useNavigate();
 
-    const { data: consejo } = useQuery(
-        ["consejo"],
-        () => getConsejo(consejoId),
-        {
-            onSuccess: (r) => {
-                if (r.status !== HTTP_STATUS.ok) {
-                    enqueueSnackbar(r.message, { variant: "warning" });
-                    navigate(-1);
-                }
-            },
-            // select: (r) => r.data,
-        }
-    );
+  const { data: consejo } = useQuery(["consejo"], () => getConsejo(consejoId), {
+    onSuccess: (r) => {
+      if (r.status !== HTTP_STATUS.ok) {
+        enqueueSnackbar(r.message, { variant: "warning" });
+        navigate(-1);
+      }
+    },
+    // select: (r) => r.data,
+  });
 
-    const { data: miembros = [], isLoading } = useQuery(
-        ["consejos-miembros", consejoId],
-        () =>
-            getMiembros({
-                filters: {
-                    consejo: consejoId,
-                },
-            }),
-        {
-            enabled: Boolean(consejo?.data),
-        }
-    );
+  const { data: miembros = [], isLoading } = useQuery(
+    ["consejos-miembros", consejoId],
+    () =>
+      getMiembros({
+        filters: {
+          consejo: consejoId,
+        },
+      }),
+    {
+      enabled: Boolean(consejo?.data),
+    }
+  );
 
-    return {
-        miembros,
-        isLoading,
-        consejo: consejo?.data,
-    };
+  return {
+    miembros,
+    isLoading,
+    consejo: consejo?.data,
+  };
 }

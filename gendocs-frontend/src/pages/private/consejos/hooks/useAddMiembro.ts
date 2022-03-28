@@ -8,70 +8,70 @@ import { VALIDATION_MESSAGES } from "utils";
 import * as yup from "yup";
 
 const validationSchema = yup.object().shape({
-    docente: yup
-        .number()
-        .positive(VALIDATION_MESSAGES.invalidOption)
-        .required(VALIDATION_MESSAGES.required),
-    consejo: yup
-        .number()
-        .positive(VALIDATION_MESSAGES.invalidOption)
-        .required(VALIDATION_MESSAGES.required),
-    responsable: yup.boolean().required(VALIDATION_MESSAGES.required),
+  docente: yup
+    .number()
+    .positive(VALIDATION_MESSAGES.invalidOption)
+    .required(VALIDATION_MESSAGES.required),
+  consejo: yup
+    .number()
+    .positive(VALIDATION_MESSAGES.invalidOption)
+    .required(VALIDATION_MESSAGES.required),
+  responsable: yup.boolean().required(VALIDATION_MESSAGES.required),
 });
 
 type useAddMiembroProps = {
-    consejo: IConsejo;
-    callback: () => void;
-    onResetAuxValues: () => void;
+  consejo: IConsejo;
+  callback: () => void;
+  onResetAuxValues: () => void;
 };
 
 export function useAddMiembro({
-    callback,
-    consejo,
-    onResetAuxValues,
+  callback,
+  consejo,
+  onResetAuxValues,
 }: useAddMiembroProps) {
-    const { enqueueSnackbar } = useSnackbar();
+  const { enqueueSnackbar } = useSnackbar();
 
-    const { errorSummary, setErrorSummary, cleanErrorsSumary } =
-        useErrorsResponse();
+  const { errorSummary, setErrorSummary, cleanErrorsSumary } =
+    useErrorsResponse();
 
-    const onSubmit = async (form: ConsejoMiembroForm) => {
-        cleanErrorsSumary();
+  const onSubmit = async (form: ConsejoMiembroForm) => {
+    cleanErrorsSumary();
 
-        const result = await saveMiembros(form);
+    const result = await saveMiembros(form);
 
-        if (result.status === HTTP_STATUS.created) {
-            enqueueSnackbar(result.message, { variant: "success" });
-            // RESET
-            onResetAuxValues();
-            formik.resetForm();
-            // CALLBACK
-            callback();
-        } else {
-            enqueueSnackbar(result.message, { variant: "error" });
-            setErrorSummary(result.errors);
-        }
-    };
+    if (result.status === HTTP_STATUS.created) {
+      enqueueSnackbar(result.message, { variant: "success" });
+      // RESET
+      onResetAuxValues();
+      formik.resetForm();
+      // CALLBACK
+      callback();
+    } else {
+      enqueueSnackbar(result.message, { variant: "error" });
+      setErrorSummary(result.errors);
+    }
+  };
 
-    const formik = useFormik<ConsejoMiembroForm>({
-        initialValues: {
-            consejo: consejo.id,
-            docente: -1,
-            responsable: false,
-        },
-        onSubmit,
-        validationSchema,
-        enableReinitialize: true,
-    });
+  const formik = useFormik<ConsejoMiembroForm>({
+    initialValues: {
+      consejo: consejo.id,
+      docente: -1,
+      responsable: false,
+    },
+    onSubmit,
+    validationSchema,
+    enableReinitialize: true,
+  });
 
-    const handleReset = () => {
-        onResetAuxValues();
-        formik.resetForm();
-    };
+  const handleReset = () => {
+    onResetAuxValues();
+    formik.resetForm();
+  };
 
-    return {
-        formik,
-        errorSummary,
-        handleReset,
-    };
+  return {
+    formik,
+    errorSummary,
+    handleReset,
+  };
 }

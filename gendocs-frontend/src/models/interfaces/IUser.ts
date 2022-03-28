@@ -1,25 +1,25 @@
 import { RolEnum } from "models/enums/Rol";
 
 export interface IUser {
-    id: number;
-    email: string;
-    email_gmail: string;
-    name: string;
-    roles: RolEnum[];
-    status?: boolean;
+  id: number;
+  email: string;
+  email_gmail: string;
+  name: string;
+  roles: RolEnum[];
+  status?: boolean;
 }
 
 export interface IUserForm {
-    id?: number;
-    nombre: string;
-    correo_principal: string;
-    correo_secundario: string;
-    rol: number;
-    status?: boolean;
+  id?: number;
+  nombre: string;
+  correo_principal: string;
+  correo_secundario: string;
+  rol: number;
+  status?: boolean;
 }
 
 export interface IUpdatePasswordForm {
-    currentPassword: string;
-    newPassword: string;
-    confirmPassword: string;
+  currentPassword: string;
+  newPassword: string;
+  confirmPassword: string;
 }

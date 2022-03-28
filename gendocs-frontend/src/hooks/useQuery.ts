@@ -7,16 +7,16 @@ import { getConsejos } from "services";
  * @returns {UseQueryResult<IConsejo[], unknown>}
  */
 export function useConsejos(): UseQueryResult<IConsejo[]> {
-    return useQuery(
-        ["consejos"],
-        () =>
-            getConsejos({
-                filters: {
-                    estado: 1,
-                },
-            }),
-        {
-            select: (d) => d.data,
-        }
-    );
+  return useQuery(
+    ["consejos"],
+    () =>
+      getConsejos({
+        filters: {
+          estado: 1,
+        },
+      }),
+    {
+      select: (d) => d.data,
+    }
+  );
 }

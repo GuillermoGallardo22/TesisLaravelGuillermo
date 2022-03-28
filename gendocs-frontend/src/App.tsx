@@ -23,76 +23,73 @@ const PublicRoute = lazy(() => import("routes/PublicRoute"));
 const queryClient = new QueryClient();
 
 const App = () => {
-    return (
-        <QueryClientProvider client={queryClient}>
-            <ThemeProvider theme={theme}>
-                <SnackbarProvider maxSnack={5}>
-                    <LocalizationProvider
-                        dateAdapter={DateAdapter}
-                        locale={esLocale}
-                    >
-                        <CssBaseline />
-                        <Router>
-                            <AuthProvider>
-                                <AuthCheck />
-                            </AuthProvider>
-                        </Router>
-                    </LocalizationProvider>
-                </SnackbarProvider>
-            </ThemeProvider>
-        </QueryClientProvider>
-    );
+  return (
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider theme={theme}>
+        <SnackbarProvider maxSnack={5}>
+          <LocalizationProvider dateAdapter={DateAdapter} locale={esLocale}>
+            <CssBaseline />
+            <Router>
+              <AuthProvider>
+                <AuthCheck />
+              </AuthProvider>
+            </Router>
+          </LocalizationProvider>
+        </SnackbarProvider>
+      </ThemeProvider>
+    </QueryClientProvider>
+  );
 };
 
 const AuthCheck = () => {
-    const {
-        context: { checkingAuth },
-        dispatch,
-    } = useAuthContext();
+  const {
+    context: { checkingAuth },
+    dispatch,
+  } = useAuthContext();
 
-    const checkAuth = useCallback(async () => {
-        const { status, data } = await getUser();
+  const checkAuth = useCallback(async () => {
+    const { status, data } = await getUser();
 
-        if (status === HTTP_STATUS.ok) {
-            dispatch({ type: AuthActionsEnum.setUser, payload: data });
-            dispatch({ type: AuthActionsEnum.setIsAuth, payload: true });
-            dispatch({ type: AuthActionsEnum.setCheckingAuth, payload: false });
-        } else {
-            dispatch({ type: AuthActionsEnum.setIsAuth, payload: false });
-            dispatch({ type: AuthActionsEnum.setCheckingAuth, payload: false });
-        }
-    }, []);
+    if (status === HTTP_STATUS.ok) {
+      dispatch({ type: AuthActionsEnum.setUser, payload: data });
+      dispatch({ type: AuthActionsEnum.setIsAuth, payload: true });
+      dispatch({ type: AuthActionsEnum.setCheckingAuth, payload: false });
+    } else {
+      dispatch({ type: AuthActionsEnum.setIsAuth, payload: false });
+      dispatch({ type: AuthActionsEnum.setCheckingAuth, payload: false });
+    }
+  }, []);
 
-    useEffect(() => {
-        checkAuth();
-    }, [checkAuth]);
+  useEffect(() => {
+    checkAuth();
+  }, [checkAuth]);
 
-    return checkingAuth ? <LoadingScreen /> : <AppBase />;
+  return checkingAuth ? <LoadingScreen /> : <AppBase />;
 };
 
 const AppBase = () => {
-    return (
-        <Suspense fallback={<LoadingScreen />}>
-            <Routes>
-                <Route
-                    path="/login"
-                    element={
-                        <PublicRoute>
-                            <Login />
-                        </PublicRoute>
-                    }
-                />
-                <Route
-                    path="/*"
-                    element={
-                        <PrivateRoute>
-                            <PrivateLayout />
-                        </PrivateRoute>
-                    }
-                />
-            </Routes>
-        </Suspense>
-    );
+  return (
+    <Suspense fallback={<LoadingScreen />}>
+      <Routes>
+        <Route
+          path="/login"
+          element={
+            <PublicRoute>
+              <Login />
+            </PublicRoute>
+          }
+        />
+        <Route
+          path="/*"
+          element={
+            <PrivateRoute>
+              <PrivateLayout />
+            </PrivateRoute>
+          }
+        />
+      </Routes>
+    </Suspense>
+  );
 };
 
 export default App;

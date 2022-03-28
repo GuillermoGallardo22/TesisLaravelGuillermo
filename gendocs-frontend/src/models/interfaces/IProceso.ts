@@ -1,5 +1,5 @@
 export interface IProceso {
-    id: number;
-    nombre: string;
-    estado: boolean;
+  id: number;
+  nombre: string;
+  estado: boolean;
 }

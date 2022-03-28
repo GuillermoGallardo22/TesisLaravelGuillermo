@@ -5,32 +5,32 @@ import { useSnackbar } from "notistack";
 import { savePlantilla } from "services";
 
 export const useAddPlantilla = ({ processId }: { processId: number }) => {
-    const { enqueueSnackbar } = useSnackbar();
+  const { enqueueSnackbar } = useSnackbar();
 
-    const onSubmit = async (form: IPlantilla) => {
-        const result = await savePlantilla(form);
+  const onSubmit = async (form: IPlantilla) => {
+    const result = await savePlantilla(form);
 
-        if (result.status === HTTP_STATUS.created) {
-            enqueueSnackbar(result.message, { variant: "success" });
-        } else {
-            enqueueSnackbar(result.message, { variant: "error" });
-        }
+    if (result.status === HTTP_STATUS.created) {
+      enqueueSnackbar(result.message, { variant: "success" });
+    } else {
+      enqueueSnackbar(result.message, { variant: "error" });
+    }
 
-        formik.resetForm();
-    };
+    formik.resetForm();
+  };
 
-    const formik = useFormik<IPlantilla>({
-        onSubmit,
-        initialValues: {
-            id: -1,
-            nombre: "",
-            estado: true,
-            proceso: processId,
-            drive: "",
-        },
-    });
+  const formik = useFormik<IPlantilla>({
+    onSubmit,
+    initialValues: {
+      id: -1,
+      nombre: "",
+      estado: true,
+      proceso: processId,
+      drive: "",
+    },
+  });
 
-    return {
-        formik,
-    };
+  return {
+    formik,
+  };
 };

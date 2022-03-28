@@ -8,86 +8,80 @@ import { CONSTANTS, VALIDATION_MESSAGES } from "utils";
 import * as yup from "yup";
 
 const initialValues: IUserForm = {
-    correo_principal: "",
-    nombre: "",
-    correo_secundario: "",
-    id: -1,
-    rol: -1,
+  correo_principal: "",
+  nombre: "",
+  correo_secundario: "",
+  id: -1,
+  rol: -1,
 };
 
 export const useAddUsuario = () => {
-    const [roles, setRoles] = useState<IRole[]>([]);
-    const { enqueueSnackbar } = useSnackbar();
-    const [errors, setErrors] = useState<string[] | undefined>();
+  const [roles, setRoles] = useState<IRole[]>([]);
+  const { enqueueSnackbar } = useSnackbar();
+  const [errors, setErrors] = useState<string[] | undefined>();
 
-    const loadInitData = useCallback(() => {
-        getRoles().then((r) => setRoles(r));
-    }, []);
+  const loadInitData = useCallback(() => {
+    getRoles().then((r) => setRoles(r));
+  }, []);
 
-    useEffect(() => {
-        loadInitData();
-    }, []);
+  useEffect(() => {
+    loadInitData();
+  }, []);
 
-    const onSubmit = async (form: IUserForm): Promise<void> => {
-        setErrors(undefined);
+  const onSubmit = async (form: IUserForm): Promise<void> => {
+    setErrors(undefined);
 
-        const { status, message, errors } = await createUser(form);
+    const { status, message, errors } = await createUser(form);
 
-        if (status === HTTP_STATUS.created) {
-            enqueueSnackbar(message, { variant: "success" });
-            formik.resetForm();
-        } else {
-            enqueueSnackbar(message, { variant: "error" });
-            setErrors(errors);
-        }
-    };
+    if (status === HTTP_STATUS.created) {
+      enqueueSnackbar(message, { variant: "success" });
+      formik.resetForm();
+    } else {
+      enqueueSnackbar(message, { variant: "error" });
+      setErrors(errors);
+    }
+  };
 
-    const validationSchema = yup.object().shape({
-        nombre: yup
-            .string()
-            .required(VALIDATION_MESSAGES.required)
-            .max(255, VALIDATION_MESSAGES.maxLength(255)),
-        correo_principal: yup
-            .string()
-            .matches(
-                CONSTANTS.email_uta_regex,
-                VALIDATION_MESSAGES.invalidFormat
-            )
-            .required(VALIDATION_MESSAGES.required)
-            .max(255, VALIDATION_MESSAGES.maxLength(255)),
-        correo_secundario: yup
-            .string()
-            .matches(
-                CONSTANTS.email_gmail_regex,
-                VALIDATION_MESSAGES.invalidFormat
-            )
-            .required(VALIDATION_MESSAGES.required)
-            .max(255, VALIDATION_MESSAGES.maxLength(255)),
-        rol: yup
-            .mixed()
-            .oneOf(
-                roles.map((item) => item.id),
-                VALIDATION_MESSAGES.invalidOption
-            )
-            .required(VALIDATION_MESSAGES.required),
-    });
+  const validationSchema = yup.object().shape({
+    nombre: yup
+      .string()
+      .required(VALIDATION_MESSAGES.required)
+      .max(255, VALIDATION_MESSAGES.maxLength(255)),
+    correo_principal: yup
+      .string()
+      .matches(CONSTANTS.email_uta_regex, VALIDATION_MESSAGES.invalidFormat)
+      .required(VALIDATION_MESSAGES.required)
+      .max(255, VALIDATION_MESSAGES.maxLength(255)),
+    correo_secundario: yup
+      .string()
+      .matches(CONSTANTS.email_gmail_regex, VALIDATION_MESSAGES.invalidFormat)
+      .required(VALIDATION_MESSAGES.required)
+      .max(255, VALIDATION_MESSAGES.maxLength(255)),
+    rol: yup
+      .mixed()
+      .oneOf(
+        roles.map((item) => item.id),
+        VALIDATION_MESSAGES.invalidOption
+      )
+      .required(VALIDATION_MESSAGES.required),
+  });
 
-    const formik = useFormik({
-        onSubmit,
-        initialValues,
-        validationSchema,
-        enableReinitialize: true,
-    });
+  const formik = useFormik({
+    onSubmit,
+    initialValues,
+    validationSchema,
+    enableReinitialize: true,
+  });
 
-    const handleReset = () => {
-        setErrors(undefined);
-        formik.resetForm();
-    };
+  const handleReset = () => {
+    setErrors(undefined);
+    formik.resetForm();
+  };
 
-    return {
-        formik,
-        errorsResponse: errors,
-        handleReset,
-        roles,
-    };
+  return {
+    formik,
+    errorsResponse: errors,
+    handleReset,
+    roles,
+  };
 };

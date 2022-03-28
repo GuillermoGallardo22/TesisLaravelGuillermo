@@ -9,144 +9,144 @@ import { VALIDATION_MESSAGES } from "utils";
 import * as yup from "yup";
 
 const initialValues: IDocumentoForm = {
-    consejo: -1,
-    proceso: -1,
-    plantilla: -1,
-    estudiante: null,
-    descripcion: null,
-    numero: -1,
+  consejo: -1,
+  proceso: -1,
+  plantilla: -1,
+  estudiante: null,
+  descripcion: null,
+  numero: -1,
 };
 
 type useAddDocumentoProps = {
-    onReset: () => void;
+  onReset: () => void;
 };
 
 export default function useAddDocumento({ onReset }: useAddDocumentoProps) {
-    const [loading, setLoading] = useState(true);
-    const { enqueueSnackbar } = useSnackbar();
-    const [consejos, setConsejos] = useState<IConsejo[]>([]);
-    const { errorSummary, setErrorSummary } = useErrorsResponse();
+  const [loading, setLoading] = useState(true);
+  const { enqueueSnackbar } = useSnackbar();
+  const [consejos, setConsejos] = useState<IConsejo[]>([]);
+  const { errorSummary, setErrorSummary } = useErrorsResponse();
 
-    const [documento, setDocumento] = useState<IDocumentoForm>(initialValues);
+  const [documento, setDocumento] = useState<IDocumentoForm>(initialValues);
 
-    const [encolados, setEncolados] = useState<number[]>([]);
-    const [reservados, setReservados] = useState<INumeracionBase[]>([]);
+  const [encolados, setEncolados] = useState<number[]>([]);
+  const [reservados, setReservados] = useState<INumeracionBase[]>([]);
 
-    useEffect(() => {
-        let active = true;
+  useEffect(() => {
+    let active = true;
 
-        (async () => {
-            setLoading(true);
+    (async () => {
+      setLoading(true);
 
-            const [resultC, resultN] = await Promise.all([
-                getConsejos({
-                    filters: {
-                        estado: 1,
-                    },
-                }),
-                getNumeracion(),
-            ]);
+      const [resultC, resultN] = await Promise.all([
+        getConsejos({
+          filters: {
+            estado: 1,
+          },
+        }),
+        getNumeracion(),
+      ]);
 
-            if (!active) return;
+      if (!active) return;
 
-            setConsejos(resultC.data);
+      setConsejos(resultC.data);
 
-            setReservados(resultN.reservados);
-            setEncolados(resultN.encolados);
-            setDocumento({
-                ...initialValues,
-                numero: resultN.siguiente,
-            });
+      setReservados(resultN.reservados);
+      setEncolados(resultN.encolados);
+      setDocumento({
+        ...initialValues,
+        numero: resultN.siguiente,
+      });
 
-            setLoading(false);
-        })();
+      setLoading(false);
+    })();
 
-        return () => {
-            active = false;
-        };
-    }, []);
-
-    const onSubmit = async (form: IDocumentoForm) => {
-        setErrorSummary(undefined);
-
-        const result = await saveDocumento(form);
-
-        if (result.status === HTTP_STATUS.created) {
-            enqueueSnackbar(result.message, { variant: "success" });
-            handleReset();
-        } else {
-            enqueueSnackbar(result.message, { variant: "error" });
-            setErrorSummary(result.errors);
-        }
-        refreshNumeracion();
+    return () => {
+      active = false;
     };
+  }, []);
 
-    const validationSchema = yup.object().shape({
-        consejo: yup
-            .number()
-            .required(VALIDATION_MESSAGES.required)
-            .positive(VALIDATION_MESSAGES.invalidOption)
-            .typeError(VALIDATION_MESSAGES.invalidOption),
-        proceso: yup
-            .number()
-            .required(VALIDATION_MESSAGES.required)
-            .positive(VALIDATION_MESSAGES.invalidOption)
-            .typeError(VALIDATION_MESSAGES.invalidOption),
-        plantilla: yup
-            .number()
-            .required(VALIDATION_MESSAGES.required)
-            .positive(VALIDATION_MESSAGES.invalidOption)
-            .typeError(VALIDATION_MESSAGES.invalidOption),
-        estudiante: yup.number().nullable(),
-        descripcion: yup.string().nullable().max(512),
-        numero: yup
-            .number()
-            .required(VALIDATION_MESSAGES.required)
-            .positive(VALIDATION_MESSAGES.invalidOption)
-            .integer(VALIDATION_MESSAGES.invalidOption)
-            // .test(
-            //     "numero-invalido",
-            //     VALIDATION_MESSAGES.consejoNumeracion,
-            //     (v, c) => test(v, c, reservados)
-            // )
-            .typeError(VALIDATION_MESSAGES.invalidOption),
-    });
+  const onSubmit = async (form: IDocumentoForm) => {
+    setErrorSummary(undefined);
 
-    const formik = useFormik<IDocumentoForm>({
-        onSubmit,
-        initialValues: documento,
-        validationSchema,
-        enableReinitialize: true,
-    });
+    const result = await saveDocumento(form);
 
-    const refreshNumeracion = () => {
-        setLoading(true);
+    if (result.status === HTTP_STATUS.created) {
+      enqueueSnackbar(result.message, { variant: "success" });
+      handleReset();
+    } else {
+      enqueueSnackbar(result.message, { variant: "error" });
+      setErrorSummary(result.errors);
+    }
+    refreshNumeracion();
+  };
 
-        getNumeracion()
-            .then((r) => {
-                setReservados(r.reservados);
-                setEncolados(r.encolados);
-                formik.setFieldValue("numero", r.siguiente);
-            })
-            .finally(() => setLoading(false));
-    };
+  const validationSchema = yup.object().shape({
+    consejo: yup
+      .number()
+      .required(VALIDATION_MESSAGES.required)
+      .positive(VALIDATION_MESSAGES.invalidOption)
+      .typeError(VALIDATION_MESSAGES.invalidOption),
+    proceso: yup
+      .number()
+      .required(VALIDATION_MESSAGES.required)
+      .positive(VALIDATION_MESSAGES.invalidOption)
+      .typeError(VALIDATION_MESSAGES.invalidOption),
+    plantilla: yup
+      .number()
+      .required(VALIDATION_MESSAGES.required)
+      .positive(VALIDATION_MESSAGES.invalidOption)
+      .typeError(VALIDATION_MESSAGES.invalidOption),
+    estudiante: yup.number().nullable(),
+    descripcion: yup.string().nullable().max(512),
+    numero: yup
+      .number()
+      .required(VALIDATION_MESSAGES.required)
+      .positive(VALIDATION_MESSAGES.invalidOption)
+      .integer(VALIDATION_MESSAGES.invalidOption)
+      // .test(
+      //     "numero-invalido",
+      //     VALIDATION_MESSAGES.consejoNumeracion,
+      //     (v, c) => test(v, c, reservados)
+      // )
+      .typeError(VALIDATION_MESSAGES.invalidOption),
+  });
 
-    const handleReset = () => {
-        formik.resetForm();
-        setErrorSummary(undefined);
-        if (onReset) {
-            onReset();
-        }
-    };
+  const formik = useFormik<IDocumentoForm>({
+    onSubmit,
+    initialValues: documento,
+    validationSchema,
+    enableReinitialize: true,
+  });
 
-    return {
-        formik,
-        consejos,
-        encolados,
-        reservados,
-        loading,
-        refreshNumeracion,
-        handleReset,
-        errorSummary,
-    };
+  const refreshNumeracion = () => {
+    setLoading(true);
+
+    getNumeracion()
+      .then((r) => {
+        setReservados(r.reservados);
+        setEncolados(r.encolados);
+        formik.setFieldValue("numero", r.siguiente);
+      })
+      .finally(() => setLoading(false));
+  };
+
+  const handleReset = () => {
+    formik.resetForm();
+    setErrorSummary(undefined);
+    if (onReset) {
+      onReset();
+    }
+  };
+
+  return {
+    formik,
+    consejos,
+    encolados,
+    reservados,
+    loading,
+    refreshNumeracion,
+    handleReset,
+    errorSummary,
+  };
 }

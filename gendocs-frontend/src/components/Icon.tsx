@@ -25,64 +25,64 @@ import TopicIcon from "@mui/icons-material/Topic";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 
 export type IconTypes =
-    | "article"
-    | "edit"
-    | "add"
-    | "move"
-    //
-    | "home"
-    | "list"
-    | "school"
-    | "groupAdd"
-    //
-    | "exitToApp"
-    | "menu"
-    | "chevronLeft"
-    | "expandMore"
-    | "security"
-    | "groups"
-    | "meetingRoom"
-    | "delete"
-    | "accountCircle"
-    | "topic"
-    | "autorenew"
-    | "numbers"
-    | "whatsApp"
-    | "email"
-    | "apartment"
-    | "hail"
-    | "factCheck";
+  | "article"
+  | "edit"
+  | "add"
+  | "move"
+  //
+  | "home"
+  | "list"
+  | "school"
+  | "groupAdd"
+  //
+  | "exitToApp"
+  | "menu"
+  | "chevronLeft"
+  | "expandMore"
+  | "security"
+  | "groups"
+  | "meetingRoom"
+  | "delete"
+  | "accountCircle"
+  | "topic"
+  | "autorenew"
+  | "numbers"
+  | "whatsApp"
+  | "email"
+  | "apartment"
+  | "hail"
+  | "factCheck";
 
 const ICONS = {
-    article: <ArticleIcon />,
-    edit: <EditIcon />,
-    add: <AddIcon />,
-    move: <DriveFileMoveIcon />,
-    home: <HomeIcon />,
-    list: <ListIcon />,
-    school: <SchoolIcon />,
-    groupAdd: <GroupAddIcon />,
-    exitToApp: <ExitToAppIcon />,
-    menu: <MenuIcon />,
-    chevronLeft: <ChevronLeftIcon />,
-    expandMore: <ExpandMoreIcon />,
-    security: <SecurityIcon />,
-    groups: <GroupsIcon />,
-    meetingRoom: <MeetingRoomIcon />,
-    delete: <DeleteIcon />,
-    accountCircle: <AccountCircleIcon />,
-    topic: <TopicIcon />,
-    autorenew: <AutorenewIcon />,
-    numbers: <NumbersIcon />,
-    whatsApp: <WhatsAppIcon />,
-    email: <EmailIcon />,
-    apartment: <ApartmentIcon />,
-    hail: <HailIcon />,
-    factCheck: <FactCheckIcon />,
+  article: <ArticleIcon />,
+  edit: <EditIcon />,
+  add: <AddIcon />,
+  move: <DriveFileMoveIcon />,
+  home: <HomeIcon />,
+  list: <ListIcon />,
+  school: <SchoolIcon />,
+  groupAdd: <GroupAddIcon />,
+  exitToApp: <ExitToAppIcon />,
+  menu: <MenuIcon />,
+  chevronLeft: <ChevronLeftIcon />,
+  expandMore: <ExpandMoreIcon />,
+  security: <SecurityIcon />,
+  groups: <GroupsIcon />,
+  meetingRoom: <MeetingRoomIcon />,
+  delete: <DeleteIcon />,
+  accountCircle: <AccountCircleIcon />,
+  topic: <TopicIcon />,
+  autorenew: <AutorenewIcon />,
+  numbers: <NumbersIcon />,
+  whatsApp: <WhatsAppIcon />,
+  email: <EmailIcon />,
+  apartment: <ApartmentIcon />,
+  hail: <HailIcon />,
+  factCheck: <FactCheckIcon />,
 };
 
 interface IconProps {
-    icon: IconTypes;
+  icon: IconTypes;
 }
 
 const Icon: React.FC<IconProps> = ({ icon }) => ICONS[icon];

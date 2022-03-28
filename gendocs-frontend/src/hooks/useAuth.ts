@@ -10,71 +10,68 @@ import { VALIDATION_MESSAGES } from "utils";
 import * as yup from "yup";
 
 interface IAuth {
-    email: string;
-    password: string;
+  email: string;
+  password: string;
 }
 
 const defaultFormValues: IAuth = {
-    email: "gbarcia@uta.edu.ec",
-    password: "12345678",
+  email: "gbarcia@uta.edu.ec",
+  password: "12345678",
 };
 
 const validationSchema = yup.object().shape({
-    email: yup
-        .string()
-        .email(VALIDATION_MESSAGES.invalidFormat)
-        .max(100, VALIDATION_MESSAGES.maxLength(100))
-        .required(VALIDATION_MESSAGES.required),
-    password: yup
-        .string()
-        .max(100, VALIDATION_MESSAGES.maxLength(100))
-        .required(VALIDATION_MESSAGES.required),
+  email: yup
+    .string()
+    .email(VALIDATION_MESSAGES.invalidFormat)
+    .max(100, VALIDATION_MESSAGES.maxLength(100))
+    .required(VALIDATION_MESSAGES.required),
+  password: yup
+    .string()
+    .max(100, VALIDATION_MESSAGES.maxLength(100))
+    .required(VALIDATION_MESSAGES.required),
 });
 
 export const useAuth = () => {
-    const { enqueueSnackbar } = useSnackbar();
+  const { enqueueSnackbar } = useSnackbar();
 
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    const { dispatch } = useAuthContext();
+  const { dispatch } = useAuthContext();
 
-    const onSubmit = async (form: IAuth) => {
-        const { status, message, data } = await login(
-            form.email,
-            form.password
-        );
+  const onSubmit = async (form: IAuth) => {
+    const { status, message, data } = await login(form.email, form.password);
 
-        if (status === HTTP_STATUS.ok) {
-            dispatch({
-                type: AuthActionsEnum.setUser,
-                payload: data,
-            });
-            dispatch({ type: AuthActionsEnum.setIsAuth, payload: true });
-        } else {
-            enqueueSnackbar(message, { variant: "error" });
-        }
-    };
+    if (status === HTTP_STATUS.ok) {
+      dispatch({
+        type: AuthActionsEnum.setUser,
+        payload: data,
+      });
+      dispatch({ type: AuthActionsEnum.setIsAuth, payload: true });
+    } else {
+      enqueueSnackbar(message, { variant: "error" });
+    }
+  };
 
-    const logout = async () => {
-        dispatch({ type: AuthActionsEnum.setCheckingAuth, payload: true });
+  const logout = async () => {
+    dispatch({ type: AuthActionsEnum.setCheckingAuth, payload: true });
 
-        await _logout();
+    await _logout();
 
-        navigate("/login", { replace: true });
+    navigate("/login", { replace: true });
 
-        dispatch({ type: AuthActionsEnum.setIsAuth, payload: false });
-        dispatch({ type: AuthActionsEnum.setUser, payload: {} as IUser });
-        dispatch({ type: AuthActionsEnum.setCheckingAuth, payload: false });
-    };
+    dispatch({ type: AuthActionsEnum.setIsAuth, payload: false });
+    dispatch({ type: AuthActionsEnum.setUser, payload: {} as IUser });
+    dispatch({ type: AuthActionsEnum.setCheckingAuth, payload: false });
+  };
 
-    const formik = useFormik<IAuth>({
-        initialValues: defaultFormValues,
-        onSubmit,
-        validationSchema,
-    });
+  const formik = useFormik<IAuth>({
+    initialValues: defaultFormValues,
+    onSubmit,
+    validationSchema,
+  });
 
-    return {
-        formik,
-        logout,
-    };
+  return {
+    formik,
+    logout,
+  };
 };

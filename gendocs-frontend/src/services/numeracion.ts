@@ -4,36 +4,36 @@ import { INumeracion, IReservaForm, IResponse } from "models/interfaces";
 import { handleErrors, HTTP_MESSAGES } from "utils";
 
 export async function getNumeracion(): Promise<INumeracion> {
-    try {
-        const {
-            data: { data },
-        } = await axios.get("numeracion");
+  try {
+    const {
+      data: { data },
+    } = await axios.get("numeracion");
 
-        return data;
-    } catch (error) {
-        return {
-            siguiente: -1,
-            reservados: [],
-            encolados: [],
-        };
-    }
+    return data;
+  } catch (error) {
+    return {
+      siguiente: -1,
+      reservados: [],
+      encolados: [],
+    };
+  }
 }
 
 export async function createReserva(
-    form: IReservaForm
+  form: IReservaForm
 ): Promise<IResponse<null>> {
-    try {
-        const payload = form;
+  try {
+    const payload = form;
 
-        await axios.post("numeracion", payload);
+    await axios.post("numeracion", payload);
 
-        return {
-            data: null,
-            message: HTTP_MESSAGES[201],
-            status: HTTP_STATUS.created,
-        };
-    } catch (error) {
-        console.error({ error });
-        return handleErrors(error);
-    }
+    return {
+      data: null,
+      message: HTTP_MESSAGES[201],
+      status: HTTP_STATUS.created,
+    };
+  } catch (error) {
+    console.error({ error });
+    return handleErrors(error);
+  }
 }
