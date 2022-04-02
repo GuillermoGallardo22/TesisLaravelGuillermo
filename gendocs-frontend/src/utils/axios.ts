@@ -8,6 +8,20 @@ const API_PATH = import.meta.env.VITE_API_URL;
 axios.defaults.withCredentials = true;
 axios.defaults.baseURL = API_PATH;
 
+axios.interceptors.response.use(
+  (r) => r,
+  (e) => {
+    if (e.response.status === HTTP_STATUS.unauthorized) {
+      deleteAllCookies();
+      const paths = window.location.pathname.split("/").filter((p) => p);
+      if (paths.length && !paths.includes("login")) {
+        window.location.href = "/login";
+      }
+    }
+    return Promise.reject(e);
+  }
+);
+
 export function handleErrors<T>(error: any, defaultValues?: any): IResponse<T> {
   if (error.response) {
     /*
@@ -55,5 +69,16 @@ export function handleErrors<T>(error: any, defaultValues?: any): IResponse<T> {
       data: defaultValues,
       message: HTTP_MESSAGES[503],
     };
+  }
+}
+
+export function deleteAllCookies() {
+  const cookies = document.cookie.split(";");
+
+  for (let i = 0; i < cookies.length; i++) {
+    const cookie = cookies[i];
+    const eqPos = cookie.indexOf("=");
+    const name = eqPos > -1 ? cookie.substring(0, eqPos) : cookie;
+    document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
   }
 }
