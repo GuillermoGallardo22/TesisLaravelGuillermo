@@ -41,3 +41,25 @@
 ![](docs/img/Screenshot%20from%202022-01-29%2018-53-40.png)
 
 6. Documentación [DRIVE API](https://developers.google.com/drive/api/v3/about-sdk)
+
+## VARIABLES DE DOCUMENTOS
+
+|     **VARIABLE**    |         **VALOR**        |
+|:-------------------:|:------------------------:|
+| {{ESTUDIANTE}}      | Juan Perez Paredes       |
+| {{ESTUDIANTEUP}}    | JUAN PEREZ PAREDES       |
+| {{CEDULA}}          | 1805240302               |
+| {{MATRICULA}}       | 0120                     |
+| {{FOLIO}}           | 0123                     |
+| {{TELEFONO}}        | 025461052                |
+| {{CELULAR}}         | 0986019417               |
+| {{CORREO}}          | abc@gmail.com            |
+| {{CORREOUTA}}       | abc@uta.edu.ec           |
+| {{NOMBRECARRERA}}   | Ingeniería en Sistemas   |
+| {{NOMBRECARRERAUP}} | INGENIERÍA EN SISTEMAS   |
+| {{FECHA}}           | 10/09/2020               |
+| {{FECHAUP}}         | 10 de septiembre de 2020 |
+| {{CREADOPOR}}       | Guillermo Barcia         |
+| {{NUMDOC}}          | 0001                     |
+| {{SESION}}          | Ordinaria                |
+| {{RESPONSABLE}}     | Guillermo Barcia         |
