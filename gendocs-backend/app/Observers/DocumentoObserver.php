@@ -2,16 +2,17 @@
 
 namespace App\Observers;
 
+use App\Constants\Variables;
 use App\Models\Documento;
 use App\Models\Numeracion;
 use App\Services\GoogleDriveService;
 use App\Services\NumeracionService;
 use App\Traits\Nameable;
-use Carbon\Carbon;
+use App\Traits\ReplaceableDocText;
 
 class DocumentoObserver
 {
-    use Nameable;
+    use Nameable, ReplaceableDocText;
 
     protected GoogleDriveService $googleDrive;
     protected NumeracionService $numeracionService;
@@ -49,18 +50,22 @@ class DocumentoObserver
             ->setDocumento($documento)
             ->checkNumeracion();
 
-        // SEGUNDO PLANO
+        /**
+         * TODO: HACER ESTO PROCESOS EN BACKGROUND
+         */
 
         $consejo = $documento->consejo;
-        $consejoFecha = Carbon::parse($consejo->fecha)->locale('es');
+
+        $consejoData = [
+            Variables::FECHA => $this->formatDate($consejo->fecha),
+            Variables::FECHAUP => $this->formatDateText($consejo->fecha),
+            Variables::SESION => $this->textToUpperLower($consejo->tipoConsejo->nombre, "lower"),
+            Variables::RESPONSABLE => $consejo->responsable->docente->nombres,
+        ];
 
         $generalData = [
-            '{{FECHA}}' => $consejoFecha->format('d/m/Y'),
-            '{{FECHAUP}}' => $consejoFecha->translatedFormat('d \d\e F \d\e Y'),
-            '{{CREADOPOR}}' => auth()->user()->name,
-            '{{NUMDOC}}' => str_pad($documento->numero, 4, '0', STR_PAD_LEFT),
-            '{{SESION}}' => strtolower($consejo->tipoConsejo->nombre),
-            '{{RESPONSABLE}}' => $consejo->responsable->docente->nombres,
+            Variables::CREADOPOR => auth()->user()->name,
+            Variables::NUMDOC => str_pad($documento->numero, 4, '0', STR_PAD_LEFT),
         ];
 
         $estudianteData = [];
@@ -71,26 +76,32 @@ class DocumentoObserver
             $carrera = $estudiante->carrera;
 
             $estudianteData = [
-                '{{ESTUDIANTE}}' => mb_convert_encoding(mb_convert_case($estudianteFullName, MB_CASE_TITLE), 'UTF-8'),
-                '{{ESTUDIANTEUP}}' => mb_strtoupper($estudianteFullName, 'UTF-8'),
-                '{{CEDULA}}' => $estudiante->cedula,
-                '{{MATRICULA}}' => $estudiante->matricula,
-                '{{FOLIO}}' => $estudiante->folio,
-                '{{TELEFONO}}' => $estudiante->telefono,
-                '{{CELULAR}}' => $estudiante->celular,
-                '{{CORREO}}' => $estudiante->correo,
-                '{{CORREOUTA}}' => $estudiante->correo_uta,
-                '{{NOMBRECARRERA}}' => $carrera->nombre,
-                '{{NOMBRECARRERAUP}}' => mb_strtoupper($carrera->nombre, 'UTF-8'),
+                Variables::ESTUDIANTE => mb_convert_encoding(mb_convert_case($estudianteFullName, MB_CASE_TITLE), 'UTF-8'),
+                Variables::ESTUDIANTEUP => mb_strtoupper($estudianteFullName, 'UTF-8'),
+                Variables::CEDULA => $estudiante->cedula,
+                Variables::MATRICULA => $estudiante->matricula,
+                Variables::FOLIO => $estudiante->folio,
+                Variables::TELEFONO => $estudiante->telefono,
+                Variables::CELULAR => $estudiante->celular,
+                Variables::CORREO => $estudiante->correo,
+                Variables::CORREOUTA => $estudiante->correo_uta,
+                Variables::NOMBRECARRERA => $carrera->nombre,
+                Variables::NOMBRECARRERAUP => mb_strtoupper($carrera->nombre, 'UTF-8'),
             ];
         }
 
-        $data = array_merge($generalData, $estudianteData);
-
-        $this->googleDrive->generateDoc(
-            $data,
+        $this->googleDrive->replaceTextOnDocument(
+            array_merge($generalData, $estudianteData, $consejoData),
             $documentoDrive->id,
         );
+
+        $documento->update([
+            'variables' => [
+                Variables::PREFEX_GENERAL => $generalData,
+                Variables::PREFIX_ESTUDIANTE => $estudianteData,
+                Variables::PREFIX_CONSEJO => $consejoData,
+            ],
+        ]);
     }
 
     /**
