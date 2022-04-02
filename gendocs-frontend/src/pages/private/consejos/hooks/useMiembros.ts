@@ -9,18 +9,19 @@ export function useMiembros() {
   const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
 
-  const { data: consejo } = useQuery(["consejo"], () => getConsejo(consejoId), {
-    onSuccess: (r) => {
+  const { data: consejo } = useQuery(["consejo"], () =>
+    getConsejo(consejoId).then((r) => {
       if (r.status !== HTTP_STATUS.ok) {
         enqueueSnackbar(r.message, { variant: "warning" });
         navigate(-1);
       }
-    },
-    // select: (r) => r.data,
-  });
+
+      return r.data;
+    })
+  );
 
   const { data: miembros = [], isLoading } = useQuery(
-    ["consejos-miembros", consejoId],
+    ["consejos-miembros", consejo?.id],
     () =>
       getMiembros({
         filters: {
@@ -28,13 +29,13 @@ export function useMiembros() {
         },
       }),
     {
-      enabled: Boolean(consejo?.data),
+      enabled: Boolean(consejo),
     }
   );
 
   return {
     miembros,
     isLoading,
-    consejo: consejo?.data,
+    consejo: consejo,
   };
 }

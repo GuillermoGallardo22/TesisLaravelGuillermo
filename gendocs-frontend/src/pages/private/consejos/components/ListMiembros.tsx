@@ -73,15 +73,12 @@ export default function ListMiembros() {
             disabled={!consejo?.estado}
             icon={<Icon icon="delete" />}
             label="Eliminar documento"
-            onClick={() => {
-              console.log({ row: p.row });
-              openDeleteMiembroModal(p.row as IMiembro);
-            }}
+            onClick={() => openDeleteMiembroModal(p.row as IMiembro)}
           />,
         ],
       },
     ],
-    []
+    [consejo]
   );
 
   const {
