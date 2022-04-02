@@ -22,6 +22,7 @@ class Documento extends Model
         'plantilla_id',
         'autor_id',
         'descripcion',
+        'variables'
     ];
 
     protected $casts = [
