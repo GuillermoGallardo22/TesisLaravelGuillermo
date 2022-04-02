@@ -2,13 +2,15 @@
 
 namespace App\Observers;
 
+use App\Constants\Variables;
 use App\Models\Consejo;
 use App\Services\GoogleDriveService;
 use App\Traits\Nameable;
+use App\Traits\ReplaceableDocText;
 
 class ConsejoObserver
 {
-    use Nameable;
+    use Nameable, ReplaceableDocText;
 
     protected GoogleDriveService $googleDrive;
 
@@ -53,6 +55,45 @@ class ConsejoObserver
                 $consejo->directorio->google_drive_id,
                 $this->setName($consejo->nombre)->generateName(),
             );
+        }
+
+        if ($consejo->wasChanged('fecha')) {
+            $fecha = $this->formatDate($consejo->fecha);
+            $fechaUP = $this->formatDateText($consejo->fecha);
+
+            foreach ($consejo->documentos as $documento) {
+                $variables = json_decode($documento->variables, true);
+
+                $this->googleDrive->replaceTextOnDocument([
+                    $variables[Variables::PREFIX_CONSEJO][Variables::FECHA] => $fecha,
+                    $variables[Variables::PREFIX_CONSEJO][Variables::FECHAUP] => $fechaUP,
+                ], $documento->archivo->google_drive_id);
+
+                $variables[Variables::PREFIX_CONSEJO][Variables::FECHA] = $fecha;
+                $variables[Variables::PREFIX_CONSEJO][Variables::FECHAUP] = $fechaUP;
+
+                $documento->update([
+                    'variables' => $variables,
+                ]);
+            }
+        }
+
+        if ($consejo->wasChanged('tipo_consejo_id')) {
+            $session = $this->textToUpperLower($consejo->tipoConsejo->nombre, "lower");
+
+            foreach ($consejo->documentos as $documento) {
+                $variables = json_decode($documento->variables, true);
+
+                $this->googleDrive->replaceTextOnDocument([
+                    $variables[Variables::PREFIX_CONSEJO][Variables::SESION] => $session,
+                ], $documento->archivo->google_drive_id);
+
+                $variables[Variables::PREFIX_CONSEJO][Variables::SESION] = $session;
+
+                $documento->update([
+                    'variables' => $variables,
+                ]);
+            }
         }
     }
 
