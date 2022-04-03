@@ -19,7 +19,7 @@ class GoogleDriveService
     {
         $client = new Client();
         $client->useApplicationDefaultCredentials();
-        $client->setScopes([Drive::DRIVE, Drive::DRIVE_FILE]);
+        $client->setScopes([Docs::DOCUMENTS, Drive::DRIVE, Drive::DRIVE_FILE]);
 
         $client->setAuthConfig(config("services.google.credentials"));
 
@@ -122,7 +122,7 @@ class GoogleDriveService
         return $this->service->files->copy($idFile, $file);
     }
 
-    public function generateDoc($data, $fileId)
+    public function replaceTextOnDocument($data, $fileId)
     {
         $requests = [];
 
