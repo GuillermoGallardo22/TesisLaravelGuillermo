@@ -22,4 +22,9 @@ trait ReplaceableDocText
         $date = Carbon::parse($date)->locale('es');
         return $date->translatedFormat($format);
     }
+
+    public function formatDocNumber($number)
+    {
+        return str_pad($number, 4, '0', STR_PAD_LEFT);
+    }
 }

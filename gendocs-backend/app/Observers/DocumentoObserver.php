@@ -34,10 +34,10 @@ class DocumentoObserver
      */
     public function created(Documento $documento)
     {
+        $numDoc = $this->formatDocNumber($documento->numero);
+
         $documentoDrive = $this->googleDrive->copyFile(
-            $this
-                ->setNumber($documento->numero)
-                ->generateNameFile(),
+            $numDoc,
             $documento->consejo->directorio->google_drive_id,
             $documento->plantilla->archivo->google_drive_id,
         );
@@ -65,7 +65,7 @@ class DocumentoObserver
 
         $generalData = [
             Variables::CREADOPOR => auth()->user()->name,
-            Variables::NUMDOC => str_pad($documento->numero, 4, '0', STR_PAD_LEFT),
+            Variables::NUMDOC => $numDoc,
         ];
 
         $estudianteData = [];
