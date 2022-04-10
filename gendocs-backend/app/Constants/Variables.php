@@ -4,6 +4,9 @@ namespace App\Constants;
 
 abstract class Variables
 {
+    const FROM = '{{FROM}}';
+    const TO = '{{TO}}';
+
     /**
      * Variables utilizadas para reemplazar datos para CONSEJO
      */
