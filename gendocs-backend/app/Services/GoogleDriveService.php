@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Constants\MimeType;
 use Google\Client;
 use Google\Service\Docs;
 use Google\Service\Docs\BatchUpdateDocumentRequest;
@@ -37,7 +38,9 @@ class GoogleDriveService
             $parentDirectory ?: config("services.google.root_directory")
         ]);
 
-        $file->setMimeType("application/vnd.google-apps.$type");
+        $file->setMimeType(
+            $type === 'folder' ? MimeType::DRIVE_FOLDER : MimeType::DRIVE_DOC,
+        );
 
         return $this->service->files->create($file);
     }
