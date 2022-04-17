@@ -5,6 +5,7 @@ import ArticleIcon from "@mui/icons-material/Article";
 import AutorenewIcon from "@mui/icons-material/Autorenew";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import DeleteIcon from "@mui/icons-material/Delete";
+import DownloadIcon from "@mui/icons-material/Download";
 import DriveFileMoveIcon from "@mui/icons-material/DriveFileMove";
 import EditIcon from "@mui/icons-material/Edit";
 import EmailIcon from "@mui/icons-material/Email";
@@ -18,6 +19,7 @@ import HomeIcon from "@mui/icons-material/Home";
 import ListIcon from "@mui/icons-material/List";
 import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
 import MenuIcon from "@mui/icons-material/Menu";
+import MenuBookIcon from "@mui/icons-material/MenuBook";
 import NumbersIcon from "@mui/icons-material/Numbers";
 import SchoolIcon from "@mui/icons-material/School";
 import SecurityIcon from "@mui/icons-material/Security";
@@ -51,7 +53,9 @@ export type IconTypes =
   | "email"
   | "apartment"
   | "hail"
-  | "factCheck";
+  | "factCheck"
+  | "menuBook"
+  | "download";
 
 const ICONS = {
   article: <ArticleIcon />,
@@ -79,6 +83,8 @@ const ICONS = {
   apartment: <ApartmentIcon />,
   hail: <HailIcon />,
   factCheck: <FactCheckIcon />,
+  menuBook: <MenuBookIcon />,
+  download: <DownloadIcon />,
 };
 
 interface IconProps {

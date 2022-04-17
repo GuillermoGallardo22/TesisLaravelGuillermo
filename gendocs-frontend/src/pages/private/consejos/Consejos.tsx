@@ -80,7 +80,7 @@ export default function Consejos() {
         type: "actions",
         field: "actions",
         headerName: "Acciones",
-        width: 180,
+        width: 200,
         getActions: (p) => [
           <GridActionsCellItem
             key={p.id}
@@ -97,7 +97,15 @@ export default function Consejos() {
             label="Asistencia"
             LinkComponent={Link}
             to={p.row?.id + "/asistencia"}
-            icon={<Icon icon="factCheck" />}
+            icon={<Icon icon="groups" />}
+          />,
+          <GridActionsCellItem
+            key={p.id}
+            color="success"
+            label="Acta"
+            LinkComponent={Link}
+            to={p.row?.id + "/acta"}
+            icon={<Icon icon="menuBook" />}
           />,
           <GridActionsCellItem
             key={p.id}
