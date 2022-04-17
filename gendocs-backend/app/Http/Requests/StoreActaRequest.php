@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\DocumentosGenerador;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreActaRequest extends FormRequest
@@ -13,7 +14,7 @@ class StoreActaRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +25,7 @@ class StoreActaRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'consejo' => ['bail', 'exists:\App\Models\Consejo,id', new DocumentosGenerador()],
         ];
     }
 }

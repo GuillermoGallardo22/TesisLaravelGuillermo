@@ -16,11 +16,17 @@ class CreateActasTable extends Migration
         Schema::create('actas', function (Blueprint $table) {
             $table->id();
 
-            $table->string("nombre_documento");
-            $table->string("ruta_documento");
+            // El id de proceso en segundo plano
+            $table->uuid('batch')
+                ->nullable();
 
-            $table->unsignedBigInteger("consejo_id")->unique();
-            $table->foreign("consejo_id")->references("id")->on("consejos");
+            // La ruta donde se encuentra los documentos procesados
+            $table->string('outputPath')
+                ->nullable();
+
+            $table->foreignId("consejo_id")
+                ->references("id")
+                ->on("consejos");
 
             $table->timestamps();
         });

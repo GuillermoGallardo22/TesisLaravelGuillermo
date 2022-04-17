@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\ActaController;
+use App\Http\Controllers\BatchController;
 use App\Http\Controllers\CarreraController;
 use App\Http\Controllers\ConsejoController;
 use App\Http\Controllers\DocenteController;
@@ -37,6 +39,9 @@ Route::middleware(["auth:sanctum", "isUserActive"])->group(function () {
     Route::apiResource('documentos', DocumentoController::class)->except(['show', 'update']);
     Route::apiResource('numeracion', NumeracionController::class)->only(['index', 'store']);
     Route::apiResource('miembros', MiembroController::class)->except(['show']);
+    Route::apiResource('actas', ActaController::class);
+    Route::get('actas/{acta}/descargar', [ActaController::class, 'descargar']);
+    Route::apiResource('batch', BatchController::class)->only(['show']);
 
     // AUTH
     Route::get('me', [UserController::class, 'me']);

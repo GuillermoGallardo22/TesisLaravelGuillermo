@@ -48,7 +48,6 @@ class GenerarActa implements ShouldQueue, ShouldBeUnique
      */
     public function handle(GoogleDriveService $service)
     {
-        // sleep(5);
         $consejo = $this->consejo;
         $documento = $this->documento;
 

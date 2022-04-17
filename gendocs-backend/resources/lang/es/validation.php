@@ -176,5 +176,12 @@ return [
                 ],
             ]
         ],
+        'acta' => [
+            'create' => [
+                'consejo' => [
+                    'documentos' => 'No se puede generar el acta, porque no existen documentos generados'
+                ]
+            ]
+        ]
     ],
 ];

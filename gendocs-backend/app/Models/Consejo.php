@@ -42,6 +42,7 @@ class Consejo extends Model
             'fecha' => $this->fecha,
             'tipo_consejo' => $this->tipoConsejo,
             'estado' => $this->estado,
+            'acta' => $this->acta
         ];
     }
 
@@ -88,5 +89,10 @@ class Consejo extends Model
     public function responsable()
     {
         return $this->hasOne(Miembro::class)->where('responsable', true);
+    }
+
+    public function acta()
+    {
+        return $this->hasOne(Acta::class, 'consejo_id');
     }
 }
