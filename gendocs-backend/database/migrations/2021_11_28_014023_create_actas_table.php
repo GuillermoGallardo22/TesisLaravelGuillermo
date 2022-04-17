@@ -21,7 +21,7 @@ class CreateActasTable extends Migration
                 ->nullable();
 
             // La ruta donde se encuentra los documentos procesados
-            $table->string('outputPath')
+            $table->string('output_path')
                 ->nullable();
 
             $table->foreignId("consejo_id")

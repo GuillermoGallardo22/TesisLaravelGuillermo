@@ -14,7 +14,7 @@ class Acta extends Model
 
     protected $fillable = [
         'batch',
-        'outputPath',
+        'output_path',
         'consejo_id'
     ];
 

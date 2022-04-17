@@ -50,7 +50,7 @@ class ActaController extends Controller
         }
 
         $acta->fill([
-            'outputPath' => ($consejo->nombre),
+            'output_path' => ($consejo->nombre),
         ]);
 
         $jobs = [];
@@ -89,7 +89,7 @@ class ActaController extends Controller
 
     public function descargar(Acta $acta)
     {
-        $dir = $acta->outputPath;
+        $dir = $acta->output_path;
         $files = glob(storage_path("app/" . $dir) . '/generados/*.docx');
 
         if (!count($files)) {
