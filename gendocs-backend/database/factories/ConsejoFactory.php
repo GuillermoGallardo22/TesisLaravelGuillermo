@@ -16,7 +16,7 @@ class ConsejoFactory extends Factory
     public function definition()
     {
         return [
-            'nombre' => $this->faker->sentence(6),
+            'nombre' => $this->faker->words(5, true),
             'fecha' => $this->faker->dateTimeInInterval('+7 days'),
             'tipo_consejo_id' => TipoConsejo::inRandomOrder()->first()->id,
             'directorio_id' => Directorio::activeDirectory()->id,
