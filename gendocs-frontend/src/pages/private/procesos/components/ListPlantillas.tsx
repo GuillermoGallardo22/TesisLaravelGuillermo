@@ -3,13 +3,13 @@ import IconButton from "@mui/material/IconButton";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import Tooltip from "@mui/material/Tooltip";
-import { GridRenderCellParams } from "@mui/x-data-grid";
+import { GridColumns, GridRenderCellParams } from "@mui/x-data-grid";
 import { ChipStatus, DataGrid, Icon } from "components";
 import { useFilterPagination } from "hooks";
 import { Link as RouterLink, useParams } from "react-router-dom";
 import { getPlantillasByProcesoId } from "services";
 
-const columns: GridColDef[] = [
+const columns: GridColumns = [
   { field: "nombre", headerName: "Nombre", flex: 1 },
   {
     field: "autor",
