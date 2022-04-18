@@ -4,12 +4,11 @@ import DialogContentText from "@mui/material/DialogContentText";
 import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
 import {
-  DataGrid,
   GridActionsCellItem,
   GridColumns,
   GridToolbar,
 } from "@mui/x-data-grid";
-import { ConfirmationDialog, Icon, Select } from "components";
+import { ConfirmationDialog, DataGrid, Icon, Select } from "components";
 import { useAuthContext } from "contexts/AuthContext";
 import { useGridColumnVisibilityModel } from "hooks";
 import { IDocumento } from "models/interfaces";

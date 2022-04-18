@@ -1,6 +1,7 @@
 export { default as AccesDenied } from "./AccesDenied";
 export { default as ChipStatus } from "./ChipStatus";
 export { default as ConfirmationDialog } from "./ConfirmationDialog";
+export * from "./DataGrid";
 export { default as DriveTemplate } from "./DriveTemplate";
 export { default as ErrorSummary } from "./ErrorSummary";
 export { default as Icon } from "./Icon";

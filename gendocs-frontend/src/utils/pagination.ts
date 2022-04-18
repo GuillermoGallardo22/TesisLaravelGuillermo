@@ -1,7 +1,8 @@
 import { IFilterPaginationProps, IPagination } from "models/interfaces";
 import { parseObjectToQueryParams } from "./libs";
 
-export const PAGE_SIZE = 50;
+export const ROW_PER_PAGE = [10, 25, 50];
+export const PAGE_SIZE = ROW_PER_PAGE[0];
 
 export const DEFAULT_META = {
   current_page: 0,

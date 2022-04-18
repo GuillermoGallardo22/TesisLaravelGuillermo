@@ -1,12 +1,11 @@
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import {
-  DataGrid,
   GridActionsCellItem,
   GridColumns,
   GridToolbar,
 } from "@mui/x-data-grid";
-import { Icon } from "components";
+import { DataGrid, Icon } from "components";
 import { useGridColumnVisibilityModel } from "hooks";
 import { Link as RouterLink } from "react-router-dom";
 import { useListDocentes } from "./hooks/useListDocentes";
