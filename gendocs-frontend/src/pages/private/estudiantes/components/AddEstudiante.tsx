@@ -1,14 +1,16 @@
 import Accordion from "@mui/material/Accordion";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
+import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-import { Icon } from "components";
+import { Icon, TitleNav } from "components";
 import { FormEstudiante } from "./FormEstudiante";
 import { FormEstudiantes } from "./FormEstudiantes";
 
 const AddStudents = () => {
   return (
-    <>
+    <Stack>
+      <TitleNav title="Crear estudiante(s)" />
       <Accordion>
         <AccordionSummary
           expandIcon={<Icon icon="expandMore" />}
@@ -33,7 +35,7 @@ const AddStudents = () => {
           <FormEstudiantes />
         </AccordionDetails>
       </Accordion>
-    </>
+    </Stack>
   );
 };
 

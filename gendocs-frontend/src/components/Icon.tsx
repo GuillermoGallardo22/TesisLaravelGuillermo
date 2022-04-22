@@ -1,6 +1,7 @@
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import AddIcon from "@mui/icons-material/Add";
 import ApartmentIcon from "@mui/icons-material/Apartment";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArticleIcon from "@mui/icons-material/Article";
 import AutorenewIcon from "@mui/icons-material/Autorenew";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
@@ -55,7 +56,8 @@ export type IconTypes =
   | "hail"
   | "factCheck"
   | "menuBook"
-  | "download";
+  | "download"
+  | "arrowBack";
 
 const ICONS = {
   article: <ArticleIcon />,
@@ -85,6 +87,7 @@ const ICONS = {
   factCheck: <FactCheckIcon />,
   menuBook: <MenuBookIcon />,
   download: <DownloadIcon />,
+  arrowBack: <ArrowBackIcon />,
 };
 
 interface IconProps {

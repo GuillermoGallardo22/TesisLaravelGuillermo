@@ -2,7 +2,7 @@ import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import Stack from "@mui/material/Stack";
 import { GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
-import { ChipStatus, DataGrid, Icon } from "components";
+import { ChipStatus, DataGrid, Icon, TitleNav } from "components";
 import { IUser } from "models/interfaces";
 import { useCallback, useEffect, useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
@@ -48,6 +48,7 @@ const Usuarios = () => {
 
   return (
     <Stack spacing={2}>
+      <TitleNav title="Usuarios" goback={false} />
       <Button
         component={RouterLink}
         startIcon={<Icon icon="add" />}

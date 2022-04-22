@@ -6,7 +6,7 @@ import {
   GridToolbar,
   GridValueFormatterParams,
 } from "@mui/x-data-grid";
-import { ChipStatus, DataGrid, Icon } from "components";
+import { ChipStatus, DataGrid, Icon, TitleNav } from "components";
 import { useMemo } from "react";
 import { Link } from "react-router-dom";
 import { useListCarreras } from "./hooks/useListCarreras";
@@ -63,6 +63,8 @@ export default function Carreras() {
 
   return (
     <Stack spacing={2}>
+      <TitleNav title="Carreras" goback={false} />
+
       <Button
         component={Link}
         startIcon={<Icon icon="add" />}

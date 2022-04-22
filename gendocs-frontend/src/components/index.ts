@@ -13,4 +13,5 @@ export { default as Outlet } from "./Outlet";
 export { default as Select } from "./Select";
 export { default as Skeleton } from "./Skeleton";
 export { default as Title } from "./Title";
+export * from "./TitleNav";
 export * from "./ToolbarDataGrid";

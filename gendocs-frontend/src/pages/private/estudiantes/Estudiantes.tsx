@@ -2,7 +2,7 @@ import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import { GridActionsCellItem, GridColumns } from "@mui/x-data-grid";
-import { DataGrid, GridToolbarColumns, Icon } from "components";
+import { DataGrid, GridToolbarColumns, Icon, TitleNav } from "components";
 import { useFilterPagination, useGridColumnVisibilityModel } from "hooks";
 import { IEstudiante } from "models/interfaces";
 import { Link as RouterLink } from "react-router-dom";
@@ -54,6 +54,7 @@ const Estudiantes = () => {
 
   return (
     <Stack spacing={2}>
+      <TitleNav title="Estudiantes" goback={false} />
       <Button
         component={RouterLink}
         startIcon={<Icon icon="add" />}

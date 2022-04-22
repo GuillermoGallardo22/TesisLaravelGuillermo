@@ -8,7 +8,13 @@ import {
   GridColumns,
   GridToolbar,
 } from "@mui/x-data-grid";
-import { ConfirmationDialog, DataGrid, Icon, Select } from "components";
+import {
+  ConfirmationDialog,
+  DataGrid,
+  Icon,
+  Select,
+  TitleNav,
+} from "components";
 import { useAuthContext } from "contexts/AuthContext";
 import { useGridColumnVisibilityModel } from "hooks";
 import { IDocumento } from "models/interfaces";
@@ -144,6 +150,8 @@ export default function Documentos() {
 
   return (
     <Stack spacing={2}>
+      <TitleNav title="Documentos" goback={false} />
+
       <Box>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={6}>

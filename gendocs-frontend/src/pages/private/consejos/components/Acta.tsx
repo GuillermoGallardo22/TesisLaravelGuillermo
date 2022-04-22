@@ -1,6 +1,6 @@
 import LoadingButton from "@mui/lab/LoadingButton";
 import Stack from "@mui/material/Stack";
-import { Icon, LinearProgressWithLabel, Skeleton } from "components";
+import { Icon, LinearProgressWithLabel, Skeleton, TitleNav } from "components";
 import { HTTP_STATUS } from "models/enums";
 import { IActa, IConsejo } from "models/interfaces";
 import { useSnackbar } from "notistack";
@@ -89,6 +89,8 @@ export const ActaBase: React.FunctionComponent<ActaBaseProps> = ({
 
   return (
     <Stack spacing={2}>
+      <TitleNav title="Generar acta" />
+
       <LoadingButton
         loading={generating}
         loadingPosition="center"

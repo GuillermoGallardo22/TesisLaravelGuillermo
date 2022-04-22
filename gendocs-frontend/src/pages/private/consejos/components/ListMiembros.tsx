@@ -7,6 +7,7 @@ import {
   DataGrid,
   GridToolbarColumns,
   Icon,
+  TitleNav,
 } from "components";
 import {
   useConfirmationDialog,
@@ -99,6 +100,7 @@ export default function ListMiembros() {
 
   return (
     <Stack spacing={2}>
+      <TitleNav title="Miembros" />
       <Button
         disabled={!consejo || !consejo?.estado}
         startIcon={<Icon icon="add" />}

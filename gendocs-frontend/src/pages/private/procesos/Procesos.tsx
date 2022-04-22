@@ -4,7 +4,7 @@ import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import Tooltip from "@mui/material/Tooltip";
 import { GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
-import { ChipStatus, DataGrid, Icon } from "components";
+import { ChipStatus, DataGrid, Icon, TitleNav } from "components";
 import { useFilterPagination } from "hooks";
 import { IProceso } from "models/interfaces";
 import { Link as RouterLink } from "react-router-dom";
@@ -59,6 +59,7 @@ const Procesos = () => {
 
   return (
     <Stack spacing={2}>
+      <TitleNav title="Procesos" goback={false} />
       <Button
         component={RouterLink}
         startIcon={<Icon icon="add" />}

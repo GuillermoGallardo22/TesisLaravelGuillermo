@@ -5,8 +5,9 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
 import InputAdornment from "@mui/material/InputAdornment";
+import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
-import { ErrorSummary, Icon, Select } from "components";
+import { ErrorSummary, Icon, Select, TitleNav } from "components";
 import { useAutocomplete, useConfirmationDialog } from "hooks";
 import { IEstudiante, IPlantilla, IProceso } from "models/interfaces";
 import { useEffect } from "react";
@@ -118,7 +119,8 @@ export default function AddDocumento() {
   const { closeModal, isVisible, openModal } = useConfirmationDialog();
 
   return (
-    <>
+    <Stack spacing={2}>
+      <TitleNav title="Generar documento" />
       <Box
         component="form"
         onSubmit={formik.handleSubmit}
@@ -393,6 +395,6 @@ export default function AddDocumento() {
         encolados={encolados}
         defaultValue={formik.values.numero}
       />
-    </>
+    </Stack>
   );
 }

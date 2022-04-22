@@ -5,7 +5,7 @@ import {
   GridColumns,
   GridToolbar,
 } from "@mui/x-data-grid";
-import { DataGrid, Icon } from "components";
+import { DataGrid, Icon, TitleNav } from "components";
 import { useGridColumnVisibilityModel } from "hooks";
 import { Link as RouterLink } from "react-router-dom";
 import { useListDocentes } from "./hooks/useListDocentes";
@@ -44,6 +44,7 @@ const Docentes = () => {
 
   return (
     <Stack spacing={2}>
+      <TitleNav title="Docentes" goback={false} />
       <Button
         component={RouterLink}
         startIcon={<Icon icon="add" />}

@@ -4,7 +4,7 @@ import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import Tooltip from "@mui/material/Tooltip";
 import { GridColumns, GridRenderCellParams } from "@mui/x-data-grid";
-import { ChipStatus, DataGrid, Icon } from "components";
+import { ChipStatus, DataGrid, Icon, TitleNav } from "components";
 import { useFilterPagination } from "hooks";
 import { Link as RouterLink, useParams } from "react-router-dom";
 import { getPlantillasByProcesoId } from "services";
@@ -69,6 +69,7 @@ const ListPlantillas = () => {
 
   return (
     <Stack spacing={2}>
+      <TitleNav title="Plantillas" />
       <Button
         component={RouterLink}
         startIcon={<Icon icon="add" />}

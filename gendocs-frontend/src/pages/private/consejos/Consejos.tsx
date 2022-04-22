@@ -3,7 +3,13 @@ import DialogContentText from "@mui/material/DialogContentText";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import { GridActionsCellItem, GridColumns } from "@mui/x-data-grid";
-import { ChipStatus, ConfirmationDialog, DataGrid, Icon } from "components";
+import {
+  ChipStatus,
+  ConfirmationDialog,
+  DataGrid,
+  Icon,
+  TitleNav,
+} from "components";
 import { useDeleteItem, useFilterPagination } from "hooks";
 import { IConsejo } from "models/interfaces";
 import { useMemo, useState } from "react";
@@ -124,6 +130,7 @@ export default function Consejos() {
   return (
     <>
       <Stack spacing={2}>
+        <TitleNav title="Consejos" goback={false} />
         <Button
           component={Link}
           startIcon={<Icon icon="add" />}
