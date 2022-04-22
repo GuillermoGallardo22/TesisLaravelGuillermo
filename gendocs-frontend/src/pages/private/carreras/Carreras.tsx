@@ -1,12 +1,13 @@
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import {
+  DataGrid,
   GridActionsCellItem,
   GridColumns,
   GridToolbar,
   GridValueFormatterParams,
 } from "@mui/x-data-grid";
-import { ChipStatus, DataGrid, Icon, TitleNav } from "components";
+import { ChipStatus, Icon, TitleNav } from "components";
 import { useMemo } from "react";
 import { Link } from "react-router-dom";
 import { useListCarreras } from "./hooks/useListCarreras";
