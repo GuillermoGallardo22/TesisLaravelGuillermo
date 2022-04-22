@@ -42,8 +42,8 @@ export default function Consejos() {
   };
 
   const closeModal = () => {
-    setItemSelected(null);
     setIsVisible(false);
+    // setItemSelected(null);
   };
 
   const { deleting, handleDelete } = useDeleteItem({
@@ -170,7 +170,6 @@ export default function Consejos() {
         </div>
       </Stack>
 
-      {itemSelected && (
         <ConfirmationDialog
           id="delete-consejo-modal"
           keepMounted={true}
@@ -184,10 +183,9 @@ export default function Consejos() {
         >
           <DialogContentText>
             ¿Está seguro que desea eliminar el registro{" "}
-            <strong>{itemSelected.nombre}</strong>?
+          <strong>{itemSelected?.nombre}</strong>?
           </DialogContentText>
         </ConfirmationDialog>
-      )}
     </>
   );
 }
