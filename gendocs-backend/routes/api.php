@@ -40,10 +40,11 @@ Route::middleware(["auth:sanctum", "isUserActive"])->group(function () {
     Route::apiResource('documentos', DocumentoController::class)->except(['show', 'update']);
     Route::apiResource('numeracion', NumeracionController::class)->only(['index', 'store']);
     Route::apiResource('miembros', MiembroController::class)->except(['show', 'update']);
-    Route::apiResource('actas', ActaController::class)->only(['index', 'store']);
-    Route::get('actas/{acta}/descargar', [ActaController::class, 'descargar']);
     Route::apiResource('batch', BatchController::class)->only(['show']);
     Route::apiResource("plantillas-globales", PlantillasGlobalesController::class)->only(['index']);
+
+    Route::apiResource('actas', ActaController::class)->only(['index', 'store']);
+    Route::get('actas/{acta}/descargar', [ActaController::class, 'descargar']);
 
     // AUTH
     Route::get('me', [UserController::class, 'me']);
