@@ -150,7 +150,7 @@ class GenerarActa implements ShouldQueue, ShouldBeUnique
         $templateProcessor = new TemplateProcessor(storage_path("app/" . $baseDir . '/separador.docx'));
         $templateProcessor->setValues([
             'Y' => $year,
-            'NUMDOC' => pathinfo($downloadedDocument, PATHINFO_FILENAME),
+            'NUMDOC' => $numDoc,
         ]);
 
         // "0001-A.docx"
