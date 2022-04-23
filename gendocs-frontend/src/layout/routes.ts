@@ -202,6 +202,14 @@ export const routes: IRoute[] = [
         roles: [RolEnum.ADMIN, RolEnum.ADMINTEMP],
       },
       {
+        path: "plantilla-acta/:driveId",
+        component: DriveTemplate,
+      },
+      {
+        path: "plantilla-separador/:driveId",
+        component: DriveTemplate,
+      },
+      {
         path: ":consejoId",
         component: Outlet,
         childrens: [

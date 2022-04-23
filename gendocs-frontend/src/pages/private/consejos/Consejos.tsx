@@ -1,5 +1,8 @@
+import LoadingButton from "@mui/lab/LoadingButton";
+import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import DialogContentText from "@mui/material/DialogContentText";
+import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import { GridActionsCellItem, GridColumns } from "@mui/x-data-grid";
@@ -10,7 +13,8 @@ import {
   Icon,
   TitleNav,
 } from "components";
-import { useDeleteItem, useFilterPagination } from "hooks";
+import { useDeleteItem, useFilterPagination, usePlantillasGlob } from "hooks";
+import { PlantillasGlobales } from "models/enums";
 import { IConsejo } from "models/interfaces";
 import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
@@ -31,6 +35,14 @@ export default function Consejos() {
     fetch: getConsejos,
     token: token,
   });
+
+  const { data: plaAct, isLoading: loadingPlaAct } = usePlantillasGlob(
+    PlantillasGlobales.PLA_ACT
+  );
+
+  const { data: plaActSep, isLoading: loadingPlaActSep } = usePlantillasGlob(
+    PlantillasGlobales.PLA_ACT_SEP
+  );
 
   const [isVisible, setIsVisible] = useState(false);
 
@@ -131,14 +143,48 @@ export default function Consejos() {
     <>
       <Stack spacing={2}>
         <TitleNav title="Consejos" goback={false} />
-        <Button
-          component={Link}
-          startIcon={<Icon icon="add" />}
-          to="nuevo"
-          variant="outlined"
-        >
-          AÑADIR CONSEJO
-        </Button>
+
+        <Box>
+          <Grid container spacing={2} columns={{ xs: 1, sm: 2, md: 3 }}>
+            <Grid item xs={1} sm={2} md={1}>
+              <Button
+                fullWidth
+                component={Link}
+                startIcon={<Icon icon="add" />}
+                to="nuevo"
+                variant="outlined"
+              >
+                AÑADIR CONSEJO
+              </Button>
+            </Grid>
+            <Grid item xs={1}>
+              <LoadingButton
+                fullWidth
+                component={Link}
+                startIcon={<Icon icon="article" />}
+                to={"plantilla-acta/" + plaAct?.drive}
+                variant="outlined"
+                loading={loadingPlaAct}
+                disabled={!plaAct}
+              >
+                PLANTILLA ACTA
+              </LoadingButton>
+            </Grid>
+            <Grid item xs={1}>
+              <LoadingButton
+                fullWidth
+                component={Link}
+                startIcon={<Icon icon="article" />}
+                to={"plantilla-separador/"+plaActSep?.drive}
+                variant="outlined"
+                loading={loadingPlaActSep}
+                disabled={!plaActSep}
+              >
+                PLANTILLA SEPARADOR
+              </LoadingButton>
+            </Grid>
+          </Grid>
+        </Box>
 
         <TextField
           fullWidth
@@ -170,22 +216,22 @@ export default function Consejos() {
         </div>
       </Stack>
 
-        <ConfirmationDialog
-          id="delete-consejo-modal"
-          keepMounted={true}
-          isVisible={isVisible}
-          title="Eliminar"
-          onCancel={closeModal}
-          onApprove={handleDelete}
-          textApprove="ELIMINAR"
-          buttonColorApprove="error"
-          loading={deleting}
-        >
-          <DialogContentText>
-            ¿Está seguro que desea eliminar el registro{" "}
+      <ConfirmationDialog
+        id="delete-consejo-modal"
+        keepMounted={true}
+        isVisible={isVisible}
+        title="Eliminar"
+        onCancel={closeModal}
+        onApprove={handleDelete}
+        textApprove="ELIMINAR"
+        buttonColorApprove="error"
+        loading={deleting}
+      >
+        <DialogContentText>
+          ¿Está seguro que desea eliminar el registro{" "}
           <strong>{itemSelected?.nombre}</strong>?
-          </DialogContentText>
-        </ConfirmationDialog>
+        </DialogContentText>
+      </ConfirmationDialog>
     </>
   );
 }
