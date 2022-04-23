@@ -29,6 +29,7 @@ class CreateActasTable extends Migration
                 ->on("consejos");
 
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
