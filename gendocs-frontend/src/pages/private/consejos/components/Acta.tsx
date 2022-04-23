@@ -33,6 +33,10 @@ export default function Acta() {
   return <ActaBase consejo={consejo} />;
 }
 
+enum GenerationStates {
+  COMPLETED = 100,
+}
+
 type ActaBaseProps = {
   consejo: IConsejo;
 };
@@ -42,19 +46,23 @@ export const ActaBase: React.FunctionComponent<ActaBaseProps> = ({
 }) => {
   const queryClient = useQueryClient();
   const { enqueueSnackbar } = useSnackbar();
+  const [submitting, setSubmitting] = useState(false);
 
   const generateActa = () => {
-    createActa(consejo.id).then((result) => {
-      if (result.status === HTTP_STATUS.created) {
-        queryClient.invalidateQueries(["consejo", { id: consejo.id }]);
-        enqueueSnackbar(result.message, { variant: "success" });
-      } else {
-        //
-        enqueueSnackbar(result.errors ? result.errors[0] : result.message, {
-          variant: "error",
-        });
-      }
-    });
+    setSubmitting(true);
+    createActa(consejo.id)
+      .then((result) => {
+        if (result.status === HTTP_STATUS.created) {
+          queryClient.invalidateQueries(["consejo", { id: consejo.id }]);
+          enqueueSnackbar(result.message, { variant: "success" });
+        } else {
+          //
+          enqueueSnackbar(result.errors ? result.errors[0] : result.message, {
+            variant: "error",
+          });
+        }
+      })
+      .finally(() => setSubmitting(false));
   };
 
   //
@@ -83,8 +91,22 @@ export const ActaBase: React.FunctionComponent<ActaBaseProps> = ({
   }, [batch]);
 
   const generating = useMemo(
-    (): boolean => Boolean(consejo.acta) && batch?.progress !== 100,
-    [batch?.progress]
+    (): boolean =>
+      Boolean(consejo.acta) &&
+      batch?.progress !== GenerationStates.COMPLETED &&
+      !submitting,
+    [batch?.progress, submitting]
+  );
+
+  const canDownloadActa = useMemo(
+    () =>
+      Boolean(
+        !generating &&
+          !submitting &&
+          consejo.acta &&
+          batch?.progress === GenerationStates.COMPLETED
+      ),
+    [batch, submitting, consejo.acta, generating]
   );
 
   return (
@@ -92,7 +114,7 @@ export const ActaBase: React.FunctionComponent<ActaBaseProps> = ({
       <TitleNav title="Generar acta" />
 
       <LoadingButton
-        loading={generating}
+        loading={generating || submitting}
         loadingPosition="center"
         startIcon={<Icon icon="add" />}
         onClick={generateActa}
@@ -100,19 +122,10 @@ export const ActaBase: React.FunctionComponent<ActaBaseProps> = ({
       >
         Generar acta
       </LoadingButton>
-      {consejo.acta && <LinearProgressWithLabel value={batch?.progress || 0} />}
 
-      {!generating && consejo.acta && batch && batch.progress === 100 && (
-        <DownloadActa acta={consejo.acta} />
-      )}
+      {generating && <LinearProgressWithLabel value={batch?.progress || 0} />}
 
-      {/* <pre>
-        {JSON.stringify(
-          { consejo, batch, refetch, acta: consejo?.acta },
-          null,
-          2
-        )}
-      </pre> */}
+      {canDownloadActa && <DownloadActa acta={consejo.acta as IActa} />}
     </Stack>
   );
 };
