@@ -34,6 +34,11 @@ class Acta extends Model
         ];
     }
 
+    public function consejo()
+    {
+        return $this->belongsTo(Consejo::class, 'consejo_id');
+    }
+
     public function scopeConsejo(Builder $query, $value)
     {
         return $query->where('consejo_id', $value)->first();

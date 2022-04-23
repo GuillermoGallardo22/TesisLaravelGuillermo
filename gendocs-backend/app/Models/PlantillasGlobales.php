@@ -38,4 +38,9 @@ class PlantillasGlobales extends Model
     {
         return $query->where('codigo', $value);
     }
+
+    public function scopePlaActSep(Builder $query): Model
+    {
+        return $query->where('codigo', \App\Constants\PlantillasGlobales::PLANTILLA_ACTA_SEPARADOR)->first();
+    }
 }

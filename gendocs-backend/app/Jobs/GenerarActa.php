@@ -147,7 +147,7 @@ class GenerarActa implements ShouldQueue, ShouldBeUnique
         $this->zipRecursive($dirTemp, $filePathDocContent);
 
         // ADD TITLE
-        $templateProcessor = new TemplateProcessor(storage_path('app/separador.docx'));
+        $templateProcessor = new TemplateProcessor(storage_path("app/" . $baseDir . '/separador.docx'));
         $templateProcessor->setValues([
             'Y' => $year,
             'NUMDOC' => pathinfo($downloadedDocument, PATHINFO_FILENAME),

@@ -33,41 +33,15 @@ class ActaController extends Controller
 
         $consejo = Consejo::find($validated['consejo']);
 
-        // GENERANDO DIRECTORIOS BASE
-        Storage::makeDirectory($consejo->nombre);
-        Storage::makeDirectory($consejo->nombre . '/generados');
-        Storage::makeDirectory($consejo->nombre . '/descargados');
+        $acta = $consejo->acta;
 
-        // COLA
-        $acta = new Acta();
+        $acta?->delete();
 
-        if ($consejo->acta) {
-            $acta = $consejo->acta;
-        } else {
-            $acta->fill([
-                'consejo_id' => $consejo->id,
-            ]);
-        }
-
-        $acta->fill([
-            'output_path' => ($consejo->nombre),
+        $acta = $consejo->acta()->updateOrCreate([
+            'consejo_id' => $consejo->id,
+        ], [
+            'consejo_id' => $consejo->id,
         ]);
-
-        $jobs = [];
-
-        $total = $consejo->documentos->count();
-
-        for ($i = 0; $i < $total; $i++) {
-            $documento = $consejo->documentos[$i];
-            $jobs[] = new GenerarActa($consejo, $documento, $i, $total);
-
-        }
-
-        $batch = Bus::batch($jobs)->dispatch();
-
-        $acta->batch = $batch->id;
-
-        $acta->save();
 
         return ResourceObject::make($acta);
     }
