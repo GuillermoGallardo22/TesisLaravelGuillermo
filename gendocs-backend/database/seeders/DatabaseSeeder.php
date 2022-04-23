@@ -26,6 +26,7 @@ class DatabaseSeeder extends Seeder
             ConsejoSeeder::class,
             PlantillasSeeder::class,
             DocenteSeeder::class,
+            PlantillasGlobalesSeeder::class,
         ]);
     }
 }

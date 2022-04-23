@@ -10,6 +10,7 @@ use App\Http\Controllers\EstudianteController;
 use App\Http\Controllers\MiembroController;
 use App\Http\Controllers\NumeracionController;
 use App\Http\Controllers\PlantillasController;
+use App\Http\Controllers\PlantillasGlobalesController;
 use App\Http\Controllers\ProcesoController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TipoConsejoController;
@@ -38,10 +39,11 @@ Route::middleware(["auth:sanctum", "isUserActive"])->group(function () {
     Route::apiResource('tipo-consejos', TipoConsejoController::class)->only(['index']);
     Route::apiResource('documentos', DocumentoController::class)->except(['show', 'update']);
     Route::apiResource('numeracion', NumeracionController::class)->only(['index', 'store']);
-    Route::apiResource('miembros', MiembroController::class)->except(['show']);
-    Route::apiResource('actas', ActaController::class);
+    Route::apiResource('miembros', MiembroController::class)->except(['show', 'update']);
+    Route::apiResource('actas', ActaController::class)->only(['index', 'store']);
     Route::get('actas/{acta}/descargar', [ActaController::class, 'descargar']);
     Route::apiResource('batch', BatchController::class)->only(['show']);
+    Route::apiResource("plantillas-globales", PlantillasGlobalesController::class)->only(['index']);
 
     // AUTH
     Route::get('me', [UserController::class, 'me']);
