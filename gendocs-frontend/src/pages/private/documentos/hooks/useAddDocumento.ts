@@ -15,6 +15,7 @@ const initialValues: IDocumentoForm = {
   estudiante: null,
   descripcion: null,
   numero: -1,
+  otro: false,
 };
 
 type useAddDocumentoProps = {
@@ -70,15 +71,18 @@ export default function useAddDocumento({ onReset }: useAddDocumentoProps) {
     setErrorSummary(undefined);
 
     const result = await saveDocumento(form);
+    refreshNumeracion();
 
     if (result.status === HTTP_STATUS.created) {
       enqueueSnackbar(result.message, { variant: "success" });
-      handleReset();
+
+      if (!form.otro) {
+        handleReset();
+      }
     } else {
       enqueueSnackbar(result.message, { variant: "error" });
       setErrorSummary(result.errors);
     }
-    refreshNumeracion();
   };
 
   const validationSchema = yup.object().shape({

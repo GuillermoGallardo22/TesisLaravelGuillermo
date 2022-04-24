@@ -1,7 +1,9 @@
 import LoadingButton from "@mui/lab/LoadingButton";
 import Autocomplete from "@mui/material/Autocomplete";
 import Box from "@mui/material/Box";
+import Checkbox from "@mui/material/Checkbox";
 import CircularProgress from "@mui/material/CircularProgress";
+import FormControlLabel from "@mui/material/FormControlLabel";
 import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
 import InputAdornment from "@mui/material/InputAdornment";
@@ -196,6 +198,7 @@ export default function AddDocumento() {
             <Autocomplete
               fullWidth
               id="autocomplete-procesos"
+              disabled={submitting}
               open={isOpenPRO}
               onOpen={openModalPRO}
               onClose={closeModalPRO}
@@ -245,7 +248,7 @@ export default function AddDocumento() {
             <Autocomplete
               fullWidth
               id="plantilla"
-              disabled={!valuePRO}
+              disabled={!valuePRO || submitting}
               open={isOpenPLA}
               onOpen={openModalPLA}
               onClose={closeModalPLA}
@@ -293,6 +296,7 @@ export default function AddDocumento() {
             <Autocomplete
               fullWidth
               id="autocomplete-estudiante"
+              disabled={submitting}
               open={isOpenEST}
               onOpen={openModalEST}
               onClose={closeModalEST}
@@ -341,6 +345,7 @@ export default function AddDocumento() {
           <Grid item xs={12}>
             <TextField
               fullWidth
+              disabled={submitting}
               multiline
               rows={4}
               margin="normal"
@@ -357,6 +362,23 @@ export default function AddDocumento() {
                 formik.touched.descripcion && formik.errors.descripcion
               }
             />
+          </Grid>
+
+          <Grid item xs={12}>
+            <Box>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    id="otro"
+                    name="otro"
+                    disabled={submitting}
+                    checked={formik.values.otro}
+                    onChange={formik.handleChange}
+                  />
+                }
+                label="Crear otro"
+              />
+            </Box>
           </Grid>
 
           {errorSummary && <ErrorSummary errors={errorSummary} />}
