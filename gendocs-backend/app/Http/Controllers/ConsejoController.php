@@ -95,6 +95,15 @@ class ConsejoController extends Controller
         return ResourceObject::make($consejo);
     }
 
+    public function cerrar(Consejo $consejo)
+    {
+        $consejo->update([
+            'estado' => false,
+        ]);
+
+        return ResourceObject::make($consejo);
+    }
+
     public function destroy(Consejo $consejo)
     {
         if (!$consejo->estado) {

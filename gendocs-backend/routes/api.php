@@ -35,13 +35,14 @@ Route::middleware(["auth:sanctum", "isUserActive"])->group(function () {
     Route::apiResource('estudiantes', EstudianteController::class)->except(['destroy']);
     Route::apiResource('procesos', ProcesoController::class)->except(['destroy']);
     Route::apiResource('plantillas', PlantillasController::class)->except(['destroy']);
-    Route::apiResource('consejos', ConsejoController::class);
     Route::apiResource('tipo-consejos', TipoConsejoController::class)->only(['index']);
     Route::apiResource('documentos', DocumentoController::class)->except(['show', 'update']);
     Route::apiResource('numeracion', NumeracionController::class)->only(['index', 'store']);
     Route::apiResource('miembros', MiembroController::class)->except(['show', 'update']);
     Route::apiResource('batch', BatchController::class)->only(['show']);
     Route::apiResource("plantillas-globales", PlantillasGlobalesController::class)->only(['index']);
+    Route::apiResource('consejos', ConsejoController::class);
+    Route::patch('consejos/{consejo}/cerrar', [ConsejoController::class, 'cerrar']);
 
     Route::apiResource('actas', ActaController::class)->only(['index', 'store', 'show']);
     Route::put('actas/{acta}/plantilla', [ActaController::class, 'crearPlantilla']);
