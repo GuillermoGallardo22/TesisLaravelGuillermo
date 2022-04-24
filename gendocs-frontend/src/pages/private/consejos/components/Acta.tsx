@@ -1,13 +1,21 @@
 import LoadingButton from "@mui/lab/LoadingButton";
-import { Button } from "@mui/material";
 import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import DialogContentText from "@mui/material/DialogContentText";
 import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
-import { Icon, LinearProgressWithLabel, Skeleton, TitleNav } from "components";
+import {
+  ConfirmationDialog,
+  Icon,
+  LinearProgressWithLabel,
+  Skeleton,
+  TitleNav,
+} from "components";
+import { useConfirmationDialog } from "hooks";
 import { HTTP_STATUS } from "models/enums";
 import { IActa, IConsejo } from "models/interfaces";
 import { useSnackbar } from "notistack";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useQuery, useQueryClient } from "react-query";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import {
@@ -59,6 +67,9 @@ export const ActaBase: React.FunctionComponent<ActaBaseProps> = ({
   const [processing, setProcessing] = useState(false);
   const [generatingPlantilla, setGeneratingPlantilla] = useState(false);
   const [enableRefetchBatch, setEnableRefetchBatch] = useState(false);
+  const [wasApproved, setWasApproved] = useState(false);
+
+  const { openJustModal, isVisible, closeModal } = useConfirmationDialog();
 
   const procesarDocumentosActa = () => {
     setProcessing(true);
@@ -79,24 +90,14 @@ export const ActaBase: React.FunctionComponent<ActaBaseProps> = ({
 
   const generatePlantillaActa = () => {
     if (!acta) return;
-    setGeneratingPlantilla(true);
-    crearPlantillaActa(acta.id)
-      .then((result) => {
-        if (result.status === HTTP_STATUS.ok) {
-          queryClient.invalidateQueries([
-            "acta",
-            { batch_id: consejo.acta?.batch },
-          ]);
-          enqueueSnackbar(result.message, { variant: "success" });
-        } else {
-          enqueueSnackbar(result.message, {
-            variant: "error",
-          });
-        }
-      })
-      .finally(() => {
-        setGeneratingPlantilla(false);
-      });
+    if (acta.drive && !wasApproved) {
+      openJustModal();
+      return;
+    }
+    if (!acta.drive) {
+      setWasApproved(true);
+      return;
+    }
   };
 
   const { data: acta } = useQuery(
@@ -137,62 +138,111 @@ export const ActaBase: React.FunctionComponent<ActaBaseProps> = ({
     [acta, generatingPlantilla]
   );
 
+  useEffect(() => {
+    if (!wasApproved) return;
+    if (!acta) return;
+
+    setWasApproved(false);
+
+    setGeneratingPlantilla(true);
+    crearPlantillaActa(acta.id)
+      .then((result) => {
+        if (result.status === HTTP_STATUS.ok) {
+          queryClient.invalidateQueries([
+            "acta",
+            { batch_id: consejo.acta?.batch },
+          ]);
+          enqueueSnackbar(result.message, { variant: "success" });
+        } else {
+          enqueueSnackbar(result.message, {
+            variant: "error",
+          });
+        }
+      })
+      .finally(() => {
+        setGeneratingPlantilla(false);
+      });
+  }, [isVisible, wasApproved]);
+
   return (
-    <Stack spacing={2}>
-      <TitleNav title="Acta" />
+    <>
+      <Stack spacing={2}>
+        <TitleNav title="Acta" />
 
-      <Box>
-        <Grid container columns={{ xs: 1, sm: 2 }} spacing={2}>
-          <Grid item xs={1}>
-            <LoadingButton
-              fullWidth
-              loading={generating || processing}
-              // loadingPosition="center"
-              startIcon={<Icon icon="settings" />}
-              onClick={procesarDocumentosActa}
-              variant="outlined"
-            >
-              Procesar documentos
-            </LoadingButton>
-          </Grid>
-          <Grid item xs={1}>
-            <LoadingButton
-              fullWidth
-              disabled={!acta}
-              loading={generatingPlantilla}
-              // loadingPosition="center"
-              startIcon={<Icon icon="settings" />}
-              onClick={generatePlantillaActa}
-              variant="outlined"
-            >
-              Generar plantilla acta
-            </LoadingButton>
-          </Grid>
-        </Grid>
-      </Box>
-
-      {generating && (
         <Box>
-          <LinearProgressWithLabel value={batch?.progress || 0} />
+          <Grid container columns={{ xs: 1, sm: 2 }} spacing={2}>
+            <Grid item xs={1}>
+              <LoadingButton
+                fullWidth
+                loading={generating || processing}
+                // loadingPosition="center"
+                startIcon={<Icon icon="settings" />}
+                onClick={procesarDocumentosActa}
+                variant="outlined"
+              >
+                Procesar documentos
+              </LoadingButton>
+            </Grid>
+            <Grid item xs={1}>
+              <LoadingButton
+                fullWidth
+                disabled={!acta}
+                loading={generatingPlantilla}
+                // loadingPosition="center"
+                startIcon={<Icon icon="settings" />}
+                onClick={generatePlantillaActa}
+                variant="outlined"
+              >
+                Generar plantilla acta
+              </LoadingButton>
+            </Grid>
+          </Grid>
         </Box>
-      )}
 
-      <DownloadActa
-        acta={acta}
-        disabled={processing || generating || loadingBatch}
-      />
+        {generating && (
+          <Box>
+            <LinearProgressWithLabel value={batch?.progress || 0} />
+          </Box>
+        )}
 
-      <Button
-        fullWidth
-        component={Link}
-        to={"drive/" + acta?.drive}
-        disabled={!canSeeActa}
-        startIcon={<Icon icon="article" />}
-        variant="outlined"
+        <DownloadActa
+          acta={acta}
+          disabled={processing || generating || loadingBatch}
+        />
+
+        <Button
+          fullWidth
+          component={Link}
+          to={"drive/" + acta?.drive}
+          disabled={!canSeeActa}
+          startIcon={<Icon icon="article" />}
+          variant="outlined"
+        >
+          Ver Acta
+        </Button>
+      </Stack>
+
+      <ConfirmationDialog
+        id="regenerate-template-acta-modal"
+        keepMounted={true}
+        isVisible={isVisible}
+        title="Advertencia"
+        onCancel={() => {
+          setWasApproved(false);
+          closeModal();
+        }}
+        onApprove={() => {
+          setWasApproved(true);
+          closeModal();
+        }}
+        buttonColorApprove="error"
       >
-        Ver Acta
-      </Button>
-    </Stack>
+        <DialogContentText>
+          ¿Está seguro que desea volver a generar la plantilla del acta?, esta
+          acción sobreescribe la plantilla actualmente generada
+        </DialogContentText>
+      </ConfirmationDialog>
+    </>
   );
 };
 
