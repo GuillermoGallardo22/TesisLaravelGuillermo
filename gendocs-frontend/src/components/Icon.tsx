@@ -16,12 +16,14 @@ import FactCheckIcon from "@mui/icons-material/FactCheck";
 import GroupAddIcon from "@mui/icons-material/GroupAdd";
 import GroupsIcon from "@mui/icons-material/Groups";
 import HailIcon from "@mui/icons-material/Hail";
+import HistoryEduIcon from "@mui/icons-material/HistoryEdu";
 import HomeIcon from "@mui/icons-material/Home";
 import ListIcon from "@mui/icons-material/List";
 import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
 import MenuIcon from "@mui/icons-material/Menu";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
 import NumbersIcon from "@mui/icons-material/Numbers";
+import PlaylistAddCheckIcon from "@mui/icons-material/PlaylistAddCheck";
 import SchoolIcon from "@mui/icons-material/School";
 import SecurityIcon from "@mui/icons-material/Security";
 import SettingsIcon from "@mui/icons-material/Settings";
@@ -61,7 +63,9 @@ export type IconTypes =
   | "menuBook"
   | "download"
   | "arrowBack"
-  | "settings";
+  | "settings"
+  | "historyEdu"
+  | "playlistAddCheck";
 
 const ICONS = {
   article: ArticleIcon,
@@ -93,6 +97,8 @@ const ICONS = {
   download: DownloadIcon,
   arrowBack: ArrowBackIcon,
   settings: SettingsIcon,
+  historyEdu: HistoryEduIcon,
+  playlistAddCheck: PlaylistAddCheckIcon,
 };
 
 interface IconProps {

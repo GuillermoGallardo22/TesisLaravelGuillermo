@@ -122,7 +122,7 @@ export default function Consejos() {
             to={p.row?.id + "/asistencia"}
             icon={
               <Tooltip title="Asistencia" arrow>
-                <Icon icon="groups" />
+                <Icon icon="playlistAddCheck" />
               </Tooltip>
             }
           />,
@@ -134,7 +134,7 @@ export default function Consejos() {
             to={p.row?.id + "/acta"}
             icon={
               <Tooltip title="Acta" arrow>
-                <Icon icon="menuBook" />
+                <Icon icon="historyEdu" />
               </Tooltip>
             }
           />,
