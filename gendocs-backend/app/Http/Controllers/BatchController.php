@@ -25,7 +25,7 @@ class BatchController extends Controller
 
         if (!$batch) return response()->noContent(Response::HTTP_NOT_FOUND);
 
-        return Bus::findBatch($id);
+        return $batch;
     }
 
     public function update(Request $request, $id)

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Query\Builder;
+use Illuminate\Support\Facades\Bus;
 
 class Acta extends Model
 {
@@ -29,9 +30,15 @@ class Acta extends Model
     {
         return [
             'id' => $this->id,
-            'consejo' => $this->consejo_id,
-            'batch' => $this->batch,
+            'consejo' => $this->consejo,
+            'batch' => $this->getBatch(),
+            'drive' => $this->archivo?->google_drive_id,
         ];
+    }
+
+    public function archivo()
+    {
+        return $this->morphOne(DriveApi::class, 'model');
     }
 
     public function consejo()
@@ -42,5 +49,10 @@ class Acta extends Model
     public function scopeConsejo(Builder $query, $value)
     {
         return $query->where('consejo_id', $value)->first();
+    }
+
+    public function getBatch()
+    {
+        return Bus::findBatch($this->batch);
     }
 }

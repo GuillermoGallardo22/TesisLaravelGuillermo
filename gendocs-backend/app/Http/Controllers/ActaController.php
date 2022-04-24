@@ -45,7 +45,7 @@ class ActaController extends Controller
 
     public function show(Acta $acta)
     {
-        //
+        return ResourceObject::make($acta);
     }
 
     public function update(UpdateActaRequest $request, Acta $acta)
