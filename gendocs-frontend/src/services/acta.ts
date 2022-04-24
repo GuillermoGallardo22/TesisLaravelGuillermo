@@ -1,14 +1,8 @@
 import axios from "axios";
 import { saveAs } from "file-saver";
 import { HTTP_STATUS } from "models/enums";
-import { IBatch, IResponse } from "models/interfaces";
+import { IActa, IResponse } from "models/interfaces";
 import { handleErrors, HTTP_MESSAGES } from "utils";
-
-interface IActa {
-  id: number;
-  consejo: number;
-  batch: IBatch;
-}
 
 export async function createActa(
   consejoId: string | number
@@ -22,6 +16,24 @@ export async function createActa(
       data: data,
       message: HTTP_MESSAGES[HTTP_STATUS.created],
       status: HTTP_STATUS.created,
+    };
+  } catch (error) {
+    return handleErrors(error);
+  }
+}
+
+export async function createPlantillaActa(
+  actaId: string | number
+): Promise<IResponse<IActa>> {
+  try {
+    const {
+      data: { data },
+    } = await axios.put(`actas/${actaId}/plantilla`);
+
+    return {
+      data: data,
+      message: HTTP_MESSAGES[HTTP_STATUS.ok],
+      status: HTTP_STATUS.ok,
     };
   } catch (error) {
     return handleErrors(error);
@@ -49,5 +61,20 @@ export async function descargarActa(
   } catch (error) {
     console.error(error);
     return handleErrors(error, false);
+  }
+}
+
+export async function getActaById(
+  actaId: number | string
+): Promise<IResponse<IActa>> {
+  try {
+    const { data } = await axios.get("actas/" + actaId);
+    return {
+      status: HTTP_STATUS.ok,
+      data: data.data,
+      message: "",
+    };
+  } catch (error) {
+    return handleErrors(error);
   }
 }

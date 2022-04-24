@@ -220,8 +220,19 @@ export const routes: IRoute[] = [
           },
           {
             path: "acta",
-            component: Acta,
+            component: Outlet,
             roles: [RolEnum.ADMIN, RolEnum.ADMINTEMP],
+            childrens: [
+              {
+                path: "drive/:driveId",
+                component: DriveTemplate,
+              },
+              {
+                path: "",
+                component: Acta,
+                isIndex: true,
+              },
+            ],
           },
           {
             path: "",

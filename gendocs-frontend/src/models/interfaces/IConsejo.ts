@@ -6,7 +6,11 @@ export interface IConsejo {
   fecha: string;
   estado: boolean;
   tipo_consejo: number | ITipoConsejo;
-  acta: IActa | null;
+  acta: IConsejoActa | null;
+}
+
+interface IConsejoActa extends Omit<IActa, "batch" | "drive"> {
+  batch: string;
 }
 
 export interface IConsejoForm {
@@ -18,9 +22,10 @@ export interface IConsejoForm {
 
 export interface IActa {
   id: number;
-  batch: string;
+  batch: IBatch;
   outputPath: string;
   consejo_id: number;
+  drive: string | null;
 }
 
 export interface IBatch {

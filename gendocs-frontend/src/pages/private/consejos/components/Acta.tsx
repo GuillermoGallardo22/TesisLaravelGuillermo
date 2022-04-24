@@ -1,13 +1,23 @@
 import LoadingButton from "@mui/lab/LoadingButton";
+import { Button } from "@mui/material";
+import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
 import { Icon, LinearProgressWithLabel, Skeleton, TitleNav } from "components";
 import { HTTP_STATUS } from "models/enums";
 import { IActa, IConsejo } from "models/interfaces";
 import { useSnackbar } from "notistack";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { useQuery, useQueryClient } from "react-query";
-import { useNavigate, useParams } from "react-router-dom";
-import { createActa, descargarActa, getBatch, getConsejo } from "services";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import {
+  createActa as procesarDocumentos,
+  createPlantillaActa as crearPlantillaActa,
+  descargarActa,
+  getActaById,
+  getBatch,
+  getConsejo,
+} from "services";
 
 export default function Acta() {
   const { consejoId = "" } = useParams<{ consejoId: string }>();
@@ -46,11 +56,13 @@ export const ActaBase: React.FunctionComponent<ActaBaseProps> = ({
 }) => {
   const queryClient = useQueryClient();
   const { enqueueSnackbar } = useSnackbar();
-  const [submitting, setSubmitting] = useState(false);
+  const [processing, setProcessing] = useState(false);
+  const [generatingPlantilla, setGeneratingPlantilla] = useState(false);
+  const [enableRefetchBatch, setEnableRefetchBatch] = useState(false);
 
-  const generateActa = () => {
-    setSubmitting(true);
-    createActa(consejo.id)
+  const procesarDocumentosActa = () => {
+    setProcessing(true);
+    procesarDocumentos(consejo.id)
       .then((result) => {
         if (result.status === HTTP_STATUS.created) {
           queryClient.invalidateQueries(["consejo", { id: consejo.id }]);
@@ -62,82 +74,142 @@ export const ActaBase: React.FunctionComponent<ActaBaseProps> = ({
           });
         }
       })
-      .finally(() => setSubmitting(false));
+      .finally(() => setProcessing(false));
   };
 
-  //
-  const [refetch, setRefetch] = useState(true);
+  const generatePlantillaActa = () => {
+    if (!acta) return;
+    setGeneratingPlantilla(true);
+    crearPlantillaActa(acta.id)
+      .then((result) => {
+        if (result.status === HTTP_STATUS.ok) {
+          queryClient.invalidateQueries([
+            "acta",
+            { batch_id: consejo.acta?.batch },
+          ]);
+          enqueueSnackbar(result.message, { variant: "success" });
+        } else {
+          enqueueSnackbar(result.message, {
+            variant: "error",
+          });
+        }
+      })
+      .finally(() => {
+        setGeneratingPlantilla(false);
+      });
+  };
 
-  const { data: batch } = useQuery(
-    ["batch", consejo.acta?.batch],
+  const { data: acta } = useQuery(
+    ["acta", { batch_id: consejo.acta?.batch }],
     () =>
-      getBatch(consejo.acta?.batch || "").then((r) => {
+      getActaById(consejo.acta?.id as number).then((r) => {
+        if (r.data.batch.progress !== GenerationStates.COMPLETED)
+          setEnableRefetchBatch(true);
         return r.data;
       }),
     {
-      enabled: refetch && Boolean(consejo.acta),
+      enabled: Boolean(consejo.acta),
+    }
+  );
+
+  const { data: batch, isLoading: loadingBatch } = useQuery(
+    ["batch", { id: acta?.batch.id }],
+    () =>
+      getBatch(acta?.batch.id as string).then((r) => {
+        if (r.data.progress === GenerationStates.COMPLETED)
+          setEnableRefetchBatch(false);
+        return r.data;
+      }),
+    {
+      enabled: enableRefetchBatch && Boolean(acta),
       refetchInterval: 1500,
     }
   );
 
-  useEffect(() => {
-    if (!batch) {
-      setRefetch(true);
-      return;
-    }
-    if (batch && batch.pendingJobs === 0) {
-      setRefetch(false);
-    }
-  }, [batch]);
-
   const generating = useMemo(
     (): boolean =>
-      Boolean(consejo.acta) &&
-      batch?.progress !== GenerationStates.COMPLETED &&
-      !submitting,
-    [batch?.progress, submitting]
+      Boolean(batch && batch.progress !== GenerationStates.COMPLETED),
+    [batch]
   );
 
-  const canDownloadActa = useMemo(
-    () =>
-      Boolean(
-        !generating &&
-          !submitting &&
-          consejo.acta &&
-          batch?.progress === GenerationStates.COMPLETED
-      ),
-    [batch, submitting, consejo.acta, generating]
+  const canSeeActa = useMemo(
+    (): boolean => Boolean(acta?.drive) && !generatingPlantilla,
+    [acta, generatingPlantilla]
   );
 
   return (
     <Stack spacing={2}>
-      <TitleNav title="Generar acta" />
+      <TitleNav title="Acta" />
 
-      <LoadingButton
-        loading={generating || submitting}
-        loadingPosition="center"
-        startIcon={<Icon icon="add" />}
-        onClick={generateActa}
+      <Box>
+        <Grid container columns={{ xs: 1, sm: 2 }} spacing={2}>
+          <Grid item xs={1}>
+            <LoadingButton
+              fullWidth
+              loading={generating || processing}
+              // loadingPosition="center"
+              startIcon={<Icon icon="settings" />}
+              onClick={procesarDocumentosActa}
+              variant="outlined"
+            >
+              Procesar documentos
+            </LoadingButton>
+          </Grid>
+          <Grid item xs={1}>
+            <LoadingButton
+              fullWidth
+              disabled={!acta}
+              loading={generatingPlantilla}
+              // loadingPosition="center"
+              startIcon={<Icon icon="settings" />}
+              onClick={generatePlantillaActa}
+              variant="outlined"
+            >
+              Generar plantilla acta
+            </LoadingButton>
+          </Grid>
+        </Grid>
+      </Box>
+
+      {generating && (
+        <Box>
+          <LinearProgressWithLabel value={batch?.progress || 0} />
+        </Box>
+      )}
+
+      <DownloadActa
+        acta={acta}
+        disabled={processing || generating || loadingBatch}
+      />
+
+      <Button
+        fullWidth
+        component={Link}
+        to={"drive/" + acta?.drive}
+        disabled={!canSeeActa}
+        startIcon={<Icon icon="article" />}
         variant="outlined"
       >
-        Generar acta
-      </LoadingButton>
-
-      {generating && <LinearProgressWithLabel value={batch?.progress || 0} />}
-
-      {canDownloadActa && <DownloadActa acta={consejo.acta as IActa} />}
+        Ver Acta
+      </Button>
     </Stack>
   );
 };
 
 type DownloadActaProps = {
-  acta: IActa;
+  acta: IActa | undefined;
+  disabled: boolean;
 };
-const DownloadActa: React.FunctionComponent<DownloadActaProps> = ({ acta }) => {
+const DownloadActa: React.FunctionComponent<DownloadActaProps> = ({
+  acta,
+  disabled,
+}) => {
   const [downloading, setDownloading] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
 
   const _descargarActa = async () => {
+    if (!acta) return;
+
     setDownloading(true);
     const result = await descargarActa(acta.id);
 
@@ -150,16 +222,22 @@ const DownloadActa: React.FunctionComponent<DownloadActaProps> = ({ acta }) => {
     setDownloading(false);
   };
 
+  const canDownloadActa = useMemo(
+    () => Boolean(acta) && !disabled,
+    [acta, disabled]
+  );
+
   return (
     <LoadingButton
+      disabled={!canDownloadActa}
       loading={downloading}
-      loadingPosition="center"
+      // loadingPosition="center"
       startIcon={<Icon icon="download" />}
       onClick={_descargarActa}
       variant="outlined"
       color="success"
     >
-      Descargar acta
+      Descargar documentos
     </LoadingButton>
   );
 };
