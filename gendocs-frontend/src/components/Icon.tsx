@@ -24,8 +24,11 @@ import MenuBookIcon from "@mui/icons-material/MenuBook";
 import NumbersIcon from "@mui/icons-material/Numbers";
 import SchoolIcon from "@mui/icons-material/School";
 import SecurityIcon from "@mui/icons-material/Security";
+import SettingsIcon from "@mui/icons-material/Settings";
 import TopicIcon from "@mui/icons-material/Topic";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
+import { SvgIcon } from "@mui/material";
+import { forwardRef } from "react";
 
 export type IconTypes =
   | "article"
@@ -57,43 +60,49 @@ export type IconTypes =
   | "factCheck"
   | "menuBook"
   | "download"
-  | "arrowBack";
+  | "arrowBack"
+  | "settings";
 
 const ICONS = {
-  article: <ArticleIcon />,
-  edit: <EditIcon />,
-  add: <AddIcon />,
-  move: <DriveFileMoveIcon />,
-  home: <HomeIcon />,
-  list: <ListIcon />,
-  school: <SchoolIcon />,
-  groupAdd: <GroupAddIcon />,
-  exitToApp: <ExitToAppIcon />,
-  menu: <MenuIcon />,
-  chevronLeft: <ChevronLeftIcon />,
-  expandMore: <ExpandMoreIcon />,
-  security: <SecurityIcon />,
-  groups: <GroupsIcon />,
-  meetingRoom: <MeetingRoomIcon />,
-  delete: <DeleteIcon />,
-  accountCircle: <AccountCircleIcon />,
-  topic: <TopicIcon />,
-  autorenew: <AutorenewIcon />,
-  numbers: <NumbersIcon />,
-  whatsApp: <WhatsAppIcon />,
-  email: <EmailIcon />,
-  apartment: <ApartmentIcon />,
-  hail: <HailIcon />,
-  factCheck: <FactCheckIcon />,
-  menuBook: <MenuBookIcon />,
-  download: <DownloadIcon />,
-  arrowBack: <ArrowBackIcon />,
+  article: ArticleIcon,
+  edit: EditIcon,
+  add: AddIcon,
+  move: DriveFileMoveIcon,
+  home: HomeIcon,
+  list: ListIcon,
+  school: SchoolIcon,
+  groupAdd: GroupAddIcon,
+  exitToApp: ExitToAppIcon,
+  menu: MenuIcon,
+  chevronLeft: ChevronLeftIcon,
+  expandMore: ExpandMoreIcon,
+  security: SecurityIcon,
+  groups: GroupsIcon,
+  meetingRoom: MeetingRoomIcon,
+  delete: DeleteIcon,
+  accountCircle: AccountCircleIcon,
+  topic: TopicIcon,
+  autorenew: AutorenewIcon,
+  numbers: NumbersIcon,
+  whatsApp: WhatsAppIcon,
+  email: EmailIcon,
+  apartment: ApartmentIcon,
+  hail: HailIcon,
+  factCheck: FactCheckIcon,
+  menuBook: MenuBookIcon,
+  download: DownloadIcon,
+  arrowBack: ArrowBackIcon,
+  settings: SettingsIcon,
 };
 
 interface IconProps {
   icon: IconTypes;
 }
 
-const Icon: React.FC<IconProps> = ({ icon }) => ICONS[icon];
+const Icon = forwardRef<any, IconProps>(({ icon, ...props }, ref) => (
+  <SvgIcon ref={ref} {...props} component={ICONS[icon]} />
+));
+
+Icon.displayName = "Custom-Icon-Component";
 
 export default Icon;
