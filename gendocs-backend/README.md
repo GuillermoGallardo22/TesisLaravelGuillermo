@@ -63,3 +63,17 @@
 |     {{NUMDOC}}      |           0001           |
 |     {{SESION}}      |        Ordinaria         |
 |   {{RESPONSABLE}}   |     Guillermo Barcia     |
+|     {{FECHA_U}}     |   16 DE JULIO DE 2021    |
+|    {{SESIONUP}}     |        ORDINARIA         |
+|    {{SESION_L}}     |        ordinaria         |
+|     {{NUMACT}}      |           001            |
+|        {{Y}}        |           2022           |
+|    {{DIASEM_T}}     |         VIERNES          |
+|   {{NUMMES_T_U}}    |          JULIO           |
+|     {{MES_T_L}}     |          julio           |
+|    {{NUMDIA_T}}     |       VEINTICINCO        |
+|    {{NUMANIO_T}}    |    DOS MIL VEINTIUNO     |
+|   {{NUMANIO_T_L}}   |    dos mil veintiuno     |
+|     {{DIAS_T}}      |     veinticinco días     |
+|    {{HORA_T_L}}     |           ocho           |
+|   {{MINUTOS_T_L}}   |         treinta          |
