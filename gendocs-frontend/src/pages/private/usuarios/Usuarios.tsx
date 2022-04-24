@@ -1,14 +1,19 @@
 import Button from "@mui/material/Button";
-import IconButton from "@mui/material/IconButton";
 import Stack from "@mui/material/Stack";
-import { DataGrid, GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
+import Tooltip from "@mui/material/Tooltip";
+import {
+  DataGrid,
+  GridActionsCellItem,
+  GridColumns,
+  GridRenderCellParams,
+} from "@mui/x-data-grid";
 import { ChipStatus, Icon, TitleNav } from "components";
 import { IUser } from "models/interfaces";
 import { useCallback, useEffect, useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import { getUsers } from "services";
 
-const columns: GridColDef[] = [
+const columns: GridColumns = [
   { field: "name", headerName: "Nombre", flex: 1 },
   { field: "email", headerName: "Correo (UTA)", flex: 1 },
   { field: "email_gmail", headerName: "Correo (GMAIL)", flex: 1 },
@@ -21,13 +26,23 @@ const columns: GridColDef[] = [
     ),
   },
   {
-    field: "id",
+    type: "actions",
+    field: "acciones",
     headerName: "Acciones",
-    renderCell: (item: GridRenderCellParams) => (
-      <IconButton color="primary" component={RouterLink} to={item.value + ""}>
-        <Icon icon="edit" />
-      </IconButton>
-    ),
+    getActions: (p) => [
+      <GridActionsCellItem
+        key={p.id}
+        color="primary"
+        icon={
+          <Tooltip title="Editar" arrow>
+            <Icon icon="edit" />
+          </Tooltip>
+        }
+        label="Editar"
+        LinkComponent={RouterLink}
+        to={`${p.row.id}`}
+      />,
+    ],
   },
 ];
 

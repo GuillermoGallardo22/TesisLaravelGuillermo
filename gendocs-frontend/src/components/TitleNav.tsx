@@ -1,4 +1,5 @@
 import { Box, Divider, IconButton } from "@mui/material";
+import Tooltip from "@mui/material/Tooltip";
 import { useNavigate } from "react-router-dom";
 import Icon from "./Icon";
 import Title from "./Title";
@@ -27,9 +28,11 @@ export const TitleNav: React.FunctionComponent<TitleNavProps> = ({
         <Title>{title}</Title>
 
         {goback && (
-          <IconButton onClick={() => navigate(-1)}>
-            <Icon icon="arrowBack" />
-          </IconButton>
+          <Tooltip title="Regresar" arrow>
+            <IconButton onClick={() => navigate(-1)}>
+              <Icon icon="arrowBack" />
+            </IconButton>
+          </Tooltip>
         )}
       </Box>
       <Box>

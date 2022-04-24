@@ -1,5 +1,6 @@
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
+import Tooltip from "@mui/material/Tooltip";
 import {
   DataGrid,
   GridActionsCellItem,
@@ -26,7 +27,11 @@ const columns: GridColumns = [
       <GridActionsCellItem
         key={p.id}
         color="primary"
-        icon={<Icon icon="edit" />}
+        icon={
+          <Tooltip title="Editar" arrow>
+            <Icon icon="edit" />
+          </Tooltip>
+        }
         label="Editar"
         LinkComponent={RouterLink}
         to={p.row.id + ""}

@@ -1,6 +1,7 @@
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
+import Tooltip from "@mui/material/Tooltip";
 import { GridActionsCellItem, GridColumns } from "@mui/x-data-grid";
 import { DataGrid, GridToolbarColumns, Icon, TitleNav } from "components";
 import { useFilterPagination, useGridColumnVisibilityModel } from "hooks";
@@ -26,7 +27,11 @@ const columns: GridColumns = [
       <GridActionsCellItem
         key={p.id}
         color="primary"
-        icon={<Icon icon="edit" />}
+        icon={
+          <Tooltip title="Editar" arrow>
+            <Icon icon="edit" />
+          </Tooltip>
+        }
         label="Editar"
         LinkComponent={RouterLink}
         to={`${p.row.id}`}

@@ -1,5 +1,6 @@
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
+import Tooltip from "@mui/material/Tooltip";
 import {
   DataGrid,
   GridActionsCellItem,
@@ -46,7 +47,11 @@ export default function Carreras() {
             color="primary"
             LinkComponent={Link}
             to={`${p.row.id}`}
-            icon={<Icon icon="edit" />}
+            icon={
+              <Tooltip title="Editar" arrow>
+                <Icon icon="edit" />
+              </Tooltip>
+            }
             label="Editar"
           />,
           // <GridActionsCellItem

@@ -3,6 +3,7 @@ import Button from "@mui/material/Button";
 import DialogContentText from "@mui/material/DialogContentText";
 import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
+import Tooltip from "@mui/material/Tooltip";
 import {
   DataGrid,
   GridActionsCellItem,
@@ -99,14 +100,22 @@ export default function Documentos() {
             target="_blank"
             rel="noopener noreferrer"
             sx={{ color: "#009380" }}
-            icon={<Icon icon="whatsApp" />}
+            icon={
+              <Tooltip title="WhatsApp" arrow>
+                <Icon icon="whatsApp" />
+              </Tooltip>
+            }
             label="Notificar vía WhatsApp"
           />,
           <GridActionsCellItem
             key={p.id}
             disabled={!p.row?.estudiante?.correo_uta}
             color="primary"
-            icon={<Icon icon="email" />}
+            icon={
+              <Tooltip title="Correo" arrow>
+                <Icon icon="email" />
+              </Tooltip>
+            }
             label="Notificar vía correo institucional"
           />,
         ],
@@ -122,13 +131,21 @@ export default function Documentos() {
             LinkComponent={Link}
             disabled={!p.row.drive}
             to={`drive/${p.row.drive}`}
-            icon={<Icon icon="article" />}
+            icon={
+              <Tooltip title="Ver documento" arrow>
+                <Icon icon="article" />
+              </Tooltip>
+            }
             label="Ver documento"
           />,
           <GridActionsCellItem
             key={p.id}
             color="error"
-            icon={<Icon icon="delete" />}
+            icon={
+              <Tooltip title="Eliminar" arrow>
+                <Icon icon="delete" />
+              </Tooltip>
+            }
             label="Eliminar documento"
             onClick={() => openModal(p.row as IDocumento)}
           />,
@@ -153,7 +170,11 @@ export default function Documentos() {
             <Button
               fullWidth
               component={Link}
-              startIcon={<Icon icon="add" />}
+              startIcon={
+                <Tooltip title="" arrow>
+                  <Icon icon="add" />
+                </Tooltip>
+              }
               to="nuevo"
               variant="outlined"
             >
@@ -164,7 +185,11 @@ export default function Documentos() {
             <Button
               fullWidth
               component={Link}
-              startIcon={<Icon icon="numbers" />}
+              startIcon={
+                <Tooltip title="" arrow>
+                  <Icon icon="numbers" />
+                </Tooltip>
+              }
               to="reservar"
               variant="outlined"
             >

@@ -5,6 +5,7 @@ import DialogContentText from "@mui/material/DialogContentText";
 import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
+import Tooltip from "@mui/material/Tooltip";
 import { GridActionsCellItem, GridColumns } from "@mui/x-data-grid";
 import {
   ChipStatus,
@@ -107,7 +108,11 @@ export default function Consejos() {
             label="Editar"
             LinkComponent={Link}
             to={p.row?.id + ""}
-            icon={<Icon icon="edit" />}
+            icon={
+              <Tooltip title="Editar" arrow>
+                <Icon icon="edit" />
+              </Tooltip>
+            }
           />,
           <GridActionsCellItem
             key={p.id}
@@ -115,7 +120,11 @@ export default function Consejos() {
             label="Asistencia"
             LinkComponent={Link}
             to={p.row?.id + "/asistencia"}
-            icon={<Icon icon="groups" />}
+            icon={
+              <Tooltip title="Asistencia" arrow>
+                <Icon icon="groups" />
+              </Tooltip>
+            }
           />,
           <GridActionsCellItem
             key={p.id}
@@ -123,14 +132,22 @@ export default function Consejos() {
             label="Acta"
             LinkComponent={Link}
             to={p.row?.id + "/acta"}
-            icon={<Icon icon="menuBook" />}
+            icon={
+              <Tooltip title="Acta" arrow>
+                <Icon icon="menuBook" />
+              </Tooltip>
+            }
           />,
           <GridActionsCellItem
             key={p.id}
             disabled={!p.row.estado}
             color="error"
             label="Eliminar"
-            icon={<Icon icon="delete" />}
+            icon={
+              <Tooltip title="Eliminar" arrow>
+                <Icon icon="delete" />
+              </Tooltip>
+            }
             onClick={() => openModal(p.row as IConsejo)}
           />,
         ],
@@ -175,7 +192,7 @@ export default function Consejos() {
                 fullWidth
                 component={Link}
                 startIcon={<Icon icon="article" />}
-                to={"plantilla-separador/"+plaActSep?.drive}
+                to={"plantilla-separador/" + plaActSep?.drive}
                 variant="outlined"
                 loading={loadingPlaActSep}
                 disabled={!plaActSep}
