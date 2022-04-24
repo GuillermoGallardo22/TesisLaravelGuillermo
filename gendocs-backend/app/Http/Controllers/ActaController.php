@@ -31,14 +31,14 @@ class ActaController extends Controller
     public function store(StoreActaRequest $request, ActaService $actaService)
     {
         try {
-        $validated = $request->validated();
-        $consejo = Consejo::find($validated['consejo']);
+            $validated = $request->validated();
+            $consejo = Consejo::find($validated['consejo']);
             $acta = $actaService->procesarDocumentos($consejo);
 
-        return ResourceObject::make($acta);
+            return ResourceObject::make($acta);
         } catch (\Exception $e) {
             return response()->json([
-                'error' => $e->getMessage(),
+                'errors' => $e->getMessage(),
             ], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
     }
@@ -75,5 +75,17 @@ class ActaController extends Controller
         $contentType = MimeType::DOCX;
 
         return Storage::download($dir . $file, pathinfo($file)['basename'], ["Content-Type: $contentType"]);
+    }
+
+    public function crearPlantilla(Acta $acta, ActaService $actaPlantillaService)
+    {
+        try {
+            $acta = $actaPlantillaService->generarPlantilla($acta);
+            return ResourceObject::make($acta);
+        } catch (\Exception $e) {
+            return response()->json([
+                'errors' => $e->getMessage(),
+            ], Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
     }
 }

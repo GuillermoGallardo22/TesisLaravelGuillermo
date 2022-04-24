@@ -3,15 +3,22 @@
 namespace App\Services;
 
 use App\Constants\MimeType;
+use App\Constants\Variables;
 use App\Jobs\GenerarActa;
 use App\Models\Acta;
 use App\Models\Consejo;
+use App\Models\Directorio;
 use App\Models\PlantillasGlobales;
+use App\Traits\ReplaceableDocText;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Bus;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
 class ActaService
 {
+    use ReplaceableDocText;
+
     protected GoogleDriveService $googleDriveService;
 
     public function __construct(GoogleDriveService $googleDriveService)
@@ -68,6 +75,7 @@ class ActaService
     {
         try {
             $consejo = $acta->consejo;
+            $tipoConsejo = $consejo->tipoConsejo;
 
             $documentoDrive = $this->googleDriveService->copyFile(
                 "ACTA-",
@@ -85,6 +93,41 @@ class ActaService
                         'google_drive_id' => $documentoDrive->id,
                     ]
                 );
+
+            $numActa = Directorio::activeDirectory()
+                ->consejos
+                ->where('estado', false)
+                ->count() + 1;
+
+            $now = now();
+
+            $fecha = $consejo->fecha;
+            $fecha->setTimeZone("America/Guayaquil");
+
+            $consejoData = [
+                Variables::FECHA => $this->formatDate($now),
+                Variables::RESPONSABLE => $consejo->responsable->docente->nombres,
+                //
+                Variables::NUMACT => $this->format_NUMACT($numActa),
+                Variables::FECHA_U => $this->format_FECHA_U($fecha),
+                Variables::SESIONUP => strtoupper($tipoConsejo->nombre),
+                Variables::SESION_L => mb_strtolower($tipoConsejo->nombre),
+                Variables::Y => $this->format_Y($now),
+                Variables::DIASEM_T => $this->format_DIASEM_T($now),
+                Variables::NUMMES_T_U => $this->format_NUMMES_T_U($now),
+                Variables::MES_T_L => $this->format_MES_T_L($now),
+                Variables::NUMDIA_T => $this->format_NUMDIA_T($now),
+                Variables::NUMANIO_T => $this->format_NUMANIO_T($now),
+                Variables::NUMANIO_T_L => $this->format_NUMANIO_T_L($now),
+                Variables::DIAS_T => $this->format_DIAS_T($now),
+                Variables::HORA_T_L => $this->converNumberToWords($fecha->hour),
+                Variables::MINUTOS_T_L => $this->converNumberToWords($fecha->minute),
+            ];
+
+            $this->googleDriveService->replaceTextOnDocument(
+                $consejoData,
+                $documentoDrive->id,
+            );
 
             return $acta;
         } catch (\Throwable $th) {
