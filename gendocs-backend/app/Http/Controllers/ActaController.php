@@ -10,6 +10,7 @@ use App\Http\Resources\ResourceObject;
 use App\Jobs\GenerarActa;
 use App\Models\Acta;
 use App\Models\Consejo;
+use App\Services\ActaService;
 use DocxMerge\DocxMerge;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Bus;
@@ -27,23 +28,19 @@ class ActaController extends Controller
         return ResourceCollection::make($query->get());
     }
 
-    public function store(StoreActaRequest $request)
+    public function store(StoreActaRequest $request, ActaService $actaService)
     {
+        try {
         $validated = $request->validated();
-
         $consejo = Consejo::find($validated['consejo']);
-
-        $acta = $consejo->acta;
-
-        $acta?->delete();
-
-        $acta = $consejo->acta()->updateOrCreate([
-            'consejo_id' => $consejo->id,
-        ], [
-            'consejo_id' => $consejo->id,
-        ]);
+            $acta = $actaService->procesarDocumentos($consejo);
 
         return ResourceObject::make($acta);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => $e->getMessage(),
+            ], Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
     }
 
     public function show(Acta $acta)

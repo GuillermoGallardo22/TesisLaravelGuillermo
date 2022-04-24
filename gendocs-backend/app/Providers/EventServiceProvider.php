@@ -47,6 +47,5 @@ class EventServiceProvider extends ServiceProvider
         Documento::observe(DocumentoObserver::class);
         Miembro::observe(MiembroObserver::class);
         PlantillasGlobales::observe(PlantillasGlobalesObserver::class);
-        Acta::observe(ActaObserver::class);
     }
 }
