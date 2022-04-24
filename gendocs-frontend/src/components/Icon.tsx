@@ -19,6 +19,7 @@ import HailIcon from "@mui/icons-material/Hail";
 import HistoryEduIcon from "@mui/icons-material/HistoryEdu";
 import HomeIcon from "@mui/icons-material/Home";
 import ListIcon from "@mui/icons-material/List";
+import LockIcon from "@mui/icons-material/Lock";
 import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
 import MenuIcon from "@mui/icons-material/Menu";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
@@ -65,7 +66,8 @@ export type IconTypes =
   | "arrowBack"
   | "settings"
   | "historyEdu"
-  | "playlistAddCheck";
+  | "playlistAddCheck"
+  | "lock";
 
 const ICONS = {
   article: ArticleIcon,
@@ -99,6 +101,7 @@ const ICONS = {
   settings: SettingsIcon,
   historyEdu: HistoryEduIcon,
   playlistAddCheck: PlaylistAddCheckIcon,
+  lock: LockIcon,
 };
 
 interface IconProps {

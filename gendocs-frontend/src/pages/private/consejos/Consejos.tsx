@@ -14,12 +14,17 @@ import {
   Icon,
   TitleNav,
 } from "components";
-import { useDeleteItem, useFilterPagination, usePlantillasGlob } from "hooks";
+import {
+  useConfirmationDialog,
+  useDeleteItem,
+  useFilterPagination,
+  usePlantillasGlob,
+} from "hooks";
 import { PlantillasGlobales } from "models/enums";
 import { IConsejo } from "models/interfaces";
 import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
-import { deleteConsejo, getConsejos } from "services";
+import { cerrarConsejo, deleteConsejo, getConsejos } from "services";
 import { parseToDateTime } from "utils";
 
 export default function Consejos() {
@@ -68,6 +73,22 @@ export default function Consejos() {
     },
   });
 
+  const {
+    isVisible: isVisibleC,
+    openModal: openModalC,
+    closeModal: closeModalC,
+    itemSelected: itemSelectedC,
+  } = useConfirmationDialog<IConsejo>();
+
+  const { deleting: closing, handleDelete: _cerrarConsejo } = useDeleteItem({
+    id: itemSelectedC?.id,
+    onDelete: cerrarConsejo,
+    callback: () => {
+      setToken(Date.now());
+      closeModalC();
+    },
+  });
+
   const columns = useMemo(
     (): GridColumns => [
       { field: "nombre", headerName: "Nombre", flex: 1 },
@@ -99,7 +120,7 @@ export default function Consejos() {
         type: "actions",
         field: "actions",
         headerName: "Acciones",
-        width: 200,
+        width: 205,
         getActions: (p) => [
           <GridActionsCellItem
             key={p.id}
@@ -137,6 +158,18 @@ export default function Consejos() {
                 <Icon icon="historyEdu" />
               </Tooltip>
             }
+          />,
+          <GridActionsCellItem
+            key={p.id}
+            disabled={!p.row.estado}
+            color="warning"
+            label="Cerrar"
+            icon={
+              <Tooltip title="Cerrar" arrow>
+                <Icon icon="lock" />
+              </Tooltip>
+            }
+            onClick={() => openModalC(p.row as IConsejo)}
           />,
           <GridActionsCellItem
             key={p.id}
@@ -232,6 +265,23 @@ export default function Consejos() {
           />
         </div>
       </Stack>
+
+      <ConfirmationDialog
+        id="close-consejo-modal"
+        keepMounted={true}
+        isVisible={isVisibleC}
+        title="Cerrar consejo"
+        onCancel={closeModalC}
+        onApprove={_cerrarConsejo}
+        textApprove="CERRAR"
+        buttonColorApprove="error"
+        loading={closing}
+      >
+        <DialogContentText>
+          ¿Está seguro que desea cerrar el consejo{" "}
+          <strong>{itemSelectedC?.nombre}</strong>?
+        </DialogContentText>
+      </ConfirmationDialog>
 
       <ConfirmationDialog
         id="delete-consejo-modal"

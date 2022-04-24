@@ -93,6 +93,24 @@ export async function updateConsejo(
   }
 }
 
+export async function cerrarConsejo(
+  consejoId: number
+): Promise<IResponse<IConsejo>> {
+  try {
+    const {
+      data: { data },
+    } = await axios.patch(`consejos/${consejoId}/cerrar`);
+
+    return {
+      data,
+      status: HTTP_STATUS.ok,
+      message: HTTP_MESSAGES[HTTP_STATUS.ok],
+    };
+  } catch (error) {
+    return handleErrors(error);
+  }
+}
+
 export async function deleteConsejo(
   id: string | number
 ): Promise<IResponse<IConsejo>> {

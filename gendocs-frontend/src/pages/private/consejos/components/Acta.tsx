@@ -164,6 +164,8 @@ export const ActaBase: React.FunctionComponent<ActaBaseProps> = ({
       });
   }, [isVisible, wasApproved]);
 
+  const canProcesarGenerarActa = useMemo(() => consejo.estado, [consejo]);
+
   return (
     <>
       <Stack spacing={2}>
@@ -175,7 +177,7 @@ export const ActaBase: React.FunctionComponent<ActaBaseProps> = ({
               <LoadingButton
                 fullWidth
                 loading={generating || processing}
-                // loadingPosition="center"
+                disabled={!canProcesarGenerarActa}
                 startIcon={<Icon icon="settings" />}
                 onClick={procesarDocumentosActa}
                 variant="outlined"
@@ -186,9 +188,8 @@ export const ActaBase: React.FunctionComponent<ActaBaseProps> = ({
             <Grid item xs={1}>
               <LoadingButton
                 fullWidth
-                disabled={!acta}
+                disabled={!acta || !canProcesarGenerarActa}
                 loading={generatingPlantilla}
-                // loadingPosition="center"
                 startIcon={<Icon icon="settings" />}
                 onClick={generatePlantillaActa}
                 variant="outlined"
