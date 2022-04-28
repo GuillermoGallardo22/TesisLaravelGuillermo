@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Consejo;
 use App\Models\Estudiante;
+use App\Models\Numeracion;
 use App\Models\Plantillas;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -23,12 +24,12 @@ class DocumentoFactory extends Factory
         $autor = User::inRandomOrder()->first();
 
         return [
-            'numero' => $this->faker->numberBetween(1, 99999),
+            'numero' => Numeracion::query()->siguiente(),
             'consejo_id' => $consejo->id,
             'plantilla_id' => $plantilla->id,
             'estudiante_id' => $estudiante->id,
             'autor_id' => $autor->id,
-            'descripcion' => $this->faker->optional()->sentence(15)
+            'descripcion' => $this->faker->optional()->words(5)
         ];
     }
 }
