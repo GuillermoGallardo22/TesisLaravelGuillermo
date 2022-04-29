@@ -143,6 +143,9 @@ return [
                 'estado' => 'No se puede eliminar el registro con el estado actual.',
                 'documentos' => 'No se puede eliminar el registro porque tiene documentos asignados.',
                 'numeracion' => 'No se puede eliminar el registro porque tiene números reservados asignados.'
+            ],
+            'close' => [
+                'documentos' => 'No se puede cerrar el consejo porque no tiene documentos asignados.',
             ]
         ],
         'user' => [

@@ -97,6 +97,12 @@ class ConsejoController extends Controller
 
     public function cerrar(Consejo $consejo)
     {
+        if (!$consejo->documentos()->exists()) {
+            return response()->json([
+                'errors' => trans('validation.custom.consejo.close.documentos')
+            ], ResponseAlias::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
         $consejo->update([
             'estado' => false,
         ]);
