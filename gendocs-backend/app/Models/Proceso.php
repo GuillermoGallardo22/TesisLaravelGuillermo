@@ -50,4 +50,9 @@ class Proceso extends Model
     {
         return $query->where('estado', '=', $filter);
     }
+
+    public function plantillas()
+    {
+        return $this->hasMany(Plantillas::class, 'proceso_id');
+    }
 }

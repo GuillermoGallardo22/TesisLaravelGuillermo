@@ -18,7 +18,7 @@ class ProcesoFactory extends Factory
 
         return [
             'nombre' => $this->faker->sentence(10),
-            'estado' => $this->faker->boolean(),
+            'estado' => $this->faker->boolean(80),
             'directorio_id' => $directorio->id,
             //
         ];

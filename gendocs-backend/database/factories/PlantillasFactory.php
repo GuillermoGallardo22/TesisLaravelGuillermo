@@ -18,7 +18,7 @@ class PlantillasFactory extends Factory
         return [
             'nombre' => $this->faker->sentence(4),
             'estado' => $this->faker->boolean(),
-            'proceso_id' => Proceso::inRandomOrder()->first()->id,
+            'proceso_id' => Proceso::where('estado', true)->inRandomOrder()->first()->id,
             'user_id' => User::inRandomOrder()->first()->id,
         ];
     }

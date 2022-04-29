@@ -6,6 +6,7 @@ use App\Models\Consejo;
 use App\Models\Estudiante;
 use App\Models\Numeracion;
 use App\Models\Plantillas;
+use App\Models\Proceso;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -19,7 +20,8 @@ class DocumentoFactory extends Factory
     public function definition()
     {
         $consejo = Consejo::where('estado', 1)->inRandomOrder()->first();
-        $plantilla = Plantillas::where('estado', 1)->inRandomOrder()->first();
+        $plantilla = Proceso::where('estado', true)->inRandomOrder()->first()
+            ->plantillas()->where('estado', true)->inRandomOrder()->first();
         $estudiante = Estudiante::inRandomOrder()->first();
         $autor = User::inRandomOrder()->first();
 
