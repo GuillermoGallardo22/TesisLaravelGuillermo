@@ -159,11 +159,7 @@ export default function Documentos() {
             <Button
               fullWidth
               component={Link}
-              startIcon={
-                <Tooltip title="" arrow>
-                  <Icon icon="add" />
-                </Tooltip>
-              }
+              startIcon={<Icon icon="add" />}
               to="nuevo"
               variant="outlined"
             >
@@ -174,11 +170,7 @@ export default function Documentos() {
             <Button
               fullWidth
               component={Link}
-              startIcon={
-                <Tooltip title="" arrow>
-                  <Icon icon="numbers" />
-                </Tooltip>
-              }
+              startIcon={<Icon icon="numbers" />}
               to="reservar"
               variant="outlined"
             >
