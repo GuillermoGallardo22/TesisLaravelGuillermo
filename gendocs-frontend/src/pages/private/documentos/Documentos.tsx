@@ -4,13 +4,14 @@ import DialogContentText from "@mui/material/DialogContentText";
 import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
 import Tooltip from "@mui/material/Tooltip";
+import { DataGrid, GridActionsCellItem, GridColumns } from "@mui/x-data-grid";
 import {
-  DataGrid,
-  GridActionsCellItem,
-  GridColumns,
-  GridToolbar,
-} from "@mui/x-data-grid";
-import { ConfirmationDialog, Icon, Select, TitleNav } from "components";
+  ConfirmationDialog,
+  GridToolbarWithoutExport,
+  Icon,
+  Select,
+  TitleNav,
+} from "components";
 import { useAuthContext } from "contexts/AuthContext";
 import { useGridColumnVisibilityModel } from "hooks";
 import { IDocumento } from "models/interfaces";
@@ -203,7 +204,7 @@ export default function Documentos() {
           disableColumnMenu
           columnVisibilityModel={columnVisibilityModel}
           onColumnVisibilityModelChange={onColumnVisibilityModelChange}
-          components={{ Toolbar: GridToolbar }}
+          components={{ Toolbar: GridToolbarWithoutExport }}
           columns={columns}
           loading={loading}
           rows={documentos}

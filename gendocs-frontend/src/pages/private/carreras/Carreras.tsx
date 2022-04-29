@@ -5,10 +5,14 @@ import {
   DataGrid,
   GridActionsCellItem,
   GridColumns,
-  GridToolbar,
   GridValueFormatterParams,
 } from "@mui/x-data-grid";
-import { ChipStatus, Icon, TitleNav } from "components";
+import {
+  ChipStatus,
+  GridToolbarWithoutExport,
+  Icon,
+  TitleNav,
+} from "components";
 import { useMemo } from "react";
 import { Link } from "react-router-dom";
 import { useListCarreras } from "./hooks/useListCarreras";
@@ -87,7 +91,7 @@ export default function Carreras() {
           // onColumnVisibilityModelChange={
           //     onColumnVisibilityModelChange
           // }
-          components={{ Toolbar: GridToolbar }}
+          components={{ Toolbar: GridToolbarWithoutExport }}
           columns={columns}
           loading={isLoading}
           rows={carreras}

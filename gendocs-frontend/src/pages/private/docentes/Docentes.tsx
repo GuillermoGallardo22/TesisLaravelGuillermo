@@ -1,13 +1,8 @@
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import Tooltip from "@mui/material/Tooltip";
-import {
-  DataGrid,
-  GridActionsCellItem,
-  GridColumns,
-  GridToolbar,
-} from "@mui/x-data-grid";
-import { Icon, TitleNav } from "components";
+import { DataGrid, GridActionsCellItem, GridColumns } from "@mui/x-data-grid";
+import { GridToolbarWithoutExport, Icon, TitleNav } from "components";
 import { useGridColumnVisibilityModel } from "hooks";
 import { Link as RouterLink } from "react-router-dom";
 import { useListDocentes } from "./hooks/useListDocentes";
@@ -65,7 +60,7 @@ const Docentes = () => {
           disableColumnMenu
           columnVisibilityModel={columnVisibilityModel}
           onColumnVisibilityModelChange={onColumnVisibilityModelChange}
-          components={{ Toolbar: GridToolbar }}
+          components={{ Toolbar: GridToolbarWithoutExport }}
           columns={columns}
           loading={isLoading}
           rows={docentes}
