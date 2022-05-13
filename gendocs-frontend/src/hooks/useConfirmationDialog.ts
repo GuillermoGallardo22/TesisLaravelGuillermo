@@ -15,7 +15,9 @@ export function useConfirmationDialog<T>() {
   };
 
   const closeModal = () => {
-    setItemSelected(null);
+    setTimeout(() => {
+      setItemSelected(null);
+    }, 500);
     setIsVisible(false);
   };
 
