@@ -20,6 +20,7 @@ import HistoryEduIcon from "@mui/icons-material/HistoryEdu";
 import HomeIcon from "@mui/icons-material/Home";
 import ListIcon from "@mui/icons-material/List";
 import LockIcon from "@mui/icons-material/Lock";
+import LockReset from "@mui/icons-material/LockReset";
 import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
 import MenuIcon from "@mui/icons-material/Menu";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
@@ -67,7 +68,8 @@ export type IconTypes =
   | "settings"
   | "historyEdu"
   | "playlistAddCheck"
-  | "lock";
+  | "lock"
+  | "lockReset";
 
 const ICONS = {
   article: ArticleIcon,
@@ -102,6 +104,7 @@ const ICONS = {
   historyEdu: HistoryEduIcon,
   playlistAddCheck: PlaylistAddCheckIcon,
   lock: LockIcon,
+  lockReset: LockReset,
 };
 
 interface IconProps {

@@ -22,3 +22,7 @@ export const HTTP_MESSAGES: { [code: number]: string } = {
   500: "Se produjo un error al intentar procesar su solicitud",
   503: "No se pudo comunicar con el servidor, inténtelo más tarde",
 };
+
+export const CUSTOM_HTTP_MESSAGES = {
+  AUTH_RESE_PASS_SUCC: "Contraseña restablecida correctamente",
+};

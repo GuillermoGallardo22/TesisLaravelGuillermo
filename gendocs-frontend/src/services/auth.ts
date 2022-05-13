@@ -7,7 +7,12 @@ import {
   IUser,
   IUserForm,
 } from "models/interfaces";
-import { handleErrors, HTTP_MESSAGES, deleteAllCookies } from "utils";
+import {
+  CUSTOM_HTTP_MESSAGES,
+  deleteAllCookies,
+  handleErrors,
+  HTTP_MESSAGES,
+} from "utils";
 
 async function getCsrf() {
   try {
@@ -190,5 +195,23 @@ export async function getUsers(): Promise<IUser[]> {
     return data;
   } catch (error) {
     return [];
+  }
+}
+
+export async function resetUserPassword(
+  email: string
+): Promise<IResponse<null>> {
+  try {
+    await axios.post("user/reset-password", {
+      email,
+    });
+
+    return {
+      data: null,
+      message: CUSTOM_HTTP_MESSAGES.AUTH_RESE_PASS_SUCC,
+      status: HTTP_STATUS.ok,
+    };
+  } catch (error) {
+    return handleErrors(error);
   }
 }
