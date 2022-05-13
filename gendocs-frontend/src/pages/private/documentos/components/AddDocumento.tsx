@@ -376,7 +376,7 @@ export default function AddDocumento() {
                     onChange={formik.handleChange}
                   />
                 }
-                label="Crear otro"
+                label="Mantener formato"
               />
             </Box>
           </Grid>
