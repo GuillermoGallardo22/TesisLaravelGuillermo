@@ -36,7 +36,7 @@ class FortifyServiceProvider extends ServiceProvider
         // Fortify::updateUserProfileInformationUsing(UpdateUserProfileInformation::class);
         // Fortify::updateUserPasswordsUsing(UpdateUserPassword::class);
         Fortify::authenticateUsing([Authentication::class, 'login']);
-        Fortify::resetUserPasswordsUsing(ResetUserPassword::class);
+        // Fortify::resetUserPasswordsUsing(ResetUserPassword::class);
 
         RateLimiter::for('login', function (Request $request) {
             $email = (string) $request->email;
@@ -44,8 +44,8 @@ class FortifyServiceProvider extends ServiceProvider
             return Limit::perMinute(10)->by($email . $request->ip());
         });
 
-        RateLimiter::for('two-factor', function (Request $request) {
-            return Limit::perMinute(10)->by($request->session()->get('login.id'));
-        });
+        // RateLimiter::for('two-factor', function (Request $request) {
+        //     return Limit::perMinute(10)->by($request->session()->get('login.id'));
+        // });
     }
 }
