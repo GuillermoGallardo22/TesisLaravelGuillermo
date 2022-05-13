@@ -52,6 +52,7 @@ Route::middleware(["auth:sanctum", "isUserActive"])->group(function () {
     Route::get('me', [UserController::class, 'me']);
     Route::put('user/profile', [UserController::class, 'updateProfile']);
     Route::put('user/password', [UserController::class, 'updatePassword']);
+    Route::post('user/reset-password', [UserController::class, 'resetPassword']);
     Route::apiResource('user', UserController::class)->except(['destroy']);
 
     Route::get('roles', [RoleController::class, 'index']);

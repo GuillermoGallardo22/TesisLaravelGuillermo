@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ResetPasswordRequest;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdatePasswordRequest;
 use App\Http\Requests\UpdateProfileRequest;
@@ -11,10 +12,12 @@ use App\Http\Resources\ResourceObject;
 use App\Models\Directorio;
 use App\Models\User;
 use App\Notifications\UserCreated;
+use App\Notifications\UserResetPassword;
 use App\Services\GoogleDriveService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Spatie\Permission\Models\Role;
 use Symfony\Component\HttpFoundation\Response as ResponseAlias;
@@ -197,6 +200,25 @@ class UserController extends Controller
         ])->save();
 
         return response()->noContent(ResponseAlias::HTTP_OK);
+    }
+
+    public function resetPassword(Request $request)
+    {
+        $email = $request->email;
+
+        $user = User::whereEmail($email)->first();
+
+        if (!$user) {
+            return;
+        }
+
+        $tempPassword = Str::random(8);
+
+        $user->update([
+            'password' => Hash::make($tempPassword),
+        ]);
+
+        $user->notify(new UserResetPassword($request->user(), $tempPassword));
     }
 
     public function destroy(User $user)
