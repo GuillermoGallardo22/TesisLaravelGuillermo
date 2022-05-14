@@ -185,6 +185,13 @@ return [
                     'documentos' => 'No se puede generar el acta, porque no existen documentos generados'
                 ]
             ]
+        ],
+        'notificacion' => [
+            'documento' => [
+                'estudiante' => [
+                    'correo' => 'El estudiante no cuenta con un correo institucional'
+                ]
+            ]
         ]
     ],
 ];

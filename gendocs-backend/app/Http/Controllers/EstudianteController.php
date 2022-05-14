@@ -12,6 +12,9 @@ use App\Models\Estudiante;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use App\Constants\Query;
+use App\Http\Requests\NotificationEmailRequest;
+use App\Notifications\DocumentNotification;
+use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
 class EstudianteController extends Controller
 {
@@ -63,6 +66,21 @@ class EstudianteController extends Controller
     {
         $estudiante->fill($request->validated())->save();
         return ResourceObject::make($estudiante);
+    }
+
+    public function sendNotificationEmail(NotificationEmailRequest $request)
+    {
+        $validated = $request->validated();
+
+        $estudiante = Estudiante::find($validated['estudiante']);
+
+        if (!$estudiante->correo_uta) {
+            return response()->json([
+                'errors' => trans('validation.custom.notificacion.documento.estudiante.correo')
+            ], ResponseAlias::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        $estudiante->notify(new DocumentNotification($request->user(), $validated['mensaje']));
     }
 
     public function destroy(Estudiante $estudiante)

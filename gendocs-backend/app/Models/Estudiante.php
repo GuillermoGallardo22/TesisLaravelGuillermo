@@ -7,11 +7,12 @@ use App\Traits\Pageable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\DB;
 
 class Estudiante extends Model
 {
-    use HasFactory, Pageable, Filterable;
+    use HasFactory, Pageable, Filterable, Notifiable;
 
     protected $fillable = [
         "cedula",
@@ -59,5 +60,17 @@ class Estudiante extends Model
             ->orWhere('matricula', 'like', "%$filter%")
             ->orWhere('folio', 'like', "%$filter%")
             ->orWhere(DB::raw("CONCAT_WS(' ', nombres, apellidos)"), 'like', "%$filter%");
+    }
+
+    /**
+     * Route notifications for the mail channel.
+     *
+     * @param \Illuminate\Notifications\Notification $notification
+     * @return array|string
+     */
+    public function routeNotificationForMail($notification)
+    {
+        // return $this->correo_uta;
+        return [$this->correo_uta => $this->nombres . ' ' . $this->apellidos];
     }
 }
