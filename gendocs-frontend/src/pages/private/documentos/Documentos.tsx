@@ -108,6 +108,17 @@ export default function Documentos() {
             }
             label="Notificar vía WhatsApp"
           />,
+          <GridActionsCellItem
+            key={p.id}
+            disabled={!p.row?.estudiante?.correo_uta}
+            color="primary"
+            icon={
+              <Tooltip title="Correo" arrow>
+                <Icon icon="email" />
+              </Tooltip>
+            }
+            label="Notificar vía correo institucional"
+          />,
         ],
       },
       {
