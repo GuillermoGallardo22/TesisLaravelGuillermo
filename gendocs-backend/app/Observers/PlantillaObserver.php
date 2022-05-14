@@ -5,6 +5,7 @@ namespace App\Observers;
 use App\Models\Plantillas;
 use App\Models\Proceso;
 use App\Services\GoogleDriveService;
+use Illuminate\Support\Facades\Log;
 
 class PlantillaObserver
 {
@@ -26,12 +27,25 @@ class PlantillaObserver
      */
     public function created(Plantillas $plantilla)
     {
-        $plantilla->archivo()->create([
-            'google_drive_id' => $this->googleDrive->create(
+        $google_drive_id = '';
+        $plantillaBase = config('services.google.default_template');
+
+        if ($plantillaBase) {
+            $google_drive_id = $this->googleDrive->copyFile(
+                $plantilla->nombre,
+                $plantilla->proceso->directorio->google_drive_id,
+                $plantillaBase,
+            )->id;
+        } else {
+            $google_drive_id = $this->googleDrive->create(
                 $plantilla->nombre,
                 'document',
-                Proceso::find($plantilla->proceso_id)->directorio->google_drive_id
-            )->id
+                $plantilla->proceso->directorio->google_drive_id,
+            )->id;
+        }
+
+        $plantilla->archivo()->create([
+            'google_drive_id' => $google_drive_id,
         ]);
     }
 

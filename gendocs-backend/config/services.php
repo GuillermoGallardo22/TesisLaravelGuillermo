@@ -32,6 +32,7 @@ return [
 
     'google' => [
         'root_directory' => env('GOOGLE_DRIVE_ROOT_DIRECTORY_ID'),
+        'default_template' => env('DEFAULT_TEMPLATE'),
         'credentials' => [
             'type' => env('GOOGLE_APPLICATION_CREDENTIALS_TYPE'),
             'project_id' => env('GOOGLE_APPLICATION_CREDENTIALS_PROJECT_ID'),
