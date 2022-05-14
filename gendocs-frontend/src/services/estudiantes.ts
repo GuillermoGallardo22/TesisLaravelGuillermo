@@ -8,6 +8,7 @@ import {
 } from "models/interfaces";
 import { BaseMultipleStudentForm } from "pages/private/estudiantes/hooks/useAddEstudiantes";
 import {
+  CUSTOM_HTTP_MESSAGES,
   DEFAULT_PAGINATION_VALUES,
   handleErrors,
   HTTP_MESSAGES,
@@ -116,6 +117,26 @@ export async function updateEstudiante(
       status: HTTP_STATUS.ok,
       data: data,
       message: HTTP_MESSAGES[200],
+    };
+  } catch (error) {
+    return handleErrors(error);
+  }
+}
+
+export async function sendEmail(
+  mensaje: string,
+  estudiante: IEstudiante
+): Promise<IResponse<null>> {
+  try {
+    await axios.post("estudiantes/email-notificacion", {
+      mensaje,
+      estudiante: estudiante.id,
+    });
+
+    return {
+      status: HTTP_STATUS.ok,
+      data: null,
+      message: CUSTOM_HTTP_MESSAGES.NOTI_EMAI_SEND,
     };
   } catch (error) {
     return handleErrors(error);

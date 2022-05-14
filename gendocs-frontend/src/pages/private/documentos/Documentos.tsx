@@ -13,7 +13,7 @@ import {
   TitleNav,
 } from "components";
 import { useAuthContext } from "contexts/AuthContext";
-import { useGridColumnVisibilityModel } from "hooks";
+import { useConfirmationDialog, useGridColumnVisibilityModel } from "hooks";
 import { IDocumento } from "models/interfaces";
 import { useMemo } from "react";
 import { Link } from "react-router-dom";
@@ -25,6 +25,7 @@ import {
   getPlantilla,
   getProceso,
 } from "utils";
+import { NotificationEmail } from "./components/NotificationEmail";
 import { useListDocumentos } from "./hooks/useListDocumentos";
 
 export default function Documentos() {
@@ -42,6 +43,13 @@ export default function Documentos() {
   const {
     context: { user },
   } = useAuthContext();
+
+  const {
+    isVisible: isVisibleNE,
+    openModal: openModalNE,
+    closeModal: closeModalNE,
+    itemSelected: itemSelectedNE,
+  } = useConfirmationDialog<IDocumento>();
 
   const columns = useMemo(
     (): GridColumns => [
@@ -118,6 +126,7 @@ export default function Documentos() {
               </Tooltip>
             }
             label="Notificar vía correo institucional"
+            onClick={() => openModalNE(p.row)}
           />,
         ],
       },
@@ -221,6 +230,12 @@ export default function Documentos() {
           rows={documentos}
         />
       </div>
+
+      <NotificationEmail
+        documento={itemSelectedNE}
+        isVisible={isVisibleNE}
+        closeModal={closeModalNE}
+      />
 
       {itemSelected && (
         <ConfirmationDialog
