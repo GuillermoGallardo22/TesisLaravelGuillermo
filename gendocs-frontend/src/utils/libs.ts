@@ -105,20 +105,30 @@ export function getCreado(params: GridValueFormatterParams) {
   return parseToDateTime(params.value as string);
 }
 
+export function getDefaultNotificationMessage(
+  plantilla: string,
+  proceso: string,
+  user: string
+) {
+  return `Me permito notificar a usted que su trámite ${plantilla} del proceso de ${proceso} ha sido atendido.
+
+Pronto será despachado a su correo institucional.
+
+Atentamente,
+
+${user}`;
+}
+
 export function generateLink(data: IDocumento, user: string) {
   const celular = data?.estudiante?.celular;
 
   if (!celular) return "";
 
-  const text = `Me permito notificar a usted que su trámite ${
-    data.plantilla.nombre
-  } del proceso de ${
-    (data.plantilla.proceso as IProceso).nombre
-  } ha sido atendido. Pronto será despachado a su correo institucional.
-
-    Atentamente,
-    ${user}
-    Secretaria FISEI`;
+  const text = getDefaultNotificationMessage(
+    data.plantilla.nombre,
+    (data.plantilla.proceso as IProceso).nombre,
+    user
+  );
 
   const params = parseObjectToQueryParams({
     phone: "+593" + celular.substring(1),
