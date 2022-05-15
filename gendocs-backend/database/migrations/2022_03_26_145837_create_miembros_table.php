@@ -25,7 +25,7 @@ class CreateMiembrosTable extends Migration
                 ->on("docentes");
 
             $table->boolean("notificado")->default(false);
-            $table->boolean("asistira")->default(false);
+            $table->boolean("asistio")->default(false);
             $table->boolean("responsable")->default(false);
 
             $table->timestamps();

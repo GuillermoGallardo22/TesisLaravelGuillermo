@@ -7,19 +7,22 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Notifications\Notifiable;
 
 class Miembro extends Model
 {
-    use HasFactory, SoftDeletes, Filterable;
+    use HasFactory, SoftDeletes, Filterable, Notifiable;
 
     protected $fillable = [
         'consejo_id',
         'docente_id',
-        'responsable'
+        'responsable',
+        'notificado',
+        'asistio',
     ];
 
     protected $casts = [
-        'asistira' => 'boolean',
+        'asistio' => 'boolean',
         'notificado' => 'boolean',
         'responsable' => 'boolean',
     ];
@@ -32,7 +35,7 @@ class Miembro extends Model
             'id' => $this->id,
             'consejo' => $this->consejo,
             'docente' => $this->docente,
-            'asistira' => $this->asistira,
+            'asistio' => $this->asistio,
             'notificado' => $this->notificado,
             'responsable' => $this->responsable,
         ];
@@ -41,8 +44,6 @@ class Miembro extends Model
     public function scopeConsejo(Builder $query, $value)
     {
         return $query->where('consejo_id', $value);
-            //->join('docentes', 'miembros.docente_id', 'docentes.id')
-            //->orderBy('docentes.nombres', 'ASC');
     }
 
     public function consejo()
@@ -53,5 +54,16 @@ class Miembro extends Model
     public function docente()
     {
         return $this->belongsTo(Docente::class, 'docente_id');
+    }
+
+    /**
+     * Route notifications for the mail channel.
+     *
+     * @param \Illuminate\Notifications\Notification $notification
+     * @return array|string
+     */
+    public function routeNotificationForMail($notification)
+    {
+        return [$this->docente->correo_uta => $this->docente->nombres];
     }
 }

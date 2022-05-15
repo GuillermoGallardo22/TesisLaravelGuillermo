@@ -8,6 +8,7 @@ use App\Http\Controllers\DocenteController;
 use App\Http\Controllers\DocumentoController;
 use App\Http\Controllers\EstudianteController;
 use App\Http\Controllers\MiembroController;
+use App\Http\Controllers\NotificacionController;
 use App\Http\Controllers\NumeracionController;
 use App\Http\Controllers\PlantillasController;
 use App\Http\Controllers\PlantillasGlobalesController;
@@ -37,9 +38,12 @@ Route::middleware(["auth:sanctum", "isUserActive"])->group(function () {
     Route::apiResource('tipo-consejos', TipoConsejoController::class)->only(['index']);
     Route::apiResource('documentos', DocumentoController::class)->except(['show', 'update']);
     Route::apiResource('numeracion', NumeracionController::class)->only(['index', 'store']);
-    Route::apiResource('miembros', MiembroController::class)->except(['show', 'update']);
     Route::apiResource('batch', BatchController::class)->only(['show']);
     Route::apiResource("plantillas-globales", PlantillasGlobalesController::class)->only(['index']);
+
+    Route::apiResource('miembros', MiembroController::class)->except(['show']);
+
+    Route::apiResource('notificaciones', NotificacionController::class)->only('store');
 
     Route::apiResource('estudiantes', EstudianteController::class)->except(['destroy']);
     Route::post('estudiantes/email-notificacion', [EstudianteController::class, 'sendNotificationEmail']);
