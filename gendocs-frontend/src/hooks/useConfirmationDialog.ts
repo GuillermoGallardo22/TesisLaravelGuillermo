@@ -1,6 +1,14 @@
 import { useState } from "react";
 
-export function useConfirmationDialog<T>() {
+export type ConfirmationDialogReturnProps<T> = {
+  isVisible: boolean;
+  openModal: (item: T) => void;
+  closeModal: () => void;
+  itemSelected: T | null;
+  openJustModal: () => void;
+};
+
+export function useConfirmationDialog<T>(): ConfirmationDialogReturnProps<T> {
   const [isVisible, setIsVisible] = useState(false);
 
   const [itemSelected, setItemSelected] = useState<T | null>(null);
