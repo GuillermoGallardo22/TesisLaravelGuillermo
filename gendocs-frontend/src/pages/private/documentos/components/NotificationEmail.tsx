@@ -5,7 +5,7 @@ import { ConfirmationDialog } from "components";
 import { useAuthContext } from "contexts/AuthContext";
 import { useFormik } from "formik";
 import { HTTP_STATUS } from "models/enums";
-import { IDocumento, IProceso } from "models/interfaces";
+import { IDocumento, IProceso, NotificationEmailForm } from "models/interfaces";
 import { useSnackbar } from "notistack";
 import { useMemo } from "react";
 import { sendEmail } from "services";
@@ -22,10 +22,6 @@ type NotificationEmailFormProps = {
   documento: IDocumento;
 } & Omit<NotificationEmailProps, "documento">;
 
-type NotificationEmailForm = {
-  mensaje: string;
-};
-
 export const NotificationEmail: React.FunctionComponent<
   NotificationEmailProps
 > = ({ documento, ...rest }) => {
@@ -36,7 +32,7 @@ export const NotificationEmail: React.FunctionComponent<
   );
 };
 
-export const NotificationEmailForm: React.FunctionComponent<
+const NotificationEmailForm: React.FunctionComponent<
   NotificationEmailFormProps
 > = ({ isVisible, closeModal, documento }) => {
   const { enqueueSnackbar } = useSnackbar();
