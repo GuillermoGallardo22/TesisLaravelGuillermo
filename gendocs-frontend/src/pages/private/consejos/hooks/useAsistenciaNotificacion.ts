@@ -3,7 +3,7 @@ import { useFormik } from "formik";
 import { HTTP_STATUS } from "models/enums";
 import {
   IMiembro,
-  NotificationEmailForm,
+  NotificationEmailFormProps,
   NotificationEmailProps,
 } from "models/interfaces";
 import { useSnackbar } from "notistack";
@@ -30,7 +30,7 @@ export function useAsistenciaNotificacion<T>({
   const client = useQueryClient();
   const { enqueueSnackbar } = useSnackbar();
 
-  const onSubmit = async (form: NotificationEmailForm) => {
+  const onSubmit = async (form: NotificationEmailFormProps) => {
     if (!miembros.length) return;
 
     const correctamente: IMiembro[] = [];
@@ -82,13 +82,13 @@ export function useAsistenciaNotificacion<T>({
   };
 
   const initialValues = useMemo(
-    (): NotificationEmailForm => ({
+    (): NotificationEmailFormProps => ({
       mensaje: getDefaultNotificationMessageAsistencia(consejo, user.name),
     }),
     [consejo, miembros]
   );
 
-  const formik = useFormik<NotificationEmailForm>({
+  const formik = useFormik<NotificationEmailFormProps>({
     onSubmit,
     initialValues,
     validationSchema: yup.object().shape({

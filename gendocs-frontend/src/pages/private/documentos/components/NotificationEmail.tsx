@@ -5,7 +5,11 @@ import { ConfirmationDialog } from "components";
 import { useAuthContext } from "contexts/AuthContext";
 import { useFormik } from "formik";
 import { HTTP_STATUS } from "models/enums";
-import { IDocumento, IProceso, NotificationEmailForm } from "models/interfaces";
+import {
+  IDocumento,
+  IProceso,
+  NotificationEmailFormProps,
+} from "models/interfaces";
 import { useSnackbar } from "notistack";
 import { useMemo } from "react";
 import { sendEmail } from "services";
@@ -18,10 +22,6 @@ type NotificationEmailProps = {
   closeModal: () => void;
 };
 
-type NotificationEmailFormProps = {
-  documento: IDocumento;
-} & Omit<NotificationEmailProps, "documento">;
-
 export const NotificationEmail: React.FunctionComponent<
   NotificationEmailProps
 > = ({ documento, ...rest }) => {
@@ -32,12 +32,16 @@ export const NotificationEmail: React.FunctionComponent<
   );
 };
 
+type NotificationEmailFormPropsC = {
+  documento: IDocumento;
+} & Omit<NotificationEmailProps, "documento">;
+
 const NotificationEmailForm: React.FunctionComponent<
-  NotificationEmailFormProps
+  NotificationEmailFormPropsC
 > = ({ isVisible, closeModal, documento }) => {
   const { enqueueSnackbar } = useSnackbar();
 
-  const onSubmit = async (form: NotificationEmailForm) => {
+  const onSubmit = async (form: NotificationEmailFormProps) => {
     const result = await sendEmail(form.mensaje, documento.estudiante!);
 
     if (result.status === HTTP_STATUS.ok) {
@@ -58,7 +62,7 @@ const NotificationEmailForm: React.FunctionComponent<
   } = useAuthContext();
 
   const initialValues = useMemo(
-    (): NotificationEmailForm => ({
+    (): NotificationEmailFormProps => ({
       mensaje: getDefaultNotificationMessage(
         documento.plantilla.nombre,
         (documento.plantilla.proceso as IProceso).nombre,

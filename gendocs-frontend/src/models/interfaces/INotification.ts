@@ -6,7 +6,7 @@ export interface INotificationProps {
   [key: string]: string | number;
 }
 
-export type NotificationEmailForm = {
+export type NotificationEmailFormProps = {
   mensaje: string;
 };
 
