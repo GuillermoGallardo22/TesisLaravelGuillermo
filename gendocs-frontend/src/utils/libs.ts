@@ -2,7 +2,14 @@ import {
   GridValueFormatterParams,
   GridValueGetterParams,
 } from "@mui/x-data-grid";
-import { IDocumento, IMiembro, IProceso } from "models/interfaces";
+import { format } from "date-fns";
+import {
+  IConsejo,
+  IDocumento,
+  IMiembro,
+  IProceso,
+  ITipoConsejo,
+} from "models/interfaces";
 import { MultipleStudentForm } from "pages/private/estudiantes/hooks/useAddEstudiantes";
 import { read, utils } from "xlsx";
 import { parseToDateTime } from "./date";
@@ -119,6 +126,26 @@ Atentamente,
 ${user}`;
 }
 
+export function getDefaultNotificationMessageAsistencia(
+  consejo: IConsejo,
+  user: string
+) {
+  const tipoConsejo = (
+    consejo.tipo_consejo as ITipoConsejo
+  ).nombre.toUpperCase();
+
+  const fecha = format(new Date(consejo.fecha), "dd/MM/yyyy");
+  const hora = format(new Date(consejo.fecha), "p");
+
+  return `Se le notifica la asistencia a la SESIÓN ${tipoConsejo} DE CONSEJO DIRECTIVO DE LA FACULTAD DE INGENIERÍA EN SISTEMAS, ELECTRÓNICA E INDUSTRIAL, que se llevará acabo el ${fecha} a las ${hora}.
+
+Se le agradece su puntual asistencia.
+
+Atentamente,
+
+${user}`;
+}
+
 export function generateLink(data: IDocumento, user: string) {
   const celular = data?.estudiante?.celular;
 
@@ -143,4 +170,16 @@ export function getNombreCompletoMiembro(
 ) {
   if (!params?.row?.docente?.nombres) return null;
   return params.row.docente.nombres;
+}
+
+export function formatRecipient(name: string, email: string): string {
+  return `${name} <${email}>`;
+}
+
+const formatter = new Intl.ListFormat("es");
+
+export function formatRecipients(list: [string, string][]): string {
+  return formatter.format(
+    list.map(([name, email]) => formatRecipient(name, email))
+  );
 }

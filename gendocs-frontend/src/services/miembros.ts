@@ -4,9 +4,15 @@ import {
   ConsejoMiembroForm,
   IFilterPaginationProps,
   IMiembro,
+  INotificationProps,
   IResponse,
 } from "models/interfaces";
-import { handleErrors, HTTP_MESSAGES, parseFilterPaginationProps } from "utils";
+import {
+  CUSTOM_HTTP_MESSAGES,
+  handleErrors,
+  HTTP_MESSAGES,
+  parseFilterPaginationProps,
+} from "utils";
 
 export async function getMiembros(
   props: IFilterPaginationProps
@@ -57,5 +63,20 @@ export async function deleteMiembro(
     };
   } catch (error) {
     return handleErrors(error);
+  }
+}
+
+export async function sendNotification(
+  props: INotificationProps
+): Promise<IResponse<null>> {
+  try {
+    await axios.post("notificaciones", props);
+    return {
+      status: HTTP_STATUS.ok,
+      message: CUSTOM_HTTP_MESSAGES.NOTI_EMAI_SEND,
+      data: null,
+    };
+  } catch (error) {
+    return handleErrors(error, null);
   }
 }

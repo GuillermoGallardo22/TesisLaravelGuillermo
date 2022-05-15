@@ -5,14 +5,14 @@ export interface IMiembro {
   id: number;
   consejo: IConsejo;
   docente: IDocente;
-  asistira: boolean;
+  asistio: boolean;
   notificado: boolean;
   responsable: boolean;
 }
 
 type PreConsejoMiembroForm = Omit<
   IMiembro,
-  "id" | "asistira" | "notificado" | "consejo" | "docente"
+  "id" | "asistio" | "notificado" | "consejo" | "docente"
 >;
 
 export interface ConsejoMiembroForm extends PreConsejoMiembroForm {

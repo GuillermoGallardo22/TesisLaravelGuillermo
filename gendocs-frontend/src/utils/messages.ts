@@ -26,4 +26,8 @@ export const HTTP_MESSAGES: { [code: number]: string } = {
 export const CUSTOM_HTTP_MESSAGES = {
   AUTH_RESE_PASS_SUCC: "Contraseña restablecida correctamente",
   NOTI_EMAI_SEND: "Notificación enviada correctamente",
+  NOTI_EMAI_SEND_SUCC: (n: number): string =>
+    `Se enviarón ${n} correo(s) exitósamente`,
+  NOTI_EMAI_SEND_FAIL: (n: number, p: string): string =>
+    `No se enviaron ${n} correo(s) (${p})`,
 };

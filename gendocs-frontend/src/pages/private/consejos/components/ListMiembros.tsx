@@ -1,8 +1,14 @@
+import { Box, Grid } from "@mui/material";
 import Button from "@mui/material/Button";
 import DialogContentText from "@mui/material/DialogContentText";
 import Stack from "@mui/material/Stack";
 import Tooltip from "@mui/material/Tooltip";
-import { DataGrid, GridActionsCellItem, GridColumns } from "@mui/x-data-grid";
+import {
+  DataGrid,
+  GridActionsCellItem,
+  GridColumns,
+  GridSelectionModel,
+} from "@mui/x-data-grid";
 import {
   ConfirmationDialog,
   GridToolbarColumns,
@@ -15,12 +21,13 @@ import {
   useGridColumnVisibilityModel,
 } from "hooks";
 import { IMiembro } from "models/interfaces";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { useQueryClient } from "react-query";
 import { deleteMiembro } from "services";
 import { getNombreCompletoMiembro } from "utils";
 import { useMiembros } from "../hooks/useMiembros";
 import { AddMiembro } from "./AddMiembro";
+import { NotificacionEmail } from "./NotificationEmail";
 
 export default function ListMiembros() {
   const { miembros, isLoading, consejo } = useMiembros();
@@ -58,8 +65,8 @@ export default function ListMiembros() {
       },
       {
         type: "boolean",
-        field: "asistira",
-        headerName: "Asistirá",
+        field: "asistio",
+        headerName: "Asistió",
         flex: 1,
       },
       {
@@ -102,20 +109,70 @@ export default function ListMiembros() {
       key: "asistentesTableModel",
     });
 
+  const {
+    isVisible: isVisibleNE,
+    openJustModal: openModalNE,
+    closeModal: closeModalNE,
+  } = useConfirmationDialog();
+
+  const [selectionModel, setSelectionModel] = useState<GridSelectionModel>([]);
+
+  const miembrosSeleccionados = useMemo(
+    (): IMiembro[] =>
+      miembros.filter((m) => selectionModel.some((s) => s === m.id)),
+    [selectionModel]
+  );
+
   return (
     <Stack spacing={2}>
       <TitleNav title="Miembros" />
-      <Button
-        disabled={!consejo || !consejo?.estado}
-        startIcon={<Icon icon="add" />}
-        variant="outlined"
-        onClick={openAddMiembroModal}
-      >
-        AGREGAR MIEMBRO
-      </Button>
+
+      <Box>
+        <Grid container spacing={2} columns={{ xs: 1, sm: 2, md: 3 }}>
+          <Grid item xs={1} sm={2} md={1}>
+            <Button
+              fullWidth
+              disabled={!consejo || !consejo?.estado}
+              startIcon={<Icon icon="add" />}
+              variant="outlined"
+              onClick={openAddMiembroModal}
+            >
+              AGREGAR MIEMBRO
+            </Button>
+          </Grid>
+          <Grid item xs={1}>
+            <Button
+              fullWidth
+              disabled={!selectionModel.length}
+              startIcon={<Icon icon="email" />}
+              variant="outlined"
+              onClick={() => openModalNE()}
+            >
+              Notificar
+            </Button>
+          </Grid>
+          <Grid item xs={1}>
+            <Button
+              fullWidth
+              disabled={!selectionModel.length}
+              startIcon={<Icon icon="factCheck" />}
+              variant="outlined"
+              // onClick={openAddMiembroModal}
+            >
+              Marcar asistencia
+            </Button>
+          </Grid>
+        </Grid>
+      </Box>
 
       <div style={{ height: 700, width: "100%" }}>
         <DataGrid
+          selectionModel={selectionModel}
+          onSelectionModelChange={(newSelectionModel) => {
+            setSelectionModel(newSelectionModel);
+          }}
+          checkboxSelection
+          disableSelectionOnClick
           disableColumnMenu
           columnVisibilityModel={columnVisibilityModel}
           onColumnVisibilityModelChange={onColumnVisibilityModelChange}
@@ -125,6 +182,15 @@ export default function ListMiembros() {
           rows={miembros}
         />
       </div>
+
+      {consejo && (
+        <NotificacionEmail
+          isVisible={isVisibleNE}
+          closeModal={closeModalNE}
+          miembros={miembrosSeleccionados}
+          consejo={consejo}
+        />
+      )}
 
       {consejo && isVisibleAddMiembroModal && (
         <AddMiembro
