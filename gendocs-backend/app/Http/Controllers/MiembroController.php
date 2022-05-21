@@ -44,7 +44,11 @@ class MiembroController extends Controller
 
     public function update(UpdateMiembroRequest $request, Miembro $miembro)
     {
-        //
+        $validated = $request->validated();
+
+        $miembro->update($validated);
+
+        return ResourceObject::make($miembro);
     }
 
     public function destroy(Miembro $miembro)
