@@ -1,4 +1,5 @@
 export { default as AccesDenied } from "./AccesDenied";
+export * from "./BooleanCell";
 export { default as ChipStatus } from "./ChipStatus";
 export * from "./ConfirmationDialog";
 export { default as ConfirmationDialog } from "./ConfirmationDialog";
