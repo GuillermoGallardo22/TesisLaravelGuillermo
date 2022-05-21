@@ -60,12 +60,18 @@ class User extends Authenticatable
             'email_gmail' => $this->email_gmail,
             'roles' => $this->getRoleNames(),
             'status' => $this->status,
+            'modulos' => $this->modules
         ];
     }
 
     public function permission()
     {
         return $this->morphOne(DriveApi::class, 'model');
+    }
+
+    public function modules()
+    {
+        return $this->belongsToMany(Module::class, UserModule::class, 'user_id', 'module_id');
     }
 
     /**
