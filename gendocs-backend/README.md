@@ -44,36 +44,38 @@
 
 ## VARIABLES DE DOCUMENTOS
 
-|    **VARIABLE**     |        **VALOR**         |
-| :-----------------: | :----------------------: |
-|   {{ESTUDIANTE}}    |    Juan Perez Paredes    |
-|  {{ESTUDIANTEUP}}   |    JUAN PEREZ PAREDES    |
-|     {{CEDULA}}      |        1805240302        |
-|    {{MATRICULA}}    |           0120           |
-|      {{FOLIO}}      |           0123           |
-|    {{TELEFONO}}     |        025461052         |
-|     {{CELULAR}}     |        0986019417        |
-|     {{CORREO}}      |      abc@gmail.com       |
-|    {{CORREOUTA}}    |      abc@uta.edu.ec      |
-|  {{NOMBRECARRERA}}  |  Ingeniería en Sistemas  |
-| {{NOMBRECARRERAUP}} |  INGENIERÍA EN SISTEMAS  |
-|      {{FECHA}}      |        10/09/2020        |
-|     {{FECHAUP}}     | 10 de septiembre de 2020 |
-|    {{CREADOPOR}}    |     Guillermo Barcia     |
-|     {{NUMDOC}}      |           0001           |
-|     {{SESION}}      |        Ordinaria         |
-|   {{RESPONSABLE}}   |     Guillermo Barcia     |
-|     {{FECHA_U}}     |   16 DE JULIO DE 2021    |
-|    {{SESIONUP}}     |        ORDINARIA         |
-|    {{SESION_L}}     |        ordinaria         |
-|     {{NUMACT}}      |           001            |
-|        {{Y}}        |           2022           |
-|    {{DIASEM_T}}     |         VIERNES          |
-|   {{NUMMES_T_U}}    |          JULIO           |
-|     {{MES_T_L}}     |          julio           |
-|    {{NUMDIA_T}}     |       VEINTICINCO        |
-|    {{NUMANIO_T}}    |    DOS MIL VEINTIUNO     |
-|   {{NUMANIO_T_L}}   |    dos mil veintiuno     |
-|     {{DIAS_T}}      |     veinticinco días     |
-|    {{HORA_T_L}}     |           ocho           |
-|   {{MINUTOS_T_L}}   |         treinta          |
+|    **VARIABLE**     |                **VALOR**                |
+| :-----------------: | :-------------------------------------: |
+|   {{ESTUDIANTE}}    |           Juan Perez Paredes            |
+|  {{ESTUDIANTEUP}}   |           JUAN PEREZ PAREDES            |
+|     {{CEDULA}}      |               1805240302                |
+|    {{MATRICULA}}    |                  0120                   |
+|      {{FOLIO}}      |                  0123                   |
+|    {{TELEFONO}}     |                025461052                |
+|     {{CELULAR}}     |               0986019417                |
+|     {{CORREO}}      |              abc@gmail.com              |
+|    {{CORREOUTA}}    |             abc@uta.edu.ec              |
+|  {{NOMBRECARRERA}}  |         Ingeniería en Sistemas          |
+| {{NOMBRECARRERAUP}} |         INGENIERÍA EN SISTEMAS          |
+|      {{FECHA}}      |               10/09/2020                |
+|     {{FECHAUP}}     |        10 de septiembre de 2020         |
+|    {{CREADOPOR}}    |            Guillermo Barcia             |
+|     {{NUMDOC}}      |                  0001                   |
+|     {{SESION}}      |                Ordinaria                |
+|   {{RESPONSABLE}}   |            Guillermo Barcia             |
+|     {{FECHA_U}}     |           16 DE JULIO DE 2021           |
+|    {{SESIONUP}}     |                ORDINARIA                |
+|    {{SESION_L}}     |                ordinaria                |
+|     {{NUMACT}}      |                   001                   |
+|        {{Y}}        |                  2022                   |
+|    {{DIASEM_T}}     |                 VIERNES                 |
+|   {{NUMMES_T_U}}    |                  JULIO                  |
+|     {{MES_T_L}}     |                  julio                  |
+|    {{NUMDIA_T}}     |               VEINTICINCO               |
+|    {{NUMANIO_T}}    |            DOS MIL VEINTIUNO            |
+|   {{NUMANIO_T_L}}   |            dos mil veintiuno            |
+|     {{DIAS_T}}      |            veinticinco días             |
+|    {{HORA_T_L}}     |                  ocho                   |
+|   {{MINUTOS_T_L}}   |                 treinta                 |
+|   {{ASISTIERON}}    | Ing. Pepito Perez, Ing. Carlitos Castro |
+|  {{NO_ASISTIERON}}  |           Ing. Juanito Garcia           |
