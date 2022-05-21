@@ -110,4 +110,18 @@ trait ReplaceableDocText
     {
         return mb_strtoupper($this->getMonthName($date));
     }
+
+    public function asis($asis = [])
+    {
+        return implode(", ", $asis);
+    }
+
+    public function no_asis($asis = [])
+    {
+        if (!count($asis)) {
+            return "";
+        }
+
+        return env('NO_ASIS_MENSSAGE') . implode(", ", $asis);
+    }
 }

@@ -56,4 +56,6 @@ abstract class Variables
     const DIAS_T = "{{DIAS_T}}";            // veinticinco días
     const HORA_T_L = "{{HORA_T_L}}";        // ocho
     const MINUTOS_T_L = "{{MINUTOS_T_L}}";  // treinta
+    const ASISTIERON = "{{ASISTIERON}}";    // miembros que asistieron
+    const NO_ASISTIERON = "{{NO_ASISTIERON}}";  // miembros que no asistieron
 }

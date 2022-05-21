@@ -104,6 +104,14 @@ class ActaService
             $fecha = $consejo->fecha;
             $fecha->setTimeZone("America/Guayaquil");
 
+            $asistieron = $consejo->miembros()->where('asistio', true)->get()->map(function ($m) {
+                return $m->docente->nombres;
+            })->all();
+
+            $no_asistieron = $consejo->miembros()->where('asistio', false)->get()->map(function ($m) {
+                return $m->docente->nombres;
+            })->all();
+
             $consejoData = [
                 Variables::FECHA => $this->formatDate($now),
                 Variables::RESPONSABLE => $consejo->responsable->docente->nombres,
@@ -122,6 +130,8 @@ class ActaService
                 Variables::DIAS_T => $this->format_DIAS_T($now),
                 Variables::HORA_T_L => $this->converNumberToWords($fecha->hour),
                 Variables::MINUTOS_T_L => $this->converNumberToWords($fecha->minute),
+                Variables::ASISTIERON => $this->asis($asistieron),
+                Variables::NO_ASISTIERON => $this->no_asis($no_asistieron),
             ];
 
             $this->googleDriveService->replaceTextOnDocument(
