@@ -66,6 +66,27 @@ export async function deleteMiembro(
   }
 }
 
+export async function marcarAsistencia(
+  miembro: IMiembro,
+  asistio: boolean
+): Promise<IResponse<IMiembro>> {
+  try {
+    const {
+      data: { data },
+    } = await axios.patch("miembros/" + miembro.id, {
+      asistio,
+    });
+
+    return {
+      data: data,
+      message: HTTP_MESSAGES[200],
+      status: HTTP_STATUS.ok,
+    };
+  } catch (error) {
+    return handleErrors(error);
+  }
+}
+
 export async function sendNotification(
   props: INotificationProps
 ): Promise<IResponse<null>> {

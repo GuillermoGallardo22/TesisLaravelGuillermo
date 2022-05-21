@@ -183,3 +183,7 @@ export function formatRecipients(list: [string, string][]): string {
     list.map(([name, email]) => formatRecipient(name, email))
   );
 }
+
+export function listFormat(list: string[]): string {
+  return formatter.format(list);
+}

@@ -1,6 +1,7 @@
-import { Box, Grid } from "@mui/material";
+import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import DialogContentText from "@mui/material/DialogContentText";
+import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
 import Tooltip from "@mui/material/Tooltip";
 import {
@@ -10,6 +11,7 @@ import {
   GridSelectionModel,
 } from "@mui/x-data-grid";
 import {
+  BooleanCell,
   ConfirmationDialog,
   GridToolbarColumns,
   Icon,
@@ -27,6 +29,7 @@ import { deleteMiembro } from "services";
 import { getNombreCompletoMiembro } from "utils";
 import { useMiembros } from "../hooks/useMiembros";
 import { AddMiembro } from "./AddMiembro";
+import { AsistenciaDialog } from "./AsistenciaDialog";
 import { NotificacionEmail } from "./NotificationEmail";
 
 export default function ListMiembros() {
@@ -62,18 +65,21 @@ export default function ListMiembros() {
         field: "notificado",
         headerName: "Notificado",
         flex: 1,
+        renderCell: (r) => <BooleanCell value={r.row.notificado} />,
       },
       {
         type: "boolean",
         field: "asistio",
         headerName: "Asistió",
         flex: 1,
+        renderCell: (r) => <BooleanCell value={r.row.asistio} />,
       },
       {
         type: "boolean",
         field: "responsable",
         headerName: "Responsable",
         flex: 1,
+        renderCell: (r) => <BooleanCell value={r.row.responsable} />,
       },
       {
         type: "actions",
@@ -113,6 +119,12 @@ export default function ListMiembros() {
     isVisible: isVisibleNE,
     openJustModal: openModalNE,
     closeModal: closeModalNE,
+  } = useConfirmationDialog();
+
+  const {
+    isVisible: isVisibleA,
+    openJustModal: openModalA,
+    closeModal: closeModalA,
   } = useConfirmationDialog();
 
   const [selectionModel, setSelectionModel] = useState<GridSelectionModel>([]);
@@ -157,7 +169,7 @@ export default function ListMiembros() {
               disabled={!selectionModel.length}
               startIcon={<Icon icon="factCheck" />}
               variant="outlined"
-              // onClick={openAddMiembroModal}
+              onClick={openModalA}
             >
               Marcar asistencia
             </Button>
@@ -199,6 +211,12 @@ export default function ListMiembros() {
           onCancel={closeAddMiembroModal}
         />
       )}
+
+      <AsistenciaDialog
+        isVisible={isVisibleA}
+        closeModal={closeModalA}
+        miembros={miembrosSeleccionados}
+      />
 
       {itemMiembroSelected && isVisibleDeleteMiembroModal && (
         <ConfirmationDialog
