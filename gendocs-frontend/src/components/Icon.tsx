@@ -4,7 +4,9 @@ import ApartmentIcon from "@mui/icons-material/Apartment";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArticleIcon from "@mui/icons-material/Article";
 import AutorenewIcon from "@mui/icons-material/Autorenew";
+import CheckIcon from "@mui/icons-material/Check";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import CloseIcon from "@mui/icons-material/Close";
 import DeleteIcon from "@mui/icons-material/Delete";
 import DownloadIcon from "@mui/icons-material/Download";
 import DriveFileMoveIcon from "@mui/icons-material/DriveFileMove";
@@ -69,9 +71,13 @@ export type IconTypes =
   | "historyEdu"
   | "playlistAddCheck"
   | "lock"
-  | "lockReset";
+  | "lockReset"
+  | "close"
+  | "check";
 
 const ICONS = {
+  close: CloseIcon,
+  check: CheckIcon,
   article: ArticleIcon,
   edit: EditIcon,
   add: AddIcon,
