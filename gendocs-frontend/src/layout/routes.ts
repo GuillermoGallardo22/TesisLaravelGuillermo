@@ -1,5 +1,5 @@
 import { IconTypes, Outlet } from "components";
-import { RolEnum } from "models/enums";
+import { ModuleEnum, RolEnum } from "models/enums";
 import {
   Acta,
   AddCarrera,
@@ -40,6 +40,7 @@ export interface IRoute {
   icon?: IconTypes;
   childrens?: IRoute[];
   roles?: RolEnum[];
+  modules?: ModuleEnum[];
 }
 
 export const DEFAULT_ROUTE = "inicio";
@@ -50,12 +51,14 @@ export const routes: IRoute[] = [
     label: "Inicio",
     component: Home,
     icon: "home",
+    modules: [ModuleEnum.FACU],
   },
   {
     path: "documentos",
     label: "Documentos",
     component: Outlet,
     icon: "topic",
+    modules: [ModuleEnum.FACU],
     childrens: [
       {
         path: "nuevo",
@@ -79,6 +82,7 @@ export const routes: IRoute[] = [
     label: "Carreras",
     component: Outlet,
     icon: "apartment",
+    modules: [ModuleEnum.FACU],
     childrens: [
       {
         path: "nuevo",
@@ -98,6 +102,7 @@ export const routes: IRoute[] = [
     label: "Docentes",
     component: Outlet,
     icon: "hail",
+    modules: [ModuleEnum.FACU],
     childrens: [
       {
         path: "nuevo",
@@ -117,6 +122,7 @@ export const routes: IRoute[] = [
     label: "Estudiantes",
     component: Outlet,
     icon: "school",
+    modules: [ModuleEnum.FACU],
     childrens: [
       {
         path: "nuevo",
@@ -136,6 +142,7 @@ export const routes: IRoute[] = [
     label: "Procesos",
     component: Outlet,
     icon: "list",
+    modules: [ModuleEnum.FACU],
     childrens: [
       {
         path: "nuevo",
@@ -195,6 +202,7 @@ export const routes: IRoute[] = [
     label: "Consejos",
     component: Outlet,
     icon: "meetingRoom",
+    modules: [ModuleEnum.FACU],
     childrens: [
       {
         path: "nuevo",
@@ -250,6 +258,7 @@ export const routes: IRoute[] = [
     label: "Usuarios",
     component: Outlet,
     icon: "groupAdd",
+    modules: [ModuleEnum.FACU],
     childrens: [
       { path: "nuevo", component: AddUsuario },
       { path: ":userId", component: UpdateUsuario },
@@ -262,5 +271,57 @@ export const routes: IRoute[] = [
     label: "Perfil",
     component: Profile,
     icon: "accountCircle",
+    modules: [ModuleEnum.FACU, ModuleEnum.SUDE, ModuleEnum.TITU],
   },
 ];
+
+export function getFacuRoutes(userRoles: RolEnum[], userModules: ModuleEnum[]) {
+  return routes
+    .filter((route) =>
+      route.modules?.some((module) => module === ModuleEnum.FACU)
+    )
+    .filter((route) =>
+      route.modules?.map((module) =>
+        userModules.map((module2) => module === module2)
+      )
+    )
+    .filter(
+      (route) =>
+        !route.roles ||
+        route.roles.some((role) => userRoles.some((role2) => role2 === role))
+    );
+}
+
+export function getSudeRoutes(userRoles: RolEnum[], userModules: ModuleEnum[]) {
+  return routes
+    .filter((route) =>
+      route.modules?.some((module) => module === ModuleEnum.SUDE)
+    )
+    .filter((route) =>
+      route.modules?.map((module) =>
+        userModules.map((module2) => module === module2)
+      )
+    )
+    .filter(
+      (route) =>
+        !route.roles ||
+        route.roles.some((role) => userRoles.some((role2) => role2 === role))
+    );
+}
+
+export function getTituRoutes(userRoles: RolEnum[], userModules: ModuleEnum[]) {
+  return routes
+    .filter((route) =>
+      route.modules?.some((module) => module === ModuleEnum.TITU)
+    )
+    .filter((route) =>
+      route.modules?.map((module) =>
+        userModules.map((module2) => module === module2)
+      )
+    )
+    .filter(
+      (route) =>
+        !route.roles ||
+        route.roles.some((role) => userRoles.some((role2) => role2 === role))
+    );
+}

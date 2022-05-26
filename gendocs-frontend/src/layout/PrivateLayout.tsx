@@ -30,6 +30,10 @@ const defaultState = JSON.parse(isToogleDrawer);
 const PrivateLayout = () => {
   const [open, setOpen] = useState(defaultState);
 
+  const {
+    context: { user },
+  } = useAuthContext();
+
   const toggleDrawer = () => {
     const state = !open;
     localStorage.setItem("isToogleDrawer", JSON.stringify(state));
@@ -78,13 +82,17 @@ interface RoleCheckerRouteProps {
 }
 
 const RoleCheckerRoute = ({
-  item: { roles, component: Component },
+  item: { roles, component: Component, modules = [] },
 }: RoleCheckerRouteProps) => {
   const {
     context: { user },
   } = useAuthContext();
 
-  if (!roles || roles.includes(user.roles[0])) return <Component />;
+  if (
+    (!roles || roles.some((r) => user.roles.some((r2) => r === r2))) &&
+    modules.some((m) => user.modulos.some((m2) => m === m2.code))
+  )
+    return <Component />;
 
   return <AccesDenied />;
 };

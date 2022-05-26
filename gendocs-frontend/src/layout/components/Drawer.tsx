@@ -1,3 +1,4 @@
+import { ListSubheader } from "@mui/material";
 import Divider from "@mui/material/Divider";
 import MuiDrawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
@@ -5,8 +6,7 @@ import List from "@mui/material/List";
 import { styled } from "@mui/material/styles";
 import Toolbar from "@mui/material/Toolbar";
 import { Icon } from "components";
-import { useAuthContext } from "contexts/AuthContext";
-import { routes } from "layout/routes";
+import { useRoutes } from "layout/hooks/useRoutes";
 import { DRAWERWIDTH } from "utils";
 import Link from "./Link";
 
@@ -19,6 +19,7 @@ const DrawerBase = styled(MuiDrawer, {
     position: "relative",
     whiteSpace: "nowrap",
     width: drawerWidth,
+    height: "100vh",
     transition: theme.transitions.create("width", {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
@@ -45,8 +46,15 @@ interface DrawerProps {
 
 const Drawer: React.FC<DrawerProps> = ({ open, toggleDrawer }) => {
   const {
-    context: { user },
-  } = useAuthContext();
+    //
+    hasFacuModule,
+    hasSudeModule,
+    hasTituModule,
+    //
+    sudeRoutes,
+    tituRoutes,
+    facuRoutes,
+  } = useRoutes();
 
   return (
     <DrawerBase variant="permanent" open={open}>
@@ -63,10 +71,13 @@ const Drawer: React.FC<DrawerProps> = ({ open, toggleDrawer }) => {
         </IconButton>
       </Toolbar>
       <Divider />
-      <List>
-        {routes
-          .filter((i) => !i.roles || i?.roles.includes(user.roles[0]))
-          .map(
+      {hasFacuModule && (
+        <List>
+          <ListSubheader component="div" inset>
+            FACULTAD
+          </ListSubheader>
+
+          {facuRoutes.map(
             (item) =>
               item.icon &&
               item.label && (
@@ -78,7 +89,50 @@ const Drawer: React.FC<DrawerProps> = ({ open, toggleDrawer }) => {
                 />
               )
           )}
-      </List>
+        </List>
+      )}
+
+      {hasSudeModule && (
+        <List>
+          <ListSubheader component="div" inset>
+            SUBDECANATO
+          </ListSubheader>
+
+          {sudeRoutes.map(
+            (item) =>
+              item.icon &&
+              item.label && (
+                <Link
+                  key={item.path}
+                  icon={<Icon icon={item.icon} />}
+                  label={item.label}
+                  path={item.path}
+                />
+              )
+          )}
+        </List>
+      )}
+
+      {hasTituModule && (
+        <List>
+          <ListSubheader component="div" inset>
+            TITULACIÓN
+          </ListSubheader>
+
+          {tituRoutes.map(
+            (item) =>
+              item.icon &&
+              item.label && (
+                <Link
+                  key={item.path}
+                  icon={<Icon icon={item.icon} />}
+                  label={item.label}
+                  path={item.path}
+                />
+              )
+          )}
+        </List>
+      )}
     </DrawerBase>
   );
 };

@@ -1,4 +1,5 @@
 import { RolEnum } from "models/enums/Rol";
+import { IModule } from "./IModule";
 
 export interface IUser {
   id: number;
@@ -7,6 +8,7 @@ export interface IUser {
   name: string;
   roles: RolEnum[];
   status?: boolean;
+  modulos: IModule[];
 }
 
 export interface IUserForm {
