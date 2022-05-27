@@ -41,6 +41,7 @@ export interface IRoute {
   childrens?: IRoute[];
   roles?: RolEnum[];
   modules?: ModuleEnum[];
+  isMenuOption?: boolean;
 }
 
 export const DEFAULT_ROUTE = "inicio";
@@ -52,6 +53,7 @@ export const routes: IRoute[] = [
     component: Home,
     icon: "home",
     modules: [ModuleEnum.FACU],
+    isMenuOption: true,
   },
   {
     path: "documentos",
@@ -59,6 +61,7 @@ export const routes: IRoute[] = [
     component: Outlet,
     icon: "topic",
     modules: [ModuleEnum.FACU],
+    isMenuOption: true,
     childrens: [
       {
         path: "nuevo",
@@ -83,6 +86,7 @@ export const routes: IRoute[] = [
     component: Outlet,
     icon: "apartment",
     modules: [ModuleEnum.FACU],
+    isMenuOption: true,
     childrens: [
       {
         path: "nuevo",
@@ -103,6 +107,7 @@ export const routes: IRoute[] = [
     component: Outlet,
     icon: "hail",
     modules: [ModuleEnum.FACU],
+    isMenuOption: true,
     childrens: [
       {
         path: "nuevo",
@@ -123,6 +128,7 @@ export const routes: IRoute[] = [
     component: Outlet,
     icon: "school",
     modules: [ModuleEnum.FACU],
+    isMenuOption: true,
     childrens: [
       {
         path: "nuevo",
@@ -143,6 +149,7 @@ export const routes: IRoute[] = [
     component: Outlet,
     icon: "list",
     modules: [ModuleEnum.FACU],
+    isMenuOption: true,
     childrens: [
       {
         path: "nuevo",
@@ -252,6 +259,7 @@ export const routes: IRoute[] = [
       },
       { path: "", isIndex: true, component: Consejos },
     ],
+    isMenuOption: true,
   },
   {
     path: "usuarios",
@@ -259,12 +267,13 @@ export const routes: IRoute[] = [
     component: Outlet,
     icon: "groupAdd",
     modules: [ModuleEnum.FACU],
+    isMenuOption: true,
+    roles: [RolEnum.ADMIN],
     childrens: [
       { path: "nuevo", component: AddUsuario },
       { path: ":userId", component: UpdateUsuario },
       { path: "", isIndex: true, component: Usuarios },
     ],
-    roles: [RolEnum.ADMIN],
   },
   {
     path: "profile",
@@ -280,6 +289,7 @@ export function getFacuRoutes(userRoles: RolEnum[], userModules: ModuleEnum[]) {
     .filter((route) =>
       route.modules?.some((module) => module === ModuleEnum.FACU)
     )
+    .filter((r) => r.isMenuOption)
     .filter((route) =>
       route.modules?.map((module) =>
         userModules.map((module2) => module === module2)
@@ -297,6 +307,7 @@ export function getSudeRoutes(userRoles: RolEnum[], userModules: ModuleEnum[]) {
     .filter((route) =>
       route.modules?.some((module) => module === ModuleEnum.SUDE)
     )
+    .filter((r) => r.isMenuOption)
     .filter((route) =>
       route.modules?.map((module) =>
         userModules.map((module2) => module === module2)
@@ -314,6 +325,7 @@ export function getTituRoutes(userRoles: RolEnum[], userModules: ModuleEnum[]) {
     .filter((route) =>
       route.modules?.some((module) => module === ModuleEnum.TITU)
     )
+    .filter((r) => r.isMenuOption)
     .filter((route) =>
       route.modules?.map((module) =>
         userModules.map((module2) => module === module2)
