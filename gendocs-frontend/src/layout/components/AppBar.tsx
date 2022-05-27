@@ -1,10 +1,15 @@
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 import IconButton from "@mui/material/IconButton";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
 import { styled } from "@mui/material/styles";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import { Icon } from "components";
 import { useAuth } from "hooks";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { DRAWERWIDTH } from "utils";
 
 const drawerWidth = DRAWERWIDTH;
@@ -38,6 +43,23 @@ interface AppBarProps {
 
 const AppBar: React.FC<AppBarProps> = ({ open, toggleDrawer }) => {
   const { logout } = useAuth();
+  const navigate = useNavigate();
+
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const openMenu = Boolean(anchorEl);
+
+  const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const navigateToProfile = () => {
+    handleClose();
+    navigate("/profile");
+  };
 
   return (
     <AppBarStyle color="uta" position="absolute" open={open}>
@@ -68,9 +90,45 @@ const AppBar: React.FC<AppBarProps> = ({ open, toggleDrawer }) => {
           FISEI
         </Typography>
 
-        <IconButton color="inherit" onClick={logout}>
-          <Icon icon="exitToApp" />
+        <IconButton
+          size="large"
+          onClick={handleMenu}
+          color="inherit"
+          aria-controls={openMenu ? "menu-appbar" : undefined}
+          aria-haspopup="true"
+          aria-expanded={openMenu ? "true" : undefined}
+        >
+          <Icon icon="accountCircle" />
         </IconButton>
+
+        <Menu
+          id="menu-appbar"
+          anchorEl={anchorEl}
+          anchorOrigin={{
+            vertical: "top",
+            horizontal: "right",
+          }}
+          keepMounted
+          transformOrigin={{
+            vertical: "top",
+            horizontal: "right",
+          }}
+          open={openMenu}
+          onClose={handleClose}
+        >
+          <MenuItem onClick={navigateToProfile}>
+            <ListItemIcon>
+              <Icon icon="accountCircle" />
+            </ListItemIcon>
+            Perfil
+          </MenuItem>
+          <MenuItem onClick={logout}>
+            <ListItemIcon>
+              <Icon icon="exitToApp" />
+            </ListItemIcon>
+            Cerrar sesión
+          </MenuItem>
+        </Menu>
       </Toolbar>
     </AppBarStyle>
   );
