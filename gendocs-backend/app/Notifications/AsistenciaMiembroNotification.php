@@ -12,15 +12,19 @@ use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use Illuminate\Support\Facades\Auth;
 
-class AsistenciaMiembroNotification extends Notification
+class AsistenciaMiembroNotification extends Notification implements ShouldQueue
 {
     use Queueable, ReplaceableDocText, NotifiableUtils;
 
-    protected $mensaje;
+    public $tries = 3;
 
-    public function __construct($mensaje)
+    protected $mensaje;
+    protected $sender;
+
+    public function __construct($mensaje, $sender)
     {
         $this->mensaje = $mensaje;
+        $this->sender = $sender;
     }
 
 
@@ -45,8 +49,8 @@ class AsistenciaMiembroNotification extends Notification
     {
         return (new MailMessage)
             ->from(
-                $this->getSenderEmail(),
-                $this->getSenderName()
+                $this->getSenderEmail($this->sender),
+                $this->getSenderName($this->sender)
             )
             ->subject($this->getSubject("Notificación asistencia"))
             ->greeting('Notificación asistencia')
@@ -66,5 +70,28 @@ class AsistenciaMiembroNotification extends Notification
         return [
             //
         ];
+    }
+
+    /**
+     * Determine the notification's delivery delay.
+     *
+     * @param  mixed  $notifiable
+     * @return array
+     */
+    public function withDelay($notifiable)
+    {
+        return [
+            'mail' => now()->addSeconds(30),
+        ];
+    }
+
+    /**
+     * Determine the time at which the job should timeout.
+     *
+     * @return \DateTime
+     */
+    public function retryUntil()
+    {
+        return now()->addMinutes(5);
     }
 }

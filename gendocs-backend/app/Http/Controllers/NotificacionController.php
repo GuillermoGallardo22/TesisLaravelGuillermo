@@ -26,7 +26,8 @@ class NotificacionController extends Controller
         if ($miembro) {
             $miembro = Miembro::find($miembro);
 
-            $miembro->notify(new AsistenciaMiembroNotification($validated["mensaje"]));
+            $miembro
+                ->notify(new AsistenciaMiembroNotification($validated["mensaje"], $request->user()));
 
             $miembro->update(['notificado' => true]);
         }
