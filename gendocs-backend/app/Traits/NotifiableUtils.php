@@ -2,20 +2,18 @@
 
 namespace App\Traits;
 
-use Illuminate\Support\Facades\Auth;
-
 trait NotifiableUtils
 {
-    public function getSenderName()
+    public function getSenderName($user)
     {
-        $senderName = Auth::user()->name;
+        $senderName = $user->name;
         $app = config('app.name');
         return "$senderName ($app)";
     }
 
-    public function getSenderEmail()
+    public function getSenderEmail($user)
     {
-        $senderEmail = Auth::user()->email;
+        $senderEmail = $user->email;
         return $senderEmail;
     }
 
