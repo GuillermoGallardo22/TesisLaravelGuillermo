@@ -1,14 +1,9 @@
-import { useConfirmationDialog, useConsejos, useDeleteItem } from "hooks";
+import { useConfirmationDialog, useDeleteItem } from "hooks";
 import { IDocumento } from "models/interfaces";
-import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { deleteDocumento, getDocumentos } from "services";
 
-export function useListDocumentos() {
-  const [consejo, setConsejo] = useState(-1);
-
-  const { data: consejos = [] } = useConsejos();
-
+export function useListDocumentos(consejo: number) {
   const {
     data: documentos = [],
     isLoading: loading,
@@ -38,17 +33,8 @@ export function useListDocumentos() {
     },
   });
 
-  useEffect(() => {
-    if (consejos.length) {
-      setConsejo(consejos[0].id);
-    }
-  }, [consejos]);
-
   return {
-    consejos,
-    setConsejo,
     documentos,
-    consejo,
     loading,
     //
     confirmationDialog,
