@@ -5,7 +5,7 @@ import Paper from "@mui/material/Paper";
 import Toolbar from "@mui/material/Toolbar";
 import { AccesDenied, Skeleton } from "components";
 import { useAuthContext } from "contexts/AuthContext";
-import { Suspense, useState } from "react";
+import { Suspense, useMemo, useState } from "react";
 import { Navigate, Route, Routes } from "react-router";
 import AppBar from "./components/AppBar";
 import Drawer from "./components/Drawer";
@@ -81,18 +81,29 @@ interface RoleCheckerRouteProps {
   item: IRoute;
 }
 
+// TODO: improve re-rendering of routes dur to poor performance when toogle drawer
 const RoleCheckerRoute = ({
-  item: { roles, component: Component, modules = [] },
+  item: { roles = [], component: Component, modules = [] },
 }: RoleCheckerRouteProps) => {
   const {
     context: { user },
   } = useAuthContext();
 
-  if (
-    (!roles || roles.some((r) => user.roles.some((r2) => r === r2))) &&
-    modules.some((m) => user.modulos.some((m2) => m === m2.code))
-  )
-    return <Component />;
+  const hasEnoughRoles = useMemo(
+    () => !roles.length || roles.some((role) => user.roles.includes(role)),
+    []
+  );
+
+  const hasAccessToModule = useMemo(
+    () =>
+      !modules.length ||
+      modules.some((module) =>
+        user.modulos.map((us) => us.code).includes(module)
+      ),
+    []
+  );
+
+  if (hasEnoughRoles && hasAccessToModule) return <Component />;
 
   return <AccesDenied />;
 };
