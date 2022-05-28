@@ -415,7 +415,6 @@ export default function AddDocumento() {
         onApprove={(n) => formik.setFieldValue("numero", n)}
         reservados={reservados}
         encolados={encolados}
-        defaultValue={formik.values.numero}
       />
     </Stack>
   );

@@ -1,7 +1,12 @@
 import { useFormik } from "formik";
 import { useErrorsResponse } from "hooks";
 import { HTTP_STATUS } from "models/enums";
-import { IConsejo, IDocumentoForm, INumeracionBase } from "models/interfaces";
+import {
+  IConsejo,
+  IDocumentoForm,
+  INumeracionBase,
+  INumeracionReservado,
+} from "models/interfaces";
 import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
 import { getConsejos, getNumeracion, saveDocumento } from "services";
@@ -30,8 +35,8 @@ export default function useAddDocumento({ onReset }: useAddDocumentoProps) {
 
   const [documento, setDocumento] = useState<IDocumentoForm>(initialValues);
 
-  const [encolados, setEncolados] = useState<number[]>([]);
-  const [reservados, setReservados] = useState<INumeracionBase[]>([]);
+  const [encolados, setEncolados] = useState<INumeracionBase[]>([]);
+  const [reservados, setReservados] = useState<INumeracionReservado[]>([]);
 
   useEffect(() => {
     let active = true;

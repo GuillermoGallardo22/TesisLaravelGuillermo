@@ -9,11 +9,14 @@ export interface IReservaForm {
 export interface INumeracionBase {
   id: number;
   numero: number;
+}
+
+export interface INumeracionReservado extends INumeracionBase {
   consejo: IConsejo;
 }
 
 export interface INumeracion {
   siguiente: number;
-  reservados: INumeracionBase[];
-  encolados: number[];
+  reservados: INumeracionReservado[];
+  encolados: INumeracionBase[];
 }

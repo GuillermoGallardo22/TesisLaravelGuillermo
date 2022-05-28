@@ -1,37 +1,16 @@
-import FormControl from "@mui/material/FormControl";
-import FormControlLabel from "@mui/material/FormControlLabel";
 import Grid from "@mui/material/Grid";
-import Radio from "@mui/material/Radio";
-import RadioGroup from "@mui/material/RadioGroup";
-import Tooltip from "@mui/material/Tooltip";
-import Typography from "@mui/material/Typography";
+import { DataGrid } from "@mui/x-data-grid";
 import { ConfirmationDialog } from "components";
-import { INumeracionBase } from "models/interfaces";
-import { useEffect, useState } from "react";
-import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
-} from "./AccordionTheme";
+import { INumeracionBase, INumeracionReservado } from "models/interfaces";
+import { useMemo, useState } from "react";
 
 type NumeracionModalProps = {
   isVisible: boolean;
   onCancel: () => void;
   onApprove: (number: number) => void;
-  reservados: INumeracionBase[];
-  encolados: number[];
-  defaultValue?: number;
+  reservados: INumeracionReservado[];
+  encolados: INumeracionBase[];
 };
-
-type PanelType = "panel1" | "panel2";
-
-const p1 = JSON.parse(
-  localStorage.getItem("isExpandedP1") || "false"
-) as boolean;
-
-const p2 = JSON.parse(
-  localStorage.getItem("isExpandedP2") || "false"
-) as boolean;
 
 export const NumeracionModal: React.FC<NumeracionModalProps> = ({
   isVisible,
@@ -39,12 +18,26 @@ export const NumeracionModal: React.FC<NumeracionModalProps> = ({
   onApprove,
   reservados,
   encolados,
-  defaultValue,
 }) => {
   const [selectedValue, setSelectedValue] = useState<number | null>(null);
+  const [searching, setSearching] = useState(false);
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSelectedValue(+event.target.value);
+  const handleChange = (
+    id: number | string,
+    type: "encolados" | "reservados"
+  ) => {
+    setSearching(true);
+
+    let selected = null;
+
+    if (type === "encolados") {
+      selected = encolados.find((e) => e.id === Number(id))?.numero || null;
+    } else {
+      selected = reservados.find((e) => e.id === Number(id))?.numero || null;
+    }
+
+    setSelectedValue(selected);
+    setSearching(false);
   };
 
   const handleOnApprove = () => {
@@ -53,37 +46,13 @@ export const NumeracionModal: React.FC<NumeracionModalProps> = ({
     onCancel();
   };
 
-  useEffect(() => {
-    if (isVisible) {
-      const inReservado = reservados.find(
-        (i) => i.numero === defaultValue
-      )?.numero;
-      const inEncolado = encolados.find((i) => i === defaultValue);
-      setSelectedValue(inReservado || inEncolado || null);
-    } else {
-      setSelectedValue(null);
-    }
-  }, [isVisible]);
-
-  const [expanded1, setExpanded1] = useState<boolean>(p1);
-  const [expanded2, setExpanded2] = useState<boolean>(p2);
-
-  const handleExpand = (panel: PanelType, isExpanded: boolean) => {
-    switch (panel) {
-    case "panel1": {
-      localStorage.setItem("isExpandedP1", JSON.stringify(isExpanded));
-      setExpanded1(isExpanded);
-      break;
-    }
-    case "panel2": {
-      localStorage.setItem("isExpandedP2", JSON.stringify(isExpanded));
-      setExpanded2(isExpanded);
-      break;
-    }
-    default:
-      break;
-    }
-  };
+  const nombreConsejos = useMemo(
+    () =>
+      reservados
+        .map((r) => r.consejo.nombre)
+        .filter((v, i, a) => a.indexOf(v) === i),
+    [reservados]
+  );
 
   return (
     <ConfirmationDialog
@@ -91,60 +60,64 @@ export const NumeracionModal: React.FC<NumeracionModalProps> = ({
       title="Numeración"
       isVisible={isVisible}
       onCancel={onCancel}
+      loading={searching}
       onApprove={handleOnApprove}
       buttonColorCancel="inherit"
       maxWidth="md"
     >
-      <FormControl component="fieldset" fullWidth>
-        <RadioGroup
-          name="numeracion-radio"
-          aria-label="numeracion-radio"
-          value={selectedValue}
-          onChange={handleChange}
-        >
-          <Accordion
-            expanded={expanded1}
-            onChange={(_, v) => handleExpand("panel1", v)}
-          >
-            <AccordionSummary id="panel1">
-              <Typography>Números reservados</Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              <Grid container columns={{ xs: 3, sm: 6, md: 10 }}>
-                {reservados.map((i) => (
-                  <Grid item key={i.id} xs={1}>
-                    <Tooltip title={i.consejo.nombre}>
-                      <FormControlLabel
-                        label={i.numero}
-                        value={i.numero}
-                        control={<Radio />}
-                      />
-                    </Tooltip>
-                  </Grid>
-                ))}
-              </Grid>
-            </AccordionDetails>
-          </Accordion>
+      <Grid container direction="column" gap={2}>
+        <Grid item>
+          <div style={{ height: 380, width: "100%" }}>
+            <DataGrid
+              pagination
+              density="compact"
+              rows={reservados}
+              onSelectionModelChange={(s) => handleChange(s[0], "reservados")}
+              columns={[
+                {
+                  field: "numero",
+                  headerName: "Números reservados",
+                  flex: 1,
+                  type: "number",
+                  align: "left",
+                  headerAlign: "left",
+                  valueFormatter: ({ value }) => value,
+                },
+                {
+                  field: "consejo",
+                  headerName: "Consejo",
+                  flex: 1,
+                  type: "singleSelect",
+                  valueGetter: ({ value }) => value.nombre,
+                  valueOptions: nombreConsejos,
+                },
+              ]}
+            />
+          </div>
+        </Grid>
 
-          <Accordion
-            expanded={expanded2}
-            onChange={(_, v) => handleExpand("panel2", v)}
-          >
-            <AccordionSummary id="panel2">
-              <Typography>Números encolados</Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              <Grid container columns={{ xs: 3, sm: 6, md: 10 }}>
-                {encolados.map((i) => (
-                  <Grid item key={i} xs={1}>
-                    <FormControlLabel label={i} value={i} control={<Radio />} />
-                  </Grid>
-                ))}
-              </Grid>
-            </AccordionDetails>
-          </Accordion>
-        </RadioGroup>
-      </FormControl>
+        <Grid item>
+          <div style={{ height: 380, width: "100%" }}>
+            <DataGrid
+              pagination
+              density="compact"
+              rows={encolados}
+              onSelectionModelChange={(s) => handleChange(s[0], "encolados")}
+              columns={[
+                {
+                  field: "numero",
+                  headerName: "Números encolados",
+                  flex: 1,
+                  type: "number",
+                  align: "left",
+                  headerAlign: "left",
+                  valueFormatter: ({ value }) => value,
+                },
+              ]}
+            />
+          </div>
+        </Grid>
+      </Grid>
     </ConfirmationDialog>
   );
 };
