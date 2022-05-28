@@ -13,9 +13,13 @@ import {
   TitleNav,
 } from "components";
 import { useAuthContext } from "contexts/AuthContext";
-import { useConfirmationDialog, useGridColumnVisibilityModel } from "hooks";
+import {
+  useConfirmationDialog,
+  useConsejos,
+  useGridColumnVisibilityModel,
+} from "hooks";
 import { IDocumento } from "models/interfaces";
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import {
   generateLink,
@@ -29,16 +33,22 @@ import { NotificationEmail } from "./components/NotificationEmail";
 import { useListDocumentos } from "./hooks/useListDocumentos";
 
 export default function Documentos() {
+  const [consejo, setConsejo] = useState(-1);
+  const { data: consejos = [] } = useConsejos();
+
+  useEffect(() => {
+    if (consejos.length) {
+      setConsejo(consejos[0].id);
+    }
+  }, [consejos]);
+
   const {
-    consejos,
     documentos,
-    consejo,
     loading,
-    setConsejo,
     //
     confirmationDialog: { isVisible, openModal, closeModal, itemSelected },
     deleteItem: { handleDelete, deleting },
-  } = useListDocumentos();
+  } = useListDocumentos(consejo);
 
   const {
     context: { user },
