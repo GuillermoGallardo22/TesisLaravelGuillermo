@@ -120,7 +120,7 @@ export default function Consejos() {
         type: "actions",
         field: "actions",
         headerName: "Acciones",
-        width: 205,
+        width: 250,
         getActions: (p) => [
           <GridActionsCellItem
             key={p.id}
@@ -156,6 +156,18 @@ export default function Consejos() {
             icon={
               <Tooltip title="Acta" arrow>
                 <Icon icon="historyEdu" />
+              </Tooltip>
+            }
+          />,
+          <GridActionsCellItem
+            key={p.id}
+            color="secondary"
+            label="Resoluciones"
+            LinkComponent={Link}
+            to={p.row?.id + "/resoluciones"}
+            icon={
+              <Tooltip title="Resoluciones" arrow>
+                <Icon icon="article" />
               </Tooltip>
             }
           />,

@@ -1,5 +1,9 @@
 import { lazy } from "react";
 
+export const ListResoluciones = lazy(
+  () => import("pages/private/consejos/components/ListResoluciones")
+);
+
 export const AddDocente = lazy(
   () => import("pages/private/docentes/components/AddDocente")
 );

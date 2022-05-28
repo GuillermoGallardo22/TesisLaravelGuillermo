@@ -20,6 +20,7 @@ import {
   Home,
   ListMiembros,
   ListPlantillas,
+  ListResoluciones,
   Procesos,
   Profile,
   UpdateCarrera,
@@ -246,6 +247,21 @@ export const routes: IRoute[] = [
                 path: "",
                 component: Acta,
                 isIndex: true,
+              },
+            ],
+          },
+          {
+            path: "resoluciones",
+            component: Outlet,
+            childrens: [
+              {
+                path: "drive/:driveId",
+                component: DriveTemplate,
+              },
+              {
+                path: "",
+                isIndex: true,
+                component: ListResoluciones,
               },
             ],
           },
