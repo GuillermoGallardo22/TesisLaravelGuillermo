@@ -31,31 +31,24 @@ class Numeracion extends Model
     public function scopeSiguiente($query)
     {
         return $query
-                ->max('numero') + 1;
+            ->max('numero') + 1;
     }
 
     public function scopeReservados($query)
     {
         return $query->where('reservado', 1)
             ->where('usado', 0)
-            ->orderBy('numero')
+            ->orderBy('numero', 'DESC')
             ->with('consejo')
             ->get();
-        // ->groupBy(['consejo.id', 'consejo.nombre']);
-        /*
-        ->groupBy(function ($item, $key) {
-                return $item->consejo->nombre . "###" . $item->consejo->id;
-            });
-        */
     }
 
     public function scopeEncolados($query)
     {
         return $query->where('encolado', 1)
             ->where('usado', 0)
-            ->orderBy('numero')
-            ->get()
-            ->pluck('numero');
+            ->orderBy('numero', 'DESC')
+            ->get();
     }
 
     public function consejo()
