@@ -155,7 +155,7 @@ export default function ListMiembros() {
           <Grid item xs={1}>
             <Button
               fullWidth
-              disabled={!selectionModel.length}
+              disabled={!selectionModel.length || !consejo || !consejo?.estado}
               startIcon={<Icon icon="email" />}
               variant="outlined"
               onClick={() => openModalNE()}
@@ -166,7 +166,7 @@ export default function ListMiembros() {
           <Grid item xs={1}>
             <Button
               fullWidth
-              disabled={!selectionModel.length}
+              disabled={!selectionModel.length || !consejo || !consejo?.estado}
               startIcon={<Icon icon="factCheck" />}
               variant="outlined"
               onClick={openModalA}
