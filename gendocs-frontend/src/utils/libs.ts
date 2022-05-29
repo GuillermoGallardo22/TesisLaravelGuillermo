@@ -96,6 +96,10 @@ export function getNombreCompleto(params: GridValueGetterParams<IDocumento>) {
   );
 }
 
+export function getConsejo(params: GridValueGetterParams<IDocumento>) {
+  return params.row.consejo.nombre;
+}
+
 export function getPlantilla(params: GridValueGetterParams<IDocumento>) {
   return params.row.plantilla.nombre;
 }

@@ -45,6 +45,24 @@ export async function getDocumentos(
   }
 }
 
+export async function filterDocumentos(
+  props?: IFilterPaginationProps
+): Promise<IPagination<IDocumento>> {
+  try {
+    if (!(props?.filters?.estudiante as string).length) {
+      return DEFAULT_PAGINATION_VALUES;
+    }
+
+    const params = parseFilterPaginationProps(props);
+
+    const { data } = await axios.get(`documentos?${params}`);
+
+    return parsePaginationData(data);
+  } catch (error) {
+    return DEFAULT_PAGINATION_VALUES;
+  }
+}
+
 export async function deleteDocumento(
   id: string | number
 ): Promise<IResponse<null>> {

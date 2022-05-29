@@ -51,10 +51,21 @@ export const routes: IRoute[] = [
   {
     path: DEFAULT_ROUTE,
     label: "Inicio",
-    component: Home,
+    component: Outlet,
     icon: "home",
     modules: [ModuleEnum.FACU],
     isMenuOption: true,
+    childrens: [
+      {
+        path: "drive/:driveId",
+        component: DriveTemplate,
+      },
+      {
+        path: "",
+        isIndex: true,
+        component: Home,
+      },
+    ],
   },
   {
     path: "documentos",
