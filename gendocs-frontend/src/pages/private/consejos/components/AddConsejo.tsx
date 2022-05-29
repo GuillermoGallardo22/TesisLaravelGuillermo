@@ -1,9 +1,9 @@
-import DateTimePicker from "@mui/lab/DateTimePicker";
 import LoadingButton from "@mui/lab/LoadingButton";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
+import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import { ErrorSummary, Select, TitleNav } from "components";
 import { useAddConsejo } from "../hooks/useAddConsejo";
 

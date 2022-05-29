@@ -1,7 +1,7 @@
-import DateAdapter from "@mui/lab/AdapterDateFns";
-import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import CssBaseline from "@mui/material/CssBaseline";
 import { ThemeProvider } from "@mui/material/styles";
+import { AdapterDateFns as DateAdapter } from "@mui/x-date-pickers/AdapterDateFns";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { LoadingScreen } from "components";
 import { useAuthContext } from "contexts/AuthContext";
 import esLocale from "date-fns/locale/es";
