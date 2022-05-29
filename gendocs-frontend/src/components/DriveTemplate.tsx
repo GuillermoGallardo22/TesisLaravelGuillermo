@@ -1,5 +1,5 @@
-import { Stack } from "@mui/material";
 import Box from "@mui/material/Box";
+import Stack from "@mui/material/Stack";
 import { useParams } from "react-router-dom";
 import { TitleNav } from "./TitleNav";
 

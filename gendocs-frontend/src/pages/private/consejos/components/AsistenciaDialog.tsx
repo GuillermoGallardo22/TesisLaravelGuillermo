@@ -1,4 +1,7 @@
-import { DialogContentText, List, ListItem, ListItemText } from "@mui/material";
+import DialogContentText from "@mui/material/DialogContentText";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemText from "@mui/material/ListItemText";
 import { ConfirmationDialog } from "components";
 import { ConfirmationDialogReturnProps } from "hooks";
 import { IMiembro } from "models/interfaces";

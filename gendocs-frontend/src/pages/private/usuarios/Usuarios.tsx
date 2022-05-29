@@ -1,5 +1,5 @@
-import { DialogContentText } from "@mui/material";
 import Button from "@mui/material/Button";
+import DialogContentText from "@mui/material/DialogContentText";
 import Stack from "@mui/material/Stack";
 import Tooltip from "@mui/material/Tooltip";
 import {
