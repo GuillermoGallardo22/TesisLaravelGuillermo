@@ -8,12 +8,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\DB;
 
 class Documento extends Model
 {
     use HasFactory, Pageable, Filterable, SoftDeletes;
 
-    public const FILTERS = ["consejo", "search"];
+    public const FILTERS = ["consejo", "estudiante"];
 
     protected $fillable = [
         'consejo_id',
@@ -42,6 +43,19 @@ class Documento extends Model
             'drive' => $this->archivo?->google_drive_id,
             'creado' => $this->created_at
         ];
+    }
+
+    public function scopeEstudiante($query, $value)
+    {
+        $filter = preg_replace('/\s+/', '%', $value);
+
+        return $query
+            ->join('estudiantes', 'estudiantes.id', '=', 'documentos.estudiante_id')
+            ->where('estudiantes.cedula', 'like', "%$filter%")
+            ->orWhere('estudiantes.matricula', 'like', "%$filter%")
+            ->orWhere('estudiantes.folio', 'like', "%$filter%")
+            ->orWhere(DB::raw("CONCAT_WS(' ', estudiantes.nombres, estudiantes.apellidos)"), 'like', "%$filter%")
+            ->select('documentos.*');
     }
 
     public function archivo()
