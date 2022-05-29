@@ -11,11 +11,13 @@ type useFilterPaginationProps<T> = {
   fetch: (props: IFilterPaginationProps) => Promise<IPagination<T>>;
   filters?: IFilterProps;
   token?: number;
+  key?: string;
 };
 
 export const useFilterPagination = <T>({
   fetch,
   filters,
+  key = "search",
   token = 1,
 }: useFilterPaginationProps<T>) => {
   const [data, setData] = useState<IPagination<T>>(DEFAULT_PAGINATION_VALUES);
@@ -69,7 +71,7 @@ export const useFilterPagination = <T>({
             size: data.meta.per_page,
           },
           filters: {
-            search,
+            [key]: search,
             ...filters,
           },
         },
@@ -90,6 +92,7 @@ export const useFilterPagination = <T>({
           },
           filters: {
             search,
+            [key]: search,
             ...filters,
           },
         },
