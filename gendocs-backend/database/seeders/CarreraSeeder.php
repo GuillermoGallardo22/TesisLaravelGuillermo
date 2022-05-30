@@ -16,14 +16,17 @@ class CarreraSeeder extends Seeder
     {
         Carrera::create([
             'nombre' => 'Sistemas Computacionales e Informaticos',
+            'desaparecera' => true,
         ]);
 
         Carrera::create([
             'nombre' => 'Electrónica y Telecomunicaciones',
+            'desaparecera' => true,
         ]);
 
         Carrera::create([
             'nombre' => 'Industrial en Procesos de Automatización',
+            'desaparecera' => true,
         ]);
 
         Carrera::create([

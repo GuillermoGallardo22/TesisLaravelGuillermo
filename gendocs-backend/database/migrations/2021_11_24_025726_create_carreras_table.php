@@ -19,6 +19,9 @@ class CreateCarrerasTable extends Migration
             $table->string("nombre");
             $table->boolean("estado")->default(true);
 
+            // Columna para determinar si es una nueva o antigua carrera (carreras que desaparecerá)
+            $table->boolean("desaparecera")->default(false);
+
             $table->timestamps();
             $table->softDeletes();
         });
