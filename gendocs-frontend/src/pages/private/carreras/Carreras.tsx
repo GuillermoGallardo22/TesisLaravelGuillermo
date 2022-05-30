@@ -1,4 +1,3 @@
-import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import Tooltip from "@mui/material/Tooltip";
 import {
@@ -58,13 +57,6 @@ export default function Carreras() {
             }
             label="Editar"
           />,
-          // <GridActionsCellItem
-          //     key={p.id}
-          //     color="error"
-          //     icon={<Icon icon="delete" />}
-          //     label="Eliminar documento"
-          //     onClick={() => openModal(p.row as IDocumento)}
-          // />,
         ],
       },
     ],
@@ -74,16 +66,6 @@ export default function Carreras() {
   return (
     <Stack spacing={2}>
       <TitleNav title="Carreras" goback={false} />
-
-      <Button
-        component={Link}
-        startIcon={<Icon icon="add" />}
-        to="nuevo"
-        variant="outlined"
-      >
-        CREAR CARRERA
-      </Button>
-
       <div style={{ height: 700, width: "100%" }}>
         <DataGrid
           disableColumnMenu
