@@ -1,5 +1,15 @@
 # TesisLaravelGuillermo
 
+## NUEVOS REQUERIMIENTOS
+
+- [ ] Agregar docentes a documentos
+  - [x] Sec. facultad
+  - [ ] Sec. subdecanato
+  - [ ] Sec. titulación (x2)
+- [ ] Cargo de docentes
+  - [ ] Asisnación de cargos a docentes
+  - [ ] Crear variable de cargos para reemplazar en documentos
+
 ## TODO
 
 - [x] Restablecer contraseña documento por defecto al crear una plantilla
@@ -50,9 +60,3 @@
         - [ ] Cerrar consejo
         - [ ] Asistencia
         - [ ] Generar acta
-
-## NUEVOS REQUERIMIENTOS
-
-- [ ] Cargo de docentes
-  - [ ] Asisnación de cargos a docentes
-  - [ ] Crear variable de cargos para reemplazar en documentos
