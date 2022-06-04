@@ -2,6 +2,7 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import Autocomplete from "@mui/material/Autocomplete";
 import Box from "@mui/material/Box";
 import Checkbox from "@mui/material/Checkbox";
+import Chip from "@mui/material/Chip";
 import CircularProgress from "@mui/material/CircularProgress";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Grid from "@mui/material/Grid";
@@ -10,10 +11,15 @@ import InputAdornment from "@mui/material/InputAdornment";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import { ErrorSummary, Icon, Select, TitleNav } from "components";
-import { useAutocomplete, useConfirmationDialog } from "hooks";
-import { IEstudiante, IPlantilla, IProceso } from "models/interfaces";
+import {
+  useAutocomplete,
+  useConfirmationDialog,
+  useMultiAutocomplete,
+} from "hooks";
+import { IDocente, IEstudiante, IPlantilla, IProceso } from "models/interfaces";
 import { useEffect } from "react";
 import {
+  getDocentes,
   getEstudiantes,
   getPlantillasByProcesoId,
   getProcesos,
@@ -21,7 +27,7 @@ import {
 import useAddDocumento from "../hooks/useAddDocumento";
 import { NumeracionModal } from "./NumeracionModal";
 
-export default function AddDocumento() {
+function AddDocumento() {
   // PROCESOS
   const {
     items: itemsPRO,
@@ -71,6 +77,19 @@ export default function AddDocumento() {
     preventSubmitOnOpen: true,
   });
 
+  // DOCENTES
+  const {
+    values: valuesDOC,
+    options: optionsDOC,
+    searching: searchingDOC,
+    setOptions: setOptionsDOC,
+    setInputValue: setInputValueDOC,
+    setValues: setValuesDOC,
+    resetValues: resetValuesDOC,
+  } = useMultiAutocomplete<IDocente>({
+    fetch: getDocentes,
+  });
+
   useEffect(() => {
     formik.setFieldValue("proceso", valuePRO?.id || -1);
     //
@@ -87,10 +106,15 @@ export default function AddDocumento() {
     formik.setFieldValue("estudiante", valueEST?.id || null);
   }, [valueEST]);
 
+  useEffect(() => {
+    formik.setFieldValue("docentes", valuesDOC.map((d) => d.id).filter(Number));
+  }, [valuesDOC.length]);
+
   const handleResetAutocomplete = () => {
     resetValueEST();
     resetValuePLA();
     resetValuePRO();
+    resetValuesDOC();
   };
 
   // FORM
@@ -292,7 +316,7 @@ export default function AddDocumento() {
             />
           </Grid>
 
-          <Grid item xs={12}>
+          <Grid item xs={12} sm={6}>
             <Autocomplete
               fullWidth
               id="autocomplete-estudiante"
@@ -331,6 +355,56 @@ export default function AddDocumento() {
                     endAdornment: (
                       <>
                         {searchingEST ? (
+                          <CircularProgress color="inherit" size={20} />
+                        ) : null}
+                        {params.InputProps.endAdornment}
+                      </>
+                    ),
+                  }}
+                />
+              )}
+            />
+          </Grid>
+
+          <Grid item xs={12} sm={6}>
+            <Autocomplete
+              id="autocomplete-docentes"
+              freeSolo
+              multiple
+              autoComplete
+              includeInputInList
+              filterSelectedOptions
+              disabled={submitting}
+              value={valuesDOC}
+              options={optionsDOC}
+              filterOptions={(x) => x}
+              onClose={() => setOptionsDOC([])}
+              isOptionEqualToValue={(o, v) => o.id === v.id}
+              getOptionLabel={(option: any) => option?.nombres || ""}
+              onChange={(_, newValue: any) => setValuesDOC(newValue)}
+              onInputChange={(_, newInputValue) =>
+                setInputValueDOC(newInputValue)
+              }
+              renderTags={(value, getTagProps) =>
+                value.map((option, index) => (
+                  <Chip
+                    label={option.nombres}
+                    {...getTagProps({ index })}
+                    key={index}
+                  />
+                ))
+              }
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  margin="normal"
+                  label="Docentes"
+                  placeholder="Cédula | Nombres"
+                  InputProps={{
+                    ...params.InputProps,
+                    endAdornment: (
+                      <>
+                        {searchingDOC ? (
                           <CircularProgress color="inherit" size={20} />
                         ) : null}
                         {params.InputProps.endAdornment}
@@ -419,3 +493,5 @@ export default function AddDocumento() {
     </Stack>
   );
 }
+
+export default AddDocumento;

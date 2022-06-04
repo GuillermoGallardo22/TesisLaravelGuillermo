@@ -21,6 +21,7 @@ const initialValues: IDocumentoForm = {
   descripcion: null,
   numero: -1,
   otro: false,
+  docentes: [],
 };
 
 type useAddDocumentoProps = {

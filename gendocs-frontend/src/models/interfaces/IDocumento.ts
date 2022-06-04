@@ -10,6 +10,7 @@ export interface IDocumentoForm {
   estudiante: number | null;
   descripcion: string | null;
   numero: number;
+  docentes: number[];
   otro?: boolean;
 }
 
