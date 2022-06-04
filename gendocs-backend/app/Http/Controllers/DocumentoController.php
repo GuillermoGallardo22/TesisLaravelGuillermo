@@ -7,8 +7,10 @@ use App\Http\Requests\UpdateDocumentoRequest;
 use App\Http\Resources\ResourceCollection;
 use App\Http\Resources\ResourceObject;
 use App\Models\Documento;
+use App\Services\DocumentoService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
 class DocumentoController extends Controller
@@ -37,7 +39,7 @@ class DocumentoController extends Controller
         return ResourceCollection::make($query->get());
     }
 
-    public function store(StoreDocumentoRequest $request)
+    public function store(StoreDocumentoRequest $request, DocumentoService $service)
     {
         $validated = $request->validated();
 
@@ -52,6 +54,12 @@ class DocumentoController extends Controller
                 'autor_id' => $request->user()->id,
                 'descripcion' => $validated['descripcion']
             ]);
+
+            if (count($validated['docentes'])) {
+                $documento->docentes()->attach($validated['docentes']);
+            }
+
+            $service->generar($documento);
 
             DB::commit();
 
