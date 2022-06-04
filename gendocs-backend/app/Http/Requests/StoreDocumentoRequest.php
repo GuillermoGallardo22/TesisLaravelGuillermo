@@ -42,7 +42,8 @@ class StoreDocumentoRequest extends FormRequest
             ],
             'plantilla' => ['required', 'exists:\App\Models\Plantillas,id'],
             'estudiante' => ['nullable', 'exists:\App\Models\Estudiante,id'],
-            'descripcion' => ['string', 'nullable', 'max:512']
+            'descripcion' => ['string', 'nullable', 'max:512'],
+            'docentes' => ['array', 'exists:\App\Models\Docente,id']
         ];
     }
 }
