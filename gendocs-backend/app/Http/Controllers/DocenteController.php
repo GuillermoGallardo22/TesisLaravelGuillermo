@@ -24,6 +24,14 @@ class DocenteController extends Controller
 
         $query->applyFilters($request->all());
 
+        $paginate = $query->applyPaginate($request->all());
+
+        if ($paginate['isPageable']) {
+            return ResourceCollection::make(
+                $query->paginate($paginate['size'], '*', $paginate['param'], $paginate['number'])
+            );
+        }
+
         return ResourceCollection::make($query->get());
     }
 
