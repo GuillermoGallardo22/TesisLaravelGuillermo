@@ -79,3 +79,5 @@
 |   {{MINUTOS_T_L}}   |                 treinta                 |
 |   {{ASISTIERON}}    | Ing. Pepito Perez, Ing. Carlitos Castro |
 |  {{NO_ASISTIERON}}  |           Ing. Juanito Garcia           |
+|  {{NO_ASISTIERON}}  |           Ing. Juanito Garcia           |
+|  {{DOCENTE_N_$i}}   |       Variable docentes dinámica        |
