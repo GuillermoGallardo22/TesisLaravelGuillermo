@@ -2,7 +2,7 @@ import { debounce } from "lodash";
 import { IFilterPaginationProps, IFilterProps } from "models/interfaces";
 import { useEffect, useMemo, useState } from "react";
 
-type useAutocompleteProps<T> = {
+export type useAutocompleteProps<T> = {
   fetch: (props: IFilterPaginationProps) => Promise<any>;
   filters?: IFilterProps;
   preventSubmitOnOpen?: boolean;

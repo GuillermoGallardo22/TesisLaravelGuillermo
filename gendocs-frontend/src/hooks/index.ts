@@ -5,4 +5,5 @@ export * from "./useDeleteItem";
 export * from "./useErrorsResponse";
 export * from "./useFilterPagination";
 export * from "./useGridColumnVisibilityModel";
+export * from "./useMultiAutocomplete";
 export * from "./useQuery";
