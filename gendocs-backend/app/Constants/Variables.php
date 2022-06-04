@@ -24,6 +24,12 @@ abstract class Variables
     const NUMDOC = "{{NUMDOC}}";
 
     /**
+     * Variables utilizadas para reemplazar datos de DOCENTES
+     */
+    const PREFIX_DOCENTES = 'docentes';
+    const DOCENTE_N = '{{DOCENTE_N_$i}}';
+
+    /**
      * Variables utilizadas para reemplazar datos para de ESTUDIANTE
      */
     const PREFIX_ESTUDIANTE = 'estudiante';
