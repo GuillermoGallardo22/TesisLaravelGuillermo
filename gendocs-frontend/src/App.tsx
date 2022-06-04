@@ -27,7 +27,10 @@ const App = () => {
     <QueryClientProvider client={queryClient}>
       <ThemeProvider theme={theme}>
         <SnackbarProvider maxSnack={5}>
-          <LocalizationProvider dateAdapter={DateAdapter} locale={esLocale}>
+          <LocalizationProvider
+            dateAdapter={DateAdapter}
+            adapterLocale={esLocale}
+          >
             <CssBaseline />
             <Router>
               <AuthProvider>
