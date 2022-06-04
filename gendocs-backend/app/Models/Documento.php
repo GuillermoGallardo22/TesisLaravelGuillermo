@@ -87,4 +87,9 @@ class Documento extends Model
     {
         return $query->where('consejo_id', $value);
     }
+
+    public function docentes()
+    {
+        return $this->belongsToMany(Docente::class, DocumentoDocente::class, 'documento_id', 'docente_id');
+    }
 }
