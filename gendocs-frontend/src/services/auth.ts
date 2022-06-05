@@ -1,6 +1,7 @@
 import axios from "axios";
 import { HTTP_STATUS } from "models/enums";
 import {
+  IModule,
   IResponse,
   IRole,
   IUpdatePasswordForm,
@@ -213,5 +214,17 @@ export async function resetUserPassword(
     };
   } catch (error) {
     return handleErrors(error);
+  }
+}
+
+export async function getModules(): Promise<IModule[]> {
+  try {
+    const {
+      data: { data = [] },
+    } = await axios.get("modulos");
+
+    return data;
+  } catch (error) {
+    return [];
   }
 }
