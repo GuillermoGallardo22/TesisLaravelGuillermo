@@ -62,6 +62,7 @@ class UserController extends Controller
             ]);
 
             $userCreated->assignRole($role);
+            $userCreated->modules()->attach($validated['modulos']);
 
             $userCreated->notify(new UserCreated($request->user(), $tempPassword));
 

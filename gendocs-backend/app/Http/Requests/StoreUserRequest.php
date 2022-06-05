@@ -28,6 +28,7 @@ class StoreUserRequest extends FormRequest
             'correo_principal' => ['required', 'string', 'unique:\App\Models\User,email', 'max:255'],
             'correo_secundario' => ['required', 'string', 'email', 'unique:\App\Models\User,email_gmail', 'max:255'],
             'rol' => ['required', 'numeric', 'exists:\Spatie\Permission\Models\Role,id'],
+            'modulos' => ['required', 'array', 'exists:\App\Models\Module,id']
         ];
     }
 }
