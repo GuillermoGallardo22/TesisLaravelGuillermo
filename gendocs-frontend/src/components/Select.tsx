@@ -4,7 +4,12 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import SelectBase, { SelectChangeEvent } from "@mui/material/Select";
 
-interface SelectProps {
+export type ItemProps = {
+  id: number;
+  label: string;
+};
+
+export interface SelectProps {
   error?: boolean;
   id: string;
   name: string;
@@ -14,7 +19,7 @@ interface SelectProps {
     event: SelectChangeEvent<string | number>,
     child: React.ReactNode
   ) => void;
-  items: { id: number; label: string }[];
+  items: ItemProps[];
   errorMessage?: any;
   autoFocus?: boolean;
   required?: boolean;
