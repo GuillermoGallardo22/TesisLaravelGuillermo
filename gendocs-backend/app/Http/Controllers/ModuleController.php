@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\ResourceCollection;
+use App\Http\Resources\ResourceObject;
 use App\Models\Module;
 use Illuminate\Http\Request;
 
@@ -14,7 +16,11 @@ class ModuleController extends Controller
      */
     public function index()
     {
-        //
+        $query = Module::query();
+
+        $query->orderBy('name');
+
+        return ResourceCollection::make($query->get());
     }
 
     /**

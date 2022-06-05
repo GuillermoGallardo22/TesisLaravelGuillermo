@@ -8,6 +8,7 @@ use App\Http\Controllers\DocenteController;
 use App\Http\Controllers\DocumentoController;
 use App\Http\Controllers\EstudianteController;
 use App\Http\Controllers\MiembroController;
+use App\Http\Controllers\ModuleController;
 use App\Http\Controllers\NotificacionController;
 use App\Http\Controllers\NumeracionController;
 use App\Http\Controllers\PlantillasController;
@@ -56,6 +57,7 @@ Route::middleware(["auth:sanctum", "isUserActive"])->group(function () {
     Route::get('actas/{acta}/descargar', [ActaController::class, 'descargar']);
 
     // AUTH
+    Route::apiResource('modulos', ModuleController::class)->only(['index']);
     Route::get('me', [UserController::class, 'me']);
     Route::put('user/profile', [UserController::class, 'updateProfile']);
     Route::put('user/password', [UserController::class, 'updatePassword']);

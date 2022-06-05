@@ -8,4 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Module extends Model
 {
     use HasFactory;
+
+    public function fields()
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'code' => $this->code
+        ];
+    }
 }
