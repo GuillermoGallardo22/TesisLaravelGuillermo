@@ -1,9 +1,9 @@
 import { useFormik } from "formik";
 import { HTTP_STATUS } from "models/enums";
-import { IRole, IUserForm } from "models/interfaces";
+import { IRole, IUserForm, IModule } from "models/interfaces";
 import { useSnackbar } from "notistack";
 import { useCallback, useEffect, useState } from "react";
-import { createUser, getRoles } from "services";
+import { createUser, getModules, getRoles } from "services";
 import { CONSTANTS, VALIDATION_MESSAGES } from "utils";
 import * as yup from "yup";
 
@@ -13,15 +13,21 @@ const initialValues: IUserForm = {
   correo_secundario: "",
   id: -1,
   rol: -1,
+  modulos: [],
 };
 
 export const useAddUsuario = () => {
   const [roles, setRoles] = useState<IRole[]>([]);
+  const [modulos, setModulos] = useState<IModule[]>([]);
   const { enqueueSnackbar } = useSnackbar();
   const [errors, setErrors] = useState<string[] | undefined>();
 
   const loadInitData = useCallback(() => {
-    getRoles().then((r) => setRoles(r));
+    Promise.all([getRoles(), getModules()]).then((result) => {
+      const [_roles, _modules] = result;
+      setRoles(_roles);
+      setModulos(_modules);
+    });
   }, []);
 
   useEffect(() => {
@@ -64,6 +70,14 @@ export const useAddUsuario = () => {
         VALIDATION_MESSAGES.invalidOption
       )
       .required(VALIDATION_MESSAGES.required),
+    modulos: yup
+      .array()
+      .test("invalid-option", VALIDATION_MESSAGES.invalidOption, (op = []) => {
+        const result = Boolean(
+          op.length && op.every((m) => modulos.map((i) => i.id).includes(m))
+        );
+        return result;
+      }),
   });
 
   const formik = useFormik({
@@ -83,5 +97,6 @@ export const useAddUsuario = () => {
     errorsResponse: errors,
     handleReset,
     roles,
+    modulos,
   };
 };

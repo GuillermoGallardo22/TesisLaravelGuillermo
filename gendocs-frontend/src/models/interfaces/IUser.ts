@@ -17,6 +17,7 @@ export interface IUserForm {
   correo_principal: string;
   correo_secundario: string;
   rol: number;
+  modulos: number[];
   status?: boolean;
 }
 

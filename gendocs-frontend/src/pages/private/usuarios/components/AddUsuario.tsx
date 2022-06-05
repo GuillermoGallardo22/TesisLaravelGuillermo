@@ -3,11 +3,12 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
-import { ErrorSummary, Select, TitleNav } from "components";
+import { ErrorSummary, Select, SelectMulti, TitleNav } from "components";
 import { useAddUsuario } from "../hooks/useAddUsuario";
 
 const AddUsuario = () => {
-  const { formik, handleReset, errorsResponse, roles } = useAddUsuario();
+  const { formik, handleReset, errorsResponse, roles, modulos } =
+    useAddUsuario();
 
   const submitting = formik.isSubmitting;
 
@@ -21,7 +22,7 @@ const AddUsuario = () => {
         noValidate
       >
         <Grid container spacing={2}>
-          <Grid item xs={12}>
+          <Grid item sm={12} md={4}>
             <Select
               required
               id="rol"
@@ -35,6 +36,23 @@ const AddUsuario = () => {
               onChange={formik.handleChange}
               error={formik.touched.rol && Boolean(formik.errors.rol)}
               errorMessage={formik.touched.rol && formik.errors.rol}
+            />
+          </Grid>
+
+          <Grid item sm={12} md={8}>
+            <SelectMulti
+              id="select-multi-modulo"
+              name="select-multi"
+              label="Módulos"
+              required
+              items={modulos.map((m) => ({
+                id: m.id,
+                label: m.name,
+              }))}
+              values={formik.values.modulos}
+              onChange={(ids) => formik.setFieldValue("modulos", ids)}
+              error={formik.touched.modulos && Boolean(formik.errors.modulos)}
+              errorMessage={formik.touched.modulos && formik.errors.modulos}
             />
           </Grid>
 
