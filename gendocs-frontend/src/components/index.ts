@@ -12,6 +12,7 @@ export * from "./LinearProgress";
 export { default as LoadingScreen } from "./LoadingScreen";
 export { default as Outlet } from "./Outlet";
 export { default as Select } from "./Select";
+export * from "./SelectMulti";
 export { default as Skeleton } from "./Skeleton";
 export { default as Title } from "./Title";
 export * from "./TitleNav";
