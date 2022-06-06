@@ -106,6 +106,8 @@ class UserController extends Controller
                 'email_gmail' => $validated['correo_secundario'],
             ]);
 
+            $user->modules()->sync($validated['modulos']);
+
             $needsNewAccess = false;
 
             if ($user->isDirty('status')) {
