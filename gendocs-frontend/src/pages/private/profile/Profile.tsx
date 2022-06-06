@@ -1,5 +1,6 @@
 import LoadingButton from "@mui/lab/LoadingButton";
 import Box from "@mui/material/Box";
+import Chip from "@mui/material/Chip";
 import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
@@ -44,13 +45,31 @@ function UserInfo() {
           />
         </Grid>
 
-        <Grid item xs={12}>
+        <Grid item sm={12} md={4}>
           <TextField
             disabled
             required
             fullWidth
             label="Rol"
             value={[formik.values.roles]}
+          />
+        </Grid>
+
+        <Grid item sm={12} md={8}>
+          <TextField
+            disabled
+            required
+            fullWidth
+            label="Módulos"
+            InputProps={{
+              startAdornment: (
+                <Box display="flex" gap={0.5}>
+                  {formik.values.modulos.map((m, i) => (
+                    <Chip key={i} disabled label={m.name} size="small" />
+                  ))}
+                </Box>
+              ),
+            }}
           />
         </Grid>
 
