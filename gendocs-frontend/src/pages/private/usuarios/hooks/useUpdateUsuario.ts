@@ -1,11 +1,11 @@
 import { useFormik } from "formik";
 import { useErrorsResponse } from "hooks";
 import { HTTP_STATUS } from "models/enums";
-import { IRole, IUser, IUserForm } from "models/interfaces";
+import { IModule, IRole, IUser, IUserForm } from "models/interfaces";
 import { useSnackbar } from "notistack";
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getRoles, getUserById, updateUser } from "services";
+import { getModules, getRoles, getUserById, updateUser } from "services";
 import { CONSTANTS, VALIDATION_MESSAGES } from "utils";
 import * as yup from "yup";
 
@@ -16,6 +16,7 @@ const initialValues: IUserForm = {
   id: -1,
   rol: -1,
   status: true,
+  modulos: [],
 };
 
 type useUpdateUserProps = {
@@ -28,6 +29,8 @@ export const useUpdateUsuario = ({ userId }: useUpdateUserProps) => {
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(initialValues);
   const [roles, setRoles] = useState<IRole[]>([]);
+  const [modulos, setModulos] = useState<IModule[]>([]);
+
   const { errorSummary, setErrorSummary, cleanErrorsSumary } =
     useErrorsResponse();
 
@@ -41,15 +44,16 @@ export const useUpdateUsuario = ({ userId }: useUpdateUserProps) => {
       status: user.status,
       id: user.id,
       rol: roles.find((i) => i.nombre === user.roles[0])?.id || -1,
+      modulos: user.modulos.map((m) => m.id),
     });
 
   const loadInitData = useCallback(() => {
     if (!userId) navigate(-1);
 
     setLoading(true);
-    Promise.all([getUserById(userId), getRoles()])
+    Promise.all([getUserById(userId), getRoles(), getModules()])
       .then((r) => {
-        const [userResult, _roles] = r;
+        const [userResult, _roles, _modulos] = r;
 
         if (userResult.status !== HTTP_STATUS.ok) {
           enqueueSnackbar(userResult.message, { variant: "warning" });
@@ -58,6 +62,7 @@ export const useUpdateUsuario = ({ userId }: useUpdateUserProps) => {
 
         handleSetUser(userResult.data, _roles);
         setRoles(_roles);
+        setModulos(_modulos);
       })
       .finally(() => setLoading(false));
   }, [userId]);
@@ -70,8 +75,6 @@ export const useUpdateUsuario = ({ userId }: useUpdateUserProps) => {
     cleanErrorsSumary();
 
     const { status, message, errors, data } = await updateUser(form);
-
-    console.log({ status, message, errors, data });
 
     if (status === HTTP_STATUS.ok) {
       handleSetUser(data, roles);
@@ -124,6 +127,7 @@ export const useUpdateUsuario = ({ userId }: useUpdateUserProps) => {
     errorsResponse: errorSummary,
     handleReset,
     roles,
+    modulos,
     loading,
   };
 };
