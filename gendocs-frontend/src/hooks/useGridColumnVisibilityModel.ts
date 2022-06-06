@@ -8,7 +8,8 @@ type useGridColumnVisibilityModelProps = {
     | "docentesTableModel"
     | "asistentesTableModel"
     | "consejo-resoluciones"
-    | "buscar-resoluciones";
+    | "buscar-resoluciones"
+    | "table-model-users";
 };
 
 export function useGridColumnVisibilityModel({
