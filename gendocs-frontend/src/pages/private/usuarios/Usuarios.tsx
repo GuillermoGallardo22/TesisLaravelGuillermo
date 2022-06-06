@@ -1,4 +1,6 @@
+import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+import Chip from "@mui/material/Chip";
 import DialogContentText from "@mui/material/DialogContentText";
 import Stack from "@mui/material/Stack";
 import Tooltip from "@mui/material/Tooltip";
@@ -9,10 +11,16 @@ import {
   GridRenderCellParams,
   GridRowParams,
 } from "@mui/x-data-grid";
-import { ChipStatus, ConfirmationDialog, Icon, TitleNav } from "components";
-import { useConfirmationDialog } from "hooks";
+import {
+  ChipStatus,
+  ConfirmationDialog,
+  GridToolbarWithoutExport,
+  Icon,
+  TitleNav,
+} from "components";
+import { useConfirmationDialog, useGridColumnVisibilityModel } from "hooks";
 import { HTTP_STATUS } from "models/enums";
-import { IUser } from "models/interfaces";
+import { IModule, IUser } from "models/interfaces";
 import { useSnackbar } from "notistack";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
@@ -71,6 +79,20 @@ const Usuarios = () => {
       { field: "email", headerName: "Correo (UTA)", flex: 1 },
       { field: "email_gmail", headerName: "Correo (GMAIL)", flex: 1 },
       {
+        field: "modulos",
+        headerName: "Módulos",
+        flex: 1,
+        valueGetter: (item: GridRenderCellParams<IModule[]>) =>
+          (item?.value || []).map((m) => m.name).join(","),
+        renderCell: (item: GridRenderCellParams<string>) => (
+          <Box display={"flex"} gap={0.5}>
+            {(item?.value || "").split(",").map((m, i) => (
+              <Chip key={i} label={m} size="small" />
+            ))}
+          </Box>
+        ),
+      },
+      {
         field: "status",
         headerName: "Estado",
         width: 120,
@@ -112,6 +134,11 @@ const Usuarios = () => {
     []
   );
 
+  const { columnVisibilityModel, onColumnVisibilityModelChange } =
+    useGridColumnVisibilityModel({
+      key: "table-model-users",
+    });
+
   return (
     <>
       <Stack spacing={2}>
@@ -126,7 +153,15 @@ const Usuarios = () => {
         </Button>
 
         <div style={{ height: 600, width: "100%" }}>
-          <DataGrid loading={loading} columns={columns} rows={users} />
+          <DataGrid
+            disableColumnMenu
+            components={{ Toolbar: GridToolbarWithoutExport }}
+            columnVisibilityModel={columnVisibilityModel}
+            onColumnVisibilityModelChange={onColumnVisibilityModelChange}
+            loading={loading}
+            columns={columns}
+            rows={users}
+          />
         </div>
       </Stack>
 
