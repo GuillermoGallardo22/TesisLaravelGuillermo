@@ -25,7 +25,7 @@ class DatabaseSeeder extends Seeder
             //
             EstudianteSeeder::class,
             ConsejoSeeder::class,
-            PlantillasSeeder::class,
+            // PlantillasSeeder::class,
             DocenteSeeder::class,
             PlantillasGlobalesSeeder::class,
         ]);
