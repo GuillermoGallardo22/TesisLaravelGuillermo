@@ -5,3 +5,7 @@ export interface IModule {
   name: string;
   code: ModuleEnum;
 }
+
+export interface ModuleContextProps {
+  module: ModuleEnum;
+}
