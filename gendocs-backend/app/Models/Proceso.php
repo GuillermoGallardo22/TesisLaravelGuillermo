@@ -20,7 +20,7 @@ class Proceso extends Model
         'estado' => 'boolean',
     ];
 
-    public const FILTERS = ['search', 'estado'];
+    public const FILTERS = ['search', 'estado', 'module'];
 
     public function fields()
     {
@@ -44,6 +44,12 @@ class Proceso extends Model
     public function scopeSearch($query, $filter)
     {
         return $query->where('nombre', 'like', "%$filter%");
+    }
+
+    public function scopeModule($query, $filter)
+    {
+        return $query->join('modules', 'procesos.module_id', 'modules.id')
+            ->where('modules.code', $filter);
     }
 
     public function scopeEstado($query, $filter)
