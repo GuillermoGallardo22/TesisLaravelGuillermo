@@ -1,5 +1,13 @@
 import { lazy } from "react";
 
+// SUDE
+
+export const ProcesosSUDE = lazy(
+  () => import("pages/private/sude/procesos/Procesos")
+);
+
+// FACU
+
 export const ListResoluciones = lazy(
   () => import("pages/private/facu/consejos/components/ListResoluciones")
 );

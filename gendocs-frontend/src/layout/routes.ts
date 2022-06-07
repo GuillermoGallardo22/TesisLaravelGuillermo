@@ -31,6 +31,7 @@ import {
   UpdateProceso,
   UpdateUsuario,
   Usuarios,
+  ProcesosSUDE,
 } from "./components";
 
 export interface IRoute {
@@ -48,6 +49,69 @@ export interface IRoute {
 export const DEFAULT_ROUTE = "inicio";
 
 export const routes: IRoute[] = [
+  // SUDE
+  {
+    path: "procesos-sude",
+    label: "Procesos",
+    component: Outlet,
+    icon: "list",
+    modules: [ModuleEnum.SUDE],
+    isMenuOption: true,
+    childrens: [
+      {
+        path: "nuevo",
+        component: AddProceso,
+        roles: [RolEnum.ADMIN, RolEnum.ADMINTEMP, RolEnum.WRITER],
+      },
+      {
+        path: ":processId",
+        component: Outlet,
+        childrens: [
+          {
+            path: "plantillas",
+            component: Outlet,
+            childrens: [
+              {
+                path: "nuevo",
+                component: AddPlantilla,
+                roles: [RolEnum.ADMIN, RolEnum.ADMINTEMP, RolEnum.WRITER],
+              },
+              {
+                path: ":templateId",
+                component: Outlet,
+                childrens: [
+                  {
+                    path: "drive/:driveId",
+                    component: DriveTemplate,
+                  },
+                  {
+                    path: "",
+                    isIndex: true,
+                    component: UpdatePlantilla,
+                    roles: [RolEnum.ADMIN, RolEnum.ADMINTEMP, RolEnum.WRITER],
+                  },
+                ],
+              },
+              {
+                path: "",
+                label: "",
+                isIndex: true,
+                component: ListPlantillas,
+              },
+            ],
+          },
+          {
+            path: "",
+            isIndex: true,
+            component: UpdateProceso,
+            roles: [RolEnum.ADMIN, RolEnum.ADMINTEMP, RolEnum.WRITER],
+          },
+        ],
+      },
+      { path: "", isIndex: true, component: ProcesosSUDE },
+    ],
+  },
+  // FACU
   {
     path: DEFAULT_ROUTE,
     label: "Inicio",
