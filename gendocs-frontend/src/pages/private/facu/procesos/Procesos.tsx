@@ -6,9 +6,12 @@ import Tooltip from "@mui/material/Tooltip";
 import { GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
 import { ChipStatus, DataGrid, Icon, TitleNav } from "components";
 import { useFilterPagination } from "hooks";
+import { ModuleEnum } from "models/enums";
 import { IProceso } from "models/interfaces";
+import ModuleProvider from "providers/ModuleProvider";
 import { Link as RouterLink } from "react-router-dom";
 import { getProcesos } from "services";
+import { useModuleContext } from "contexts/ModuleContext";
 
 const columns: GridColDef[] = [
   { field: "nombre", headerName: "Nombre", flex: 1 },
@@ -45,7 +48,8 @@ const columns: GridColDef[] = [
   },
 ];
 
-const Procesos = () => {
+export const ProcesosBase = () => {
+  const { module } = useModuleContext();
   const {
     data,
     handlePageChange,
@@ -55,6 +59,9 @@ const Procesos = () => {
     setSearch,
   } = useFilterPagination<IProceso>({
     fetch: getProcesos,
+    filters: {
+      module,
+    },
   });
 
   return (
@@ -100,5 +107,11 @@ const Procesos = () => {
     </Stack>
   );
 };
+
+const Procesos = () => (
+  <ModuleProvider module={ModuleEnum.FACU}>
+    <ProcesosBase />
+  </ModuleProvider>
+);
 
 export default Procesos;
