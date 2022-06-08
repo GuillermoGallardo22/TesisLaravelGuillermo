@@ -11,7 +11,7 @@ class Plantillas extends Model
 {
     use HasFactory, Pageable, Filterable;
 
-    public const FILTERS = ["proceso", "search", "estado"];
+    public const FILTERS = ["proceso", "search", "estado", "module"];
 
     protected $fillable = [
         'nombre',
@@ -43,6 +43,15 @@ class Plantillas extends Model
     public function scopeProceso($query, $value)
     {
         return $query->where('proceso_id', $value);
+    }
+
+    public function scopeModule($query, $value)
+    {
+        return $query
+            ->join('procesos', 'plantillas.proceso_id', 'procesos.id')
+            ->join('modules', 'procesos.module_id', 'modules.id')
+            ->select('plantillas.*')
+            ->where('modules.code', $value);
     }
 
     public function scopeEstado($query, $value)
