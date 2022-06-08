@@ -51,6 +51,7 @@ class Proceso extends Model
     public function scopeModule($query, $filter)
     {
         return $query->join('modules', 'procesos.module_id', 'modules.id')
+            ->select('procesos.*')
             ->where('modules.code', $filter);
     }
 
