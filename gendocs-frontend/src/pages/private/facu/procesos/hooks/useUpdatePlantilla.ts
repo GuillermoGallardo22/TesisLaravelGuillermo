@@ -1,3 +1,4 @@
+import { useModuleContext } from "contexts/ModuleContext";
 import { useFormik } from "formik";
 import { HTTP_STATUS } from "models/enums";
 import { IPlantilla, IProceso } from "models/interfaces";
@@ -8,6 +9,7 @@ import { getPlantillaById, getProcesos, updatePlantilla } from "services";
 
 export const useUpdatePlantilla = ({ templateId }: { templateId: number }) => {
   const navigate = useNavigate();
+  const { module } = useModuleContext();
   const { enqueueSnackbar } = useSnackbar();
   const [template, setTemplate] = useState<IPlantilla>({
     id: -1,
@@ -23,7 +25,7 @@ export const useUpdatePlantilla = ({ templateId }: { templateId: number }) => {
   useEffect(() => {
     setLoading(true);
     Promise.all([
-      getProcesos({ filters: { estado: 1 } }),
+      getProcesos({ filters: { estado: 1, module } }),
       getPlantillaById(templateId, { justForeignKey: true }),
     ])
       .then((result) => {
