@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateProcesoRequest;
 use App\Http\Resources\ResourceCollection;
 use App\Http\Resources\ResourceObject;
 use App\Models\Directorio;
+use App\Models\Module;
 use App\Models\Proceso;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response as ResponseAlias;
@@ -44,12 +45,13 @@ class ProcesoController extends Controller
         $validated = $request->validated();
 
         try {
-            $directorio = Directorio::query()->activeDirectory();
 
-            $proceso = new Proceso($validated);
-            $proceso->directorio_id = $directorio->id;
-
-            $proceso->save();
+            $proceso = Proceso::create([
+                'nombre' => $validated['nombre'],
+                'estado' => $validated['estado'],
+                'module_id' => Module::query()->where('code', $validated['module'])->first()->id,
+                'directorio_id' => Directorio::query()->activeDirectory()->id,
+            ]);
 
             return ResourceObject::make($proceso);
         } catch (\Exception $e) {

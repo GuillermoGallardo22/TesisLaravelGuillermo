@@ -14,6 +14,8 @@ class Proceso extends Model
     protected $fillable = [
         'nombre',
         'estado',
+        'module_id',
+        'directorio_id'
     ];
 
     protected $casts = [

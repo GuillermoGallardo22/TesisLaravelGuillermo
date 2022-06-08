@@ -25,7 +25,8 @@ class StoreProcesoRequest extends FormRequest
     {
         return [
             'nombre' => ['required', 'string', 'max:512'],
-            'estado' => ['required', 'boolean']
+            'estado' => ['required', 'boolean'],
+            'module' => ['required', 'string', 'exists:\App\Models\Module,code']
         ];
     }
 }
