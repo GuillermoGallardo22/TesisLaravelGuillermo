@@ -1,16 +1,11 @@
+import { useModuleContext } from "contexts/ModuleContext";
 import { useFormik } from "formik";
 import { HTTP_STATUS } from "models/enums";
-import { IProceso } from "models/interfaces";
+import { IProcesoForm } from "models/interfaces";
 import { useSnackbar } from "notistack";
 import { saveProceso } from "services";
 import { VALIDATION_MESSAGES } from "utils";
 import * as yup from "yup";
-
-const initialValues: IProceso = {
-  id: -1,
-  nombre: "",
-  estado: true,
-};
 
 const validationSchema = yup.object().shape({
   nombre: yup
@@ -22,8 +17,16 @@ const validationSchema = yup.object().shape({
 
 export const useAddProceso = () => {
   const { enqueueSnackbar } = useSnackbar();
+  const { module } = useModuleContext();
 
-  const onSubmit = async (form: IProceso) => {
+  const initialValues: IProcesoForm = {
+    id: -1,
+    nombre: "",
+    estado: true,
+    module,
+  };
+
+  const onSubmit = async (form: IProcesoForm) => {
     const result = await saveProceso(form);
 
     if (result.status === HTTP_STATUS.created) {

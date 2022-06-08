@@ -4,6 +4,7 @@ import {
   IFilterPaginationProps,
   IPagination,
   IProceso,
+  IProcesoForm,
   IResponse,
 } from "models/interfaces";
 import {
@@ -29,7 +30,7 @@ export async function getProcesos(
 }
 
 export async function saveProceso(
-  form: IProceso
+  form: IProcesoForm
 ): Promise<IResponse<IProceso>> {
   try {
     const { data } = await axios.post("procesos", form);
