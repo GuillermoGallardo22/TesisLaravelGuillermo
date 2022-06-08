@@ -79,6 +79,18 @@ const Usuarios = () => {
       { field: "email", headerName: "Correo (UTA)", flex: 1 },
       { field: "email_gmail", headerName: "Correo (GMAIL)", flex: 1 },
       {
+        field: "roles",
+        headerName: "Roles",
+        flex: 0.5,
+        renderCell: (item: GridRenderCellParams<string>) => (
+          <Box display={"flex"} gap={0.5}>
+            {(item?.value as any).map((m: string, i: number) => (
+              <Chip key={i} label={m} size="small" />
+            ))}
+          </Box>
+        ),
+      },
+      {
         field: "modulos",
         headerName: "Módulos",
         flex: 1,
