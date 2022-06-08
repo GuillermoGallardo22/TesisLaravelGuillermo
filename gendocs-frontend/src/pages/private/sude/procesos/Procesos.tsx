@@ -1,11 +1,9 @@
 import { ModuleEnum } from "models/enums";
-import { ProcesosBase } from "pages/private/facu/procesos/Procesos";
 import ModuleProvider from "providers/ModuleProvider";
+import { Outlet } from "react-router-dom";
 
-const Procesos = () => (
+export const ProcesosOutlet = () => (
   <ModuleProvider module={ModuleEnum.SUDE}>
-    <ProcesosBase />
+    <Outlet />
   </ModuleProvider>
 );
-
-export default Procesos;

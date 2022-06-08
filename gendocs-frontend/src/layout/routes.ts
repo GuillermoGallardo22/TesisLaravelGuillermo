@@ -21,7 +21,10 @@ import {
   ListMiembros,
   ListPlantillas,
   ListResoluciones,
-  Procesos,
+  ProcesosFACU,
+  ProcesosFACUOutlet,
+  ProcesosSUDE,
+  ProcesosSUDEOutlet,
   Profile,
   UpdateCarrera,
   UpdateConsejo,
@@ -31,7 +34,6 @@ import {
   UpdateProceso,
   UpdateUsuario,
   Usuarios,
-  ProcesosSUDE,
 } from "./components";
 
 export interface IRoute {
@@ -53,7 +55,7 @@ export const routes: IRoute[] = [
   {
     path: "procesos-sude",
     label: "Procesos",
-    component: Outlet,
+    component: ProcesosSUDEOutlet,
     icon: "list",
     modules: [ModuleEnum.SUDE],
     isMenuOption: true,
@@ -222,7 +224,7 @@ export const routes: IRoute[] = [
   {
     path: "procesos",
     label: "Procesos",
-    component: Outlet,
+    component: ProcesosFACUOutlet,
     icon: "list",
     modules: [ModuleEnum.FACU],
     isMenuOption: true,
@@ -277,7 +279,7 @@ export const routes: IRoute[] = [
           },
         ],
       },
-      { path: "", isIndex: true, component: Procesos },
+      { path: "", isIndex: true, component: ProcesosFACU },
     ],
   },
   {

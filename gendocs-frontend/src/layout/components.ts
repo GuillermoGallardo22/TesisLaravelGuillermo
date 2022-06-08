@@ -1,9 +1,16 @@
 import { lazy } from "react";
 
 // SUDE
+export const ProcesosSUDEOutlet = lazy(() =>
+  import("pages/private/sude/procesos/Procesos").then((m) => ({
+    default: m.ProcesosOutlet,
+  }))
+);
 
-export const ProcesosSUDE = lazy(
-  () => import("pages/private/sude/procesos/Procesos")
+export const ProcesosSUDE = lazy(() =>
+  import("pages/private/facu/procesos/Procesos").then((m) => ({
+    default: m.Procesos,
+  }))
 );
 
 // FACU
@@ -74,8 +81,16 @@ export const AddPlantilla = lazy(
   () => import("pages/private/facu/procesos/components/AddPlantilla")
 );
 
-export const Procesos = lazy(
-  () => import("pages/private/facu/procesos/Procesos")
+export const ProcesosFACUOutlet = lazy(() =>
+  import("pages/private/facu/procesos/Procesos").then((m) => ({
+    default: m.ProcesosOutlet,
+  }))
+);
+
+export const ProcesosFACU = lazy(() =>
+  import("pages/private/facu/procesos/Procesos").then((m) => ({
+    default: m.Procesos,
+  }))
 );
 
 export const ListPlantillas = lazy(
