@@ -8,6 +8,7 @@ import { ChipStatus, DataGrid, Icon, TitleNav } from "components";
 import { useFilterPagination } from "hooks";
 import { Link as RouterLink, useParams } from "react-router-dom";
 import { getPlantillasByProcesoId } from "services";
+import { useModuleContext } from "contexts/ModuleContext";
 
 const columns: GridColumns = [
   { field: "nombre", headerName: "Nombre", flex: 1 },
@@ -52,6 +53,7 @@ const columns: GridColumns = [
 
 const ListPlantillas = () => {
   const { processId = "" } = useParams<{ processId: string }>();
+  const { module } = useModuleContext();
 
   const {
     data,
@@ -64,6 +66,7 @@ const ListPlantillas = () => {
     fetch: getPlantillasByProcesoId,
     filters: {
       proceso: processId,
+      module,
     },
   });
 
