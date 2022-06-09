@@ -11,6 +11,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import { ErrorSummary, Icon, Select, TitleNav } from "components";
+import { useModuleContext } from "contexts/ModuleContext";
 import {
   useAutocomplete,
   useConfirmationDialog,
@@ -28,6 +29,8 @@ import useAddDocumento from "../hooks/useAddDocumento";
 import { NumeracionModal } from "./NumeracionModal";
 
 function AddDocumento() {
+  const { module } = useModuleContext();
+
   // PROCESOS
   const {
     items: itemsPRO,
@@ -41,6 +44,9 @@ function AddDocumento() {
     resetValue: resetValuePRO,
   } = useAutocomplete<IProceso>({
     fetch: getProcesos,
+    filters: {
+      module,
+    },
   });
 
   // PLANTILLAS

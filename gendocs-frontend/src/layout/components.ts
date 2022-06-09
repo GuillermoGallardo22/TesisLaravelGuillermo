@@ -69,8 +69,12 @@ export const AddDocumento = lazy(
   () => import("pages/private/facu/documentos/components/AddDocumento")
 );
 
-export const Documentos = lazy(
+export const DocumentosFACUOutlet = lazy(
   () => import("pages/private/facu/documentos/Documentos")
+);
+
+export const DocumentosFACU = lazy(
+  () => import("pages/private/facu/documentos/components/DocumentoBase")
 );
 
 export const AddProceso = lazy(

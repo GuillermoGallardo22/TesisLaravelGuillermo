@@ -14,7 +14,8 @@ import {
   Carreras,
   Consejos,
   Docentes,
-  Documentos,
+  DocumentosFACU,
+  DocumentosFACUOutlet,
   DriveTemplate,
   Estudiantes,
   Home,
@@ -136,7 +137,7 @@ export const routes: IRoute[] = [
   {
     path: "documentos",
     label: "Documentos",
-    component: Outlet,
+    component: DocumentosFACUOutlet,
     icon: "topic",
     modules: [ModuleEnum.FACU],
     isMenuOption: true,
@@ -155,7 +156,7 @@ export const routes: IRoute[] = [
         path: "drive/:driveId",
         component: DriveTemplate,
       },
-      { path: "", isIndex: true, component: Documentos },
+      { path: "", isIndex: true, component: DocumentosFACU },
     ],
   },
   {
