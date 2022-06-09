@@ -3,7 +3,7 @@ import Tooltip from "@mui/material/Tooltip";
 import { DataGrid, GridActionsCellItem, GridColumns } from "@mui/x-data-grid";
 import { GridToolbarWithoutExport, Icon, TitleNav } from "components";
 import { useGridColumnVisibilityModel } from "hooks";
-import { useListDocumentos } from "pages/private/documentos/hooks/useListDocumentos";
+import { useListDocumentos } from "pages/private/facu/documentos/hooks/useListDocumentos";
 import { useMemo } from "react";
 import { Link, useParams } from "react-router-dom";
 import {
