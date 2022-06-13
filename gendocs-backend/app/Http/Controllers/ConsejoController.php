@@ -8,6 +8,7 @@ use App\Http\Resources\ResourceCollection;
 use App\Http\Resources\ResourceObject;
 use App\Models\Consejo;
 use App\Models\Directorio;
+use App\Models\Module;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -55,6 +56,10 @@ class ConsejoController extends Controller
                 'fecha' => new Carbon($validated['fecha']),
                 'tipo_consejo_id' => $validated['tipo_consejo'],
                 'directorio_id' => $activeDirectory->id,
+            ]);
+
+            $consejo->module()->create([
+                'module_id' => Module::query()->where('code', $validated['module'])->first()->id,
             ]);
 
             DB::commit();

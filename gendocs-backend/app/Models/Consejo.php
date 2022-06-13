@@ -27,7 +27,7 @@ class Consejo extends Model
         'deleted_at'
     ];
 
-    public const FILTERS = ['search', 'estado'];
+    public const FILTERS = ['search', 'estado', 'module'];
 
     protected $casts = [
         'estado' => 'boolean',
@@ -44,6 +44,13 @@ class Consejo extends Model
             'estado' => $this->estado,
             'acta' => $this->acta
         ];
+    }
+
+    public function scopeModule($query, $filter)
+    {
+        return $query->whereHas('module', function ($query) use ($filter) {
+            $query->where('module_id', Module::query()->where('code', $filter)->first()?->id);
+        });
     }
 
     public function tipoConsejo()
@@ -94,5 +101,10 @@ class Consejo extends Model
     public function acta()
     {
         return $this->hasOne(Acta::class, 'consejo_id');
+    }
+
+    public function module()
+    {
+        return $this->morphOne(ModelHasModule::class, 'model');
     }
 }

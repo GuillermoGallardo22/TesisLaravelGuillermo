@@ -27,6 +27,7 @@ class StoreConsejoRequest extends FormRequest
             'nombre' => ['string', 'required', 'max:255'],
             'fecha' => ['date', 'required'],
             'tipo_consejo' => ['required', 'exists:\App\Models\TipoConsejo,id'],
+            'module' => ['required', 'string', 'exists:\App\Models\Module,code'],
         ];
     }
 }
