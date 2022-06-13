@@ -49,8 +49,11 @@ class ProcesoController extends Controller
             $proceso = Proceso::create([
                 'nombre' => $validated['nombre'],
                 'estado' => $validated['estado'],
-                'module_id' => Module::query()->where('code', $validated['module'])->first()->id,
                 'directorio_id' => Directorio::query()->activeDirectory()->id,
+            ]);
+
+            $proceso->module()->create([
+                'module_id' => Module::query()->where('code', $validated['module'])->first()->id,
             ]);
 
             return ResourceObject::make($proceso);

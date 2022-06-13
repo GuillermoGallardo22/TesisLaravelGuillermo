@@ -50,9 +50,9 @@ class Proceso extends Model
 
     public function scopeModule($query, $filter)
     {
-        return $query->join('modules', 'procesos.module_id', 'modules.id')
-            ->select('procesos.*')
-            ->where('modules.code', $filter);
+        return $query->whereHas('module', function ($query) use ($filter) {
+            $query->where('module_id', Module::query()->where('code', $filter)->first()?->id);
+        });
     }
 
     public function scopeEstado($query, $filter)
@@ -63,5 +63,10 @@ class Proceso extends Model
     public function plantillas()
     {
         return $this->hasMany(Plantillas::class, 'proceso_id');
+    }
+
+    public function module()
+    {
+        return $this->morphOne(ModelHasModule::class, 'model');
     }
 }

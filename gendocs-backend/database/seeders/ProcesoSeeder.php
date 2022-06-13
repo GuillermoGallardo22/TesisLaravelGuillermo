@@ -25,20 +25,23 @@ class ProcesoSeeder extends Seeder
             'nombre' => 'Proceso 1',
             'estado' => true,
             'directorio_id' => $directorio->id,
-            'module_id' => Module::where('code', Modulos::FACU)->first()->id,
+        ])->module()->create([
+            'module_id' => Module::where('code', Modulos::FACU)->first()->id
         ]);
 
         Proceso::create([
             'nombre' => 'Proceso 1',
             'estado' => true,
-            'directorio_id' => $directorio->id,
+            'directorio_id' => $directorio->id
+        ])->module()->create([
             'module_id' => Module::where('code', Modulos::SUDE)->first()->id,
         ]);
 
         Proceso::create([
             'nombre' => 'Proceso 1',
             'estado' => true,
-            'directorio_id' => $directorio->id,
+            'directorio_id' => $directorio->id
+        ])->module()->create([
             'module_id' => Module::where('code', Modulos::TITU)->first()->id,
         ]);
     }
