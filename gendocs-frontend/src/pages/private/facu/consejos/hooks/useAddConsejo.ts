@@ -1,20 +1,14 @@
+import { useModuleContext } from "contexts/ModuleContext";
 import { useFormik } from "formik";
 import { useErrorsResponse } from "hooks";
 import { HTTP_STATUS } from "models/enums";
 import { IConsejoForm, ITipoConsejo } from "models/interfaces";
 import { useSnackbar } from "notistack";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { saveConsejo } from "services";
 import { getTipoConsejos } from "services/tipo-consejos";
 import { VALIDATION_MESSAGES } from "utils";
 import * as yup from "yup";
-
-const initialValues: IConsejoForm = {
-  id: -1,
-  tipo_consejo: -1,
-  nombre: "",
-  fecha: new Date(),
-};
 
 export function useAddConsejo() {
   const [tipoConsejos, setTipoConsejos] = useState<ITipoConsejo[]>([]);
@@ -22,6 +16,18 @@ export function useAddConsejo() {
   const { errorSummary, setErrorSummary, cleanErrorsSumary } =
     useErrorsResponse();
   const { enqueueSnackbar } = useSnackbar();
+  const { module } = useModuleContext();
+
+  const initialValues = useMemo(
+    (): IConsejoForm => ({
+      id: -1,
+      tipo_consejo: -1,
+      nombre: "",
+      fecha: new Date(),
+      module,
+    }),
+    []
+  );
 
   const loadInitData = useCallback(() => {
     setLoading(true);

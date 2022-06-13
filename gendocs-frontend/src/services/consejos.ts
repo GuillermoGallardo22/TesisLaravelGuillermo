@@ -51,9 +51,10 @@ export async function saveConsejo(
   form: IConsejoForm
 ): Promise<IResponse<IConsejo>> {
   try {
+    const { fecha, ...rest } = form;
     const payload = {
-      ...form,
-      fecha: form.fecha.toISOString(),
+      ...rest,
+      fecha: fecha.toISOString(),
     };
 
     const {

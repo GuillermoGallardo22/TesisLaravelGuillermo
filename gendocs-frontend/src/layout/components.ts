@@ -13,6 +13,12 @@ export const ProcesosSUDE = lazy(() =>
   }))
 );
 
+export const ConsejosSUDEOUTLET = lazy(() =>
+  import("pages/private/sude/consejos/Consejos").then((m) => ({
+    default: m.ConsejosOutlet,
+  }))
+);
+
 // FACU
 
 export const ListResoluciones = lazy(
@@ -49,8 +55,16 @@ export const AddConsejo = lazy(
   () => import("pages/private/facu/consejos/components/AddConsejo")
 );
 
-export const Consejos = lazy(
-  () => import("pages/private/facu/consejos/Consejos")
+export const ConsejosFACUOUTLET = lazy(() =>
+  import("pages/private/facu/consejos/Consejos").then((m) => ({
+    default: m.ConsejosOutlet,
+  }))
+);
+
+export const Consejos = lazy(() =>
+  import("pages/private/facu/consejos/Consejos").then((m) => ({
+    default: m.Consejos,
+  }))
 );
 
 export const Acta = lazy(

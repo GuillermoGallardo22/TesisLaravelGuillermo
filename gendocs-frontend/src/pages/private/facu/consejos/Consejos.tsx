@@ -14,21 +14,24 @@ import {
   Icon,
   TitleNav,
 } from "components";
+import { useModuleContext } from "contexts/ModuleContext";
 import {
   useConfirmationDialog,
   useDeleteItem,
   useFilterPagination,
   usePlantillasGlob,
 } from "hooks";
-import { PlantillasGlobales } from "models/enums";
+import { ModuleEnum, PlantillasGlobales } from "models/enums";
 import { IConsejo } from "models/interfaces";
+import ModuleProvider from "providers/ModuleProvider";
 import { useMemo, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import { cerrarConsejo, deleteConsejo, getConsejos } from "services";
 import { parseToDateTime } from "utils";
 
-export default function Consejos() {
+export const Consejos = () => {
   const [token, setToken] = useState(1);
+  const { module } = useModuleContext();
 
   const {
     data,
@@ -39,6 +42,9 @@ export default function Consejos() {
     setSearch,
   } = useFilterPagination({
     fetch: getConsejos,
+    filters: {
+      module,
+    },
     token: token,
   });
 
@@ -313,4 +319,10 @@ export default function Consejos() {
       </ConfirmationDialog>
     </>
   );
-}
+};
+
+export const ConsejosOutlet = () => (
+  <ModuleProvider module={ModuleEnum.FACU}>
+    <Outlet />
+  </ModuleProvider>
+);

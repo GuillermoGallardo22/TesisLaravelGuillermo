@@ -1,3 +1,4 @@
+import { ModuleEnum } from "models/enums";
 import { ITipoConsejo } from "./ITipoConsejo";
 
 export interface IConsejo {
@@ -15,9 +16,10 @@ interface IConsejoActa extends Omit<IActa, "batch" | "drive"> {
 
 export interface IConsejoForm {
   id: number;
-  tipo_consejo: number;
   nombre: string;
   fecha: Date;
+  tipo_consejo: number;
+  module: ModuleEnum;
 }
 
 export interface IActa {

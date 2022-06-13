@@ -13,6 +13,8 @@ import {
   AddUsuario,
   Carreras,
   Consejos,
+  ConsejosFACUOUTLET,
+  ConsejosSUDEOUTLET,
   Docentes,
   DocumentosFACU,
   DocumentosFACUOutlet,
@@ -113,6 +115,78 @@ export const routes: IRoute[] = [
       },
       { path: "", isIndex: true, component: ProcesosSUDE },
     ],
+  },
+  {
+    path: "consejos-sude",
+    label: "Consejos",
+    component: ConsejosSUDEOUTLET,
+    icon: "meetingRoom",
+    modules: [ModuleEnum.SUDE],
+    childrens: [
+      {
+        path: "nuevo",
+        component: AddConsejo,
+        roles: [RolEnum.ADMIN, RolEnum.ADMINTEMP],
+      },
+      {
+        path: "plantilla-acta/:driveId",
+        component: DriveTemplate,
+      },
+      {
+        path: "plantilla-separador/:driveId",
+        component: DriveTemplate,
+      },
+      {
+        path: ":consejoId",
+        component: Outlet,
+        childrens: [
+          {
+            path: "asistencia",
+            component: ListMiembros,
+            roles: [RolEnum.ADMIN, RolEnum.ADMINTEMP],
+          },
+          {
+            path: "acta",
+            component: Outlet,
+            roles: [RolEnum.ADMIN, RolEnum.ADMINTEMP],
+            childrens: [
+              {
+                path: "drive/:driveId",
+                component: DriveTemplate,
+              },
+              {
+                path: "",
+                component: Acta,
+                isIndex: true,
+              },
+            ],
+          },
+          {
+            path: "resoluciones",
+            component: Outlet,
+            childrens: [
+              {
+                path: "drive/:driveId",
+                component: DriveTemplate,
+              },
+              {
+                path: "",
+                isIndex: true,
+                component: ListResoluciones,
+              },
+            ],
+          },
+          {
+            path: "",
+            isIndex: true,
+            component: UpdateConsejo,
+            roles: [RolEnum.ADMIN, RolEnum.ADMINTEMP],
+          },
+        ],
+      },
+      { path: "", isIndex: true, component: Consejos },
+    ],
+    isMenuOption: true,
   },
   // FACU
   {
@@ -286,7 +360,7 @@ export const routes: IRoute[] = [
   {
     path: "consejos",
     label: "Consejos",
-    component: Outlet,
+    component: ConsejosFACUOUTLET,
     icon: "meetingRoom",
     modules: [ModuleEnum.FACU],
     childrens: [
