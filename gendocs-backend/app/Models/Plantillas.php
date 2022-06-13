@@ -47,11 +47,9 @@ class Plantillas extends Model
 
     public function scopeModule($query, $value)
     {
-        return $query
-            ->join('procesos', 'plantillas.proceso_id', 'procesos.id')
-            ->join('modules', 'procesos.module_id', 'modules.id')
-            ->select('plantillas.*')
-            ->where('modules.code', $value);
+        return $query->whereHas('proceso.module', function ($query) use ($value) {
+            $query->where('module_id', Module::query()->where('code', $value)->first()?->id);
+        });
     }
 
     public function scopeEstado($query, $value)
