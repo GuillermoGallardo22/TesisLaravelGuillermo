@@ -21,7 +21,8 @@ import {
   useFilterPagination,
   usePlantillasGlob,
 } from "hooks";
-import { ModuleEnum, PlantillasGlobales } from "models/enums";
+import { useModuleFactory } from "hooks/useModuleFactory";
+import { ModuleEnum } from "models/enums";
 import { IConsejo } from "models/interfaces";
 import ModuleProvider from "providers/ModuleProvider";
 import { useMemo, useState } from "react";
@@ -48,13 +49,14 @@ export const Consejos = () => {
     token: token,
   });
 
-  const { data: plaAct, isLoading: loadingPlaAct } = usePlantillasGlob(
-    PlantillasGlobales.PLA_ACT
-  );
+  const { getPlantillasActa } = useModuleFactory(module);
 
-  const { data: plaActSep, isLoading: loadingPlaActSep } = usePlantillasGlob(
-    PlantillasGlobales.PLA_ACT_SEP
-  );
+  const [act, sep] = getPlantillasActa();
+
+  const { data: plaAct, isLoading: loadingPlaAct } = usePlantillasGlob(act);
+
+  const { data: plaActSep, isLoading: loadingPlaActSep } =
+    usePlantillasGlob(sep);
 
   const [isVisible, setIsVisible] = useState(false);
 
