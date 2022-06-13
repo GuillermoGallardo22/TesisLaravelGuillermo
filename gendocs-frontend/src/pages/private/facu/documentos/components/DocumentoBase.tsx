@@ -13,6 +13,7 @@ import {
   TitleNav,
 } from "components";
 import { useAuthContext } from "contexts/AuthContext";
+import { useModuleContext } from "contexts/ModuleContext";
 import {
   useConfirmationDialog,
   useConsejos,
@@ -34,7 +35,13 @@ import { NotificationEmail } from "./NotificationEmail";
 
 const DocumentosBase = () => {
   const [consejo, setConsejo] = useState(-1);
-  const { data: consejos = [] } = useConsejos();
+  const { module } = useModuleContext();
+
+  const { data: consejos = [] } = useConsejos({
+    filters: {
+      module,
+    },
+  });
 
   useEffect(() => {
     if (consejos.length) {

@@ -1,3 +1,4 @@
+import { useModuleContext } from "contexts/ModuleContext";
 import { useFormik } from "formik";
 import { useErrorsResponse } from "hooks";
 import { HTTP_STATUS } from "models/enums";
@@ -33,6 +34,7 @@ export default function useAddDocumento({ onReset }: useAddDocumentoProps) {
   const { enqueueSnackbar } = useSnackbar();
   const [consejos, setConsejos] = useState<IConsejo[]>([]);
   const { errorSummary, setErrorSummary } = useErrorsResponse();
+  const { module } = useModuleContext();
 
   const [documento, setDocumento] = useState<IDocumentoForm>(initialValues);
 
@@ -49,6 +51,7 @@ export default function useAddDocumento({ onReset }: useAddDocumentoProps) {
         getConsejos({
           filters: {
             estado: 1,
+            module,
           },
         }),
         getNumeracion(),

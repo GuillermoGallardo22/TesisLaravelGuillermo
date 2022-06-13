@@ -1,5 +1,5 @@
 import { PlantillasGlobales } from "models/enums";
-import { IConsejo } from "models/interfaces";
+import { IConsejo, IFilterPaginationProps } from "models/interfaces";
 import { IPlantillaGlobal } from "models/interfaces/IPlantillaGlobal";
 import { useQuery, UseQueryResult } from "react-query";
 import { getConsejos } from "services";
@@ -9,12 +9,15 @@ import { getPlantillaGlobalByCode } from "services/plantillasGlobales";
  * Retorna consejos activos
  * @returns {UseQueryResult<IConsejo[], unknown>}
  */
-export function useConsejos(): UseQueryResult<IConsejo[]> {
+export function useConsejos(
+  props?: IFilterPaginationProps
+): UseQueryResult<IConsejo[]> {
   return useQuery(
     ["consejos"],
     () =>
       getConsejos({
         filters: {
+          ...props?.filters,
           estado: 1,
         },
       }),
