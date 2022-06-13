@@ -23,10 +23,6 @@ class CreateProcesosTable extends Migration
                 ->references("id")
                 ->on("directorios");
 
-            $table->foreignId("module_id")
-                ->references("id")
-                ->on("modules");
-
             $table->timestamps();
             $table->softDeletes();
         });
