@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Constants\PlantillasGlobales as ConstantsPlantillasGlobales;
 use App\Traits\Filterable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -39,13 +40,27 @@ class PlantillasGlobales extends Model
         return $query->where('codigo', $value);
     }
 
-    public function scopePlaAct(Builder $query): Model
+    public function scopePlaAct($query, $moduleCode): Model
     {
-        return $query->where('codigo', \App\Constants\PlantillasGlobales::PLANTILLA_ACTA)->first();
+        $code = sprintf(
+            "%s%s%s",
+            ConstantsPlantillasGlobales::ACTA,
+            ConstantsPlantillasGlobales::SEP,
+            $moduleCode
+        );
+
+        return $query->where('codigo', $code)->first();
     }
 
-    public function scopePlaActSep(Builder $query): Model
+    public function scopePlaActSep($query, $moduleCode): Model
     {
-        return $query->where('codigo', \App\Constants\PlantillasGlobales::PLANTILLA_ACTA_SEPARADOR)->first();
+        $code = sprintf(
+            "%s%s%s",
+            ConstantsPlantillasGlobales::ACTA,
+            ConstantsPlantillasGlobales::SEP,
+            $moduleCode
+        );
+
+        return $query->where('codigo', $code)->first();
     }
 }

@@ -15,4 +15,9 @@ class ModelHasModule extends Model
     {
         return $this->morphTo();
     }
+
+    public function modulo()
+    {
+        return $this->belongsTo(Module::class, 'module_id', 'id');
+    }
 }

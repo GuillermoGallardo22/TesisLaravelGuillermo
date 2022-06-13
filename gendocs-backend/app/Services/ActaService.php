@@ -34,6 +34,7 @@ class ActaService
             ], [
                 'consejo_id' => $consejo->id,
             ]);
+            $moduleCode = $consejo->module->modulo->code;
 
             // GENERANDO DIRECTORIOS BASE
             Storage::makeDirectory($consejo->nombre);
@@ -42,7 +43,7 @@ class ActaService
 
             // DESCARGANDO PLANTILLA SEPARADOR
             $response = $this->googleDriveService->exportFile(
-                PlantillasGlobales::plaActSep()->archivo->google_drive_id,
+                PlantillasGlobales::plaActSep($moduleCode)->archivo->google_drive_id,
                 MimeType::DOCX,
             );
 
@@ -76,11 +77,12 @@ class ActaService
         try {
             $consejo = $acta->consejo;
             $tipoConsejo = $consejo->tipoConsejo;
+            $moduleCode = $consejo->module->modulo->code;
 
             $documentoDrive = $this->googleDriveService->copyFile(
                 "ACTA-",
                 $consejo->directorio->google_drive_id,
-                PlantillasGlobales::plaAct()->archivo->google_drive_id,
+                PlantillasGlobales::plaAct($moduleCode)->archivo->google_drive_id,
             );
 
             $acta
