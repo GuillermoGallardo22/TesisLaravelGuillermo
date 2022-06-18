@@ -12,8 +12,8 @@ abstract class Roles
      */
     const Admin = 'Administrador';
     const AdminTemp = 'Administrador-Temporal';
-    const Reader = 'Escritor';
-    const Writer = 'Lector';
+    const Reader = 'Lector';
+    const Writer = 'Escritor';
 
     /**
      * ROLES PARA GOOGLE DRIVE
