@@ -18,3 +18,7 @@ export const ConsejosSUDEOUTLET = lazy(() =>
     default: m.ConsejosOutlet,
   }))
 );
+
+export const DocumentosSUDEOUTLET = lazy(
+  () => import("pages/private/sude/documentos/Documentos")
+);

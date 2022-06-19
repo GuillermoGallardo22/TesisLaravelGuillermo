@@ -2,26 +2,55 @@ import { ModuleEnum, RolEnum } from "models/enums";
 import { IRoute } from "models/interfaces";
 import { Outlet } from "react-router-dom";
 import {
-  AddProceso,
-  AddPlantilla,
-  DriveTemplate,
-  UpdatePlantilla,
-  ListPlantillas,
-  UpdateProceso,
-  AddConsejo,
-  ListMiembros,
   Acta,
+  AddConsejo,
+  AddDocumento,
+  AddPlantilla,
+  AddProceso,
+  AddReserva,
+  Consejos,
+  DocumentosFACU,
+  DriveTemplate,
+  ListMiembros,
+  ListPlantillas,
   ListResoluciones,
   UpdateConsejo,
-  Consejos,
+  UpdatePlantilla,
+  UpdateProceso,
 } from "../facu/components";
 import {
-  ProcesosSUDEOutlet,
-  ProcesosSUDE,
   ConsejosSUDEOUTLET,
+  DocumentosSUDEOUTLET,
+  ProcesosSUDE,
+  ProcesosSUDEOutlet,
 } from "./components";
 
 export const routes: IRoute[] = [
+  {
+    path: "documentos-sude",
+    label: "Documentos",
+    component: DocumentosSUDEOUTLET,
+    icon: "topic",
+    modules: [ModuleEnum.SUDE],
+    isMenuOption: true,
+    childrens: [
+      {
+        path: "nuevo",
+        component: AddDocumento,
+        roles: [RolEnum.ADMIN, RolEnum.ADMINTEMP, RolEnum.WRITER],
+      },
+      {
+        path: "reservar",
+        component: AddReserva,
+        roles: [RolEnum.ADMIN, RolEnum.ADMINTEMP],
+      },
+      {
+        path: "drive/:driveId",
+        component: DriveTemplate,
+      },
+      { path: "", isIndex: true, component: DocumentosFACU },
+    ],
+  },
   {
     path: "procesos-sude",
     label: "Procesos",
