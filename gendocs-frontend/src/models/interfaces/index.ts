@@ -13,5 +13,6 @@ export * from "./IPlantillaGlobal";
 export * from "./IProceso";
 export * from "./IResponse";
 export * from "./IRole";
+export * from "./IRoute";
 export * from "./ITipoConsejo";
 export * from "./IUser";

@@ -1,7 +1,9 @@
 import { useAuthContext } from "contexts/AuthContext";
-import { getFacuRoutes, getSudeRoutes, getTituRoutes } from "layout/routes";
 import { ModuleEnum } from "models/enums";
 import { useMemo } from "react";
+import { getRoutes as getFacuRoutes } from "../routes/facu";
+import { getRoutes as getSudeRoutes } from "../routes/sude";
+import { getRoutes as getTituRoutes } from "../routes/titu";
 
 export function useRoutes() {
   const {

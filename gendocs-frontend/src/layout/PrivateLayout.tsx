@@ -3,29 +3,17 @@ import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import Toolbar from "@mui/material/Toolbar";
-import { AccesDenied, Skeleton } from "components";
+import { AccesDenied as AccessDenied, Skeleton } from "components";
 import { useAuthContext } from "contexts/AuthContext";
-import { Suspense, useMemo, useState } from "react";
+import { IRoute } from "models/interfaces";
+import { Suspense, useCallback, useMemo, useState } from "react";
 import { Navigate, Route, Routes } from "react-router";
 import AppBar from "./components/AppBar";
 import Drawer from "./components/Drawer";
-import { DEFAULT_ROUTE, IRoute, routes } from "./routes";
-
-const handleRoutes = (item: IRoute) => {
-  return (
-    <Route
-      key={item.path}
-      path={item.path}
-      index={Boolean(item.isIndex)}
-      element={<RoleCheckerRoute item={item} />}
-    >
-      {item.childrens?.map(handleRoutes)}
-    </Route>
-  );
-};
+import { allRoutes as routes, getDefaultRoutes } from "./routes";
 
 const isToogleDrawer = localStorage.getItem("isToogleDrawer") || "true";
-const defaultState = JSON.parse(isToogleDrawer);
+const defaultState = Boolean(JSON.parse(isToogleDrawer));
 
 const PrivateLayout = () => {
   const [open, setOpen] = useState(defaultState);
@@ -39,6 +27,39 @@ const PrivateLayout = () => {
     localStorage.setItem("isToogleDrawer", JSON.stringify(state));
     setOpen(state);
   };
+
+  const DEFAULT_ROUTE = useMemo(() => getDefaultRoutes(user.modulos), []);
+
+  const handleRoute = useCallback((item: IRoute) => {
+    const {
+      roles = [],
+      modules = [],
+      childrens = [],
+      component: TargetComponent,
+    } = item;
+
+    const hasEnoughRoles =
+      !roles.length || roles.some((role) => user.roles.includes(role));
+
+    const hasAccessToModule =
+      !modules.length ||
+      modules.some((module) =>
+        user.modulos.map((m) => m.code).includes(module)
+      );
+
+    const canAccess = hasEnoughRoles && hasAccessToModule;
+
+    return (
+      <Route
+        key={item.path}
+        path={item.path}
+        index={Boolean(item.isIndex)}
+        element={canAccess ? <TargetComponent /> : <AccessDenied />}
+      >
+        {childrens.map(handleRoute)}
+      </Route>
+    );
+  }, []);
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -64,7 +85,7 @@ const PrivateLayout = () => {
               <Paper sx={{ p: 2 }}>
                 <Suspense fallback={<Skeleton />}>
                   <Routes>
-                    {routes.map(handleRoutes)}
+                    {routes.map(handleRoute)}
                     <Route path="/" element={<Navigate to={DEFAULT_ROUTE} />} />
                   </Routes>
                 </Suspense>
@@ -75,37 +96,6 @@ const PrivateLayout = () => {
       </Box>
     </Box>
   );
-};
-
-interface RoleCheckerRouteProps {
-  item: IRoute;
-}
-
-// TODO: improve re-rendering of routes dur to poor performance when toogle drawer
-const RoleCheckerRoute = ({
-  item: { roles = [], component: Component, modules = [] },
-}: RoleCheckerRouteProps) => {
-  const {
-    context: { user },
-  } = useAuthContext();
-
-  const hasEnoughRoles = useMemo(
-    () => !roles.length || roles.some((role) => user.roles.includes(role)),
-    []
-  );
-
-  const hasAccessToModule = useMemo(
-    () =>
-      !modules.length ||
-      modules.some((module) =>
-        user.modulos.map((us) => us.code).includes(module)
-      ),
-    []
-  );
-
-  if (hasEnoughRoles && hasAccessToModule) return <Component />;
-
-  return <AccesDenied />;
 };
 
 export default PrivateLayout;

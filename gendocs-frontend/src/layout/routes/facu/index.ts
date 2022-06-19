@@ -1,196 +1,45 @@
-import { IconTypes, Outlet } from "components";
 import { ModuleEnum, RolEnum } from "models/enums";
+import { IRoute } from "models/interfaces";
+import { Outlet } from "react-router-dom";
 import {
-  Acta,
-  AddCarrera,
-  AddConsejo,
-  AddDocente,
-  AddDocumento,
-  AddEstudiante,
-  AddPlantilla,
-  AddProceso,
-  AddReserva,
-  AddUsuario,
-  Carreras,
-  Consejos,
-  ConsejosFACUOUTLET,
-  ConsejosSUDEOUTLET,
-  Docentes,
-  DocumentosFACU,
-  DocumentosFACUOutlet,
   DriveTemplate,
-  Estudiantes,
   Home,
-  ListMiembros,
-  ListPlantillas,
-  ListResoluciones,
-  ProcesosFACU,
-  ProcesosFACUOutlet,
-  ProcesosSUDE,
-  ProcesosSUDEOutlet,
-  Profile,
+  DocumentosFACUOutlet,
+  AddDocumento,
+  AddReserva,
+  DocumentosFACU,
+  AddCarrera,
   UpdateCarrera,
-  UpdateConsejo,
+  Carreras,
+  AddDocente,
   UpdateDocente,
+  Docentes,
+  AddEstudiante,
   UpdateEstudiante,
+  Estudiantes,
+  ProcesosFACUOutlet,
+  AddProceso,
+  AddPlantilla,
   UpdatePlantilla,
+  ListPlantillas,
   UpdateProceso,
+  ProcesosFACU,
+  ConsejosFACUOUTLET,
+  AddConsejo,
+  ListMiembros,
+  Acta,
+  ListResoluciones,
+  UpdateConsejo,
+  Consejos,
+  AddUsuario,
   UpdateUsuario,
   Usuarios,
+  Profile,
 } from "./components";
 
-export interface IRoute {
-  path: string;
-  component: React.FunctionComponent;
-  isIndex?: boolean;
-  label?: string;
-  icon?: IconTypes;
-  childrens?: IRoute[];
-  roles?: RolEnum[];
-  modules?: ModuleEnum[];
-  isMenuOption?: boolean;
-}
-
-export const DEFAULT_ROUTE = "inicio";
-
 export const routes: IRoute[] = [
-  // SUDE
   {
-    path: "procesos-sude",
-    label: "Procesos",
-    component: ProcesosSUDEOutlet,
-    icon: "list",
-    modules: [ModuleEnum.SUDE],
-    isMenuOption: true,
-    childrens: [
-      {
-        path: "nuevo",
-        component: AddProceso,
-        roles: [RolEnum.ADMIN, RolEnum.ADMINTEMP, RolEnum.WRITER],
-      },
-      {
-        path: ":processId",
-        component: Outlet,
-        childrens: [
-          {
-            path: "plantillas",
-            component: Outlet,
-            childrens: [
-              {
-                path: "nuevo",
-                component: AddPlantilla,
-                roles: [RolEnum.ADMIN, RolEnum.ADMINTEMP, RolEnum.WRITER],
-              },
-              {
-                path: ":templateId",
-                component: Outlet,
-                childrens: [
-                  {
-                    path: "drive/:driveId",
-                    component: DriveTemplate,
-                  },
-                  {
-                    path: "",
-                    isIndex: true,
-                    component: UpdatePlantilla,
-                    roles: [RolEnum.ADMIN, RolEnum.ADMINTEMP, RolEnum.WRITER],
-                  },
-                ],
-              },
-              {
-                path: "",
-                label: "",
-                isIndex: true,
-                component: ListPlantillas,
-              },
-            ],
-          },
-          {
-            path: "",
-            isIndex: true,
-            component: UpdateProceso,
-            roles: [RolEnum.ADMIN, RolEnum.ADMINTEMP, RolEnum.WRITER],
-          },
-        ],
-      },
-      { path: "", isIndex: true, component: ProcesosSUDE },
-    ],
-  },
-  {
-    path: "consejos-sude",
-    label: "Consejos",
-    component: ConsejosSUDEOUTLET,
-    icon: "meetingRoom",
-    modules: [ModuleEnum.SUDE],
-    childrens: [
-      {
-        path: "nuevo",
-        component: AddConsejo,
-        roles: [RolEnum.ADMIN, RolEnum.ADMINTEMP],
-      },
-      {
-        path: "plantilla-acta/:driveId",
-        component: DriveTemplate,
-      },
-      {
-        path: "plantilla-separador/:driveId",
-        component: DriveTemplate,
-      },
-      {
-        path: ":consejoId",
-        component: Outlet,
-        childrens: [
-          {
-            path: "asistencia",
-            component: ListMiembros,
-            roles: [RolEnum.ADMIN, RolEnum.ADMINTEMP],
-          },
-          {
-            path: "acta",
-            component: Outlet,
-            roles: [RolEnum.ADMIN, RolEnum.ADMINTEMP],
-            childrens: [
-              {
-                path: "drive/:driveId",
-                component: DriveTemplate,
-              },
-              {
-                path: "",
-                component: Acta,
-                isIndex: true,
-              },
-            ],
-          },
-          {
-            path: "resoluciones",
-            component: Outlet,
-            childrens: [
-              {
-                path: "drive/:driveId",
-                component: DriveTemplate,
-              },
-              {
-                path: "",
-                isIndex: true,
-                component: ListResoluciones,
-              },
-            ],
-          },
-          {
-            path: "",
-            isIndex: true,
-            component: UpdateConsejo,
-            roles: [RolEnum.ADMIN, RolEnum.ADMINTEMP],
-          },
-        ],
-      },
-      { path: "", isIndex: true, component: Consejos },
-    ],
-    isMenuOption: true,
-  },
-  // FACU
-  {
-    path: DEFAULT_ROUTE,
+    path: "inicio",
     label: "Inicio",
     component: Outlet,
     icon: "home",
@@ -452,56 +301,8 @@ export const routes: IRoute[] = [
   },
 ];
 
-export function getFacuRoutes(userRoles: RolEnum[], userModules: ModuleEnum[]) {
-  return routes
-    .filter((route) =>
-      route.modules?.some((module) => module === ModuleEnum.FACU)
-    )
-    .filter((r) => r.isMenuOption)
-    .filter((route) =>
-      route.modules?.map((module) =>
-        userModules.map((module2) => module === module2)
-      )
-    )
-    .filter(
-      (route) =>
-        !route.roles ||
-        route.roles.some((role) => userRoles.some((role2) => role2 === role))
-    );
-}
+export const DEFAULT_ROUTE = routes[0].path;
 
-export function getSudeRoutes(userRoles: RolEnum[], userModules: ModuleEnum[]) {
-  return routes
-    .filter((route) =>
-      route.modules?.some((module) => module === ModuleEnum.SUDE)
-    )
-    .filter((r) => r.isMenuOption)
-    .filter((route) =>
-      route.modules?.map((module) =>
-        userModules.map((module2) => module === module2)
-      )
-    )
-    .filter(
-      (route) =>
-        !route.roles ||
-        route.roles.some((role) => userRoles.some((role2) => role2 === role))
-    );
-}
-
-export function getTituRoutes(userRoles: RolEnum[], userModules: ModuleEnum[]) {
-  return routes
-    .filter((route) =>
-      route.modules?.some((module) => module === ModuleEnum.TITU)
-    )
-    .filter((r) => r.isMenuOption)
-    .filter((route) =>
-      route.modules?.map((module) =>
-        userModules.map((module2) => module === module2)
-      )
-    )
-    .filter(
-      (route) =>
-        !route.roles ||
-        route.roles.some((role) => userRoles.some((role2) => role2 === role))
-    );
+export function getRoutes(a: any, b: any): IRoute[] {
+  return routes.filter((r) => r.isMenuOption);
 }
