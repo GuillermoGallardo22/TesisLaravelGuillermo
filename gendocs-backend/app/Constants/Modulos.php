@@ -18,4 +18,9 @@ abstract class Modulos
      * SECRETARÍA DE TITULACIÓN
      */
     const TITU = 'TITU';
+
+    /**
+     * UNIDAD CURRICULAR
+     */
+    const CURR = 'CURR';
 }

@@ -17,17 +17,22 @@ class ModuleSeeder extends Seeder
     {
         Module::create([
             'code' => Modulos::FACU,
-            'name' => 'SECRETARÍA DE FACULTAD'
+            'name' => 'FACULTAD'
         ]);
 
         Module::create([
             'code' => Modulos::SUDE,
-            'name' => 'SECRETARÍA DE SUBDECANATO'
+            'name' => 'SUBDECANATO'
         ]);
 
         Module::create([
             'code' => Modulos::TITU,
-            'name' => 'SECRETARÍA DE TITULACIÓN'
+            'name' => 'TITULACIÓN'
+        ]);
+
+        Module::create([
+            'code' => Modulos::CURR,
+            'name' => 'UNIDAD CURRICULAR',
         ]);
     }
 }
