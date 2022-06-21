@@ -1,3 +1,4 @@
+import { useModuleContext } from "contexts/ModuleContext";
 import { useFormik } from "formik";
 import { useConsejos, useErrorsResponse } from "hooks";
 import { HTTP_STATUS } from "models/enums";
@@ -8,17 +9,23 @@ import { createReserva, getNumeracion } from "services";
 import { VALIDATION_MESSAGES } from "utils";
 import * as yup from "yup";
 
-const initialValues: IReservaForm = {
-  desde: -1,
-  hasta: -1,
-  consejo: -1,
-};
-
 export function useAddReserva() {
+  const { module } = useModuleContext();
   const { enqueueSnackbar } = useSnackbar();
   const { errorSummary, setErrorSummary } = useErrorsResponse();
 
-  const { data: consejos = [], isLoading: isLoadingC } = useConsejos();
+  const initialValues: IReservaForm = {
+    desde: -1,
+    hasta: -1,
+    consejo: -1,
+    module,
+  };
+
+  const { data: consejos = [], isLoading: isLoadingC } = useConsejos({
+    filters: {
+      module,
+    },
+  });
 
   const validationSchema = yup.object().shape({
     desde: yup
@@ -61,7 +68,12 @@ export function useAddReserva() {
 
   const { isLoading: isLoadingN, refetch } = useQuery(
     ["numeracion"],
-    getNumeracion,
+    () =>
+      getNumeracion({
+        filters: {
+          module,
+        },
+      }),
     {
       onSuccess: (r) => formik.setFieldValue("desde", r.siguiente),
       refetchInterval: 2500,

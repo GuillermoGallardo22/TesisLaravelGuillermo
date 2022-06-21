@@ -1,9 +1,11 @@
+import { ModuleEnum } from "../enums";
 import { IConsejo } from "./IConsejo";
 
 export interface IReservaForm {
   desde: number;
   hasta: number;
   consejo: number;
+  module: ModuleEnum;
 }
 
 export interface INumeracionBase {
