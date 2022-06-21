@@ -29,24 +29,30 @@ class StoreReservaRequest extends FormRequest
     public function rules()
     {
         return [
+            'module' => [
+                'bail',
+                'required',
+                'string',
+                'exists:\App\Models\Module,code'
+            ],
             'hasta' => [
                 'bail',
                 'numeric',
                 'required',
                 'min:1',
-                new NumeroAsignado(),
-                new NumeroReservado()
+                new NumeroAsignado($this->module),
+                new NumeroReservado($this->module)
             ],
             'desde' => [
                 'bail',
                 'numeric',
                 'required',
                 'min:1',
-                new NumeroSiguiente(),
-                new NumeroAsignado(),
-                new NumeroReservado(),
-                new RangoValido($this->hasta),
-                new RangoDisponible($this->hasta)
+                new NumeroSiguiente($this->module),
+                new NumeroAsignado($this->module),
+                new NumeroReservado($this->module),
+                new RangoValido($this->hasta, $this->module),
+                new RangoDisponible($this->hasta, $this->module)
             ],
             'consejo' => ['required', 'exists:\App\Models\Consejo,id'],
         ];
