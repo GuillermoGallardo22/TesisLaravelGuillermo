@@ -37,7 +37,10 @@ class DocumentoObserver
      */
     public function deleted(Documento $documento)
     {
-        $numeracion = Numeracion::where('numero', $documento->numero)->first();
+        $numeracion = Numeracion::query()
+            ->where('numero', $documento->numero)
+            ->where('module_id', $documento->consejo->module->modulo->id)
+            ->first();
 
         $numeracion->update([
             'usado' => false,

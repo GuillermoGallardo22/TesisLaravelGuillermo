@@ -10,11 +10,16 @@ class NumeracionService
 {
     public function checkNumeracion(Documento $documento)
     {
-        $numeracion = Numeracion::query()->where('numero', $documento->numero)->first();
         $modulo = $documento->consejo->module->modulo;
+        $numeracion = Numeracion::query()
+            ->where('numero', $documento->numero)
+            ->where('module_id', $modulo->id)
+            ->first();
 
         if (!$numeracion) {
-            $last = Numeracion::max('numero');
+            $last = Numeracion::query()
+                ->where('module_id', $modulo->id)
+                ->max('numero');
 
             for ($i = $last + 1; $i <= $documento->numero; $i++) {
                 Numeracion::create([
