@@ -16,7 +16,7 @@ class CreateNumeracionesTable extends Migration
         Schema::create('numeraciones', function (Blueprint $table) {
             $table->id();
 
-            $table->unsignedBigInteger('numero')->unique();
+            $table->unsignedBigInteger('numero');
 
             // ESTADO DEL NÚMERO
             $table->boolean('usado')
@@ -35,6 +35,18 @@ class CreateNumeracionesTable extends Migration
                 ->nullable()
                 ->references('id')
                 ->on('consejos');
+
+            $table->foreignId('module_id')
+                ->references('id')
+                ->on('modules');
+
+            // DIRECTORIO AL QUE PERTENECE EL NÚMERO
+            $table->foreignId('directorio_id')
+                ->references('id')
+                ->on('directorios');
+
+            //
+            $table->unique(['numero', 'module_id', 'directorio_id']);
 
             $table->timestamps();
         });
