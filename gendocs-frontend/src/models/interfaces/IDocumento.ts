@@ -1,3 +1,4 @@
+import { ModuleEnum } from "models/enums";
 import { IConsejo } from "./IConsejo";
 import { IEstudiante } from "./IEstudiante";
 import { IPlantilla } from "./IPlantilla";
@@ -12,6 +13,7 @@ export interface IDocumentoForm {
   numero: number;
   docentes: number[];
   otro?: boolean;
+  module: ModuleEnum;
 }
 
 export interface IDocumento {

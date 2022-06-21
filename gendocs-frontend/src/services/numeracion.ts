@@ -1,13 +1,22 @@
 import axios from "axios";
 import { HTTP_STATUS } from "models/enums";
-import { INumeracion, IReservaForm, IResponse } from "models/interfaces";
-import { handleErrors, HTTP_MESSAGES } from "utils";
+import {
+  IFilterPaginationProps,
+  INumeracion,
+  IReservaForm,
+  IResponse,
+} from "models/interfaces";
+import { handleErrors, HTTP_MESSAGES, parseFilterPaginationProps } from "utils";
 
-export async function getNumeracion(): Promise<INumeracion> {
+export async function getNumeracion(
+  props: IFilterPaginationProps
+): Promise<INumeracion> {
   try {
+    const params = parseFilterPaginationProps(props);
+
     const {
       data: { data },
-    } = await axios.get("numeracion");
+    } = await axios.get(`numeracion?${params}`);
 
     return data;
   } catch (error) {

@@ -10,20 +10,13 @@ import {
 } from "models/interfaces";
 import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
-import { getConsejos, getNumeracion, saveDocumento } from "services";
+import {
+  getConsejos,
+  getNumeracion as _getNumeracion,
+  saveDocumento,
+} from "services";
 import { VALIDATION_MESSAGES } from "utils";
 import * as yup from "yup";
-
-const initialValues: IDocumentoForm = {
-  consejo: -1,
-  proceso: -1,
-  plantilla: -1,
-  estudiante: null,
-  descripcion: null,
-  numero: -1,
-  otro: false,
-  docentes: [],
-};
 
 type useAddDocumentoProps = {
   onReset: () => void;
@@ -36,10 +29,29 @@ export default function useAddDocumento({ onReset }: useAddDocumentoProps) {
   const { errorSummary, setErrorSummary } = useErrorsResponse();
   const { module } = useModuleContext();
 
+  const initialValues: IDocumentoForm = {
+    consejo: -1,
+    proceso: -1,
+    plantilla: -1,
+    estudiante: null,
+    descripcion: null,
+    numero: -1,
+    otro: false,
+    docentes: [],
+    module,
+  };
+
   const [documento, setDocumento] = useState<IDocumentoForm>(initialValues);
 
   const [encolados, setEncolados] = useState<INumeracionBase[]>([]);
   const [reservados, setReservados] = useState<INumeracionReservado[]>([]);
+
+  const getNumeracion = () =>
+    _getNumeracion({
+      filters: {
+        module,
+      },
+    });
 
   useEffect(() => {
     let active = true;
