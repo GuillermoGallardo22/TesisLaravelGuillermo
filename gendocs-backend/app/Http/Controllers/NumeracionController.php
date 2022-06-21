@@ -8,6 +8,7 @@ use App\Models\Consejo;
 use App\Models\Numeracion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
 class NumeracionController extends Controller
@@ -18,13 +19,29 @@ class NumeracionController extends Controller
         $this->authorizeResource(Numeracion::class);
     }
 
-    public function index()
+    public function index(Request $request)
     {
+        $queryParams = $request->all();
+
+        if (!$request->exists('filter.module')) {
+            return response()->json([
+                'data' => [
+                    'siguiente' => -1,
+                    'reservados' => [],
+                    'encolados' => [],
+                ]
+            ], ResponseAlias::HTTP_BAD_REQUEST);
+        }
+
+        $baseQuery = Numeracion::query()->fromActiveDirectory();
+
+        $baseQuery->applyFilters($queryParams);
+
         return response()->json([
             'data' => [
-                'siguiente' => Numeracion::query()->siguiente(),
-                'reservados' => Numeracion::query()->reservados(),
-                'encolados' => Numeracion::query()->encolados(),
+                'siguiente' => (clone $baseQuery)->siguiente(),
+                'reservados' => (clone $baseQuery)->reservados()->get(),
+                'encolados' => (clone $baseQuery)->encolados()->get(),
             ]
         ]);
     }
