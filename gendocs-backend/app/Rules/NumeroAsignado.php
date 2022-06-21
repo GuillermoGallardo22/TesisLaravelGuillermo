@@ -7,14 +7,16 @@ use Illuminate\Contracts\Validation\Rule;
 
 class NumeroAsignado implements Rule
 {
+    private $moduleCode;
+
     /**
      * Create a new rule instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($moduleCode)
     {
-        //
+        $this->moduleCode = $moduleCode;
     }
 
     /**
@@ -26,9 +28,13 @@ class NumeroAsignado implements Rule
      */
     public function passes($attribute, $value)
     {
+        $moduleCode = $this->moduleCode;
         return !Numeracion::query()
             ->where('numero', $value)
             ->where('usado', true)
+            ->whereHas('module', function ($query) use ($moduleCode) {
+                $query->where('code', $moduleCode);
+            })
             ->exists();
     }
 
