@@ -7,14 +7,16 @@ use Illuminate\Contracts\Validation\Rule;
 
 class NumeroSiguiente implements Rule
 {
+    private $moduleCode;
+
     /**
      * Create a new rule instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($moduleCode)
     {
-        //
+        $this->moduleCode = $moduleCode;
     }
 
     /**
@@ -26,7 +28,7 @@ class NumeroSiguiente implements Rule
      */
     public function passes($attribute, $value)
     {
-        $ultimo = Numeracion::max('numero');
+        $ultimo = Numeracion::query()->module($this->moduleCode)->max('numero');
 
         return ($ultimo + 1) === $value;
     }

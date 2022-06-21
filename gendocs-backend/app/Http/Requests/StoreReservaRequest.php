@@ -11,6 +11,8 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class StoreReservaRequest extends FormRequest
 {
+    protected $stopOnFirtsFailure = true;
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -51,7 +53,7 @@ class StoreReservaRequest extends FormRequest
                 new NumeroSiguiente($this->module),
                 new NumeroAsignado($this->module),
                 new NumeroReservado($this->module),
-                new RangoValido($this->hasta, $this->module),
+                new RangoValido($this->hasta),
                 new RangoDisponible($this->hasta, $this->module)
             ],
             'consejo' => ['required', 'exists:\App\Models\Consejo,id'],

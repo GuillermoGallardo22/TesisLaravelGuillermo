@@ -7,14 +7,16 @@ use Illuminate\Contracts\Validation\Rule;
 
 class NumeroReservado implements Rule
 {
+    private $moduleCode;
+
     /**
      * Create a new rule instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($moduleCode)
     {
-        //
+        $this->moduleCode = $moduleCode;
     }
 
     /**
@@ -27,6 +29,7 @@ class NumeroReservado implements Rule
     public function passes($attribute, $value)
     {
         return !Numeracion::query()
+            ->module($this->moduleCode)
             ->where('numero', $value)
             ->where('reservado', 1)
             ->exists();

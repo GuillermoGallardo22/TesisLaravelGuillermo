@@ -8,15 +8,17 @@ use Illuminate\Contracts\Validation\Rule;
 class RangoDisponible implements Rule
 {
     private $hasta;
+    private $moduleCode;
 
     /**
      * Create a new rule instance.
      *
      * @return void
      */
-    public function __construct($hasta)
+    public function __construct($hasta, $moduleCode)
     {
         $this->hasta = $hasta;
+        $this->moduleCode = $moduleCode;
     }
 
     /**
@@ -32,10 +34,12 @@ class RangoDisponible implements Rule
         $hasta = $this->hasta;
 
         $existsDesde = Numeracion::query()
+            ->module($this->moduleCode)
             ->where('numero', $desde)
             ->exists();
 
         $existsHasta = Numeracion::query()
+            ->module($this->moduleCode)
             ->where('numero', $hasta)
             ->exists();
 

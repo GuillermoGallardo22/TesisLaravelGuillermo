@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreReservaRequest;
 use App\Http\Resources\ResourceObject;
 use App\Models\Consejo;
+use App\Models\Directorio;
+use App\Models\Module;
 use App\Models\Numeracion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -53,6 +55,7 @@ class NumeracionController extends Controller
         $desde = $validated['desde'];
         $hasta = $validated['hasta'];
         $consejo_id = $validated['consejo'];
+        $moduleCode = $validated['module'];
 
         try {
             DB::beginTransaction();
@@ -62,6 +65,8 @@ class NumeracionController extends Controller
                     'numero' => $i,
                     'reservado' => true,
                     'consejo_id' => $consejo_id,
+                    'module_id' => Module::where('code', $moduleCode)->first()->id,
+                    'directorio_id' => Directorio::activeDirectory()->id,
                 ]);
             }
 
