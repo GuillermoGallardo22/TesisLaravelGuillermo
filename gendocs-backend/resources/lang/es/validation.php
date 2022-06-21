@@ -161,7 +161,8 @@ return [
                 ],
                 'consejo' => [
                     'responsable' => 'El consejo seleccionado no tiene un responsable'
-                ]
+                ],
+                'consejo_plantilla_modulo' => 'La plantilla no puede ser usada con el consejo seleccionado',
             ]
         ],
         'numeracion' => [
