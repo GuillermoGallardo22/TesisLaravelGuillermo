@@ -2,32 +2,16 @@
 
 namespace App\Services;
 
+use App\Models\Directorio;
 use App\Models\Documento;
 use App\Models\Numeracion;
 
 class NumeracionService
 {
-    private Documento $documento;
-
-    /**
-     * @param Documento $documento
-     */
-    public function __construct(Documento $documento)
+    public function checkNumeracion(Documento $documento)
     {
-        $this->documento = $documento;
-    }
-
-    public function setDocumento(Documento $documento): NumeracionService
-    {
-        $this->documento = $documento;
-        return $this;
-    }
-
-    public function checkNumeracion()
-    {
-        $documento = $this->documento;
-
         $numeracion = Numeracion::query()->where('numero', $documento->numero)->first();
+        $modulo = $documento->consejo->module->modulo;
 
         if (!$numeracion) {
             $last = Numeracion::max('numero');
@@ -37,6 +21,8 @@ class NumeracionService
                     'numero' => $i,
                     'usado' => $documento->numero === $i,
                     'encolado' => $documento->numero !== $i,
+                    'module_id' => $modulo->id,
+                    'directorio_id' => Directorio::activeDirectory()->id,
                 ]);
             }
         } else {

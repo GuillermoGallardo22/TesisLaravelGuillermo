@@ -39,8 +39,7 @@ class DocumentoService
         ]);
 
         $this->numeracionService
-            ->setDocumento($documento)
-            ->checkNumeracion();
+            ->checkNumeracion($documento);
 
         /**
          * TODO: HACER ESTO PROCESOS EN BACKGROUND
