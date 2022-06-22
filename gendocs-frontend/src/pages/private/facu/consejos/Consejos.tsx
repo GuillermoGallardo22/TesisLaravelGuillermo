@@ -170,11 +170,11 @@ export const Consejos = () => {
           <GridActionsCellItem
             key={p.id}
             color="secondary"
-            label="Resoluciones"
+            label="Documentos"
             LinkComponent={Link}
-            to={p.row?.id + "/resoluciones"}
+            to={p.row?.id + "/documentos"}
             icon={
-              <Tooltip title="Resoluciones" arrow>
+              <Tooltip title="Documentos" arrow>
                 <Icon icon="article" />
               </Tooltip>
             }

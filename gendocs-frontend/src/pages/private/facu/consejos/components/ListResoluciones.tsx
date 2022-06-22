@@ -93,7 +93,7 @@ const ListResoluciones: React.FunctionComponent = () => {
 
   return (
     <Stack spacing={2}>
-      <TitleNav title="Resoluciones" />
+      <TitleNav title="Documentos" />
       <div style={{ height: 700, width: "100%" }}>
         <DataGrid
           //   disableColumnMenu

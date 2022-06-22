@@ -158,7 +158,7 @@ export const routes: IRoute[] = [
             ],
           },
           {
-            path: "resoluciones",
+            path: "documentos",
             component: Outlet,
             childrens: [
               {

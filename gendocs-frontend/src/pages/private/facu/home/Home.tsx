@@ -110,7 +110,7 @@ const Home = () => {
 
   return (
     <Stack spacing={2}>
-      <TitleNav title="Consulta de resoluciones" goback={false} />
+      <TitleNav title="Consulta de documentos" goback={false} />
 
       <TextField
         fullWidth
