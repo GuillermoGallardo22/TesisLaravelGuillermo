@@ -44,5 +44,13 @@ class ProcesoSeeder extends Seeder
         ])->module()->create([
             'module_id' => Module::where('code', Modulos::TITU)->first()->id,
         ]);
+
+        Proceso::create([
+            'nombre' => 'Proceso 1 CURR',
+            'estado' => true,
+            'directorio_id' => $directorio->id
+        ])->module()->create([
+            'module_id' => Module::where('code', Modulos::CURR)->first()->id,
+        ]);
     }
 }
