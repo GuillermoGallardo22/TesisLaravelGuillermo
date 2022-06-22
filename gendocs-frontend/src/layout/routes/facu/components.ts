@@ -28,7 +28,8 @@ export const UpdateCarrera = lazy(
   () => import("pages/private/facu/carreras/components/UpdateCarrera")
 );
 
-export const Home = lazy(() => import("pages/private/facu/home/Home"));
+export const HomeOutlet = lazy(() => import("pages/private/facu/home/Home"));
+export const Home = lazy(() => import("pages/private/facu/home/BuscarBase"));
 
 export const AddConsejo = lazy(
   () => import("pages/private/facu/consejos/components/AddConsejo")
