@@ -43,14 +43,7 @@ export function useRoutes() {
     []
   );
 
-  const tituRoutes = useMemo(
-    () =>
-      getTituRoutes(
-        user.roles,
-        user.modulos.map((m) => m.code)
-      ),
-    []
-  );
+  const tituRoutes = useMemo(() => getTituRoutes(), []);
 
   return {
     hasFacuModule,
