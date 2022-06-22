@@ -2,15 +2,21 @@ import { ModuleEnum, RolEnum } from "models/enums";
 import { IRoute } from "models/interfaces";
 import { Outlet } from "react-router-dom";
 import {
-  AddProceso,
+  Acta,
+  AddConsejo,
   AddPlantilla,
+  AddProceso,
+  Consejos,
   DriveTemplate,
-  UpdatePlantilla,
+  ListMiembros,
   ListPlantillas,
-  UpdateProceso,
+  ListResoluciones,
   ProcesosFACU,
+  UpdateConsejo,
+  UpdatePlantilla,
+  UpdateProceso,
 } from "../facu/components";
-import { ProcesosTITUOUTLET } from "./components";
+import { ConsejosTITUOUTLET, ProcesosTITUOUTLET } from "./components";
 
 export const routes: IRoute[] = [
   {
@@ -73,6 +79,78 @@ export const routes: IRoute[] = [
       },
       { path: "", isIndex: true, component: ProcesosFACU },
     ],
+  },
+  {
+    path: "consejos-titu",
+    label: "Consejos",
+    component: ConsejosTITUOUTLET,
+    icon: "meetingRoom",
+    modules: [ModuleEnum.TITU],
+    childrens: [
+      {
+        path: "nuevo",
+        component: AddConsejo,
+        roles: [RolEnum.ADMIN, RolEnum.ADMINTEMP],
+      },
+      {
+        path: "plantilla-acta/:driveId",
+        component: DriveTemplate,
+      },
+      {
+        path: "plantilla-separador/:driveId",
+        component: DriveTemplate,
+      },
+      {
+        path: ":consejoId",
+        component: Outlet,
+        childrens: [
+          {
+            path: "asistencia",
+            component: ListMiembros,
+            roles: [RolEnum.ADMIN, RolEnum.ADMINTEMP],
+          },
+          {
+            path: "acta",
+            component: Outlet,
+            roles: [RolEnum.ADMIN, RolEnum.ADMINTEMP],
+            childrens: [
+              {
+                path: "drive/:driveId",
+                component: DriveTemplate,
+              },
+              {
+                path: "",
+                component: Acta,
+                isIndex: true,
+              },
+            ],
+          },
+          {
+            path: "resoluciones",
+            component: Outlet,
+            childrens: [
+              {
+                path: "drive/:driveId",
+                component: DriveTemplate,
+              },
+              {
+                path: "",
+                isIndex: true,
+                component: ListResoluciones,
+              },
+            ],
+          },
+          {
+            path: "",
+            isIndex: true,
+            component: UpdateConsejo,
+            roles: [RolEnum.ADMIN, RolEnum.ADMINTEMP],
+          },
+        ],
+      },
+      { path: "", isIndex: true, component: Consejos },
+    ],
+    isMenuOption: true,
   },
 ];
 
