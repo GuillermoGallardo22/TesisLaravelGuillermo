@@ -34,5 +34,25 @@ class PlantillasGlobalesSeeder extends Seeder
             'codigo' => ConstantsPlantillasGlobales::PLAN_ACTA_SEPA_SUDE,
             'nombre' => 'Plantilla separador para acta',
         ]);
+
+        PlantillasGlobales::create([
+            'codigo' => ConstantsPlantillasGlobales::PLAN_ACTA_TITU,
+            'nombre' => 'Plantilla acta',
+        ]);
+
+        PlantillasGlobales::create([
+            'codigo' => ConstantsPlantillasGlobales::PLAN_ACTA_SEPA_TITU,
+            'nombre' => 'Plantilla separador para acta',
+        ]);
+
+        PlantillasGlobales::create([
+            'codigo' => ConstantsPlantillasGlobales::PLAN_ACTA_CURR,
+            'nombre' => 'Plantilla acta',
+        ]);
+
+        PlantillasGlobales::create([
+            'codigo' => ConstantsPlantillasGlobales::PLAN_ACTA_SEPA_CURR,
+            'nombre' => 'Plantilla separador para acta',
+        ]);
     }
 }
