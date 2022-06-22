@@ -29,6 +29,7 @@ import MenuBookIcon from "@mui/icons-material/MenuBook";
 import NumbersIcon from "@mui/icons-material/Numbers";
 import PlaylistAddCheckIcon from "@mui/icons-material/PlaylistAddCheck";
 import SchoolIcon from "@mui/icons-material/School";
+import SearchIcon from "@mui/icons-material/Search";
 import SecurityIcon from "@mui/icons-material/Security";
 import SettingsIcon from "@mui/icons-material/Settings";
 import TopicIcon from "@mui/icons-material/Topic";
@@ -37,16 +38,15 @@ import SvgIcon from "@mui/material/SvgIcon";
 import { forwardRef } from "react";
 
 export type IconTypes =
+  | "search"
   | "article"
   | "edit"
   | "add"
   | "move"
-  //
   | "home"
   | "list"
   | "school"
   | "groupAdd"
-  //
   | "exitToApp"
   | "menu"
   | "chevronLeft"
@@ -76,6 +76,7 @@ export type IconTypes =
   | "check";
 
 const ICONS = {
+  search: SearchIcon,
   close: CloseIcon,
   check: CheckIcon,
   article: ArticleIcon,
