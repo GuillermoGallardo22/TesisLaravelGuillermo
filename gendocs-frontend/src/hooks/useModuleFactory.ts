@@ -18,6 +18,11 @@ export function useModuleFactory(module: ModuleEnum) {
           PlantillasGlobales.PLA_ACT_TITU,
           PlantillasGlobales.PLA_ACT_SEP_TITU,
         ];
+      case ModuleEnum.CURR:
+        return [
+          PlantillasGlobales.PLA_ACT_CURR,
+          PlantillasGlobales.PLA_ACT_SEP_CURR,
+        ];
       default:
         throw new Error("Código de plantilla no implementado");
     }

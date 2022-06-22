@@ -12,8 +12,17 @@ import {
   routes as tituRoutes,
   DEFAULT_ROUTE as TITU_DEFAULT_ROUTE,
 } from "./titu";
+import {
+  routes as currRoutes,
+  DEFAULT_ROUTE as CURR_DEFAULT_ROUTE,
+} from "./curr";
 
-export const allRoutes = [...facuRoutes, ...sudeRoutes, ...tituRoutes];
+export const allRoutes = [
+  ...facuRoutes,
+  ...sudeRoutes,
+  ...tituRoutes,
+  ...currRoutes,
+];
 
 export function getDefaultRoutes(modules: IModule[]): string {
   const main = modules[0];
@@ -25,6 +34,8 @@ export function getDefaultRoutes(modules: IModule[]): string {
       return SUDE_DEFAULT_ROUTE;
     case ModuleEnum.TITU:
       return TITU_DEFAULT_ROUTE;
+    case ModuleEnum.CURR:
+      return CURR_DEFAULT_ROUTE;
     default:
       throw new Error("DEFAULT ROUTE NOT FOUND");
   }

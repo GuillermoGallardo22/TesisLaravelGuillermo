@@ -50,10 +50,12 @@ const Drawer: React.FC<DrawerProps> = ({ open, toggleDrawer }) => {
     hasFacuModule,
     hasSudeModule,
     hasTituModule,
+    hasCurrModule,
     //
     sudeRoutes,
     tituRoutes,
     facuRoutes,
+    currRoutes,
   } = useRoutes();
 
   return (
@@ -120,6 +122,27 @@ const Drawer: React.FC<DrawerProps> = ({ open, toggleDrawer }) => {
           </ListSubheader>
 
           {tituRoutes.map(
+            (item) =>
+              item.icon &&
+              item.label && (
+                <Link
+                  key={item.path}
+                  icon={<Icon icon={item.icon} />}
+                  label={item.label}
+                  path={item.path}
+                />
+              )
+          )}
+        </List>
+      )}
+
+      {hasCurrModule && (
+        <List>
+          <ListSubheader component="div" inset>
+            U. CURRICULAR
+          </ListSubheader>
+
+          {currRoutes.map(
             (item) =>
               item.icon &&
               item.label && (

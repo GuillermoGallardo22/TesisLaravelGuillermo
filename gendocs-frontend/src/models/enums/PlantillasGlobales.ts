@@ -5,4 +5,6 @@ export enum PlantillasGlobales {
   PLA_ACT_SEP_SUDE = "PLA_ACT_SEP::SUDE",
   PLA_ACT_TITU = "PLA_ACT::TITU",
   PLA_ACT_SEP_TITU = "PLA_ACT_SEP::TITU",
+  PLA_ACT_CURR = "PLA_ACT::CURR",
+  PLA_ACT_SEP_CURR = "PLA_ACT_SEP::CURR",
 }
