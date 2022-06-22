@@ -22,7 +22,7 @@ class ProcesoSeeder extends Seeder
         $directorio = Directorio::query()->activeDirectory();
 
         Proceso::create([
-            'nombre' => 'Proceso 1',
+            'nombre' => 'Proceso 1 FACU',
             'estado' => true,
             'directorio_id' => $directorio->id,
         ])->module()->create([
@@ -30,7 +30,7 @@ class ProcesoSeeder extends Seeder
         ]);
 
         Proceso::create([
-            'nombre' => 'Proceso 1',
+            'nombre' => 'Proceso 1 SUDE',
             'estado' => true,
             'directorio_id' => $directorio->id
         ])->module()->create([
@@ -38,7 +38,7 @@ class ProcesoSeeder extends Seeder
         ]);
 
         Proceso::create([
-            'nombre' => 'Proceso 1',
+            'nombre' => 'Proceso 1 TITU',
             'estado' => true,
             'directorio_id' => $directorio->id
         ])->module()->create([
