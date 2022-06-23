@@ -11,6 +11,7 @@ import {
   Consejos,
   DocumentosFACU,
   DriveTemplate,
+  Home,
   ListMiembros,
   ListPlantillas,
   ListResoluciones,
@@ -19,6 +20,7 @@ import {
   UpdateProceso,
 } from "../facu/components";
 import {
+  BuscarOutlet,
   ConsejosSUDEOUTLET,
   DocumentosSUDEOUTLET,
   ProcesosSUDE,
@@ -26,6 +28,25 @@ import {
 } from "./components";
 
 export const routes: IRoute[] = [
+  {
+    path: "inicio-sude",
+    label: "Buscar",
+    component: BuscarOutlet,
+    icon: "search",
+    modules: [ModuleEnum.SUDE],
+    isMenuOption: true,
+    childrens: [
+      {
+        path: "drive/:driveId",
+        component: DriveTemplate,
+      },
+      {
+        path: "",
+        isIndex: true,
+        component: Home,
+      },
+    ],
+  },
   {
     path: "documentos-sude",
     label: "Documentos",

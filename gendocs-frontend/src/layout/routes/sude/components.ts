@@ -1,6 +1,9 @@
 import { lazy } from "react";
 
-// SUDE
+export const BuscarOutlet = lazy(
+  () => import("pages/private/sude/buscar/Buscar")
+);
+
 export const ProcesosSUDEOutlet = lazy(() =>
   import("pages/private/sude/procesos/Procesos").then((m) => ({
     default: m.ProcesosOutlet,
