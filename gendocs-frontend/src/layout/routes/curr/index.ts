@@ -8,6 +8,7 @@ import {
   AddProceso,
   Consejos,
   DriveTemplate,
+  Home,
   ListMiembros,
   ListPlantillas,
   ListResoluciones,
@@ -16,9 +17,32 @@ import {
   UpdatePlantilla,
   UpdateProceso,
 } from "../facu/components";
-import { ConsejosCURROUTLET, ProcesosCURROUTLET } from "./components";
+import {
+  BuscarOutlet,
+  ConsejosCURROUTLET,
+  ProcesosCURROUTLET,
+} from "./components";
 
 export const routes: IRoute[] = [
+  {
+    path: "inicio-curr",
+    label: "Buscar",
+    component: BuscarOutlet,
+    icon: "search",
+    modules: [ModuleEnum.CURR],
+    isMenuOption: true,
+    childrens: [
+      {
+        path: "drive/:driveId",
+        component: DriveTemplate,
+      },
+      {
+        path: "",
+        isIndex: true,
+        component: Home,
+      },
+    ],
+  },
   {
     path: "procesos-curr",
     label: "Procesos",
