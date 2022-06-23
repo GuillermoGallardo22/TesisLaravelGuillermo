@@ -14,7 +14,7 @@ class Documento extends Model
 {
     use HasFactory, Pageable, Filterable, SoftDeletes;
 
-    public const FILTERS = ["consejo", "estudiante"];
+    public const FILTERS = ["consejo", "estudiante", "module"];
 
     protected $fillable = [
         'consejo_id',
@@ -56,6 +56,15 @@ class Documento extends Model
             ->orWhere('estudiantes.folio', 'like', "%$filter%")
             ->orWhere(DB::raw("CONCAT_WS(' ', estudiantes.nombres, estudiantes.apellidos)"), 'like', "%$filter%")
             ->select('documentos.*');
+    }
+
+    public function scopeModule($query, $filter)
+    {
+        return $query->whereHas('consejo', function ($query) use ($filter) {
+            $query->whereHas('module', function ($query) use ($filter) {
+                $query->where('module_id', Module::query()->where('code', $filter)->first()?->id);
+            });
+        });
     }
 
     public function archivo()
