@@ -8,6 +8,7 @@ import {
   AddProceso,
   Consejos,
   DriveTemplate,
+  Home,
   ListMiembros,
   ListPlantillas,
   ListResoluciones,
@@ -16,9 +17,32 @@ import {
   UpdatePlantilla,
   UpdateProceso,
 } from "../facu/components";
-import { ConsejosTITUOUTLET, ProcesosTITUOUTLET } from "./components";
+import {
+  BuscarOutlet,
+  ConsejosTITUOUTLET,
+  ProcesosTITUOUTLET,
+} from "./components";
 
 export const routes: IRoute[] = [
+  {
+    path: "inicio-titu",
+    label: "Buscar",
+    component: BuscarOutlet,
+    icon: "search",
+    modules: [ModuleEnum.TITU],
+    isMenuOption: true,
+    childrens: [
+      {
+        path: "drive/:driveId",
+        component: DriveTemplate,
+      },
+      {
+        path: "",
+        isIndex: true,
+        component: Home,
+      },
+    ],
+  },
   {
     path: "procesos-titu",
     label: "Procesos",
