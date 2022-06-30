@@ -9,8 +9,8 @@ import {
   IMiembro,
   IProceso,
   ITipoConsejo,
+  MultipleStudentForm,
 } from "models/interfaces";
-import { MultipleStudentForm } from "pages/private/estudiantes/hooks/useAddEstudiantes";
 import { read, utils } from "xlsx";
 import { parseToDateTime } from "./date";
 

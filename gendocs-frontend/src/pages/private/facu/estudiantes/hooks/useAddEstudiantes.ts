@@ -1,24 +1,11 @@
 import { useFormik } from "formik";
 import { HTTP_STATUS } from "models/enums";
-import { ICarrera } from "models/interfaces";
+import { ICarrera, MultipleStudentForm } from "models/interfaces";
 import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
 import { getAllCarreras, saveListEstudiante } from "services";
 import { CONSTANTS, unique, VALIDATION_MESSAGES } from "utils";
 import * as yup from "yup";
-
-export interface MultipleStudentForm {
-  id: number;
-  cedula: string;
-  nombres: string;
-  apellidos: string;
-  telefono: string;
-  celular: string;
-  correo: string;
-  correo_uta: string;
-  matricula: string;
-  folio: string;
-}
 
 yup.addMethod(yup.array, "unique", unique);
 

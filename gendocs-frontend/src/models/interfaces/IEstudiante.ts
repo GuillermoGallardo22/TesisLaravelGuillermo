@@ -13,3 +13,16 @@ export interface IEstudiante {
   telefono?: string | null;
   correo?: string | null;
 }
+
+export interface MultipleStudentForm {
+  id: number;
+  cedula: string;
+  nombres: string;
+  apellidos: string;
+  telefono: string;
+  celular: string;
+  correo: string;
+  correo_uta: string;
+  matricula: string;
+  folio: string;
+}
