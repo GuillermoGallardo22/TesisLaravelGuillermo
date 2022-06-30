@@ -56,7 +56,7 @@ class PlantillasGlobales extends Model
     {
         $code = sprintf(
             "%s%s%s",
-            ConstantsPlantillasGlobales::ACTA,
+            ConstantsPlantillasGlobales::ACTA_SEP,
             ConstantsPlantillasGlobales::SEP,
             $moduleCode
         );
