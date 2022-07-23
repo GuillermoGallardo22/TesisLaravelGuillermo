@@ -6,6 +6,7 @@ use App\Traits\Filterable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Log;
 
 class Carrera extends Model
 {
@@ -20,7 +21,7 @@ class Carrera extends Model
         'estado' => 'boolean',
     ];
 
-    public const FILTERS = ['estado'];
+    public const FILTERS = ['estado', 'antigua'];
 
     public function fields()
     {
@@ -29,6 +30,11 @@ class Carrera extends Model
             "estado" => $this->estado,
             "nombre" => $this->nombre,
         ];
+    }
+
+    public function scopeAntigua(Builder $query, $value)
+    {
+        return $query->where('desaparecera', $value);
     }
 
     public function scopeEstado(Builder $query, $value)
