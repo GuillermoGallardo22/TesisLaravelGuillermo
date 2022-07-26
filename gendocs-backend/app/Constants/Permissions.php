@@ -66,4 +66,11 @@ abstract class Permissions
         'update' => 'consejo.miembro.update',
         'delete' => 'consejo.miembro.delete',
     ];
+
+    const Cargos = [
+        'index' => 'cargo.index',
+        'create' => 'cargo.create',
+        'update' => 'cargo.update',
+        'delete' => 'cargo.delete',
+    ];
 }

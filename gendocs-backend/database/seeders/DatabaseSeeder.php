@@ -28,6 +28,7 @@ class DatabaseSeeder extends Seeder
             // PlantillasSeeder::class,
             DocenteSeeder::class,
             PlantillasGlobalesSeeder::class,
+            CargoSeeder::class,
         ]);
     }
 }
