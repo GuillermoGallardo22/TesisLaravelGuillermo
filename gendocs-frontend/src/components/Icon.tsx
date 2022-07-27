@@ -32,12 +32,14 @@ import SchoolIcon from "@mui/icons-material/School";
 import SearchIcon from "@mui/icons-material/Search";
 import SecurityIcon from "@mui/icons-material/Security";
 import SettingsIcon from "@mui/icons-material/Settings";
+import StyleIcon from "@mui/icons-material/Style";
 import TopicIcon from "@mui/icons-material/Topic";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import SvgIcon from "@mui/material/SvgIcon";
 import { forwardRef } from "react";
 
 export type IconTypes =
+  | "style"
   | "search"
   | "article"
   | "edit"
@@ -112,6 +114,7 @@ const ICONS = {
   playlistAddCheck: PlaylistAddCheckIcon,
   lock: LockIcon,
   lockReset: LockReset,
+  style: StyleIcon,
 };
 
 interface IconProps {
