@@ -9,7 +9,8 @@ type useGridColumnVisibilityModelProps = {
     | "asistentesTableModel"
     | "consejo-resoluciones"
     | "buscar-resoluciones"
-    | "table-model-users";
+    | "table-model-users"
+    | "table-cargos";
 };
 
 export function useGridColumnVisibilityModel({
