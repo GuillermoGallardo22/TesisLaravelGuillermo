@@ -121,5 +121,6 @@ export const useAutocomplete = <T>({
     closeModal,
     resetValue,
     onInputChange,
+    setValue,
   };
 };
