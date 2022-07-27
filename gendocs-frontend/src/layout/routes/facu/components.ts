@@ -138,3 +138,11 @@ export const DriveTemplate = lazy(() =>
     default: module.DriveTemplate,
   }))
 );
+
+export const Cargos = lazy(() => import("pages/private/facu/cargos/Cargos"));
+export const AddCargo = lazy(
+  () => import("pages/private/facu/cargos/components/AddCargo")
+);
+export const UpdateCargo = lazy(
+  () => import("pages/private/facu/cargos/components/UpdateCargo")
+);

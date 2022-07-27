@@ -1,3 +1,4 @@
+export * from "./ICargo";
 export * from "./ICarrera";
 export * from "./IConsejo";
 export * from "./IConsejoMiembro";

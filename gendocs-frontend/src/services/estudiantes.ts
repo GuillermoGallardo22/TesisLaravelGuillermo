@@ -6,7 +6,7 @@ import {
   IPagination,
   IResponse,
 } from "models/interfaces";
-import { BaseMultipleStudentForm } from "pages/private/estudiantes/hooks/useAddEstudiantes";
+import { BaseMultipleStudentForm } from "pages/private/facu/estudiantes/hooks/useAddEstudiantes";
 import {
   CUSTOM_HTTP_MESSAGES,
   DEFAULT_PAGINATION_VALUES,

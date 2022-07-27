@@ -12,6 +12,7 @@ import {
   AddProceso,
   AddReserva,
   AddUsuario,
+  Cargos,
   Carreras,
   Consejos,
   ConsejosFACUOUTLET,
@@ -36,6 +37,8 @@ import {
   UpdateProceso,
   UpdateUsuario,
   Usuarios,
+  AddCargo,
+  UpdateCargo,
 } from "./components";
 
 export const routes: IRoute[] = [
@@ -278,6 +281,27 @@ export const routes: IRoute[] = [
       { path: "", isIndex: true, component: Consejos },
     ],
     isMenuOption: true,
+  },
+  {
+    path: "cargos",
+    label: "Cargos",
+    component: Outlet,
+    icon: "style",
+    modules: [ModuleEnum.FACU],
+    isMenuOption: true,
+    childrens: [
+      {
+        path: "nuevo",
+        component: AddCargo,
+        roles: [RolEnum.ADMIN, RolEnum.ADMINTEMP, RolEnum.WRITER],
+      },
+      {
+        path: ":cargoId",
+        component: UpdateCargo,
+        roles: [RolEnum.ADMIN, RolEnum.ADMINTEMP, RolEnum.WRITER],
+      },
+      { path: "", isIndex: true, component: Cargos },
+    ],
   },
   {
     path: "usuarios",
