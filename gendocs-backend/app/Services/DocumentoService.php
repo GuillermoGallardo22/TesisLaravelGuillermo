@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Constants\Variables;
+use App\Models\Cargo;
 use App\Models\Documento;
 use App\Traits\Nameable;
 use App\Traits\ReplaceableDocText;
@@ -85,9 +86,19 @@ class DocumentoService
             return [$key => $docente->nombres];
         })->collapse()->toArray();
 
+        $cargos = Cargo::query()->with(['docente'])->get()->map(function ($i, $k) {
+            return [$i['variable'] => $i['docente']['nombres']];
+        })->collapse()->toArray();
+
         //
         $this->googleDrive->replaceTextOnDocument(
-            array_merge($generalData, $estudianteData, $consejoData, $docentes),
+            array_merge(
+                $generalData,
+                $estudianteData,
+                $consejoData,
+                $docentes,
+                $cargos,
+            ),
             $documentoDrive->id,
         );
 
