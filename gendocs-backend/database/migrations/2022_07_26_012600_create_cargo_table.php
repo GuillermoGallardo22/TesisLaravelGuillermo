@@ -16,7 +16,8 @@ class CreateCargoTable extends Migration
         Schema::create('cargos', function (Blueprint $table) {
             $table->id();
 
-            $table->string('variable')->unique();
+            // ESTE CAMPO ES ÚNICO => ES CONTROLADO POR LÓGICA DE PROGRAMACIÓN
+            $table->string('variable');
 
             $table->string('nombre');
 

@@ -25,7 +25,7 @@ class StoreCargoRequest extends FormRequest
     {
         return [
             'docente' => ['required', 'exists:\App\Models\Docente,id'],
-            'variable' => ['required', 'unique:\App\Models\Cargo,variable'],
+            'variable' => ['required', 'unique:\App\Models\Cargo,variable,NULL,id,deleted_at,NULL'],
             'nombre' => ['required', 'string', 'max:255'],
         ];
     }
