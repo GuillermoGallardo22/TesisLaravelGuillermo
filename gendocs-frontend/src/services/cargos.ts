@@ -72,3 +72,17 @@ export async function updateCargo(
     return handleErrors(error);
   }
 }
+
+export async function deleteCargo(id: string): Promise<IResponse<null>> {
+  try {
+    await axios.delete("cargos/" + id);
+
+    return {
+      data: null,
+      status: HTTP_STATUS.ok,
+      message: HTTP_MESSAGES[HTTP_STATUS.ok],
+    };
+  } catch (error) {
+    return handleErrors(error);
+  }
+}
