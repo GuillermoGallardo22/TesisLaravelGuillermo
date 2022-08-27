@@ -24,7 +24,9 @@ class Estudiante extends Model
         "correo_uta",
         "matricula",
         "folio",
-        "carrera_id"
+        "carrera_id",
+        "genero",
+        "fecha_nacimiento",
     ];
 
     public const FILTERS = ['search'];
@@ -43,6 +45,8 @@ class Estudiante extends Model
             "matricula" => $this->matricula,
             "folio" => $this->folio,
             "carrera" => $this->carrera_id,
+            "genero" => $this->genero,
+            "fecha_nacimiento" => $this->fecha_nacimiento,
         ];
     }
 

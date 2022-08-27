@@ -1,5 +1,6 @@
 <?php
 
+use App\Constants\Genero;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -30,6 +31,10 @@ class CreateEstudiantesTable extends Migration
 
             $table->string("matricula", 10)->nullable();
             $table->string("folio", 10)->nullable();
+
+            $table->enum('genero', [Genero::MASCULINO, Genero::FEMENINO])->nullable();
+            $table->date('fecha_nacimiento')->nullable();
+            $table->integer('creditos_aprobados')->nullable();
 
             $table->unsignedBigInteger("carrera_id");
             $table->foreign("carrera_id")->references("id")->on("carreras");

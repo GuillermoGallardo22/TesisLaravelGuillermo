@@ -2,8 +2,10 @@
 
 namespace App\Http\Requests;
 
+use App\Constants\Genero;
 use App\Constants\StoreTipoEstudiante;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreEstudianteRequest extends FormRequest
 {
@@ -39,6 +41,8 @@ class StoreEstudianteRequest extends FormRequest
                 'estudiantes.*.correo_uta' => ['present', 'string', 'nullable', 'max:100'],
                 'estudiantes.*.folio' => ['present', 'string', 'nullable', 'max:10'],
                 'estudiantes.*.matricula' => ['present', 'string', 'nullable', 'max:10'],
+                'estudiantes.*.genero' => ['present', Rule::in([Genero::FEMENINO, Genero::MASCULINO, ""])],
+                'estudiantes.*.fecha_nacimiento' => ['present', "nullable", 'date'],
             ] :
             [
                 'cedula' => ['required', 'string', 'max:10', 'unique:\App\Models\Estudiante,cedula'],
@@ -50,7 +54,9 @@ class StoreEstudianteRequest extends FormRequest
                 'correo_uta' => ['required', 'string', 'max:100'],
                 'folio' => ['nullable', 'string', 'max:10'],
                 'matricula' => ['nullable', 'string', 'max:10'],
-                'carrera' => ['required', 'exists:\App\Models\Carrera,id']
+                'carrera' => ['required', 'exists:\App\Models\Carrera,id'],
+                'genero' => ['present', Rule::in([Genero::FEMENINO, Genero::MASCULINO, ""])],
+                'fecha_nacimiento' => ['present', "nullable", 'date'],
             ];
     }
 }
