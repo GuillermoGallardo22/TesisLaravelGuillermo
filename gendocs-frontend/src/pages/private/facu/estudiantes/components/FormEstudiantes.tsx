@@ -8,9 +8,11 @@ import { usePlantillasGlob } from "hooks";
 import { GoogleType, PlantillasGlobales } from "models/enums";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { readFile } from "utils";
+import { CONSTANTS, readFile } from "utils";
 import { useAddEstudiantes } from "../hooks/useAddEstudiantes";
 import ListStudentsErrors from "./ListEstudianteErrors";
+
+const { page_size: PAGE_SIZE } = CONSTANTS;
 
 const columns: GridColDef[] = [
   { field: "id", headerName: "#", width: 30 },
@@ -138,7 +140,11 @@ export const FormEstudiantes = () => {
 
             <Grid item xs={12}>
               <div style={{ height: 600, width: "100%" }}>
-                <DataGrid rows={formik.values.estudiantes} columns={columns} />
+                <DataGrid
+                  rows={formik.values.estudiantes}
+                  columns={columns}
+                  rowsPerPageOptions={[PAGE_SIZE]}
+                />
               </div>
             </Grid>
 
