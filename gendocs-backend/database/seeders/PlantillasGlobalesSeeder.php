@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Constants\MimeType;
 use App\Constants\PlantillasGlobales as ConstantsPlantillasGlobales;
 use App\Models\PlantillasGlobales;
 use Illuminate\Database\Seeder;
@@ -53,6 +54,12 @@ class PlantillasGlobalesSeeder extends Seeder
         PlantillasGlobales::create([
             'codigo' => ConstantsPlantillasGlobales::PLAN_ACTA_SEPA_CURR,
             'nombre' => 'Plantilla separador para acta',
+        ]);
+
+        PlantillasGlobales::create([
+            'codigo' => ConstantsPlantillasGlobales::PLAN_SUBIR_ESTUDIANTES,
+            'nombre' => 'Plantilla subir estudiantes',
+            'tipo' => MimeType::DRIVE_SS
         ]);
     }
 }
