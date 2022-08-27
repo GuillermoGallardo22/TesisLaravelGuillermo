@@ -1,33 +1,12 @@
 import { useFormik } from "formik";
 import { useErrorsResponse } from "hooks";
 import { Genero, HTTP_STATUS } from "models/enums";
-import { ICarrera, IEstudiante } from "models/interfaces";
+import { ICarrera, SimpleStudentForm } from "models/interfaces";
 import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
 import { getAllCarreras, saveEstudiante } from "services";
 import { CONSTANTS, VALIDATION_MESSAGES } from "utils";
 import * as yup from "yup";
-
-export interface SimpleStudentForm
-  extends Omit<
-    IEstudiante,
-    | "id"
-    | "telefono"
-    | "celular"
-    | "correo"
-    | "correo_uta"
-    | "matricula"
-    | "folio"
-    | "carrera"
-  > {
-  telefono: string;
-  celular: string;
-  correo: string;
-  correo_uta: string;
-  matricula: string;
-  folio: string;
-  carrera: number;
-}
 
 const initialValues: SimpleStudentForm = {
   cedula: "",
@@ -107,7 +86,7 @@ export const useAddEstudiante = () => {
   const onSubmit = async (form: SimpleStudentForm) => {
     setErrorSummary(undefined);
 
-    const result = await saveEstudiante({ ...form, id: -1 });
+    const result = await saveEstudiante(form);
 
     if (result.status === HTTP_STATUS.created) {
       formik.resetForm();

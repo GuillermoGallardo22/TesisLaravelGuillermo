@@ -16,11 +16,18 @@ export interface IEstudiante {
   correo?: string | null;
 }
 
-export interface MultipleStudentForm {
-  id: number;
-  cedula: string;
-  nombres: string;
-  apellidos: string;
+export interface MultipleStudentForm
+  extends Omit<
+    IEstudiante,
+    | "telefono"
+    | "celular"
+    | "correo"
+    | "correo_uta"
+    | "matricula"
+    | "folio"
+    | "genero"
+    | "fecha_nacimiento"
+  > {
   telefono: string;
   celular: string;
   correo: string;
@@ -29,4 +36,25 @@ export interface MultipleStudentForm {
   folio: string;
   genero: string;
   fecha_nacimiento: string;
+}
+
+export interface SimpleStudentForm
+  extends Omit<
+    IEstudiante,
+    | "id"
+    | "telefono"
+    | "celular"
+    | "correo"
+    | "correo_uta"
+    | "matricula"
+    | "folio"
+    | "carrera"
+  > {
+  telefono: string;
+  celular: string;
+  correo: string;
+  correo_uta: string;
+  matricula: string;
+  folio: string;
+  carrera: number;
 }
