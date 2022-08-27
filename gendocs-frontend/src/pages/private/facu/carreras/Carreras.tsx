@@ -27,6 +27,16 @@ export default function Carreras() {
         flex: 1,
       },
       {
+        field: "titulo_mas",
+        headerName: "Título (M)",
+        flex: 1,
+      },
+      {
+        field: "titulo_fem",
+        headerName: "Título (F)",
+        flex: 1,
+      },
+      {
         field: "estado",
         type: "singleSelect",
         headerName: "Estado",

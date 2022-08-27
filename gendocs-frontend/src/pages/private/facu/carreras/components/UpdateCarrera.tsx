@@ -26,7 +26,7 @@ export default function UpdateCarrera() {
         noValidate
       >
         <Grid container spacing={2}>
-          <Grid item xs={12}>
+          <Grid item xs={8}>
             <TextField
               required
               fullWidth
@@ -38,6 +38,55 @@ export default function UpdateCarrera() {
               onChange={formik.handleChange}
               error={formik.touched.nombre && Boolean(formik.errors.nombre)}
               helperText={formik.touched.nombre && formik.errors.nombre}
+            />
+          </Grid>
+
+          <Grid item xs={4}>
+            <TextField
+              required
+              fullWidth
+              margin="normal"
+              id="creditos"
+              name="creditos"
+              label="Créditos"
+              value={formik.values.creditos}
+              onChange={formik.handleChange}
+              error={formik.touched.creditos && Boolean(formik.errors.creditos)}
+              helperText={formik.touched.creditos && formik.errors.creditos}
+            />
+          </Grid>
+
+          <Grid item xs={6}>
+            <TextField
+              required
+              fullWidth
+              margin="normal"
+              id="titulo_mas"
+              name="titulo_mas"
+              label="Título (Masculino)"
+              value={formik.values.titulo_mas}
+              onChange={formik.handleChange}
+              error={
+                formik.touched.titulo_mas && Boolean(formik.errors.titulo_mas)
+              }
+              helperText={formik.touched.titulo_mas && formik.errors.titulo_mas}
+            />
+          </Grid>
+
+          <Grid item xs={6}>
+            <TextField
+              required
+              fullWidth
+              margin="normal"
+              id="titulo_fem"
+              name="titulo_fem"
+              label="Título (Femenino)"
+              value={formik.values.titulo_fem}
+              onChange={formik.handleChange}
+              error={
+                formik.touched.titulo_fem && Boolean(formik.errors.titulo_fem)
+              }
+              helperText={formik.touched.titulo_fem && formik.errors.titulo_fem}
             />
           </Grid>
 

@@ -7,17 +7,32 @@ import { saveCarrera } from "services";
 import { VALIDATION_MESSAGES } from "utils";
 import * as yup from "yup";
 
-const initialValues: ICarrera = {
+export const initialValues: ICarrera = {
   id: -1,
   nombre: "",
   estado: true,
+  creditos: 0,
+  titulo_mas: "",
+  titulo_fem: "",
 };
 
-const validationSchema = yup.object().shape({
+export const validationSchema = yup.object().shape({
   nombre: yup
     .string()
     .required(VALIDATION_MESSAGES.required)
     .max(512, VALIDATION_MESSAGES.maxLength(512)),
+  titulo_mas: yup
+    .string()
+    .required(VALIDATION_MESSAGES.required)
+    .max(512, VALIDATION_MESSAGES.maxLength(512)),
+  titulo_fem: yup
+    .string()
+    .required(VALIDATION_MESSAGES.required)
+    .max(512, VALIDATION_MESSAGES.maxLength(512)),
+  creditos: yup
+    .number()
+    .required(VALIDATION_MESSAGES.required)
+    .positive(VALIDATION_MESSAGES.invalidOption),
   estado: yup.boolean().required(VALIDATION_MESSAGES.required),
 });
 

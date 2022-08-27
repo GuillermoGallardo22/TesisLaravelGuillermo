@@ -6,22 +6,7 @@ import { useSnackbar } from "notistack";
 import { useQuery } from "react-query";
 import { useNavigate, useParams } from "react-router-dom";
 import { getCarrera, updateCarrera } from "services";
-import { VALIDATION_MESSAGES } from "utils";
-import * as yup from "yup";
-
-const initialValues: ICarrera = {
-  id: -1,
-  nombre: "",
-  estado: true,
-};
-
-const validationSchema = yup.object().shape({
-  nombre: yup
-    .string()
-    .required(VALIDATION_MESSAGES.required)
-    .max(512, VALIDATION_MESSAGES.maxLength(512)),
-  estado: yup.boolean().required(VALIDATION_MESSAGES.required),
-});
+import { initialValues, validationSchema } from "./useAddCarrera";
 
 export const useUpdateCarrera = () => {
   const navigate = useNavigate();
