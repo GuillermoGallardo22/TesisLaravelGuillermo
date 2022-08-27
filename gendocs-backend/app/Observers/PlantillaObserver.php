@@ -2,6 +2,7 @@
 
 namespace App\Observers;
 
+use App\Constants\MimeType;
 use App\Models\Plantillas;
 use App\Models\Proceso;
 use App\Services\GoogleDriveService;
@@ -39,7 +40,7 @@ class PlantillaObserver
         } else {
             $google_drive_id = $this->googleDrive->create(
                 $plantilla->nombre,
-                'document',
+                MimeType::DRIVE_DOC,
                 $plantilla->proceso->directorio->google_drive_id,
             )->id;
         }

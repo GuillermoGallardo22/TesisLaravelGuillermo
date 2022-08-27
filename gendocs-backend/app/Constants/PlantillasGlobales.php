@@ -23,4 +23,7 @@ class PlantillasGlobales
     // CURR
     const PLAN_ACTA_CURR = PlantillasGlobales::ACTA . PlantillasGlobales::SEP . Modulos::CURR;
     const PLAN_ACTA_SEPA_CURR = PlantillasGlobales::ACTA_SEP . PlantillasGlobales::SEP . Modulos::CURR;
+
+    // PLANTILLA SUBIR ESTUDIANTES
+    const PLAN_SUBIR_ESTUDIANTES = "PLAN_SUBIR_ESTUDIANTES";
 }

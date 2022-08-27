@@ -2,6 +2,7 @@
 
 namespace App\Observers;
 
+use App\Constants\MimeType;
 use App\Models\Directorio;
 use App\Models\Proceso;
 use App\Services\GoogleDriveService;
@@ -35,7 +36,7 @@ class ProcesoObserver
                 $this
                     ->setName($proceso->nombre)
                     ->generateName(),
-                "folder",
+                MimeType::DRIVE_FOLDER,
                 Directorio::find($proceso->directorio_id)->drive_id
             )->id
         ]);

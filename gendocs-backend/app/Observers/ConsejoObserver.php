@@ -2,6 +2,7 @@
 
 namespace App\Observers;
 
+use App\Constants\MimeType;
 use App\Constants\Variables;
 use App\Models\Consejo;
 use App\Services\GoogleDriveService;
@@ -33,7 +34,7 @@ class ConsejoObserver
     {
         $directorio = $this->googleDrive->create(
             $this->setName($consejo->nombre)->generateName(),
-            "folder",
+            MimeType::DRIVE_FOLDER,
             $consejo->directorioLocal->drive_id,
         );
 

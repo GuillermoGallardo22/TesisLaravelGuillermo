@@ -2,6 +2,7 @@
 
 namespace App\Observers;
 
+use App\Constants\MimeType;
 use App\Models\Directorio;
 use App\Models\PlantillasGlobales;
 use App\Services\GoogleDriveService;
@@ -29,7 +30,7 @@ class PlantillasGlobalesObserver
         $plantillasGlobales->archivo()->create([
             'google_drive_id' => $this->googleDrive->create(
                 $plantillasGlobales->nombre,
-                'document',
+                $plantillasGlobales->tipo,
                 Directorio::activeDirectory()->drive_id,
             )->id
         ]);

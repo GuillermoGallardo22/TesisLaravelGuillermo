@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Constants\MimeType;
 use App\Models\Directorio;
 use App\Services\GoogleDriveService;
 use Illuminate\Database\Seeder;
@@ -29,14 +30,14 @@ class DirectorioSeeder extends Seeder
             'nombre' => 'El origen',
             'fecha_inicio' => '2020-01-01',
             'estado' => false,
-            'drive_id' => $this->googleDrive->create("El origen", "folder")->id
+            'drive_id' => $this->googleDrive->create("El origen", MimeType::DRIVE_FOLDER)->id
         ]);
 
         Directorio::create([
             'nombre' => 'La resurección',
             'fecha_inicio' => '2021-01-01',
             'estado' => true,
-            'drive_id' => $this->googleDrive->create("La resurección", "folder")->id
+            'drive_id' => $this->googleDrive->create("La resurección", MimeType::DRIVE_FOLDER)->id
         ]);
     }
 }

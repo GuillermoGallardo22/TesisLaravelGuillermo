@@ -28,8 +28,11 @@ class GoogleDriveService
         $this->serviceDocs = new Docs($client);
     }
 
-    public function create($nameFile, $type = "document" | "folder", $parentDirectory = null): DriveFile
-    {
+    public function create(
+        $nameFile,
+        $mimeType = MimeType::DRIVE_DOC | MimeType::DRIVE_FOLDER | MimeType::DRIVE_SS,
+        $parentDirectory = null
+    ): DriveFile {
         $file = new DriveFile();
 
         $file->setName($nameFile);
@@ -38,9 +41,7 @@ class GoogleDriveService
             $parentDirectory ?: config("services.google.root_directory")
         ]);
 
-        $file->setMimeType(
-            $type === 'folder' ? MimeType::DRIVE_FOLDER : MimeType::DRIVE_DOC,
-        );
+        $file->setMimeType($mimeType);
 
         return $this->service->files->create($file);
     }

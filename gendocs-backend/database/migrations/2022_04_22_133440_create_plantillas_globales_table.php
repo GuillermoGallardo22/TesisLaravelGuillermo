@@ -1,5 +1,6 @@
 <?php
 
+use App\Constants\MimeType;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -18,6 +19,8 @@ class CreatePlantillasGlobalesTable extends Migration
 
             $table->string("codigo")->unique();
             $table->string("nombre");
+
+            $table->enum('tipo', [MimeType::DRIVE_DOC, MimeType::DRIVE_SS])->default(MimeType::DRIVE_DOC);
 
             $table->timestamps();
             $table->softDeletes();
