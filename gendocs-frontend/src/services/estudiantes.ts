@@ -6,6 +6,7 @@ import {
   IFilterPaginationProps,
   IPagination,
   IResponse,
+  SimpleStudentForm,
 } from "models/interfaces";
 import { BaseMultipleStudentForm } from "pages/private/facu/estudiantes/hooks/useAddEstudiantes";
 import {
@@ -34,7 +35,7 @@ export async function getEstudiantes(
 }
 
 export async function saveEstudiante(
-  form: IEstudiante
+  form: SimpleStudentForm
 ): Promise<IResponse<IEstudiante>> {
   try {
     const { fecha_nacimiento, genero, ...rest } = form;
