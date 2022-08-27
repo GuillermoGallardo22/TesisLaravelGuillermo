@@ -72,8 +72,25 @@ export const FormEstudiantes = () => {
     <Stack spacing={2}>
       <Grid container spacing={2}>
         <Grid item xs={6}>
+          <LoadingButton
+            fullWidth
+            component={Link}
+            startIcon={<Icon icon="article" />}
+            to={
+              "formato/" + plantilla?.drive + "?type=" + GoogleType.SPREADSHEETS
+            }
+            variant="outlined"
+            loading={loadingPlantilla}
+            disabled={!plantilla}
+          >
+            VER FORMATO
+          </LoadingButton>
+        </Grid>
+
+        <Grid item xs={6}>
           <Box>
             <LoadingButton
+              fullWidth
               variant="contained"
               disabled={reading || submitting}
               loading={reading || submitting}
@@ -96,21 +113,6 @@ export const FormEstudiantes = () => {
               {file?.name && !reading && file.name}
             </label>
           </Box>
-        </Grid>
-
-        <Grid item xs={6}>
-          <LoadingButton
-            component={Link}
-            startIcon={<Icon icon="article" />}
-            to={
-              "formato/" + plantilla?.drive + "?type=" + GoogleType.SPREADSHEETS
-            }
-            variant="outlined"
-            loading={loadingPlantilla}
-            disabled={!plantilla}
-          >
-            VER FORMATO
-          </LoadingButton>
         </Grid>
       </Grid>
 
