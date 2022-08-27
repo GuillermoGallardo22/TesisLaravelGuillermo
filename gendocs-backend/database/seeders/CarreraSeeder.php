@@ -15,7 +15,7 @@ class CarreraSeeder extends Seeder
     public function run()
     {
         Carrera::create([
-            'nombre' => 'Sistemas Computacionales e Informaticos',
+            'nombre' => 'Ingeniería en Sistemas Computacionales e Informaticos',
             'desaparecera' => true,
             'titulo_mas' => 'Ingeniero en Sistemas Computacionales e Informáticos',
             'titulo_fem' => 'Ingeniera en Sistemas Computacionales e Informáticos',
@@ -23,7 +23,7 @@ class CarreraSeeder extends Seeder
         ]);
 
         Carrera::create([
-            'nombre' => 'Electrónica y Telecomunicaciones',
+            'nombre' => 'Ingeniería en Electrónica y Telecomunicaciones',
             'desaparecera' => true,
             'titulo_mas' => 'Ingeniero en Electrónica y Comunicaciones',
             'titulo_fem' => 'Ingeniera en Electrónica y Comunicaciones',
@@ -31,7 +31,7 @@ class CarreraSeeder extends Seeder
         ]);
 
         Carrera::create([
-            'nombre' => 'Industrial en Procesos de Automatización',
+            'nombre' => 'Ingeniería Industrial en Procesos de Automatización',
             'desaparecera' => true,
             'titulo_mas' => 'Ingeniero Industrial en Procesos de Automatización',
             'titulo_fem' => 'Ingeniera Industrial en Procesos de Automatización',
