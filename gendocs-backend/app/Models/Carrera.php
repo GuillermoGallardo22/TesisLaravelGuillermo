@@ -14,7 +14,10 @@ class Carrera extends Model
 
     protected $fillable = [
         "nombre",
-        "estado"
+        "estado",
+        'titulo_mas',
+        'titulo_fem',
+        'creditos',
     ];
 
     protected $casts = [
@@ -29,6 +32,9 @@ class Carrera extends Model
             'id' => $this->id,
             "estado" => $this->estado,
             "nombre" => $this->nombre,
+            "titulo_mas" => $this->titulo_mas,
+            "titulo_fem" => $this->titulo_fem,
+            "creditos" => $this->creditos,
         ];
     }
 
