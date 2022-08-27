@@ -3,8 +3,11 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
 import { GridColDef } from "@mui/x-data-grid";
-import { DataGrid, Select } from "components";
+import { DataGrid, Icon, Select } from "components";
+import { usePlantillasGlob } from "hooks";
+import { GoogleType, PlantillasGlobales } from "models/enums";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { readFile } from "utils";
 import { useAddEstudiantes } from "../hooks/useAddEstudiantes";
 import ListStudentsErrors from "./ListEstudianteErrors";
@@ -24,6 +27,9 @@ const columns: GridColDef[] = [
 
 export const FormEstudiantes = () => {
   const { formik, submitting, carreras } = useAddEstudiantes();
+  const { data: plantilla, isLoading: loadingPlantilla } = usePlantillasGlob(
+    PlantillasGlobales.PLAN_SUBIR_ESTUDIANTES
+  );
 
   const [file, setFile] = useState<File>();
 
@@ -60,27 +66,49 @@ export const FormEstudiantes = () => {
 
   return (
     <Stack spacing={2}>
-      <Box>
-        <LoadingButton
-          variant="contained"
-          disabled={reading || submitting}
-          loading={reading || submitting}
-          component="label"
-        >
-          Subir archivo...
-          <input
-            id="contained-button-file"
-            type="file"
-            disabled={reading}
-            onChange={handleChangeFile}
-            accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,text/csv"
-            hidden
-          />
-        </LoadingButton>
-        <label style={{ marginLeft: "1rem" }} htmlFor="contained-button-file">
-          {file?.name && !reading && file.name}
-        </label>
-      </Box>
+      <Grid container spacing={2}>
+        <Grid item xs={6}>
+          <Box>
+            <LoadingButton
+              variant="contained"
+              disabled={reading || submitting}
+              loading={reading || submitting}
+              component="label"
+            >
+              Subir archivo...
+              <input
+                id="contained-button-file"
+                type="file"
+                disabled={reading}
+                onChange={handleChangeFile}
+                accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,text/csv"
+                hidden
+              />
+            </LoadingButton>
+            <label
+              style={{ marginLeft: "1rem" }}
+              htmlFor="contained-button-file"
+            >
+              {file?.name && !reading && file.name}
+            </label>
+          </Box>
+        </Grid>
+
+        <Grid item xs={6}>
+          <LoadingButton
+            component={Link}
+            startIcon={<Icon icon="article" />}
+            to={
+              "formato/" + plantilla?.drive + "?type=" + GoogleType.SPREADSHEETS
+            }
+            variant="outlined"
+            loading={loadingPlantilla}
+            disabled={!plantilla}
+          >
+            VER FORMATO
+          </LoadingButton>
+        </Grid>
+      </Grid>
 
       <Box>
         <Box
