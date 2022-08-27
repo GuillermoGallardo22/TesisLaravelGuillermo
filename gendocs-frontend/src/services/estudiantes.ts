@@ -10,6 +10,7 @@ import {
 } from "models/interfaces";
 import { BaseMultipleStudentForm } from "pages/private/facu/estudiantes/hooks/useAddEstudiantes";
 import {
+  CONSTANTS,
   CUSTOM_HTTP_MESSAGES,
   DEFAULT_PAGINATION_VALUES,
   handleErrors,
@@ -17,6 +18,8 @@ import {
   parseFilterPaginationProps,
   parsePaginationData,
 } from "utils";
+
+const { fecha: MAYOR_EDAD } = CONSTANTS;
 
 export async function getEstudiantes(
   props: IFilterPaginationProps
@@ -46,7 +49,7 @@ export async function saveEstudiante(
       genero: genero === -1 ? "" : genero,
       fecha_nacimiento:
         fecha_nacimiento instanceof Date
-          ? format(fecha_nacimiento, "Y-MM-d")
+          ? format(fecha_nacimiento, MAYOR_EDAD)
           : "",
     };
 
@@ -129,7 +132,7 @@ export async function updateEstudiante(
       genero: genero === -1 ? "" : genero,
       fecha_nacimiento:
         fecha_nacimiento instanceof Date
-          ? format(fecha_nacimiento, "Y-MM-d")
+          ? format(fecha_nacimiento, MAYOR_EDAD)
           : "",
       carrera_id: carrera,
     };
