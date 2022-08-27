@@ -23,6 +23,8 @@ const columns: GridColDef[] = [
   { field: "correo_uta", headerName: "Correo UTA", width: 250 },
   { field: "matricula", headerName: "Matrícula", width: 100 },
   { field: "folio", headerName: "Folio", width: 100 },
+  { field: "genero", headerName: "Género", width: 100 },
+  { field: "fecha_nacimiento", headerName: "F. nacimiento", width: 100 },
 ];
 
 export const FormEstudiantes = () => {

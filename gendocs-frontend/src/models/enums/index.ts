@@ -1,3 +1,4 @@
+export * from "./Genero";
 export * from "./GoogleType";
 export * from "./HttpStatus";
 export * from "./Module";

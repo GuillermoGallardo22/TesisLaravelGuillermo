@@ -1,4 +1,5 @@
 import axios from "axios";
+import { format, parseISO } from "date-fns";
 import { HTTP_STATUS } from "models/enums";
 import {
   IEstudiante,
@@ -36,9 +37,16 @@ export async function saveEstudiante(
   form: IEstudiante
 ): Promise<IResponse<IEstudiante>> {
   try {
+    const { fecha_nacimiento, genero, ...rest } = form;
+
     const payload = {
       type: "simple",
-      ...form,
+      ...rest,
+      genero: genero === -1 ? "" : genero,
+      fecha_nacimiento:
+        fecha_nacimiento instanceof Date
+          ? format(fecha_nacimiento, "Y-MM-d")
+          : "",
     };
 
     const {
@@ -96,6 +104,11 @@ export async function getEstudianteById(
         carrera: data?.carrera || "",
         telefono: data?.telefono || "",
         correo: data?.correo || "",
+        fecha_nacimiento:
+          data?.fecha_nacimiento === null
+            ? null
+            : parseISO(data.fecha_nacimiento),
+        genero: data?.genero || "",
       },
       message: "",
     };
@@ -108,10 +121,19 @@ export async function updateEstudiante(
   form: IEstudiante
 ): Promise<IResponse<IEstudiante>> {
   try {
-    const { data: data } = await axios.put("estudiantes/" + form.id, {
-      ...form,
-      carrera_id: form.carrera,
-    });
+    const { carrera, genero, fecha_nacimiento, ...rest } = form;
+
+    const payload = {
+      ...rest,
+      genero: genero === -1 ? "" : genero,
+      fecha_nacimiento:
+        fecha_nacimiento instanceof Date
+          ? format(fecha_nacimiento, "Y-MM-d")
+          : "",
+      carrera_id: carrera,
+    };
+
+    const { data: data } = await axios.put("estudiantes/" + form.id, payload);
 
     return {
       status: HTTP_STATUS.ok,

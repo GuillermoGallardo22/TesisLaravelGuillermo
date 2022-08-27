@@ -1,5 +1,5 @@
 import { useFormik } from "formik";
-import { HTTP_STATUS } from "models/enums";
+import { Genero, HTTP_STATUS } from "models/enums";
 import { ICarrera, MultipleStudentForm } from "models/interfaces";
 import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
@@ -42,6 +42,18 @@ export const useAddEstudiantes = () => {
             .string()
             .required(VALIDATION_MESSAGES.required)
             .max(100, VALIDATION_MESSAGES.maxLength(100)),
+          genero: yup
+            .mixed()
+            .nullable()
+            .oneOf(
+              [Genero.MASCULINO, Genero.FEMENINO, ""],
+              VALIDATION_MESSAGES.invalidOption
+            )
+            .typeError(VALIDATION_MESSAGES.required),
+          fecha_nacimiento: yup
+            .string()
+            .nullable()
+            .typeError(VALIDATION_MESSAGES.invalidDate),
           celular: yup
             .string()
             .matches(CONSTANTS.phone_regex, VALIDATION_MESSAGES.invalidFormat)

@@ -1,17 +1,25 @@
 import { useFormik } from "formik";
 import { useErrorsResponse } from "hooks";
-import { HTTP_STATUS } from "models/enums";
-import { ICarrera } from "models/interfaces";
+import { Genero, HTTP_STATUS } from "models/enums";
+import { ICarrera, IEstudiante } from "models/interfaces";
 import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
 import { getAllCarreras, saveEstudiante } from "services";
 import { CONSTANTS, VALIDATION_MESSAGES } from "utils";
 import * as yup from "yup";
 
-export interface SimpleStudentForm {
-  cedula: string;
-  nombres: string;
-  apellidos: string;
+export interface SimpleStudentForm
+  extends Omit<
+    IEstudiante,
+    | "id"
+    | "telefono"
+    | "celular"
+    | "correo"
+    | "correo_uta"
+    | "matricula"
+    | "folio"
+    | "carrera"
+  > {
   telefono: string;
   celular: string;
   correo: string;
@@ -32,6 +40,8 @@ const initialValues: SimpleStudentForm = {
   matricula: "",
   folio: "",
   carrera: -1,
+  genero: -1,
+  fecha_nacimiento: null,
 };
 
 export const useAddEstudiante = () => {
@@ -51,6 +61,18 @@ export const useAddEstudiante = () => {
       .string()
       .required(VALIDATION_MESSAGES.required)
       .max(100, VALIDATION_MESSAGES.maxLength(100)),
+    genero: yup
+      .mixed()
+      .nullable()
+      .oneOf(
+        [Genero.MASCULINO, Genero.FEMENINO, -1],
+        VALIDATION_MESSAGES.invalidOption
+      )
+      .typeError(VALIDATION_MESSAGES.required),
+    fecha_nacimiento: yup
+      .date()
+      .nullable()
+      .typeError(VALIDATION_MESSAGES.invalidDate),
     celular: yup
       .string()
       .matches(CONSTANTS.phone_regex, VALIDATION_MESSAGES.invalidFormat)

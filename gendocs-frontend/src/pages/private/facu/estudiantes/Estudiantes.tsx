@@ -10,11 +10,13 @@ import { Link as RouterLink } from "react-router-dom";
 import { getEstudiantes } from "services";
 
 const columns: GridColumns = [
-  { field: "cedula", headerName: "Cédula", flex: 1 },
+  { field: "cedula", headerName: "Cédula", width: 150 },
   { field: "apellidos", headerName: "Apellidos", flex: 1 },
   { field: "nombres", headerName: "Nombres", flex: 1 },
-  { field: "celular", headerName: "Celular", flex: 1 },
-  { field: "telefono", headerName: "Teléfono", flex: 1 },
+  { field: "genero", headerName: "Género", width: 80 },
+  { field: "fecha_nacimiento", headerName: "F. nacimiento", width: 130 },
+  { field: "celular", headerName: "Celular", width: 125 },
+  { field: "telefono", headerName: "Teléfono", width: 125 },
   { field: "correo_uta", headerName: "Correo UTA", flex: 1 },
   { field: "correo", headerName: "Correo", flex: 1 },
   { field: "matricula", headerName: "Matrícula" },

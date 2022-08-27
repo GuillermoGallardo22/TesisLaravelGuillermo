@@ -3,9 +3,15 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { ErrorSummary, Select, TitleNav } from "components";
+import { subYears } from "date-fns";
+import { Genero } from "models/enums";
 import { useParams } from "react-router-dom";
+import { CONSTANTS } from "utils";
 import { useUpdateEstudiante } from "../hooks/useUpdateEstudiante";
+
+const { mayor_edad: MAYOR_DE_EDAD } = CONSTANTS;
 
 const UpdateEstudiante = () => {
   const { studentId = "" } = useParams<{ studentId: string }>();
@@ -84,6 +90,54 @@ const UpdateEstudiante = () => {
                 formik.touched.apellidos && Boolean(formik.errors.apellidos)
               }
               helperText={formik.touched.apellidos && formik.errors.apellidos}
+            />
+          </Grid>
+
+          <Grid item xs={6}>
+            <Select
+              id="genero"
+              name="genero"
+              label="Género"
+              items={[
+                {
+                  id: Genero.MASCULINO,
+                  label: "Masculino",
+                },
+                {
+                  id: Genero.FEMENINO,
+                  label: "Femenino",
+                },
+              ]}
+              value={formik.values.genero || ""}
+              onChange={formik.handleChange}
+              error={formik.touched.genero && Boolean(formik.errors.genero)}
+              errorMessage={formik.touched.genero && formik.errors.genero}
+            />
+          </Grid>
+
+          <Grid item xs={6}>
+            <DatePicker
+              maxDate={subYears(new Date(), MAYOR_DE_EDAD)}
+              renderInput={(props) => (
+                <TextField
+                  {...props}
+                  margin="normal"
+                  fullWidth
+                  error={
+                    formik.touched.fecha_nacimiento &&
+                    Boolean(formik.errors.fecha_nacimiento)
+                  }
+                  helperText={
+                    formik.touched.fecha_nacimiento &&
+                    formik.errors.fecha_nacimiento
+                  }
+                />
+              )}
+              label="Fecha de nacimiento"
+              value={formik.values.fecha_nacimiento}
+              onChange={(date) =>
+                formik.setFieldValue("fecha_nacimiento", date)
+              }
             />
           </Grid>
 

@@ -3,6 +3,7 @@ import { IRoute } from "models/interfaces";
 import { Outlet } from "react-router-dom";
 import {
   Acta,
+  AddCargo,
   AddCarrera,
   AddConsejo,
   AddDocente,
@@ -29,6 +30,7 @@ import {
   ProcesosFACU,
   ProcesosFACUOutlet,
   Profile,
+  UpdateCargo,
   UpdateCarrera,
   UpdateConsejo,
   UpdateDocente,
@@ -37,8 +39,6 @@ import {
   UpdateProceso,
   UpdateUsuario,
   Usuarios,
-  AddCargo,
-  UpdateCargo,
 } from "./components";
 
 export const routes: IRoute[] = [
@@ -138,8 +138,12 @@ export const routes: IRoute[] = [
     childrens: [
       {
         path: "nuevo",
-        component: AddEstudiante,
+        component: Outlet,
         roles: [RolEnum.ADMIN, RolEnum.ADMINTEMP, RolEnum.WRITER],
+        childrens: [
+          { path: "formato/:driveId", component: DriveTemplate },
+          { path: "", isIndex: true, component: AddEstudiante },
+        ],
       },
       {
         path: ":studentId",

@@ -2,7 +2,8 @@ import {
   GridValueFormatterParams,
   GridValueGetterParams,
 } from "@mui/x-data-grid";
-import { format } from "date-fns";
+import { format, isValid, parseISO } from "date-fns";
+import { Genero } from "models/enums";
 import {
   IConsejo,
   IDocumento,
@@ -12,9 +13,11 @@ import {
   MultipleStudentForm,
 } from "models/interfaces";
 import { read, utils } from "xlsx";
+import { CONSTANTS } from "./constants";
 import { parseToDateTime } from "./date";
 
 export const DRAWERWIDTH = 240;
+const { fecha: FORMATO_FECHA } = CONSTANTS;
 
 type SheetType = {
   A: string;
@@ -26,11 +29,47 @@ type SheetType = {
   G: string;
   H: string;
   I: string;
+  J: string;
+  K: string;
 };
 
 const cleanFields = (data: string | null | undefined): string => {
   return !data ? "" : data.length === 1 ? "" : data;
 };
+
+function cleanFN(data: any) {
+  try {
+    let fecha_nacimiento: Date | null = null;
+
+    if (typeof data === "number") {
+      fecha_nacimiento = new Date(
+        Math.round((data - (25567 + 1)) * 86400 * 1000)
+      );
+    } else if (typeof data === "string") {
+      fecha_nacimiento = parseISO(data);
+    }
+
+    let result = "";
+
+    if (fecha_nacimiento && isValid(fecha_nacimiento)) {
+      result = format(fecha_nacimiento, FORMATO_FECHA);
+    }
+
+    return result;
+  } catch (error) {
+    return "";
+  }
+}
+
+function cleanG(data: any) {
+  if (typeof data === "string") {
+    data = data.toUpperCase();
+
+    return [Genero.FEMENINO, Genero.MASCULINO].includes(data) ? data : "";
+  } else {
+    return "";
+  }
+}
 
 export async function readFile(file: File): Promise<MultipleStudentForm[]> {
   try {
@@ -41,7 +80,7 @@ export async function readFile(file: File): Promise<MultipleStudentForm[]> {
     const sheet = workbook.Sheets[workbook.SheetNames[0]];
 
     const parseData = utils.sheet_to_json<SheetType>(sheet, {
-      header: ["A", "B", "C", "D", "E", "F", "G", "H", "I"],
+      header: ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K"],
     });
 
     const students = parseData
@@ -57,6 +96,8 @@ export async function readFile(file: File): Promise<MultipleStudentForm[]> {
         correo_uta: cleanFields(element["G"]),
         matricula: cleanFields(element["H"]),
         folio: cleanFields(element["I"]),
+        genero: cleanG(element["J"]),
+        fecha_nacimiento: cleanFN(element["K"]),
       }));
 
     return students;

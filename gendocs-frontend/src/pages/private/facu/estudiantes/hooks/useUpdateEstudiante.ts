@@ -1,5 +1,5 @@
 import { useFormik } from "formik";
-import { HTTP_STATUS } from "models/enums";
+import { Genero, HTTP_STATUS } from "models/enums";
 import { ICarrera, IEstudiante } from "models/interfaces";
 import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
@@ -19,6 +19,8 @@ const initialValues: IEstudiante = {
   matricula: "",
   folio: "",
   carrera: -1,
+  genero: -1,
+  fecha_nacimiento: null,
 };
 
 export const useUpdateEstudiante = ({ studentId }: { studentId: string }) => {
@@ -46,6 +48,18 @@ export const useUpdateEstudiante = ({ studentId }: { studentId: string }) => {
       .required(VALIDATION_MESSAGES.required)
       .max(100, VALIDATION_MESSAGES.maxLength(100))
       .typeError(VALIDATION_MESSAGES.required),
+    genero: yup
+      .mixed()
+      .nullable()
+      .oneOf(
+        [Genero.MASCULINO, Genero.FEMENINO, -1],
+        VALIDATION_MESSAGES.invalidOption
+      )
+      .typeError(VALIDATION_MESSAGES.required),
+    fecha_nacimiento: yup
+      .date()
+      .nullable()
+      .typeError(VALIDATION_MESSAGES.invalidDate),
     celular: yup
       .string()
       .nullable()
