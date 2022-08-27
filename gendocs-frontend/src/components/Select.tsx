@@ -5,7 +5,7 @@ import MenuItem from "@mui/material/MenuItem";
 import SelectBase, { SelectChangeEvent } from "@mui/material/Select";
 
 export type ItemProps = {
-  id: number;
+  id: number | string;
   label: string;
 };
 
