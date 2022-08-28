@@ -17,6 +17,7 @@ use App\Http\Controllers\PlantillasController;
 use App\Http\Controllers\PlantillasGlobalesController;
 use App\Http\Controllers\ProcesoController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\TipoActaGradoController;
 use App\Http\Controllers\TipoConsejoController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -61,6 +62,7 @@ Route::middleware(["auth:sanctum", "isUserActive"])->group(function () {
     Route::apiResource('cargos', CargoController::class);
 
     Route::apiResource('cantones', CantonController::class)->only('index');
+    Route::apiResource('tipo-actas-grado', TipoActaGradoController::class)->only('index');
 
     // AUTH
     Route::apiResource('modulos', ModuleController::class)->only(['index']);

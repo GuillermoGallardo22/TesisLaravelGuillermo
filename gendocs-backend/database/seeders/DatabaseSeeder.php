@@ -31,6 +31,7 @@ class DatabaseSeeder extends Seeder
             CargoSeeder::class,
             ProvinciaSeeder::class,
             CantonSeeder::class,
+            TipoActaGradoSeeder::class,
         ]);
     }
 }

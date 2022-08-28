@@ -1,0 +1,15 @@
+<?php
+
+namespace App\Constants;
+
+abstract class TipoActaGrados
+{
+
+    // TITULACIÓN
+    const T_EGCC = "T-EXAMEN-GRADO-CARACTER-COMPLEXIVO";
+    const T_PIAA = "T-PROYECTO-INVESTIGACIÓN-ARTÍCULO-ACADÉMICO";
+
+    // INTEGRACIÓN CURRICULAR
+    const IC_EGCC = "IC-EXAMEN-GRADO-CARACTER-COMPLEXIVO";
+    const IC_PIAA = "IC-PROYECTO-INVESTIGACIÓN-ARTÍCULO-ACADÉMICO";
+}
