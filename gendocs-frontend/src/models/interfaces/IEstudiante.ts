@@ -11,7 +11,7 @@ export interface IEstudiante {
   correo_uta: string | null;
   matricula: string | null;
   folio: string | null;
-  carrera: number | ICarrera;
+  carrera: ICarrera;
   telefono?: string | null;
   correo?: string | null;
 }
