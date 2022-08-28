@@ -29,6 +29,8 @@ class DatabaseSeeder extends Seeder
             DocenteSeeder::class,
             PlantillasGlobalesSeeder::class,
             CargoSeeder::class,
+            ProvinciaSeeder::class,
+            CantonSeeder::class,
         ]);
     }
 }

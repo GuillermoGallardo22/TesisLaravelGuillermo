@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ActaController;
 use App\Http\Controllers\BatchController;
+use App\Http\Controllers\CantonController;
 use App\Http\Controllers\CargoController;
 use App\Http\Controllers\CarreraController;
 use App\Http\Controllers\ConsejoController;
@@ -58,6 +59,8 @@ Route::middleware(["auth:sanctum", "isUserActive"])->group(function () {
     Route::get('actas/{acta}/descargar', [ActaController::class, 'descargar']);
 
     Route::apiResource('cargos', CargoController::class);
+
+    Route::apiResource('cantones', CantonController::class)->only('index');
 
     // AUTH
     Route::apiResource('modulos', ModuleController::class)->only(['index']);
