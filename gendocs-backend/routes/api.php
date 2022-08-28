@@ -8,6 +8,7 @@ use App\Http\Controllers\CarreraController;
 use App\Http\Controllers\ConsejoController;
 use App\Http\Controllers\DocenteController;
 use App\Http\Controllers\DocumentoController;
+use App\Http\Controllers\EstadoActaController;
 use App\Http\Controllers\EstudianteController;
 use App\Http\Controllers\MiembroController;
 use App\Http\Controllers\ModuleController;
@@ -63,6 +64,7 @@ Route::middleware(["auth:sanctum", "isUserActive"])->group(function () {
 
     Route::apiResource('cantones', CantonController::class)->only('index');
     Route::apiResource('tipo-actas-grado', TipoActaGradoController::class)->only('index');
+    Route::apiResource('estado-actas-grado', EstadoActaController::class)->only('index');
 
     // AUTH
     Route::apiResource('modulos', ModuleController::class)->only(['index']);
