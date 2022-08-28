@@ -1,3 +1,4 @@
+export * from "./ICanton";
 export * from "./ICargo";
 export * from "./ICarrera";
 export * from "./IConsejo";

@@ -1,6 +1,7 @@
 export * from "./acta";
 export * from "./auth";
 export * from "./batch";
+export * from "./cantones";
 export * from "./cargos";
 export * from "./carreras";
 export * from "./consejos";
