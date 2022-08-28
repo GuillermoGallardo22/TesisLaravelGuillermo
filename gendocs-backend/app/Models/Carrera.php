@@ -20,8 +20,15 @@ class Carrera extends Model
         'creditos',
     ];
 
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+        'deleted_at',
+    ];
+
     protected $casts = [
         'estado' => 'boolean',
+        'desaparecera' => 'boolean',
     ];
 
     public const FILTERS = ['estado', 'antigua'];
