@@ -54,12 +54,12 @@ export const useAddEstudiante = () => {
       .typeError(VALIDATION_MESSAGES.invalidDate),
     celular: yup
       .string()
-      .matches(CONSTANTS.phone_regex, VALIDATION_MESSAGES.invalidFormat)
+      .matches(CONSTANTS.PHONE_REGEX, VALIDATION_MESSAGES.invalidFormat)
       .required(VALIDATION_MESSAGES.required)
       .max(10, VALIDATION_MESSAGES.maxLength(10)),
     telefono: yup
       .string()
-      .matches(CONSTANTS.phone_regex, VALIDATION_MESSAGES.invalidFormat)
+      .matches(CONSTANTS.PHONE_REGEX, VALIDATION_MESSAGES.invalidFormat)
       .max(10, VALIDATION_MESSAGES.maxLength(10)),
     correo: yup
       .string()
@@ -67,7 +67,7 @@ export const useAddEstudiante = () => {
       .max(100, VALIDATION_MESSAGES.maxLength(100)),
     correo_uta: yup
       .string()
-      .matches(CONSTANTS.email_uta_regex, VALIDATION_MESSAGES.invalidFormat)
+      .matches(CONSTANTS.EMAIL_UTA_REGEX, VALIDATION_MESSAGES.invalidFormat)
       .required(VALIDATION_MESSAGES.required)
       .max(100, VALIDATION_MESSAGES.maxLength(100)),
     matricula: yup.string().max(10, VALIDATION_MESSAGES.maxLength(10)),

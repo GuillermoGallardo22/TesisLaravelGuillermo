@@ -12,7 +12,7 @@ import { CONSTANTS, readFile } from "utils";
 import { useAddEstudiantes } from "../hooks/useAddEstudiantes";
 import ListStudentsErrors from "./ListEstudianteErrors";
 
-const { page_size: PAGE_SIZE } = CONSTANTS;
+const { PAGE_SIZE: PAGE_SIZE } = CONSTANTS;
 
 const columns: GridColDef[] = [
   { field: "id", headerName: "#", width: 30 },

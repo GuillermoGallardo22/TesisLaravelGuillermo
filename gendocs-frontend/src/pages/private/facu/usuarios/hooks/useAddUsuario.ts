@@ -1,6 +1,6 @@
 import { useFormik } from "formik";
 import { HTTP_STATUS } from "models/enums";
-import { IRole, IUserForm, IModule } from "models/interfaces";
+import { IModule, IRole, IUserForm } from "models/interfaces";
 import { useSnackbar } from "notistack";
 import { useCallback, useEffect, useState } from "react";
 import { createUser, getModules, getRoles } from "services";
@@ -55,12 +55,12 @@ export const useAddUsuario = () => {
       .max(255, VALIDATION_MESSAGES.maxLength(255)),
     correo_principal: yup
       .string()
-      .matches(CONSTANTS.email_uta_regex, VALIDATION_MESSAGES.invalidFormat)
+      .matches(CONSTANTS.EMAIL_UTA_REGEX, VALIDATION_MESSAGES.invalidFormat)
       .required(VALIDATION_MESSAGES.required)
       .max(255, VALIDATION_MESSAGES.maxLength(255)),
     correo_secundario: yup
       .string()
-      .matches(CONSTANTS.email_gmail_regex, VALIDATION_MESSAGES.invalidFormat)
+      .matches(CONSTANTS.EMAIL_GMAIL_REGEX, VALIDATION_MESSAGES.invalidFormat)
       .required(VALIDATION_MESSAGES.required)
       .max(255, VALIDATION_MESSAGES.maxLength(255)),
     rol: yup

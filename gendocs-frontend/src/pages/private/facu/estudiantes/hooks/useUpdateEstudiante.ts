@@ -63,13 +63,13 @@ export const useUpdateEstudiante = ({ studentId }: { studentId: string }) => {
     celular: yup
       .string()
       .nullable()
-      .matches(CONSTANTS.phone_regex, VALIDATION_MESSAGES.invalidFormat)
+      .matches(CONSTANTS.PHONE_REGEX, VALIDATION_MESSAGES.invalidFormat)
       .max(10, VALIDATION_MESSAGES.maxLength(10))
       .typeError(VALIDATION_MESSAGES.required),
     telefono: yup
       .string()
       .nullable()
-      .matches(CONSTANTS.phone_regex, VALIDATION_MESSAGES.invalidFormat)
+      .matches(CONSTANTS.PHONE_REGEX, VALIDATION_MESSAGES.invalidFormat)
       .max(10, VALIDATION_MESSAGES.maxLength(10))
       .typeError(VALIDATION_MESSAGES.required),
     correo: yup
@@ -81,7 +81,7 @@ export const useUpdateEstudiante = ({ studentId }: { studentId: string }) => {
     correo_uta: yup
       .string()
       .required()
-      .matches(CONSTANTS.email_uta_regex, VALIDATION_MESSAGES.invalidFormat)
+      .matches(CONSTANTS.EMAIL_UTA_REGEX, VALIDATION_MESSAGES.invalidFormat)
       .max(100, VALIDATION_MESSAGES.maxLength(100))
       .typeError(VALIDATION_MESSAGES.required),
     matricula: yup

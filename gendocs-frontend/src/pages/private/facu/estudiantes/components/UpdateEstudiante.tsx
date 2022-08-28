@@ -11,7 +11,7 @@ import { useParams } from "react-router-dom";
 import { CONSTANTS } from "utils";
 import { useUpdateEstudiante } from "../hooks/useUpdateEstudiante";
 
-const { mayor_edad: MAYOR_DE_EDAD } = CONSTANTS;
+const { MAYOR_EDAD: MAYOR_DE_EDAD } = CONSTANTS;
 
 const UpdateEstudiante = () => {
   const { studentId = "" } = useParams<{ studentId: string }>();

@@ -31,13 +31,13 @@ const validationSchema = yup.object().shape({
     .max(500, VALIDATION_MESSAGES.maxLength(500)),
   celular: yup
     .string()
-    .matches(CONSTANTS.phone_regex, VALIDATION_MESSAGES.invalidFormat)
+    .matches(CONSTANTS.PHONE_REGEX, VALIDATION_MESSAGES.invalidFormat)
     .required(VALIDATION_MESSAGES.required)
     .max(25, VALIDATION_MESSAGES.maxLength(25)),
   telefono: yup
     .string()
     .nullable()
-    .matches(CONSTANTS.phone_regex, VALIDATION_MESSAGES.invalidFormat)
+    .matches(CONSTANTS.PHONE_REGEX, VALIDATION_MESSAGES.invalidFormat)
     .max(25, VALIDATION_MESSAGES.maxLength(25)),
   correo: yup
     .string()
@@ -46,7 +46,7 @@ const validationSchema = yup.object().shape({
     .max(150, VALIDATION_MESSAGES.maxLength(150)),
   correo_uta: yup
     .string()
-    .matches(CONSTANTS.email_uta_regex, VALIDATION_MESSAGES.invalidFormat)
+    .matches(CONSTANTS.EMAIL_UTA_REGEX, VALIDATION_MESSAGES.invalidFormat)
     .required(VALIDATION_MESSAGES.required)
     .max(150, VALIDATION_MESSAGES.maxLength(150)),
 });

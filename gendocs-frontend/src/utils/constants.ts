@@ -1,8 +1,8 @@
 export const CONSTANTS = {
-  email_uta_regex: /^[^\s\\]*@uta\.edu\.ec$/gm,
-  email_gmail_regex: /^[a-z0-9](\.?[a-z0-9]){3,}@g(oogle)?mail\.com$/gm,
-  phone_regex: /^[0-9]+$/gm,
-  page_size: 100,
-  mayor_edad: 18,
-  fecha: "Y-MM-d", // FECHA NACIMIENTO
+  EMAIL_UTA_REGEX: /^[^\s\\]*@uta\.edu\.ec$/gm,
+  EMAIL_GMAIL_REGEX: /^[a-z0-9](\.?[a-z0-9]){3,}@g(oogle)?mail\.com$/gm,
+  PHONE_REGEX: /^[0-9]+$/gm,
+  PAGE_SIZE: 100,
+  MAYOR_EDAD: 18,
+  FORMATO_FECHA_NACIMIENTO: "Y-MM-d", // FECHA NACIMIENTO
 };

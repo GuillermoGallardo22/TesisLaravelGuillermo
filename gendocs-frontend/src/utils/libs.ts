@@ -17,7 +17,7 @@ import { CONSTANTS } from "./constants";
 import { parseToDateTime } from "./date";
 
 export const DRAWERWIDTH = 240;
-const { fecha: FORMATO_FECHA } = CONSTANTS;
+const { FORMATO_FECHA_NACIMIENTO: FORMATO_FECHA } = CONSTANTS;
 
 type SheetType = {
   A: string;

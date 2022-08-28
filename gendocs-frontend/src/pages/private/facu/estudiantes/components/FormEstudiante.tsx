@@ -9,7 +9,7 @@ import { Genero } from "models/enums";
 import { CONSTANTS } from "utils";
 import { useAddEstudiante } from "../hooks/useAddEstudiante";
 
-const { mayor_edad: MAYOR_DE_EDAD } = CONSTANTS;
+const { MAYOR_EDAD: MAYOR_DE_EDAD } = CONSTANTS;
 
 export const FormEstudiante = () => {
   const { formik, carreras, errorSummary } = useAddEstudiante();

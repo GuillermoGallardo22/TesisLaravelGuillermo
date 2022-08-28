@@ -19,7 +19,7 @@ import {
   parsePaginationData,
 } from "utils";
 
-const { fecha: MAYOR_EDAD } = CONSTANTS;
+const { FORMATO_FECHA_NACIMIENTO: MAYOR_EDAD } = CONSTANTS;
 
 export async function getEstudiantes(
   props: IFilterPaginationProps
