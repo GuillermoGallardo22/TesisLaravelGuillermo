@@ -14,3 +14,4 @@ export * from "./plantillas";
 export * from "./plantillasGlobales";
 export * from "./proceso";
 export * from "./tipo-consejos";
+export * from "./tipoActasGrado";
