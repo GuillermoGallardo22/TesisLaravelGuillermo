@@ -27,6 +27,7 @@ export interface MultipleStudentForm
     | "folio"
     | "genero"
     | "fecha_nacimiento"
+    | "carrera"
   > {
   telefono: string;
   celular: string;
