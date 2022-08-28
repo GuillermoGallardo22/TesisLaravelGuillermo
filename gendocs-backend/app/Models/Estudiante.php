@@ -44,7 +44,7 @@ class Estudiante extends Model
             "correo_uta" => $this->correo_uta,
             "matricula" => $this->matricula,
             "folio" => $this->folio,
-            "carrera" => $this->carrera_id,
+            "carrera" => $this->carrera,
             "genero" => $this->genero,
             "fecha_nacimiento" => $this->fecha_nacimiento,
         ];
