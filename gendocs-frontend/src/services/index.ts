@@ -7,6 +7,7 @@ export * from "./carreras";
 export * from "./consejos";
 export * from "./docentes";
 export * from "./documentos";
+export * from "./estadoActasGrado";
 export * from "./estudiantes";
 export * from "./miembros";
 export * from "./numeracion";
