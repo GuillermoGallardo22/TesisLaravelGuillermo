@@ -33,6 +33,7 @@ class DatabaseSeeder extends Seeder
             CantonSeeder::class,
             TipoActaGradoSeeder::class,
             EstadoActaSeeder::class,
+            AulaSeeder::class,
         ]);
     }
 }

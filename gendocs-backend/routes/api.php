@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ActaController;
+use App\Http\Controllers\AulaController;
 use App\Http\Controllers\BatchController;
 use App\Http\Controllers\CantonController;
 use App\Http\Controllers\CargoController;
@@ -65,6 +66,7 @@ Route::middleware(["auth:sanctum", "isUserActive"])->group(function () {
     Route::apiResource('cantones', CantonController::class)->only('index');
     Route::apiResource('tipo-actas-grado', TipoActaGradoController::class)->only('index');
     Route::apiResource('estado-actas-grado', EstadoActaController::class)->only('index');
+    Route::apiResource('aulas', AulaController::class)->only('index');
 
     // AUTH
     Route::apiResource('modulos', ModuleController::class)->only(['index']);
