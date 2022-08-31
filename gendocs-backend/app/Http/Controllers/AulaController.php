@@ -13,9 +13,13 @@ class AulaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $q = Aula::query();
+
+        $q->orderBy('nombre');
+
+        $q->applyFilters($request->all());
 
         return ResourceCollection::make($q->get());
     }
