@@ -12,6 +12,7 @@ use App\Http\Controllers\DocumentoController;
 use App\Http\Controllers\EstadoActaController;
 use App\Http\Controllers\EstudianteController;
 use App\Http\Controllers\MiembroController;
+use App\Http\Controllers\ModalidadActaGradoController;
 use App\Http\Controllers\ModuleController;
 use App\Http\Controllers\NotificacionController;
 use App\Http\Controllers\NumeracionController;
@@ -67,6 +68,7 @@ Route::middleware(["auth:sanctum", "isUserActive"])->group(function () {
     Route::apiResource('tipo-actas-grado', TipoActaGradoController::class)->only('index');
     Route::apiResource('estado-actas-grado', EstadoActaController::class)->only('index');
     Route::apiResource('aulas', AulaController::class)->only('index');
+    Route::apiResource('modalidades-acta-grado', ModalidadActaGradoController::class)->only('index');
 
     // AUTH
     Route::apiResource('modulos', ModuleController::class)->only(['index']);

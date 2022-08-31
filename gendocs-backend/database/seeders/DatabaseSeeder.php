@@ -34,6 +34,7 @@ class DatabaseSeeder extends Seeder
             TipoActaGradoSeeder::class,
             EstadoActaSeeder::class,
             AulaSeeder::class,
+            ModalidadActaGradoSeeder::class,
         ]);
     }
 }
