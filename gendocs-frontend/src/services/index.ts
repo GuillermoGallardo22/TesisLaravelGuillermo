@@ -10,6 +10,7 @@ export * from "./documentos";
 export * from "./estadoActasGrado";
 export * from "./estudiantes";
 export * from "./miembros";
+export * from "./modalidadActaGrado";
 export * from "./numeracion";
 export * from "./plantillas";
 export * from "./plantillasGlobales";

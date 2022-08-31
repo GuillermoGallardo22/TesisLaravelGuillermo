@@ -7,6 +7,7 @@ export * from "./IConsejoMiembro";
 export * from "./IDocente";
 export * from "./IDocumento";
 export * from "./IEstudiante";
+export * from "./IModalidadActaGrado";
 export * from "./IModule";
 export * from "./INotification";
 export * from "./INumeracion";
