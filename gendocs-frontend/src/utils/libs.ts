@@ -5,8 +5,12 @@ import {
 import { format, isValid, parseISO } from "date-fns";
 import { Genero } from "models/enums";
 import {
+  IAula,
+  ICanton,
   IConsejo,
+  IDocente,
   IDocumento,
+  IEstudiante,
   IMiembro,
   IProceso,
   ITipoConsejo,
@@ -231,4 +235,72 @@ export function formatRecipients(list: [string, string][]): string {
 
 export function listFormat(list: string[]): string {
   return formatter.format(list);
+}
+
+export function getOptionLabelDocente2(option: IDocente) {
+  return option.nombres;
+}
+
+function getAutocompleteDocente(option: string | IDocente) {
+  return typeof option === "string" ? option : getOptionLabelDocente2(option);
+}
+
+export function isOptionEqualToValueDocente(o: IDocente, v: IDocente) {
+  return o.id === v.id;
+}
+
+export function getOptionLabelDocente(option: string | IDocente) {
+  return getAutocompleteDocente(option);
+}
+
+function getAutocompleteCanton(value: ICanton) {
+  const {
+    nombre: nombreCO,
+    provincia: { nombre: nombrePO },
+  } = value;
+  return `${nombreCO} - ${nombrePO}`;
+}
+
+export function isOptionEqualToValueCanton(option: ICanton, value: ICanton) {
+  return getAutocompleteCanton(option) === getAutocompleteCanton(value);
+}
+
+export function getOptionLabelCanton(option: ICanton) {
+  return getAutocompleteCanton(option);
+}
+
+function getAutocompleteAula(option: IAula) {
+  return option.nombre;
+}
+
+export function isOptionEqualToValueAula(option: IAula, value: IAula) {
+  return getAutocompleteAula(option) === getAutocompleteAula(value);
+}
+
+export function getOptionLabelAula(option: IAula) {
+  return getAutocompleteAula(option);
+}
+
+function getAutocompleteEstudiante(option: IEstudiante) {
+  const {
+    cedula,
+    nombres,
+    apellidos,
+    carrera: { nombre: nombreCarrera },
+  } = option;
+
+  const nombreCompleto = [nombres, apellidos].join(" ");
+
+  return `${cedula} - ${nombreCompleto} - ${nombreCarrera}`;
+}
+
+export function isOptionEqualToValueEstudiante(
+  option: IEstudiante,
+  value: IEstudiante
+) {
+  return getAutocompleteEstudiante(option) === getAutocompleteEstudiante(value);
+}
+
+export function getOptionLabelEstudiante(option: IEstudiante) {
+  return getAutocompleteEstudiante(option);
 }

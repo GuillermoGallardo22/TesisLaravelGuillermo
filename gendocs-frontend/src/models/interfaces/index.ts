@@ -1,4 +1,5 @@
 export * from "./IActaGrado";
+export * from "./IAula";
 export * from "./ICanton";
 export * from "./ICargo";
 export * from "./ICarrera";

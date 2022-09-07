@@ -1,4 +1,5 @@
 export * from "./acta";
+export * from "./aulas";
 export * from "./auth";
 export * from "./batch";
 export * from "./cantones";

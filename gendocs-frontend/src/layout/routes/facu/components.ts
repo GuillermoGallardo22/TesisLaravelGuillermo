@@ -1,5 +1,13 @@
 import { lazy } from "react";
 
+export const ActasGrado = lazy(
+  () => import("pages/private/facu/actas-grado/ActasGrado")
+);
+
+export const AddActaGrado = lazy(
+  () => import("pages/private/facu/actas-grado/components/AddActaGrado")
+);
+
 export const ListResoluciones = lazy(
   () => import("pages/private/facu/consejos/components/ListResoluciones")
 );
@@ -29,6 +37,7 @@ export const UpdateCarrera = lazy(
 );
 
 export const HomeOutlet = lazy(() => import("pages/private/facu/home/Home"));
+
 export const Home = lazy(() => import("pages/private/facu/home/BuscarBase"));
 
 export const AddConsejo = lazy(
@@ -140,9 +149,11 @@ export const DriveTemplate = lazy(() =>
 );
 
 export const Cargos = lazy(() => import("pages/private/facu/cargos/Cargos"));
+
 export const AddCargo = lazy(
   () => import("pages/private/facu/cargos/components/AddCargo")
 );
+
 export const UpdateCargo = lazy(
   () => import("pages/private/facu/cargos/components/UpdateCargo")
 );

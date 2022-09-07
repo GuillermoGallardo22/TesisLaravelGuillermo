@@ -3,6 +3,8 @@ import { IRoute } from "models/interfaces";
 import { Outlet } from "react-router-dom";
 import {
   Acta,
+  ActasGrado,
+  AddActaGrado,
   AddCargo,
   AddCarrera,
   AddConsejo,
@@ -58,6 +60,26 @@ export const routes: IRoute[] = [
         path: "",
         isIndex: true,
         component: Home,
+      },
+    ],
+  },
+  {
+    path: "actas-grado",
+    label: "Actas de grado",
+    component: Outlet,
+    icon: "historyEdu",
+    modules: [ModuleEnum.FACU],
+    isMenuOption: true,
+    childrens: [
+      {
+        path: "nuevo",
+        component: AddActaGrado,
+        roles: [RolEnum.ADMIN, RolEnum.ADMINTEMP, RolEnum.WRITER],
+      },
+      {
+        path: "",
+        isIndex: true,
+        component: ActasGrado,
       },
     ],
   },
