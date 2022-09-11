@@ -44,4 +44,9 @@ class TipoActaGrado extends Model
             'carrera_id',
         );
     }
+
+    public function archivo()
+    {
+        return $this->morphOne(DriveApi::class, 'model');
+    }
 }

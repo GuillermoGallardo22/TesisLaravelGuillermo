@@ -24,9 +24,13 @@ class TipoActaGradoSeeder extends Seeder
                 'codigo' => TipoActaGrados::T_EGCC,
             ],
             [
-                'nombre' => 'PROYECTO DE INVESTIGACIÓN / ARTÍCULO ACADÉMICO',
-                'codigo' => TipoActaGrados::T_PIAA,
-            ]
+                'nombre' => 'PROYECTO DE INVESTIGACIÓN',
+                'codigo' => TipoActaGrados::T_PI,
+            ],
+            [
+                'nombre' => 'ARTÍCULO ACADÉMICO',
+                'codigo' => TipoActaGrados::T_AA,
+            ],
         ]);
 
         $antiguasCarreras = Carrera::where('desaparecera', true)->get();
@@ -52,9 +56,13 @@ class TipoActaGradoSeeder extends Seeder
                 'codigo' => TipoActaGrados::IC_EGCC,
             ],
             [
-                'nombre' => 'PROYECTO DE INVESTIGACIÓN / ARTÍCULO ACADÉMICO',
-                'codigo' => TipoActaGrados::IC_PIAA,
-            ]
+                'nombre' => 'PROYECTO DE INVESTIGACIÓN',
+                'codigo' => TipoActaGrados::IC_PI,
+            ],
+            [
+                'nombre' => 'ARTÍCULO ACADÉMICO',
+                'codigo' => TipoActaGrados::IC_AA,
+            ],
         ]);
 
         $antiguasCarreras = Carrera::where('desaparecera', false)->get();
