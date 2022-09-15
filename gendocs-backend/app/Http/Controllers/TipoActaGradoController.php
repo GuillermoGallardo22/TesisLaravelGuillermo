@@ -17,6 +17,8 @@ class TipoActaGradoController extends Controller
     {
         $query = TipoActaGrado::query();
 
+        $query->orderBy('nombre');
+
         $query->applyFilters($request->all());
 
         return ResourceCollection::make($query->get());

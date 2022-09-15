@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Http\Resources\ResourceCollection;
 use App\Traits\Filterable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -24,7 +25,8 @@ class TipoActaGrado extends Model
             'id' => $this->id,
             'nombre' => $this->nombre,
             'codigo' => $this->codigo,
-            // 'carreras' => $this->carreras,
+            'carreras' => ResourceCollection::make($this->carreras),
+            'drive' => $this->archivo->google_drive_id,
         ];
     }
 
