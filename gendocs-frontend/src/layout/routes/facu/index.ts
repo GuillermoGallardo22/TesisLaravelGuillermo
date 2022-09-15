@@ -29,6 +29,7 @@ import {
   ListMiembros,
   ListPlantillas,
   ListResoluciones,
+  PlantillasActasGrado,
   ProcesosFACU,
   ProcesosFACUOutlet,
   Profile,
@@ -75,6 +76,22 @@ export const routes: IRoute[] = [
         path: "nuevo",
         component: AddActaGrado,
         roles: [RolEnum.ADMIN, RolEnum.ADMINTEMP, RolEnum.WRITER],
+      },
+      {
+        path: "plantillas",
+        component: Outlet,
+        roles: [RolEnum.ADMIN, RolEnum.ADMINTEMP, RolEnum.WRITER],
+        childrens: [
+          {
+            path: "drive/:driveId",
+            component: DriveTemplate,
+          },
+          {
+            path: "",
+            isIndex: true,
+            component: PlantillasActasGrado,
+          },
+        ],
       },
       {
         path: "",

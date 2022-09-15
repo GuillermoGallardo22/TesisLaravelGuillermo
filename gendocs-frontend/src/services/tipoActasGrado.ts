@@ -3,7 +3,7 @@ import { IFilterPaginationProps, ITipoActaGrado } from "models/interfaces";
 import { parseFilterPaginationProps } from "utils";
 
 export async function getTipoActasGrado(
-  props: IFilterPaginationProps
+  props?: IFilterPaginationProps
 ): Promise<ITipoActaGrado[]> {
   try {
     const params = parseFilterPaginationProps(props);
