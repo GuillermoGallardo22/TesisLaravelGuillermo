@@ -1,13 +1,13 @@
 import { useFormik } from "formik";
 import { Genero, HTTP_STATUS } from "models/enums";
-import { ICarrera, IEstudiante } from "models/interfaces";
+import { ICarrera, IEstudiante, IUpdateEstudiante } from "models/interfaces";
 import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
 import { getAllCarreras, getEstudianteById, updateEstudiante } from "services";
 import { CONSTANTS, VALIDATION_MESSAGES } from "utils";
 import * as yup from "yup";
 
-const initialValues: IEstudiante = {
+const initialValues: IUpdateEstudiante = {
   id: -1,
   cedula: "",
   nombres: "",
@@ -27,7 +27,8 @@ export const useUpdateEstudiante = ({ studentId }: { studentId: string }) => {
   const { enqueueSnackbar } = useSnackbar();
   const [submitting, setSubmitting] = useState(false);
   const [carreras, setCarreras] = useState<ICarrera[]>([]);
-  const [estudiante, setEstudiante] = useState<IEstudiante>(initialValues);
+  const [estudiante, setEstudiante] =
+    useState<IUpdateEstudiante>(initialValues);
   const [errorSummary, setErrorSummary] = useState<
     string | string[] | undefined
   >();
@@ -111,11 +112,15 @@ export const useUpdateEstudiante = ({ studentId }: { studentId: string }) => {
     ]).then((results) => {
       const [_carreras, _estudiante] = results;
       setCarreras(_carreras);
-      setEstudiante(_estudiante.data);
+      const { carrera, ...rest } = _estudiante.data;
+      setEstudiante({
+        ...rest,
+        carrera: carrera.id,
+      });
     });
   }, [studentId]);
 
-  const onSubmit = async (form: IEstudiante) => {
+  const onSubmit = async (form: IUpdateEstudiante) => {
     setErrorSummary(undefined);
 
     setSubmitting(true);
