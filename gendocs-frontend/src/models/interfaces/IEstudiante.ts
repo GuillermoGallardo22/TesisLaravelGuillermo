@@ -16,10 +16,6 @@ export interface IEstudiante {
   correo?: string | null;
 }
 
-export interface IUpdateEstudiante extends Omit<IEstudiante, "carrera"> {
-  carrera: number;
-}
-
 export interface MultipleStudentForm
   extends Omit<
     IEstudiante,
