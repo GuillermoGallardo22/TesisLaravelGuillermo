@@ -44,6 +44,7 @@ export interface IAddActaGrado {
   modalidad_acta_grado: ModalidadActaGrado | number;
   link: string;
   aula: number;
+  duracion: number;
   //
 }
 
@@ -102,6 +103,7 @@ export const useAddActaGrado = ({ estudiante }: useAddActaGradoProps) => {
       modalidad_acta_grado: -1,
       link: "",
       aula: -1,
+      duracion: 60,
     }),
     [estudiante]
   );

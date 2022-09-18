@@ -385,9 +385,9 @@ const AddActaGrado: React.FunctionComponent = () => {
               </Fade>
             </Box>
 
-            <Box sx={{ display: isPRE ? "inline" : "none" }}>
+            <Box sx={{ display: isPRE ? "flex" : "none" }}>
               <Fade in={isPRE}>
-                <Box>
+                <Box width={"100%"} sx={{ display: "flex" }} gap={2}>
                   <SingleAutoComplete
                     key="autocomplete-aulas"
                     value={acAula}
@@ -407,87 +407,56 @@ const AddActaGrado: React.FunctionComponent = () => {
                       placeholder: "Nombre",
                     }}
                   />
+
+                  <TextField
+                    required
+                    fullWidth
+                    margin="normal"
+                    type="number"
+                    id="duracion"
+                    name="duracion"
+                    label="Duración (min)"
+                    value={formik.values.duracion}
+                    onChange={formik.handleChange}
+                    error={
+                      formik.touched.duracion && Boolean(formik.errors.duracion)
+                    }
+                    helperText={
+                      formik.touched.duracion && formik.errors.duracion
+                    }
+                  />
                 </Box>
               </Fade>
             </Box>
           </Grid>
 
-          <Grid item xs={12} sm={6}>
-            <MultipleAutoComplete
-              key="autocomplete-miembros-prin"
-              values={acMiembrosPrin}
-              onChange={setACMiembrosPrin}
-              hookProps={{
-                fetch: getDocentes,
-              }}
-              AutoCompleteProps={{
-                id: "autocomplete-miembros-prin",
-                isOptionEqualToValue: isOptionEqualToValueDocente,
-                getOptionLabel: getOptionLabelDocente,
-                disabled: submitting,
-              }}
-              ChipProps={{
-                getOptionLabel: getOptionLabelDocente2,
-              }}
-              TextFieldProps={{
-                label: "Miembros principales",
-                placeholder: "Cédula | Nombres",
-              }}
-            />
-          </Grid>
-
-          <Grid item xs={12} sm={6}>
-            <MultipleAutoComplete
-              key="autocomplete-miembros-sec"
-              values={acMiembrosSecu}
-              onChange={setACMiembrosSecu}
-              hookProps={{
-                fetch: getDocentes,
-              }}
-              AutoCompleteProps={{
-                id: "autocomplete-miembros-sec",
-                isOptionEqualToValue: isOptionEqualToValueDocente,
-                getOptionLabel: getOptionLabelDocente,
-                disabled: submitting,
-              }}
-              ChipProps={{
-                getOptionLabel: getOptionLabelDocente2,
-              }}
-              TextFieldProps={{
-                label: "Miembros suplentes",
-                placeholder: "Cédula | Nombres",
-              }}
-            />
-          </Grid>
-
-          <Grid item xs={12} sm={6}>
-            <FormControlLabel
-              label="Solicitar especie"
-              control={
-                <Checkbox
-                  id="solicitar_especie"
-                  name="solicitar_especie"
-                  disabled={submitting}
-                  checked={formik.values.solicitar_especie}
-                  onChange={formik.handleChange}
-                />
-              }
-            />
-          </Grid>
-
-          <Grid item xs={12} sm={6}>
-            <FormControlLabel
-              label="Envío financiero especie de título"
-              control={
-                <Checkbox
-                  id="envio_financiero_especie"
-                  name="envio_financiero_especie"
-                  disabled={submitting}
-                  checked={formik.values.envio_financiero_especie}
-                  onChange={formik.handleChange}
-                />
-              }
-            />
+          <Grid item xs={12}>
+            <Stack>
+              <FormControlLabel
+                label="Solicitar especie"
+                control={
+                  <Checkbox
+                    id="solicitar_especie"
+                    name="solicitar_especie"
+                    disabled={submitting}
+                    checked={formik.values.solicitar_especie}
+                    onChange={formik.handleChange}
+                  />
+                }
+              />
+              <FormControlLabel
+                label="Envío financiero especie de título"
+                control={
+                  <Checkbox
+                    id="envio_financiero_especie"
+                    name="envio_financiero_especie"
+                    disabled={submitting}
+                    checked={formik.values.envio_financiero_especie}
+                    onChange={formik.handleChange}
+                  />
+                }
+              />
+            </Stack>
           </Grid>
 
           {errorSummary && <ErrorSummary errors={errorSummary} />}
