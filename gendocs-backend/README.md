@@ -81,3 +81,12 @@
 |  {{NO_ASISTIERON}}  |           Ing. Juanito Garcia           |
 |  {{NO_ASISTIERON}}  |           Ing. Juanito Garcia           |
 |  {{DOCENTE_N_$i}}   |       Variable docentes dinámica        |
+
+
+1. ¿Cuando se genere el acta y se seleccione la modalidad(virtual/presencial), solo habrá que considerar la duración en el caso presencial, por temas de disponibilidad de aulas?
+2. ¿El link de zoom siempre será único para cada acta?
+3. ¿El docente que preside siempre existirá en todos los demás tipos de actas de grado?
+4. ¿Los miembros de tribunal existirán siempre en todos los demás tipos de actas de grado?
+5. ¿Puede haber el caso de que un miembro principal sea a la vez un miembro secundario?
+6. ¿Como identificar cual miembro asistió, se tendría que hacer un flujo similar al de Consejos > Miembros?
+7. ¿Cual sería la definición final para la lógica de miembros de tribunales principales y suplentes?
