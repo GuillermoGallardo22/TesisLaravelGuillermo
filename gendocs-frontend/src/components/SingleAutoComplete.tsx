@@ -4,6 +4,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import TextField from "@mui/material/TextField";
 import { useAutocomplete, useAutocompleteProps } from "hooks";
 import { useEffect } from "react";
+import { TextFieldProps } from "@mui/material/TextField";
 
 type UseAutocompleteProps<T> = Pick<
   UseAutocompletePropsBase<T, undefined, undefined, undefined>,
@@ -15,10 +16,7 @@ interface SingleAutoCompleteProps<T> {
   onChange: React.Dispatch<React.SetStateAction<T | null>>;
   hookProps: useAutocompleteProps<T>;
   AutoCompleteProps: UseAutocompleteProps<T>;
-  TextFieldProps: {
-    label: string;
-    placeholder: string;
-  };
+  TextFieldProps: TextFieldProps;
 }
 
 export function SingleAutoComplete<T>(props: SingleAutoCompleteProps<T>) {

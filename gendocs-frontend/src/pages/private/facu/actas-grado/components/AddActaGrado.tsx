@@ -38,6 +38,7 @@ const AddActaGrado: React.FunctionComponent = () => {
   const [acMiembrosPrin, setACMiembrosPrin] = useState<IDocente[]>([]);
   const [acMiembrosSecu, setACMiembrosSecu] = useState<IDocente[]>([]);
   const [acEstudiante, setACEstudiante] = useState<IEstudiante | null>(null);
+  const [acDocente, setACDocente] = useState<IDocente | null>(null);
 
   // FORM
 
@@ -60,6 +61,10 @@ const AddActaGrado: React.FunctionComponent = () => {
   useEffect(() => {
     formik.setFieldValue("estudiante", acEstudiante?.id || null);
   }, [acEstudiante]);
+
+  useEffect(() => {
+    formik.setFieldValue("docente", acDocente?.id || null);
+  }, [acDocente]);
 
   useEffect(() => {
     formik.setFieldValue("canton", acCanton?.id || null);
@@ -119,7 +124,26 @@ const AddActaGrado: React.FunctionComponent = () => {
         noValidate
       >
         <Grid container spacing={2}>
-          <Grid item xs={12}>
+          <Grid item xs={12} sm={3} md={4}>
+            <TextField
+              fullWidth
+              required
+              disabled={submitting}
+              id="numeracion"
+              name="numeracion"
+              type="number"
+              label="Numeración"
+              margin="normal"
+              value={formik.values.numeracion}
+              onChange={formik.handleChange}
+              error={
+                formik.touched.numeracion && Boolean(formik.errors.numeracion)
+              }
+              helperText={formik.touched.numeracion && formik.errors.numeracion}
+            />
+          </Grid>
+
+          <Grid item xs={12} sm={9} md={8}>
             <SingleAutoComplete
               key="autocomplete-estudiante"
               value={acEstudiante}
@@ -136,7 +160,13 @@ const AddActaGrado: React.FunctionComponent = () => {
               }}
               TextFieldProps={{
                 label: "Estudiante",
+                required: true,
                 placeholder: "Cédula | Nombres | Apellidos | Matrícula | Folio",
+                error:
+                  formik.touched.estudiante &&
+                  Boolean(formik.errors.estudiante),
+                helperText:
+                  formik.touched.estudiante && formik.errors.estudiante,
               }}
             />
           </Grid>
@@ -159,6 +189,9 @@ const AddActaGrado: React.FunctionComponent = () => {
               TextFieldProps={{
                 label: "Cantón de redidencia",
                 placeholder: "Nombre",
+                required: true,
+                error: formik.touched.canton && Boolean(formik.errors.canton),
+                helperText: formik.touched.canton && formik.errors.canton,
               }}
             />
           </Grid>
@@ -260,7 +293,6 @@ const AddActaGrado: React.FunctionComponent = () => {
 
           <Grid item xs={12} sm={6}>
             <TextField
-              required
               fullWidth
               margin="normal"
               type="number"
@@ -283,8 +315,9 @@ const AddActaGrado: React.FunctionComponent = () => {
             <Divider />
           </Grid>
 
-          <Grid item xs={12} sm={4}>
+          <Grid item xs={12} sm={6}>
             <Select
+              required
               id="tipo_acta"
               name="tipo_acta"
               label="Tipo de acta"
@@ -301,25 +334,50 @@ const AddActaGrado: React.FunctionComponent = () => {
             />
           </Grid>
 
-          <Grid item xs={12} sm={4}>
+          <Grid item xs={12} sm={6}>
             <Select
-              id="declarada"
-              name="declarada"
+              required
+              id="estado_acta"
+              name="estado_acta"
               label="Estado acta"
               items={estadoActas.map((i) => ({
                 id: i.id,
                 label: i.nombre_fem,
               }))}
-              value={formik.values.declarada}
+              value={formik.values.estado_acta}
               onChange={formik.handleChange}
               error={
-                formik.touched.declarada && Boolean(formik.errors.declarada)
+                formik.touched.estado_acta && Boolean(formik.errors.estado_acta)
               }
-              errorMessage={formik.touched.declarada && formik.errors.declarada}
+              errorMessage={
+                formik.touched.estado_acta && formik.errors.estado_acta
+              }
             />
           </Grid>
 
-          <Grid item xs={12} sm={4}>
+          <Grid item xs={12} sm={6}>
+            <SingleAutoComplete
+              key="autocomplete-presidente"
+              value={acDocente}
+              onChange={setACDocente}
+              hookProps={{
+                fetch: getDocentes,
+                preventSubmitOnOpen: true,
+              }}
+              AutoCompleteProps={{
+                id: "autocomplete-presidente",
+                disabled: submitting,
+                isOptionEqualToValue: isOptionEqualToValueDocente,
+                getOptionLabel: getOptionLabelDocente,
+              }}
+              TextFieldProps={{
+                label: "Presidente",
+                placeholder: "Cédula | Nombres",
+              }}
+            />
+          </Grid>
+
+          <Grid item xs={12} sm={6}>
             <DateTimePicker
               label="Fecha presentación"
               value={formik.values.fecha_presentacion}
@@ -330,7 +388,6 @@ const AddActaGrado: React.FunctionComponent = () => {
                 <TextField
                   {...props}
                   margin="normal"
-                  required
                   fullWidth
                   error={
                     formik.touched.fecha_presentacion &&
@@ -409,7 +466,6 @@ const AddActaGrado: React.FunctionComponent = () => {
                   />
 
                   <TextField
-                    required
                     fullWidth
                     margin="normal"
                     type="number"
