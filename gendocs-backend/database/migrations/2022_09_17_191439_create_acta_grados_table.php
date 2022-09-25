@@ -26,7 +26,7 @@ class CreateActaGradosTable extends Migration
             $table->decimal("creditos_aprobados");
             $table->decimal("horas_practicas")->nullable();
 
-            $table->date("fecha_presentacion")->nullable();
+            $table->dateTime("fecha_presentacion")->nullable();
 
             $table->foreignId("docente_id") // PRESIDENTE
                 ->nullable()
@@ -62,7 +62,7 @@ class CreateActaGradosTable extends Migration
                 ->references("id")
                 ->on("aulas");
 
-            $table->integer("duración")
+            $table->integer("duracion")
                 ->nullable();
 
             $table->string("link")
@@ -80,6 +80,9 @@ class CreateActaGradosTable extends Migration
                 ->nullable()
                 ->references("id")
                 ->on("users");
+
+            $table->boolean("solicitar_especie")->default(false);
+            $table->boolean("envio_financiero_especie")->default(false);
 
             $table->unique("link");
             $table->unique(["id", "link", "aula_id"]);
