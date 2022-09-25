@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreActaGradoRequest;
 use App\Http\Requests\UpdateActaGradoRequest;
+use App\Http\Resources\ResourceCollection;
 use App\Models\ActaGrado;
+use Illuminate\Http\Request;
 
 class ActaGradoController extends Controller
 {
@@ -13,9 +15,13 @@ class ActaGradoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $query = ActaGrado::query();
+
+        $query->applyFilters($request->all());
+
+        return ResourceCollection::make($query->get());
     }
 
     /**
