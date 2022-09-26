@@ -3,7 +3,11 @@ import {
   ModalidadActaGrado,
   TipoActaGradoEnum,
 } from "models/enums";
+import { IModalidadActaGrado } from ".";
+import { ICanton } from "./ICanton";
 import { ICarrera } from "./ICarrera";
+import { IDocente } from "./IDocente";
+import { IEstudiante } from "./IEstudiante";
 
 export interface ITipoActaGrado {
   id: number;
@@ -18,6 +22,28 @@ export interface IEstadoActa {
   codigo: EstadoActaEnum;
   nombre_mas: string;
   nombre_fem: string;
+}
+
+export interface IActaGrado {
+  numeracion: number;
+  estudiante: IEstudiante;
+  presidente: IDocente;
+  canton: ICanton;
+  tipo_acta: ITipoActaGrado;
+  titulo_bachiller: string;
+  fecha_inicio_estudios: Date;
+  fecha_fin_estudios: Date;
+  creditos_aprobados: number;
+  horas_practicas: number;
+  fecha_presentacion: Date | null;
+  estado_acta: IEstadoActa;
+  solicitar_especie: boolean;
+  envio_financiero_especie: boolean;
+  //
+  modalidad_acta_grado: IModalidadActaGrado;
+  link: string | null;
+  aula: string | null;
+  duracion: number | null;
 }
 
 export interface IAddActaGrado {
