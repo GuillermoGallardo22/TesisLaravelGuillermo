@@ -10,7 +10,8 @@ type useGridColumnVisibilityModelProps = {
     | "consejo-resoluciones"
     | "buscar-resoluciones"
     | "table-model-users"
-    | "table-cargos";
+    | "table-cargos"
+    | "actasGradoTableModel";
 };
 
 export function useGridColumnVisibilityModel({
