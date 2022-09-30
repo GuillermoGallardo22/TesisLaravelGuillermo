@@ -20,7 +20,7 @@ class CreatePlantillasGlobalesTable extends Migration
             $table->string("codigo")->unique();
             $table->string("nombre");
 
-            $table->enum('tipo', [MimeType::DRIVE_DOC, MimeType::DRIVE_SS])->default(MimeType::DRIVE_DOC);
+            $table->enum('tipo', [MimeType::DRIVE_DOC, MimeType::DRIVE_SS]);
 
             $table->timestamps();
             $table->softDeletes();
