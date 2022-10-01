@@ -17,18 +17,15 @@ class NumeracionSeeder extends Seeder
      */
     public function run()
     {
-        Numeracion::create([
-            'numero' => 0,
-            'usado' => 1,
-            'module_id' => Module::where('code', Modulos::FACU)->first()->id,
-            'directorio_id' => Directorio::query()->activeDirectory()->id,
-        ]);
+        $directorio = Directorio::query()->activeDirectory();
 
-        Numeracion::create([
-            'numero' => 0,
-            'usado' => 1,
-            'module_id' => Module::where('code', Modulos::SUDE)->first()->id,
-            'directorio_id' => Directorio::query()->activeDirectory()->id,
-        ]);
+        foreach (Module::all() as $module) {
+            Numeracion::create([
+                'numero' => 0,
+                'usado' => 1,
+                'module_id' => $module->id,
+                'directorio_id' => $directorio->id,
+            ]);
+        }
     }
 }
