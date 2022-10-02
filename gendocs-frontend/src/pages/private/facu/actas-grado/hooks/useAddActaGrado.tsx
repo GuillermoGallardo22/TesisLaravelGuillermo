@@ -4,10 +4,10 @@ import { useErrorsResponse } from "hooks";
 import {
   IAddActaGrado,
   IEstadoActa,
-  IEstudiante,
   IModalidadActaGrado,
   INumeracionBase,
   ITipoActaGrado,
+  useAddActaGradoProps,
 } from "models/interfaces";
 import { useEffect, useState } from "react";
 import {
@@ -24,10 +24,6 @@ const { DURACION_ESTUDIOS, HORAS_PRACTICAS } = CONSTANTS;
 const TODAY = new Date();
 
 TODAY.setMinutes(0);
-
-type useAddActaGradoProps = {
-  estudiante?: IEstudiante | null | undefined;
-};
 
 const initialValues: IAddActaGrado = {
   numeracion: 0,

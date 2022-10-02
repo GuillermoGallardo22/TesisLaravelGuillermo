@@ -3,11 +3,11 @@ import {
   ModalidadActaGrado,
   TipoActaGradoEnum,
 } from "models/enums";
-import { IModalidadActaGrado } from ".";
 import { ICanton } from "./ICanton";
 import { ICarrera } from "./ICarrera";
 import { IDocente } from "./IDocente";
 import { IEstudiante } from "./IEstudiante";
+import { IModalidadActaGrado } from "./IModalidadActaGrado";
 
 export interface ITipoActaGrado {
   id: number;
@@ -70,3 +70,7 @@ export interface IAddActaGrado {
   duracion: number;
   //
 }
+
+export type useAddActaGradoProps = {
+  estudiante?: IEstudiante | null | undefined;
+};
