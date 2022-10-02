@@ -22,3 +22,5 @@ export interface INumeracion {
   reservados: INumeracionReservado[];
   encolados: INumeracionBase[];
 }
+
+export type INumeracionActaGrado = Omit<INumeracion, "reservados">;

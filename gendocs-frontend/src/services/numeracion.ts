@@ -3,6 +3,7 @@ import { HTTP_STATUS } from "models/enums";
 import {
   IFilterPaginationProps,
   INumeracion,
+  INumeracionActaGrado,
   IReservaForm,
   IResponse,
 } from "models/interfaces";
@@ -44,5 +45,32 @@ export async function createReserva(
   } catch (error) {
     console.error({ error });
     return handleErrors(error);
+  }
+}
+
+export async function getNumeracionActaGrado(
+  props: IFilterPaginationProps
+): Promise<IResponse<INumeracionActaGrado>> {
+  try {
+    const params = parseFilterPaginationProps(props);
+
+    const {
+      data: { data },
+    } = await axios.get(`numeracion-acta-grado?${params}`);
+
+    return {
+      status: HTTP_STATUS.ok,
+      message: HTTP_MESSAGES[HTTP_STATUS.ok],
+      data,
+    };
+  } catch (error) {
+    return {
+      status: HTTP_STATUS.notFound,
+      message: HTTP_MESSAGES[HTTP_STATUS.notFound],
+      data: {
+        siguiente: -1,
+        encolados: [],
+      },
+    };
   }
 }
