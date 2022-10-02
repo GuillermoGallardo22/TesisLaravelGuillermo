@@ -2,23 +2,24 @@ import { subYears } from "date-fns";
 import { useFormik } from "formik";
 import { useErrorsResponse } from "hooks";
 import {
-  ICarrera,
+  IAddActaGrado,
   IEstadoActa,
   IEstudiante,
   IModalidadActaGrado,
+  INumeracionBase,
   ITipoActaGrado,
-  IAddActaGrado,
 } from "models/interfaces";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   getEstadoActasGrado,
   getModalidadesActaGrado,
+  getNumeracionActaGrado,
   getTipoActasGrado,
 } from "services";
-import { CONSTANTS } from "utils";
+import { CONSTANTS, VALIDATION_MESSAGES as VM } from "utils";
 import * as yup from "yup";
 
-const { DURACION_ESTUDIOS, HORAS_PRACTICAS = 0 } = CONSTANTS;
+const { DURACION_ESTUDIOS, HORAS_PRACTICAS } = CONSTANTS;
 
 const TODAY = new Date();
 
@@ -28,106 +29,128 @@ type useAddActaGradoProps = {
   estudiante?: IEstudiante | null | undefined;
 };
 
+const initialValues: IAddActaGrado = {
+  numeracion: 0,
+  estudiante: -1,
+  presidente: -1,
+  canton: -1,
+  tipo_acta: -1,
+  titulo_bachiller: "",
+  fecha_inicio_estudios: subYears(TODAY, DURACION_ESTUDIOS),
+  fecha_fin_estudios: TODAY,
+  creditos_aprobados: 0,
+  fecha_presentacion: null,
+  horas_practicas: HORAS_PRACTICAS,
+  estado_acta: -1,
+  solicitar_especie: false,
+  envio_financiero_especie: false,
+  modalidad_acta_grado: -1,
+  link: "",
+  aula: -1,
+  duracion: 60,
+};
+
+const validationSchema = yup.object().shape({
+  numeracion: yup.number().required(VM.required).min(1, VM.invalidOption),
+  estudiante: yup
+    .number()
+    .required(VM.required)
+    .min(1, VM.invalidOption)
+    .typeError(VM.required),
+  presidente: yup.number().nullable(),
+  canton: yup
+    .number()
+    .required(VM.required)
+    .min(1, VM.invalidOption)
+    .typeError(VM.required),
+  tipo_acta: yup
+    .string()
+    .required(VM.required)
+    .test("invalid-option", VM.required, (v) => v !== "-1"),
+  titulo_bachiller: yup.string().required(VM.required),
+  fecha_inicio_estudios: yup.date().required(VM.required),
+  fecha_fin_estudios: yup
+    .date()
+    .required(VM.required)
+    .min(yup.ref("fecha_inicio_estudios"), VM.invalidDate),
+  creditos_aprobados: yup
+    .number()
+    .required(VM.required)
+    .min(1, VM.invalidOption),
+  fecha_presentacion: yup.date().min(TODAY, VM.invalidDate).nullable(),
+  horas_practicas: yup.number(),
+  estado_acta: yup.number().min(1, VM.invalidOption),
+  solicitar_especie: yup.boolean(),
+  envio_financiero_especie: yup.boolean(),
+  modalidad_acta_grado: yup.string().required(VM.required),
+  link: yup.string().nullable(),
+  aula: yup.number().nullable(),
+  duracion: yup.number().nullable(),
+});
+
 export const useAddActaGrado = ({ estudiante }: useAddActaGradoProps) => {
   const [estadoActas, setEstadoActas] = useState<IEstadoActa[]>([]);
   const [modalidades, setModalidades] = useState<IModalidadActaGrado[]>([]);
   const [tipoActasGrado, setTipoActasGrado] = useState<ITipoActaGrado[]>([]);
 
+  const [fetchingRequiredData, setFetchingRequiredData] = useState(false);
+
+  const [encolados, setEncolados] = useState<INumeracionBase[]>([]);
   const { errorSummary, setErrorSummary } = useErrorsResponse();
 
-  useEffect(() => {
-    Promise.all([getEstadoActasGrado(), getModalidadesActaGrado()]).then(
-      (r) => {
-        const [estadoActas, modalidades] = r;
-        setEstadoActas(estadoActas);
-        setModalidades(modalidades);
-      }
-    );
-  }, []);
-
-  useEffect(() => {
-    if (!estudiante) {
-      setTipoActasGrado([]);
-      return;
-    }
-
-    getTipoActasGrado({
-      filters: {
-        carrera: estudiante.carrera.id,
-      },
-    }).then((r) => {
-      setTipoActasGrado(r);
-    });
-  }, [estudiante]);
-
-  const onSubmit = async (form: any) => {
+  const onSubmit = async (form: IAddActaGrado) => {
     setErrorSummary(undefined);
+    console.log({ form });
   };
-
-  const initialValues = useMemo(
-    (): IAddActaGrado => ({
-      numeracion: 0,
-      estudiante: -1,
-      presidente: -1,
-      canton: -1,
-      tipo_acta: -1,
-      titulo_bachiller: "",
-      fecha_inicio_estudios: subYears(TODAY, DURACION_ESTUDIOS),
-      fecha_fin_estudios: TODAY,
-      creditos_aprobados: (estudiante?.carrera as ICarrera)?.creditos || 0,
-      fecha_presentacion: null,
-      horas_practicas: HORAS_PRACTICAS,
-      estado_acta: -1,
-      solicitar_especie: false,
-      envio_financiero_especie: false,
-      modalidad_acta_grado: -1,
-      link: "",
-      aula: -1,
-      duracion: 60,
-    }),
-    [estudiante]
-  );
-
-  const validationSchema = useMemo(
-    () =>
-      yup.object().shape({
-        numeracion: yup.number().required().min(1),
-        estudiante: yup.number().required().min(1),
-        presidente: yup.number().nullable(),
-        canton: yup.number().required().min(1),
-        tipo_acta: yup
-          .number()
-          .required()
-          .oneOf(tipoActasGrado.map((tag) => tag.id)),
-        titulo_bachiller: yup.string().required(),
-        fecha_inicio_estudios: yup.date().required(),
-        fecha_fin_estudios: yup
-          .date()
-          .required()
-          .min(yup.ref("fecha_inicio_estudios")),
-        creditos_aprobados: yup.number().required().min(1),
-        fecha_presentacion: yup.date().min(TODAY).nullable(),
-        horas_practicas: yup.number(),
-        estado_acta: yup.number().min(1),
-        solicitar_especie: yup.boolean(),
-        envio_financiero_especie: yup.boolean(),
-        modalidad_acta_grado: yup
-          .string()
-          .required()
-          .oneOf(modalidades.map((m) => m.codigo)),
-        link: yup.string().nullable(),
-        aula: yup.number().nullable(),
-        duracion: yup.number().nullable(),
-      }),
-    [tipoActasGrado.length, modalidades.length]
-  );
 
   const formik = useFormik({
     onSubmit,
     initialValues,
-    enableReinitialize: true,
     validationSchema,
   });
+
+  useEffect(() => {
+    if (!estudiante) {
+      return;
+    }
+
+    setFetchingRequiredData(true);
+
+    const {
+      carrera: { id: carreraId, creditos },
+    } = estudiante;
+
+    Promise.all([
+      getTipoActasGrado({
+        filters: {
+          carrera: carreraId,
+        },
+      }),
+      getNumeracionActaGrado({
+        filters: {
+          carrera: carreraId,
+        },
+      }),
+      getEstadoActasGrado(),
+      getModalidadesActaGrado(),
+    ])
+      .then((r) => {
+        const [_tiposActasGrado, _numeracion, estadoActas, modalidades] = r;
+
+        setTipoActasGrado(_tiposActasGrado);
+
+        formik.setFieldValue("numeracion", _numeracion.data.siguiente);
+
+        setEstadoActas(estadoActas);
+        setModalidades(modalidades);
+
+        setEncolados(_numeracion.data.encolados);
+      })
+      .finally(() => {
+        formik.setFieldValue("creditos_aprobados", creditos);
+        setFetchingRequiredData(false);
+      });
+  }, [estudiante]);
 
   const handleReset = () => {
     formik.resetForm();
@@ -136,10 +159,12 @@ export const useAddActaGrado = ({ estudiante }: useAddActaGradoProps) => {
 
   return {
     formik,
+    encolados,
     modalidades,
     handleReset,
     estadoActas,
     errorSummary,
     tipoActasGrado,
+    fetchingRequiredData,
   };
 };
