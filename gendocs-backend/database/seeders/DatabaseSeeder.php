@@ -38,6 +38,8 @@ class DatabaseSeeder extends Seeder
             AulaSeeder::class,
             ModalidadActaGradoSeeder::class,
             ActaGradoSeeder::class,
+            //
+            NumeracionActaGradoSeeder::class,
         ]);
     }
 }

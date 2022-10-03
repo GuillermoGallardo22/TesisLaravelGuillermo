@@ -16,6 +16,7 @@ use App\Http\Controllers\MiembroController;
 use App\Http\Controllers\ModalidadActaGradoController;
 use App\Http\Controllers\ModuleController;
 use App\Http\Controllers\NotificacionController;
+use App\Http\Controllers\NumeracionActaGradoController;
 use App\Http\Controllers\NumeracionController;
 use App\Http\Controllers\PlantillasController;
 use App\Http\Controllers\PlantillasGlobalesController;
@@ -45,7 +46,6 @@ Route::middleware(["auth:sanctum", "isUserActive"])->group(function () {
     Route::apiResource('plantillas', PlantillasController::class)->except(['destroy']);
     Route::apiResource('tipo-consejos', TipoConsejoController::class)->only(['index']);
     Route::apiResource('documentos', DocumentoController::class)->except(['show', 'update']);
-    Route::apiResource('numeracion', NumeracionController::class)->only(['index', 'store']);
     Route::apiResource('batch', BatchController::class)->only(['show']);
     Route::apiResource("plantillas-globales", PlantillasGlobalesController::class)->only(['index']);
 
@@ -72,6 +72,9 @@ Route::middleware(["auth:sanctum", "isUserActive"])->group(function () {
     Route::apiResource('modalidades-acta-grado', ModalidadActaGradoController::class)->only('index');
 
     Route::apiResource("actas-grados", ActaGradoController::class);
+
+    Route::apiResource('numeracion', NumeracionController::class)->only(['index', 'store']);
+    Route::apiResource('numeracion-acta-grado', NumeracionActaGradoController::class)->only(['index']);
 
     // AUTH
     Route::apiResource('modulos', ModuleController::class)->only(['index']);
