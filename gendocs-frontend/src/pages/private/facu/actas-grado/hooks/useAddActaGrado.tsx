@@ -75,13 +75,13 @@ const validationSchema = yup.object().shape({
     .min(1, VM.invalidOption),
   fecha_presentacion: yup.date().min(TODAY, VM.invalidDate).nullable(),
   horas_practicas: yup.number(),
-  estado_acta: yup.number().min(1, VM.invalidOption),
+  estado_acta: yup.number().required(VM.required).min(1, VM.invalidOption),
   solicitar_especie: yup.boolean(),
   envio_financiero_especie: yup.boolean(),
   modalidad_acta_grado: yup.string().required(VM.required),
   link: yup.string().nullable(),
   aula: yup.number().nullable(),
-  duracion: yup.number().nullable(),
+  duracion: yup.number().required(VM.required).min(1, VM.invalidOption),
 });
 
 export const useAddActaGrado = ({ estudiante }: useAddActaGradoProps) => {
