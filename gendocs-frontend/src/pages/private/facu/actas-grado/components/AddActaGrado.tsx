@@ -370,55 +370,6 @@ const AddActaGrado: React.FunctionComponent = () => {
             />
           </Grid>
 
-          <Grid item xs={12} sm={6}>
-            <SingleAutoComplete
-              key="autocomplete-presidente"
-              value={acDocente}
-              onChange={setACDocente}
-              hookProps={{
-                fetch: getDocentes,
-                preventSubmitOnOpen: true,
-              }}
-              AutoCompleteProps={{
-                id: "autocomplete-presidente",
-                disabled: submitting || !estudianteSeleccionado,
-                isOptionEqualToValue: isOptionEqualToValueDocente,
-                getOptionLabel: getOptionLabelDocente,
-              }}
-              TextFieldProps={{
-                label: "Presidente",
-                placeholder: "Cédula | Nombres",
-                disabled: submitting || !estudianteSeleccionado,
-              }}
-            />
-          </Grid>
-
-          <Grid item xs={12} sm={6}>
-            <DateTimePicker
-              label="Fecha sustentación/incorporación"
-              disabled={submitting || !estudianteSeleccionado}
-              value={formik.values.fecha_presentacion}
-              onChange={(date) =>
-                formik.setFieldValue("fecha_presentacion", date)
-              }
-              renderInput={(props) => (
-                <TextField
-                  {...props}
-                  margin="normal"
-                  fullWidth
-                  error={
-                    formik.touched.fecha_presentacion &&
-                    Boolean(formik.errors.fecha_presentacion)
-                  }
-                  helperText={
-                    formik.touched.fecha_presentacion &&
-                    formik.errors.fecha_presentacion
-                  }
-                />
-              )}
-            />
-          </Grid>
-
           <Grid item xs={12} sm={4}>
             <TextField
               required
@@ -504,6 +455,55 @@ const AddActaGrado: React.FunctionComponent = () => {
                 </Box>
               </Fade>
             </Box>
+          </Grid>
+
+          <Grid item xs={12} sm={6}>
+            <SingleAutoComplete
+              key="autocomplete-presidente"
+              value={acDocente}
+              onChange={setACDocente}
+              hookProps={{
+                fetch: getDocentes,
+                preventSubmitOnOpen: true,
+              }}
+              AutoCompleteProps={{
+                id: "autocomplete-presidente",
+                disabled: submitting || !estudianteSeleccionado,
+                isOptionEqualToValue: isOptionEqualToValueDocente,
+                getOptionLabel: getOptionLabelDocente,
+              }}
+              TextFieldProps={{
+                label: "Presidente",
+                placeholder: "Cédula | Nombres",
+                disabled: submitting || !estudianteSeleccionado,
+              }}
+            />
+          </Grid>
+
+          <Grid item xs={12} sm={6}>
+            <DateTimePicker
+              label="Fecha sustentación/incorporación"
+              disabled={submitting || !estudianteSeleccionado}
+              value={formik.values.fecha_presentacion}
+              onChange={(date) =>
+                formik.setFieldValue("fecha_presentacion", date)
+              }
+              renderInput={(props) => (
+                <TextField
+                  {...props}
+                  margin="normal"
+                  fullWidth
+                  error={
+                    formik.touched.fecha_presentacion &&
+                    Boolean(formik.errors.fecha_presentacion)
+                  }
+                  helperText={
+                    formik.touched.fecha_presentacion &&
+                    formik.errors.fecha_presentacion
+                  }
+                />
+              )}
+            />
           </Grid>
 
           <Grid item xs={12}>
