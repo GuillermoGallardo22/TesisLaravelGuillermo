@@ -395,7 +395,7 @@ const AddActaGrado: React.FunctionComponent = () => {
 
           <Grid item xs={12} sm={6}>
             <DateTimePicker
-              label="Fecha presentación"
+              label="Fecha sustentación/incorporación"
               disabled={submitting || !estudianteSeleccionado}
               value={formik.values.fecha_presentacion}
               onChange={(date) =>
@@ -419,9 +419,26 @@ const AddActaGrado: React.FunctionComponent = () => {
             />
           </Grid>
 
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={4}>
+            <TextField
+              required
+              fullWidth
+              margin="normal"
+              type="number"
+              id="duracion"
+              name="duracion"
+              label="Duración (min)"
+              disabled={submitting || !estudianteSeleccionado}
+              value={formik.values.duracion}
+              onChange={formik.handleChange}
+              error={formik.touched.duracion && Boolean(formik.errors.duracion)}
+              helperText={formik.touched.duracion && formik.errors.duracion}
+            />
+          </Grid>
+
+          <Grid item xs={12} sm={4}>
             <Select
-              required={true}
+              required
               id="modalidad_acta_grado"
               name="modalidad_acta_grado"
               label="Modalidad acta"
@@ -443,7 +460,7 @@ const AddActaGrado: React.FunctionComponent = () => {
             />
           </Grid>
 
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={4}>
             <Box sx={{ display: isONL ? "inline" : "none" }}>
               <Fade in={isONL}>
                 <TextField
@@ -483,24 +500,6 @@ const AddActaGrado: React.FunctionComponent = () => {
                       placeholder: "Nombre",
                       disabled: submitting || !estudianteSeleccionado,
                     }}
-                  />
-
-                  <TextField
-                    fullWidth
-                    margin="normal"
-                    type="number"
-                    id="duracion"
-                    name="duracion"
-                    label="Duración (min)"
-                    disabled={submitting || !estudianteSeleccionado}
-                    value={formik.values.duracion}
-                    onChange={formik.handleChange}
-                    error={
-                      formik.touched.duracion && Boolean(formik.errors.duracion)
-                    }
-                    helperText={
-                      formik.touched.duracion && formik.errors.duracion
-                    }
                   />
                 </Box>
               </Fade>
