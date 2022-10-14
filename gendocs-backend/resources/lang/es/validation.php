@@ -193,6 +193,20 @@ return [
                     'correo' => 'El estudiante no cuenta con un correo institucional'
                 ]
             ]
-        ]
+        ],
+        "acta_grado" => [
+            "create" => [
+                "validation" => [
+                    "disponibilidad_docente" => "El docente ya se encuentra asignado en otra fecha y hora",
+                    "disponibilidad_aula" => "El aula ya se encuentra asignada en otra fecha y hora",
+                    "disponibilidad_link" => "El link ya se encuentra asignado en otra fecha y hora",
+                    "modalidad_seleccionada_aula_link" => "La modalidad seleccionada no concuerda con los datos provistos, verifique si debe de ingresar un aula o link",
+                ],
+                "unique" => [
+                    "unique_restriction_link_fecha_presentacion" => "El link ingresado no puede ser usado en más de dos fechas al mismo tiempo",
+                    "unique_restriction_numero_carrera_id_directorio_id" => "El número seleccionado ya está en uso",
+                ],
+            ],
+        ],
     ],
 ];
