@@ -19,7 +19,7 @@ trait Filterable
         }
 
         foreach ($filters as $filter => $value) {
-            if (collect($this::FILTERS)->contains($filter)) {
+            if (collect(self::FILTERS)->contains($filter)) {
                 $builder->$filter($value);
             }
         }
