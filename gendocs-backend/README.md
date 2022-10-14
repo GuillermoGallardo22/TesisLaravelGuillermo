@@ -1,3 +1,4 @@
+
 # BACKEND - LARAVEL - GENDOCS V.2
 
 ## GOOGLE DRIVE SERVICE
@@ -82,6 +83,7 @@
 |  {{NO_ASISTIERON}}  |           Ing. Juanito Garcia           |
 |  {{DOCENTE_N_$i}}   |       Variable docentes dinámica        |
 
+## DUDAS
 
 1. ¿Cuando se genere el acta y se seleccione la modalidad(virtual/presencial), solo habrá que considerar la duración en el caso presencial, por temas de disponibilidad de aulas?
 2. ¿El link de zoom siempre será único para cada acta?
@@ -90,3 +92,20 @@
 5. ¿Puede haber el caso de que un miembro principal sea a la vez un miembro secundario?
 6. ¿Como identificar cual miembro asistió, se tendría que hacer un flujo similar al de Consejos > Miembros?
 7. ¿Cual sería la definición final para la lógica de miembros de tribunales principales y suplentes?
+
+## NOTAS
+
+la fecha fin debería de ser no requerido
+
+estado de acta => no debería de ser obligatorio
+- aprobado
+- reprobado
+- no presentación
+  - articulo academico, proyecto de investigación
+
+numeración
+- empezar desde cualquier número, entonces los anteriores tendrían que colocarse a encolados
+
+cambio de universidad
+- número de resolución
+- de que universidad proviene
