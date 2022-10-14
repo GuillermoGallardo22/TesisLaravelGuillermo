@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Constants\Permissions;
 use App\Models\ActaGrado;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
@@ -18,7 +19,7 @@ class ActaGradoPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return $user->getAllPermissions()->contains('name', Permissions::ActaGrado['index']);
     }
 
     /**
@@ -30,7 +31,7 @@ class ActaGradoPolicy
      */
     public function view(User $user, ActaGrado $actaGrado)
     {
-        //
+        return $user->getAllPermissions()->contains('name', Permissions::ActaGrado['index']);
     }
 
     /**
@@ -41,7 +42,7 @@ class ActaGradoPolicy
      */
     public function create(User $user)
     {
-        //
+        return $user->getAllPermissions()->contains('name', Permissions::ActaGrado['create']);
     }
 
     /**
@@ -53,7 +54,7 @@ class ActaGradoPolicy
      */
     public function update(User $user, ActaGrado $actaGrado)
     {
-        //
+        return $user->getAllPermissions()->contains('name', Permissions::ActaGrado['update']);
     }
 
     /**
@@ -65,7 +66,7 @@ class ActaGradoPolicy
      */
     public function delete(User $user, ActaGrado $actaGrado)
     {
-        //
+        return $user->getAllPermissions()->contains('name', Permissions::ActaGrado['delete']);
     }
 
     /**

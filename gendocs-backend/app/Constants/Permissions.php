@@ -73,4 +73,11 @@ abstract class Permissions
         'update' => 'cargo.update',
         'delete' => 'cargo.delete',
     ];
+
+    const ActaGrado = [
+        'index' => 'acta-grado.index',
+        'create' => 'acta-grado.create',
+        'update' => 'acta-grado.update',
+        'delete' => 'acta-grado.delete',
+    ];
 }

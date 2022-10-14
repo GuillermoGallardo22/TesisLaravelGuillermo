@@ -2,89 +2,124 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\QueryException;
 use App\Http\Requests\StoreActaGradoRequest;
 use App\Http\Requests\UpdateActaGradoRequest;
 use App\Http\Resources\ResourceCollection;
+use App\Http\Resources\ResourceObject;
 use App\Models\ActaGrado;
+use App\Models\Directorio;
+use App\Models\Estudiante;
+use App\Models\ModalidadActaGrado;
+use App\Models\NumeracionActaGrado;
+use App\Models\TipoActaGrado;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Symfony\Component\HttpFoundation\Response;
 
 class ActaGradoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
+    public function __construct()
+    {
+        $this->authorizeResource(ActaGrado::class);
+    }
+
     public function index(Request $request)
     {
         $query = ActaGrado::query();
+
+        $query->orderBy("numero", "DESC");
 
         $query->applyFilters($request->all());
 
         return ResourceCollection::make($query->get());
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoreActaGradoRequest  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(StoreActaGradoRequest $request)
     {
-        //
+        $validated = $request->validated();
+
+        $estudiante = Estudiante::find($validated["estudiante"]);
+        $tipoActa = TipoActaGrado::where("codigo", $validated["tipo_acta"])->first();
+        $modalidadActa = ModalidadActaGrado::where("codigo", $validated["modalidad_acta_grado"])->first();
+
+        $numero = $validated["numeracion"];
+
+        try {
+            DB::beginTransaction();
+
+            $acta = new ActaGrado([
+                "numero" => $numero,
+                "estudiante_id" => $estudiante->id,
+                "canton_id" => $validated["canton"],
+                "titulo_bachiller" => $validated["titulo_bachiller"],
+                "fecha_inicio_estudios" => $validated["fecha_inicio_estudios"],
+                "fecha_fin_estudios" => $validated["fecha_fin_estudios"],
+                "creditos_aprobados" => $validated["creditos_aprobados"],
+                "tipo_acta_id" => $tipoActa->id,
+                "estado_acta_id" => $validated["estado_acta"],
+                "solicitar_especie" => $validated["solicitar_especie"],
+                "envio_financiero_especie" => $validated["envio_financiero_especie"],
+                "duracion" => $validated["duracion"],
+                "modalidad_acta_grado_id" => $modalidadActa->id,
+                //
+                "carrera_id" => $estudiante->carrera->id,
+                "directorio_id" => Directorio::activeDirectory()->id,
+                "created_user_id" => Auth::id(),
+                //
+                "horas_practicas" => $validated["horas_practicas"],
+                "docente_id" => $validated["presidente"],
+                "fecha_presentacion" => $validated["fecha_presentacion"],
+                "link" => $validated["link"],
+                "aula_id" => $validated["aula"],
+            ]);
+
+            $tempNumeracion = new NumeracionActaGrado([
+                'numero' => $numero,
+                'usado' => 1,
+                'carrera_id' => $estudiante->carrera->id,
+            ]);
+
+            $acta->save();
+            $tempNumeracion->save();
+
+            DB::commit();
+
+            return ResourceObject::make($acta);
+        } catch (\Illuminate\Database\QueryException $ex) {
+
+            $handle = new QueryException($ex);
+
+            $handle->setMessageTranskey("validation.custom.acta_grado.create.unique.");
+            $handle->setUniqueRestrictionNames([
+                "unique_restriction_link_fecha_presentacion",
+                "unique_restriction_numero_carrera_id_directorio_id",
+            ]);
+
+            [$message, $code] = $handle->execute();
+
+            return response($message, $code);
+        } catch (\Throwable $th) {
+            return response([
+                "errors" => $th->getMessage(),
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        } finally {
+            DB::rollBack();
+        }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\ActaGrado  $actaGrado
-     * @return \Illuminate\Http\Response
-     */
     public function show(ActaGrado $actaGrado)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\ActaGrado  $actaGrado
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(ActaGrado $actaGrado)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateActaGradoRequest  $request
-     * @param  \App\Models\ActaGrado  $actaGrado
-     * @return \Illuminate\Http\Response
-     */
     public function update(UpdateActaGradoRequest $request, ActaGrado $actaGrado)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\ActaGrado  $actaGrado
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(ActaGrado $actaGrado)
     {
         //

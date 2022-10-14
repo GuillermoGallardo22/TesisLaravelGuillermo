@@ -11,6 +11,12 @@ class NumeracionActaGrado extends Model
 {
     use HasFactory, Filterable;
 
+    protected $fillable = [
+        "numero",
+        "usado",
+        "carrera_id",
+    ];
+
     protected const FILTERS = ["carrera"];
 
     public function scopeCarrera(Builder $builder, $value)
@@ -18,10 +24,11 @@ class NumeracionActaGrado extends Model
         return $builder->where("carrera_id", $value);
     }
 
-    public function scopeSiguiente($query)
+    public function scopeSiguiente(Builder $query)
     {
-        return $query
-            ->max('numero') + 1;
+        $row = $query->orderBy("numero", "DESC")->first();
+
+        return $row->numero + 1;
     }
 
     public function scopeEncolados($query)

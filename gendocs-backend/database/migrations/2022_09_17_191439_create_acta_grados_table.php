@@ -84,9 +84,9 @@ class CreateActaGradosTable extends Migration
             $table->boolean("solicitar_especie")->default(false);
             $table->boolean("envio_financiero_especie")->default(false);
 
-            $table->unique("link");
-            $table->unique(["id", "link", "aula_id"]);
-            $table->unique(["numero", "carrera_id", "directorio_id"]);
+            $table->unique(["link", "fecha_presentacion"], "unique_restriction_link_fecha_presentacion");
+            // $table->unique(["id", "link", "aula_id"], "unique_restriction.id_link_aula_id");
+            $table->unique(["numero", "carrera_id", "directorio_id"], "unique_restriction_numero_carrera_id_directorio_id");
 
             $table->softDeletes();
             $table->timestamps();

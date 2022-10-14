@@ -13,6 +13,30 @@ class ActaGrado extends Model
 {
     use HasFactory, Filterable;
 
+    protected $fillable = [
+        "numero",
+        "titulo_bachiller",
+        "fecha_inicio_estudios",
+        "fecha_fin_estudios",
+        "creditos_aprobados",
+        "horas_practicas",
+        "fecha_presentacion",
+        "docente_id",
+        "estudiante_id",
+        "carrera_id",
+        "canton_id",
+        "tipo_acta_id",
+        "estado_acta_id",
+        "modalidad_acta_grado_id",
+        "aula_id",
+        "duracion",
+        "link",
+        "directorio_id",
+        "solicitar_especie",
+        "envio_financiero_especie",
+        "created_user_id",
+    ];
+
     protected const FILTERS = ["carrera"];
 
     protected $cast = [
@@ -20,7 +44,7 @@ class ActaGrado extends Model
         "envio_financiero_especie" => "boolean",
         "fecha_inicio_estudios" => "date",
         "fecha_fin_estudios" => "date",
-        "fecha_presentacion" => "date"
+        "fecha_presentacion" => "dateTime"
     ];
 
     public function fields()
