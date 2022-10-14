@@ -110,7 +110,8 @@ const ActasGrado: React.FunctionComponent = () => {
         field: "presidente",
         headerName: "Presidente",
         flex: 1,
-        valueGetter: (e: GridValueGetterParams<IDocente>) => e.value!.nombres,
+        valueGetter: (e: GridValueGetterParams<IDocente>) =>
+          e.value && e.value.nombres,
       },
       {
         field: "canton",

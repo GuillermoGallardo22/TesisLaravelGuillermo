@@ -27,7 +27,7 @@ export interface IEstadoActa {
 export interface IActaGrado {
   numeracion: number;
   estudiante: IEstudiante;
-  presidente: IDocente;
+  presidente?: IDocente | null;
   canton: ICanton;
   tipo_acta: ITipoActaGrado;
   titulo_bachiller: string;

@@ -1,6 +1,7 @@
 import { subYears } from "date-fns";
 import { useFormik } from "formik";
 import { useErrorsResponse } from "hooks";
+import { HTTP_STATUS } from "models/enums";
 import {
   IAddActaGrado,
   IEstadoActa,
@@ -9,8 +10,10 @@ import {
   ITipoActaGrado,
   useAddActaGradoProps,
 } from "models/interfaces";
+import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
 import {
+  addActaGrado,
   getEstadoActasGrado,
   getModalidadesActaGrado,
   getNumeracionActaGrado,
@@ -85,6 +88,8 @@ const validationSchema = yup.object().shape({
 });
 
 export const useAddActaGrado = ({ estudiante }: useAddActaGradoProps) => {
+  const { enqueueSnackbar } = useSnackbar();
+
   const [estadoActas, setEstadoActas] = useState<IEstadoActa[]>([]);
   const [modalidades, setModalidades] = useState<IModalidadActaGrado[]>([]);
   const [tipoActasGrado, setTipoActasGrado] = useState<ITipoActaGrado[]>([]);
@@ -96,7 +101,16 @@ export const useAddActaGrado = ({ estudiante }: useAddActaGradoProps) => {
 
   const onSubmit = async (form: IAddActaGrado) => {
     setErrorSummary(undefined);
-    console.log({ form });
+
+    const result = await addActaGrado(form);
+
+    if (result.status === HTTP_STATUS.created) {
+      enqueueSnackbar(result.message, { variant: "success" });
+      // handleReset();
+    } else {
+      enqueueSnackbar(result.message, { variant: "error" });
+      setErrorSummary(result.errors);
+    }
   };
 
   const formik = useFormik({

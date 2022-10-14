@@ -2,10 +2,11 @@ import axios from "axios";
 import { HTTP_STATUS } from "models/enums";
 import {
   IActaGrado,
+  IAddActaGrado,
   IFilterPaginationProps,
   IResponse,
 } from "models/interfaces";
-import { HTTP_MESSAGES, parseFilterPaginationProps } from "utils";
+import { handleErrors, HTTP_MESSAGES, parseFilterPaginationProps } from "utils";
 
 export async function getActasGrado(
   options?: IFilterPaginationProps
@@ -28,5 +29,25 @@ export async function getActasGrado(
       message: HTTP_MESSAGES[HTTP_STATUS.ok],
       data: [],
     };
+  }
+}
+
+export async function addActaGrado(
+  form: IAddActaGrado
+): Promise<IResponse<IActaGrado>> {
+  try {
+    const payload = form;
+
+    const {
+      data: { data },
+    } = await axios.post("actas-grados", payload);
+
+    return {
+      status: HTTP_STATUS.created,
+      message: HTTP_MESSAGES[HTTP_STATUS.created],
+      data,
+    };
+  } catch (error) {
+    return handleErrors(error);
   }
 }
