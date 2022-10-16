@@ -16,6 +16,7 @@ use App\Models\TipoActaGrado;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\Response;
 
 class ActaGradoController extends Controller
@@ -102,6 +103,8 @@ class ActaGradoController extends Controller
 
             return response($message, $code);
         } catch (\Throwable $th) {
+            Log::error($th);
+
             return response([
                 "errors" => $th->getMessage(),
             ], Response::HTTP_INTERNAL_SERVER_ERROR);

@@ -41,7 +41,7 @@ class StoreActaGradoRequest extends FormRequest
             "fecha_fin_estudios" => ["sometimes", "nullable", "date"],
             //
             "horas_practicas" => ["present", "numeric"],
-            "fecha_presentacion" => ["present", "nullable", "date"],
+            "fecha_presentacion" => ["sometimes", "nullable", "date"],
             "presidente" => [
                 "bail",
                 "sometimes",
@@ -73,10 +73,15 @@ class StoreActaGradoRequest extends FormRequest
     protected function prepareForValidation()
     {
         $this->merge([
-            "fecha_inicio_estudios" => Carbon::parse($this->fecha_inicio_estudios)->setSecond(0)->setMilli(0)->toDateString(),
-            "fecha_fin_estudios" => Carbon::parse($this->fecha_fin_estudios)->setSecond(0)->setMilli(0)->toDateString(),
+            "fecha_inicio_estudios" => $this->fecha_inicio_estudios ? Carbon::parse($this->fecha_inicio_estudios)->setSecond(0)->setMilli(0)->toDateString() : null,
+            "fecha_fin_estudios" => $this->fecha_fin_estudios ? Carbon::parse($this->fecha_fin_estudios)->setSecond(0)->setMilli(0)->toDateString() : null,
             "fecha_presentacion" => $this->fecha_presentacion ? Carbon::parse($this->fecha_presentacion)->setSecond(0)->setMilli(0) : null,
             "presidente" => (!boolval($this->presidente) || $this->presidente < 1) ? null : $this->presidente,
+            //
+            "estado_acta" => $this->estado_acta ? $this->estado_acta : null,
+            "horas_practicas" => isset($this->horas_practicas) ? $this->horas_practicas : null,
+            "aula" => $this->aula ? $this->aula : null,
+            "link" => $this->link ? $this->link : null,
         ]);
     }
 }
