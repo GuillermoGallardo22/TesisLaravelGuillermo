@@ -23,6 +23,89 @@ import { parseToDateTime } from "./date";
 export const DRAWERWIDTH = 240;
 const { FORMATO_FECHA_NACIMIENTO: FORMATO_FECHA } = CONSTANTS;
 
+import { isPlainObject, transform, isEmpty } from "lodash";
+
+export type CleanOptions = {
+  cleanKeys?: string[];
+  cleanValues?: any[];
+  emptyArrays?: boolean;
+  emptyObjects?: boolean;
+  emptyStrings?: boolean;
+  NaNValues?: boolean;
+  nullValues?: boolean;
+  undefinedValues?: boolean;
+};
+
+export function clean(
+  object: Record<string, any>,
+  options?: CleanOptions
+): Record<string, any> {
+  const {
+    cleanKeys = [],
+    cleanValues = [],
+    emptyArrays = true,
+    emptyObjects = true,
+    emptyStrings = true,
+    NaNValues = false,
+    nullValues = true,
+    undefinedValues = true,
+  } = options || {};
+
+  return transform(object, (result, value, key) => {
+    // Exclude specific keys.
+    if (cleanKeys.includes(key)) {
+      return;
+    }
+
+    // Recurse into arrays and objects.
+    if (Array.isArray(value) || isPlainObject(value)) {
+      value = clean(value, options);
+    }
+
+    // Exclude specific values.
+    if (cleanValues.includes(value)) {
+      return;
+    }
+
+    // Exclude empty objects.
+    if (emptyObjects && isPlainObject(value) && isEmpty(value)) {
+      return;
+    }
+
+    // Exclude empty arrays.
+    if (emptyArrays && Array.isArray(value) && !value.length) {
+      return;
+    }
+
+    // Exclude empty strings.
+    if (emptyStrings && value === "") {
+      return;
+    }
+
+    // Exclude NaN values.
+    if (NaNValues && Number.isNaN(value)) {
+      return;
+    }
+
+    // Exclude null values.
+    if (nullValues && value === null) {
+      return;
+    }
+
+    // Exclude undefined values.
+    if (undefinedValues && value === undefined) {
+      return;
+    }
+
+    // Append when recursing arrays.
+    if (Array.isArray(result)) {
+      return result.push(value);
+    }
+
+    result[key] = value;
+  });
+}
+
 type SheetType = {
   A: string;
   B: string;
