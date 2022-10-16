@@ -21,7 +21,7 @@ class CreateActaGradosTable extends Migration
             $table->string("titulo_bachiller");
 
             $table->date("fecha_inicio_estudios");
-            $table->date("fecha_fin_estudios");
+            $table->date("fecha_fin_estudios")->nullable();
 
             $table->decimal("creditos_aprobados");
             $table->decimal("horas_practicas")->nullable();
@@ -50,6 +50,7 @@ class CreateActaGradosTable extends Migration
                 ->on("tipo_acta_grados");
 
             $table->foreignId("estado_acta_id")
+                ->nullable()
                 ->references("id")
                 ->on("estado_actas");
 
