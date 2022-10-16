@@ -54,7 +54,7 @@ export interface IAddActaGrado {
   tipo_acta: number;
   titulo_bachiller: string;
   fecha_inicio_estudios: Date;
-  fecha_fin_estudios: Date;
+  fecha_fin_estudios: Date | null;
   creditos_aprobados: number;
   fecha_presentacion: Date | null;
   horas_practicas: number;

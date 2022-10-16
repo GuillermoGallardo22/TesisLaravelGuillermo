@@ -6,7 +6,12 @@ import {
   IFilterPaginationProps,
   IResponse,
 } from "models/interfaces";
-import { handleErrors, HTTP_MESSAGES, parseFilterPaginationProps } from "utils";
+import {
+  clean,
+  handleErrors,
+  HTTP_MESSAGES,
+  parseFilterPaginationProps,
+} from "utils";
 
 export async function getActasGrado(
   options?: IFilterPaginationProps
@@ -36,7 +41,10 @@ export async function addActaGrado(
   form: IAddActaGrado
 ): Promise<IResponse<IActaGrado>> {
   try {
-    const payload = form;
+    const payload = clean(form, {
+      cleanValues: [-1],
+    });
+    console.log({ payload, form });
 
     const {
       data: { data },

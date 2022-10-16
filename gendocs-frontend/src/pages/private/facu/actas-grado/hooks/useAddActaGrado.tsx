@@ -36,7 +36,7 @@ const initialValues: IAddActaGrado = {
   tipo_acta: -1,
   titulo_bachiller: "",
   fecha_inicio_estudios: subYears(TODAY, DURACION_ESTUDIOS),
-  fecha_fin_estudios: TODAY,
+  fecha_fin_estudios: null,
   creditos_aprobados: 0,
   fecha_presentacion: null,
   horas_practicas: HORAS_PRACTICAS,
@@ -70,7 +70,7 @@ const validationSchema = yup.object().shape({
   fecha_inicio_estudios: yup.date().required(VM.required),
   fecha_fin_estudios: yup
     .date()
-    .required(VM.required)
+    .nullable()
     .min(yup.ref("fecha_inicio_estudios"), VM.invalidDate),
   creditos_aprobados: yup
     .number()
@@ -78,7 +78,7 @@ const validationSchema = yup.object().shape({
     .min(1, VM.invalidOption),
   fecha_presentacion: yup.date().min(TODAY, VM.invalidDate).nullable(),
   horas_practicas: yup.number(),
-  estado_acta: yup.number().required(VM.required).min(1, VM.invalidOption),
+  estado_acta: yup.number().nullable(),
   solicitar_especie: yup.boolean(),
   envio_financiero_especie: yup.boolean(),
   modalidad_acta_grado: yup.string().required(VM.required),

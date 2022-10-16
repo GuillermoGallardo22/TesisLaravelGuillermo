@@ -195,7 +195,7 @@ const AddActaGrado: React.FunctionComponent = () => {
                 getOptionLabel: getOptionLabelCanton,
               }}
               TextFieldProps={{
-                label: "Cantón de redidencia",
+                label: "Cantón de residencia",
                 placeholder: "Nombre",
                 required: true,
                 error: formik.touched.canton && Boolean(formik.errors.canton),
@@ -265,7 +265,6 @@ const AddActaGrado: React.FunctionComponent = () => {
                 <TextField
                   {...props}
                   margin="normal"
-                  required
                   fullWidth
                   error={
                     formik.touched.fecha_fin_estudios &&
@@ -350,7 +349,6 @@ const AddActaGrado: React.FunctionComponent = () => {
 
           <Grid item xs={12} sm={6}>
             <Select
-              required
               id="estado_acta"
               name="estado_acta"
               label="Estado acta"
@@ -457,30 +455,7 @@ const AddActaGrado: React.FunctionComponent = () => {
             </Box>
           </Grid>
 
-          <Grid item xs={12} sm={6}>
-            <SingleAutoComplete
-              key="autocomplete-presidente"
-              value={acDocente}
-              onChange={setACDocente}
-              hookProps={{
-                fetch: getDocentes,
-                preventSubmitOnOpen: true,
-              }}
-              AutoCompleteProps={{
-                id: "autocomplete-presidente",
-                disabled: submitting || !estudianteSeleccionado,
-                isOptionEqualToValue: isOptionEqualToValueDocente,
-                getOptionLabel: getOptionLabelDocente,
-              }}
-              TextFieldProps={{
-                label: "Presidente",
-                placeholder: "Cédula | Nombres",
-                disabled: submitting || !estudianteSeleccionado,
-              }}
-            />
-          </Grid>
-
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12}>
             <DateTimePicker
               label="Fecha sustentación/incorporación"
               disabled={submitting || !estudianteSeleccionado}
