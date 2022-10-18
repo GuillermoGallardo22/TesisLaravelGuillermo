@@ -125,6 +125,8 @@ class ActaGradoController extends Controller
 
     public function destroy(ActaGrado $actaGrado)
     {
-        //
+        $actaGrado->delete();
+
+        return response()->noContent();
     }
 }
