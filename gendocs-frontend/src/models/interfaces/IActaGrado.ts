@@ -25,7 +25,8 @@ export interface IEstadoActa {
 }
 
 export interface IActaGrado {
-  numeracion: number;
+  id: number;
+  numero: number;
   estudiante: IEstudiante;
   presidente?: IDocente | null;
   canton: ICanton;
