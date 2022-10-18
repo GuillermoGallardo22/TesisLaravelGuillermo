@@ -21,7 +21,7 @@ export async function getActasGrado(
 
     const {
       data: { data },
-    } = await axios.get("actas-grados?" + params);
+    } = await axios.get("acta-grado?" + params);
 
     return {
       status: HTTP_STATUS.ok,
@@ -48,7 +48,7 @@ export async function addActaGrado(
 
     const {
       data: { data },
-    } = await axios.post("actas-grados", payload);
+    } = await axios.post("acta-grado", payload);
 
     return {
       status: HTTP_STATUS.created,
