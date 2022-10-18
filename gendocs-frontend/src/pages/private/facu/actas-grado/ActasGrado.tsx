@@ -1,22 +1,31 @@
+import { DialogContentText, Tooltip } from "@mui/material";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
 import {
   DataGrid,
+  GridActionsCellItem,
   GridColumns,
+  GridRowParams,
   GridValueFormatterParams,
   GridValueGetterParams,
 } from "@mui/x-data-grid";
 import {
   BooleanCell,
+  ConfirmationDialog,
   GridToolbarWithoutExport,
   Icon,
   Select,
   TitleNav,
 } from "components";
-import { useGridColumnVisibilityModel } from "hooks";
 import {
+  useConfirmationDialog,
+  useDeleteItem,
+  useGridColumnVisibilityModel,
+} from "hooks";
+import {
+  IActaGrado,
   IAula,
   ICanton,
   IDocente,
@@ -28,7 +37,7 @@ import {
 import { useMemo, useState } from "react";
 import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
-import { getActasGrado } from "services";
+import { deleteActaGrado, getActasGrado } from "services";
 import { parseToDate, parseToDateTime } from "utils";
 import { useListCarreras } from "../carreras/hooks/useListCarreras";
 import { useEstadoActasList } from "./hooks/useEstadoActasList";
@@ -43,7 +52,11 @@ const ActasGrado: React.FunctionComponent = () => {
     useModalidadActasList();
   const { tiposActas, isLoading: loadingTipoActas } = useTipoActasList();
 
-  const { data: actasGrado = [], isLoading: loadingActasGrado } = useQuery(
+  const {
+    data: actasGrado = [],
+    isLoading: loadingActasGrado,
+    refetch,
+  } = useQuery(
     ["actas-grado", carrera],
     () =>
       getActasGrado({
@@ -56,6 +69,22 @@ const ActasGrado: React.FunctionComponent = () => {
       enabled: carrera !== -1,
     }
   );
+
+  const {
+    closeModal: closeDeleteModal,
+    isVisible: isVisibleDeleteModal,
+    itemSelected: itemSelectedDeleteModal,
+    openModal: openDeleteModal,
+  } = useConfirmationDialog<IActaGrado>();
+
+  const { deleting, handleDelete } = useDeleteItem({
+    id: itemSelectedDeleteModal?.id,
+    onDelete: deleteActaGrado,
+    callback: () => {
+      closeDeleteModal();
+      refetch();
+    },
+  });
 
   const columns = useMemo(
     (): GridColumns => [
@@ -186,37 +215,36 @@ const ActasGrado: React.FunctionComponent = () => {
         width: 130,
         renderCell: (r) => <BooleanCell value={r.value} />,
       },
-      // {
-      //   type: "actions",
-      //   field: "acciones",
-      //   headerName: "Acciones",
-      //   getActions: (p) => [
-      //     <GridActionsCellItem
-      //       key={p.id}
-      //       color="primary"
-      //       LinkComponent={Link}
-      //       disabled={!p.row.drive}
-      //       to={`drive/${p.row.drive}`}
-      //       icon={
-      //         <Tooltip title="Ver documento" arrow>
-      //           <Icon icon="article" />
-      //         </Tooltip>
-      //       }
-      //       label="Ver documento"
-      //     />,
-      //     <GridActionsCellItem
-      //       key={p.id}
-      //       color="error"
-      //       icon={
-      //         <Tooltip title="Eliminar" arrow>
-      //           <Icon icon="delete" />
-      //         </Tooltip>
-      //       }
-      //       label="Eliminar documento"
-      //       onClick={() => openModal(p.row as IDocumento)}
-      //     />,
-      //   ],
-      // },
+      {
+        type: "actions",
+        field: "acciones",
+        headerName: "Acciones",
+        getActions: (p: GridRowParams<IActaGrado>) => [
+          <GridActionsCellItem
+            key={p.id}
+            color="success"
+            LinkComponent={Link}
+            to={`asistencia/${p.row.id}`}
+            icon={
+              <Tooltip title="Asistentes" arrow>
+                <Icon icon="people" />
+              </Tooltip>
+            }
+            label="Ver documento"
+          />,
+          <GridActionsCellItem
+            key={p.id}
+            color="error"
+            icon={
+              <Tooltip title="Eliminar" arrow>
+                <Icon icon="delete" />
+              </Tooltip>
+            }
+            label="Eliminar acta"
+            onClick={() => openDeleteModal(p.row)}
+          />,
+        ],
+      },
     ],
     [estadoActas.length, modalidades.length, tiposActas.length]
   );
@@ -294,6 +322,23 @@ const ActasGrado: React.FunctionComponent = () => {
           rows={actasGrado}
         />
       </div>
+
+      <ConfirmationDialog
+        id="delete-acta-modal"
+        keepMounted={true}
+        isVisible={isVisibleDeleteModal}
+        title="Eliminar"
+        onCancel={closeDeleteModal}
+        onApprove={handleDelete}
+        textApprove="ELIMINAR"
+        buttonColorApprove="error"
+        loading={deleting}
+      >
+        <DialogContentText>
+          ¿Está seguro que desea eliminar el acta número{" "}
+          <strong>{itemSelectedDeleteModal?.numero}</strong>?
+        </DialogContentText>
+      </ConfirmationDialog>
     </Stack>
   );
 };

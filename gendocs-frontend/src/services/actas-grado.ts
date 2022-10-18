@@ -59,3 +59,19 @@ export async function addActaGrado(
     return handleErrors(error);
   }
 }
+
+export async function deleteActaGrado(
+  id: string | number
+): Promise<IResponse<null>> {
+  try {
+    await axios.delete("acta-grado/" + id);
+
+    return {
+      data: null,
+      status: HTTP_STATUS.ok,
+      message: HTTP_MESSAGES[200],
+    };
+  } catch (error) {
+    return handleErrors(error);
+  }
+}

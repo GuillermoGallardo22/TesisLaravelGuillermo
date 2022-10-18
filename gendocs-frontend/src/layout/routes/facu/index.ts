@@ -15,6 +15,7 @@ import {
   AddProceso,
   AddReserva,
   AddUsuario,
+  AsistentesActaGrado,
   Cargos,
   Carreras,
   Consejos,
@@ -72,6 +73,11 @@ export const routes: IRoute[] = [
     modules: [ModuleEnum.FACU],
     isMenuOption: true,
     childrens: [
+      {
+        path: "asistencia/:actaGradoId",
+        component: AsistentesActaGrado,
+        roles: [RolEnum.ADMIN, RolEnum.ADMINTEMP],
+      },
       {
         path: "nuevo",
         component: AddActaGrado,

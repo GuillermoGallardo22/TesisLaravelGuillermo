@@ -1,5 +1,9 @@
 import { lazy } from "react";
 
+export const AsistentesActaGrado = lazy(
+  () => import("pages/private/facu/actas-grado/components/AsistenciaActaGrado")
+);
+
 export const PlantillasActasGrado = lazy(
   () => import("pages/private/facu/actas-grado/components/PlantillasActaGrado")
 );
