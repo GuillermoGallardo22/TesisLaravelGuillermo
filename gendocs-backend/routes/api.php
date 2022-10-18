@@ -71,7 +71,7 @@ Route::middleware(["auth:sanctum", "isUserActive"])->group(function () {
     Route::apiResource('aulas', AulaController::class)->only('index');
     Route::apiResource('modalidades-acta-grado', ModalidadActaGradoController::class)->only('index');
 
-    Route::apiResource("actas-grados", ActaGradoController::class);
+    Route::apiResource("acta-grado", ActaGradoController::class);
 
     Route::apiResource('numeracion', NumeracionController::class)->only(['index', 'store']);
     Route::apiResource('numeracion-acta-grado', NumeracionActaGradoController::class)->only(['index']);
