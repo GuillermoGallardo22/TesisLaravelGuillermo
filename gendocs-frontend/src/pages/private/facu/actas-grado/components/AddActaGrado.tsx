@@ -12,16 +12,14 @@ import { DatePicker, DateTimePicker } from "@mui/x-date-pickers";
 import { ErrorSummary, Select, SingleAutoComplete, TitleNav } from "components";
 import { ModalidadActaGrado } from "models/enums";
 import { IAula, ICanton, IDocente, IEstudiante } from "models/interfaces";
-import { useEffect, useMemo, useState } from "react";
-import { getAulas, getCantones, getDocentes, getEstudiantes } from "services";
+import { useEffect, useState } from "react";
+import { getAulas, getCantones, getEstudiantes } from "services";
 import {
   getOptionLabelAula,
   getOptionLabelCanton,
-  getOptionLabelDocente,
   getOptionLabelEstudiante,
   isOptionEqualToValueAula,
   isOptionEqualToValueCanton,
-  isOptionEqualToValueDocente,
   isOptionEqualToValueEstudiante,
 } from "utils";
 

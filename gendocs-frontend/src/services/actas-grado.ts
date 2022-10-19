@@ -37,6 +37,24 @@ export async function getActasGrado(
   }
 }
 
+export async function getActaGrado(
+  actaGradoId: string | number
+): Promise<IResponse<IActaGrado>> {
+  try {
+    const {
+      data: { data },
+    } = await axios.get("acta-grado/" + actaGradoId);
+
+    return {
+      status: HTTP_STATUS.ok,
+      message: HTTP_MESSAGES[HTTP_STATUS.ok],
+      data: data,
+    };
+  } catch (error) {
+    return handleErrors(error);
+  }
+}
+
 export async function addActaGrado(
   form: IAddActaGrado
 ): Promise<IResponse<IActaGrado>> {

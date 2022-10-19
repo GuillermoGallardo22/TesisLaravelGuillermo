@@ -1,11 +1,123 @@
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
-import { TitleNav } from "components";
+import { DataGrid, GridColumns } from "@mui/x-data-grid";
+import { GridToolbarColumns, Icon, Skeleton, TitleNav } from "components";
+import { useConfirmationDialog } from "hooks";
+import { useMemo } from "react";
+import { useParams } from "react-router-dom";
+import AddAsistenteActa from "../components/AddAsistenteActa";
+import useActaGrado from "../hooks/useActaGrado";
 
 const AsistenciaActaGrado = () => {
+  const { actaGradoId = "" } = useParams<{ actaGradoId: string }>();
+
+  const { actaGrado, isLoadingActaGrado } = useActaGrado(actaGradoId);
+
+  const {
+    isVisible: isVisibleAddDocente,
+    openJustModal: openModalAddDocente,
+    closeModal: closeModalAddDocente,
+  } = useConfirmationDialog();
+
+  const columns = useMemo(
+    (): GridColumns => [
+      {
+        field: "docente",
+        headerName: "Docente",
+        flex: 1,
+        // valueGetter: getNombreCompletoMiembro,
+      },
+      {
+        field: "tipo",
+        headerName: "Tipo",
+        flex: 1,
+        // valueGetter: getNombreCompletoMiembro,
+      },
+      // {
+      //   type: "boolean",
+      //   field: "notificado",
+      //   headerName: "Notificado",
+      //   flex: 1,
+      //   renderCell: (r) => <BooleanCell value={r.row.notificado} />,
+      // },
+      // {
+      //   type: "boolean",
+      //   field: "asistio",
+      //   headerName: "Asistió",
+      //   flex: 1,
+      //   renderCell: (r) => <BooleanCell value={r.row.asistio} />,
+      // },
+      // {
+      //   type: "boolean",
+      //   field: "responsable",
+      //   headerName: "Responsable",
+      //   flex: 1,
+      //   renderCell: (r) => <BooleanCell value={r.row.responsable} />,
+      // },
+      {
+        type: "actions",
+        field: "acciones",
+        headerName: "Acciones",
+        getActions: (p) => [
+          // <GridActionsCellItem
+          //   key={p.id}
+          //   color="error"
+          //   disabled={!consejo?.estado}
+          //   icon={
+          //     <Tooltip title="Eliminar" arrow>
+          //       <Icon icon="delete" />
+          //     </Tooltip>
+          //   }
+          //   label="Eliminar documento"
+          //   onClick={() => openDeleteMiembroModal(p.row as IMiembro)}
+          // />,
+        ],
+      },
+    ],
+    []
+  );
+
+  if (!actaGrado || isLoadingActaGrado) return <Skeleton />;
+
   return (
     <Stack spacing={2}>
-      <TitleNav title="Asistentes" goback={false} />
-      <h1>hola mundo</h1>
+      <TitleNav title="Asistentes" />
+
+      <Box>
+        <Button
+          fullWidth
+          startIcon={<Icon icon="add" />}
+          variant="outlined"
+          onClick={openModalAddDocente}
+        >
+          AGREGAR
+        </Button>
+      </Box>
+
+      <div style={{ height: 700, width: "100%" }}>
+        <DataGrid
+          // selectionModel={selectionModel}
+          // onSelectionModelChange={(newSelectionModel) => {
+          //   setSelectionModel(newSelectionModel);
+          // }}
+          // checkboxSelection
+          // disableSelectionOnClick
+          disableColumnMenu
+          // columnVisibilityModel={columnVisibilityModel}
+          // onColumnVisibilityModelChange={onColumnVisibilityModelChange}
+          components={{ Toolbar: GridToolbarColumns }}
+          columns={columns}
+          // loading={isLoading}
+          rows={[]}
+        />
+      </div>
+
+      <AddAsistenteActa
+        actaGrado={actaGrado}
+        isVisible={isVisibleAddDocente}
+        onCancel={closeModalAddDocente}
+      />
     </Stack>
   );
 };
