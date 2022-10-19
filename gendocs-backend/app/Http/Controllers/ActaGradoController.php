@@ -115,7 +115,7 @@ class ActaGradoController extends Controller
 
     public function show(ActaGrado $actaGrado)
     {
-        //
+        return ResourceObject::make($actaGrado);
     }
 
     public function update(UpdateActaGradoRequest $request, ActaGrado $actaGrado)
