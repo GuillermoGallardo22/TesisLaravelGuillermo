@@ -120,10 +120,10 @@ const ActasGrado: React.FunctionComponent = () => {
       {
         type: "dateTime",
         field: "fecha_presentacion",
-        headerName: "F. presen.",
+        headerName: "F. sus./inc.",
         width: 180,
         valueFormatter: (v: GridValueFormatterParams) =>
-          parseToDateTime(v.value),
+          v.value && parseToDateTime(v.value),
       },
       {
         type: "number",
