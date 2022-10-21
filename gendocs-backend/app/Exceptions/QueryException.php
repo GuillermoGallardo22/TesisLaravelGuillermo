@@ -19,7 +19,7 @@ class QueryException
 
     public function setMessageTranskey($key)
     {
-        $this->messageTransKey = $key;
+        $this->messageTransKey = "validation.custom." . $key . ".create.unique.";
     }
 
     public function setUniqueRestrictionNames($uniqueRestrictionNames)

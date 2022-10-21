@@ -93,7 +93,7 @@ class ActaGradoController extends Controller
 
             $handle = new QueryException($ex);
 
-            $handle->setMessageTranskey("validation.custom.acta_grado.create.unique.");
+            $handle->setMessageTranskey("acta_grado");
             $handle->setUniqueRestrictionNames([
                 "unique_restriction_link_fecha_presentacion",
                 "unique_restriction_numero_carrera_id_directorio_id",
