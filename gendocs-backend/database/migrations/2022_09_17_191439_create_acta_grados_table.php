@@ -28,10 +28,10 @@ class CreateActaGradosTable extends Migration
 
             $table->dateTime("fecha_presentacion")->nullable();
 
-            $table->foreignId("docente_id") // PRESIDENTE
-                ->nullable()
-                ->references("id")
-                ->on("docentes");
+            // $table->foreignId("docente_id") // PRESIDENTE
+            //     ->nullable()
+            //     ->references("id")
+            //     ->on("docentes");
 
             $table->foreignId("estudiante_id")
                 ->references("id")
@@ -63,8 +63,7 @@ class CreateActaGradosTable extends Migration
                 ->references("id")
                 ->on("aulas");
 
-            $table->integer("duracion")
-                ->nullable();
+            $table->integer("duracion");
 
             $table->string("link")
                 ->nullable();
