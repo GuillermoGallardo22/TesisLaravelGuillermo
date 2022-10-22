@@ -26,9 +26,11 @@ class ActaGradoSeeder extends Seeder
     {
         $carreras = Carrera::all();
 
+        $fecha = Carbon::today()->setHour(8)->setMinute(0)->setSecond(0)->addDays(7);
+
         foreach ($carreras as $carrera) {
 
-            $docente = Docente::inRandomOrder()->first();
+            // $docente = Docente::inRandomOrder()->first();
             $canton = Canton::inRandomOrder()->first();
             $tipoActa = TipoActaGrado::inRandomOrder()->first();
             $estadoActa = EstadoActa::inRandomOrder()->first();
@@ -40,6 +42,7 @@ class ActaGradoSeeder extends Seeder
                 ->first();
 
             $modalidadOptions = [];
+            $duracion = collect([60, 120])->random();
 
             if ($modalidad->codigo == ModalidadesActaGrado::ONL) {
                 $modalidadOptions = [
@@ -48,7 +51,6 @@ class ActaGradoSeeder extends Seeder
             } else {
                 $modalidadOptions = [
                     "aula_id" => Aula::inRandomOrder()->first()->id,
-                    "duracion" => collect([60, 120])->random(),
                 ];
             }
 
@@ -59,10 +61,10 @@ class ActaGradoSeeder extends Seeder
                 "titulo_bachiller" => "Sistemas computacionales",
                 "fecha_inicio_estudios" => Carbon::parse("2017-05-05"),
                 "fecha_fin_estudios" => Carbon::parse("2022-05-05"),
-                "fecha_presentacion" => Carbon::parse("2022-05-05 08:30"),
+                "fecha_presentacion" => $fecha,
                 "creditos_aprobados" => 400,
                 "horas_practicas" => 400,
-                "docente_id" => $docente->id,
+                // "docente_id" => $docente->id,
                 "canton_id" => $canton->id,
                 "tipo_acta_id" => $tipoActa->id,
                 "estado_acta_id" => $estadoActa->id,
@@ -71,12 +73,15 @@ class ActaGradoSeeder extends Seeder
                 "created_user_id" => "1",
                 "solicitar_especie" => rand(0, 1),
                 "envio_financiero_especie" => rand(0, 1),
+                "duracion" => $duracion,
             ];
 
             ActaGrado::create(array_merge(
                 $actaGradoOptions,
                 $modalidadOptions,
             ));
+
+            $fecha->addMinutes($duracion);
         }
     }
 }
