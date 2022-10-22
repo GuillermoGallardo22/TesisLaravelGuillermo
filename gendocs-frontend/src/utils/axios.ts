@@ -3,10 +3,8 @@ import { HTTP_STATUS } from "models/enums/HttpStatus";
 import { IResponse } from "models/interfaces/IResponse";
 import { HTTP_MESSAGES } from "./messages";
 
-const API_PATH = import.meta.env.VITE_API_URL;
-
 axios.defaults.withCredentials = true;
-axios.defaults.baseURL = API_PATH;
+axios.defaults.baseURL = "/api";
 
 axios.interceptors.response.use(
   (r) => r,
