@@ -2,83 +2,74 @@
 
 namespace App\Http\Controllers;
 
+use App\Constants\UniqueConstraintNames;
+use App\Exceptions\QueryException;
 use App\Http\Requests\StoreMiembrosActaGradoRequest;
 use App\Http\Requests\UpdateMiembrosActaGradoRequest;
+use App\Http\Resources\ResourceCollection;
+use App\Http\Resources\ResourceObject;
 use App\Models\MiembrosActaGrado;
+use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class MiembrosActaGradoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function __construct()
     {
-        //
+        $this->authorizeResource(MiembrosActaGrado::class);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function index(Request $request)
     {
-        //
+        $query = MiembrosActaGrado::query();
+
+        $query->applyFilters($request->all());
+
+        return ResourceCollection::make($query->get());
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoreMiembrosActaGradoRequest  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(StoreMiembrosActaGradoRequest $request)
     {
-        //
+        $validated = $request->validated();
+
+        try {
+            $miembroActaGrado = MiembrosActaGrado::create([
+                "docente_id" => $validated["docente"],
+                "acta_grado_id" => $validated["actaGrado"],
+                "tipo" => $validated["tipo"],
+                "informacion_adicional" => $validated["informacion_adicional"],
+            ]);
+
+            return ResourceObject::make($miembroActaGrado);
+        } catch (\Illuminate\Database\QueryException $ex) {
+
+            $handle = new QueryException($ex);
+
+            $handle->setMessageTranskey("miembro_acta_grado");
+            $handle->setUniqueRestrictionNames([
+                UniqueConstraintNames::ACTA_GRADO_ACTA_GRADO_ID_DOCENTE_ID,
+            ]);
+
+            [$message, $code] = $handle->execute();
+
+            return response($message, $code);
+        } catch (\Throwable $th) {
+            return response([
+                "errors" => $th->getMessage(),
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\MiembrosActaGrado  $miembrosActaGrado
-     * @return \Illuminate\Http\Response
-     */
     public function show(MiembrosActaGrado $miembrosActaGrado)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\MiembrosActaGrado  $miembrosActaGrado
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(MiembrosActaGrado $miembrosActaGrado)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateMiembrosActaGradoRequest  $request
-     * @param  \App\Models\MiembrosActaGrado  $miembrosActaGrado
-     * @return \Illuminate\Http\Response
-     */
     public function update(UpdateMiembrosActaGradoRequest $request, MiembrosActaGrado $miembrosActaGrado)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\MiembrosActaGrado  $miembrosActaGrado
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(MiembrosActaGrado $miembrosActaGrado)
     {
         //
