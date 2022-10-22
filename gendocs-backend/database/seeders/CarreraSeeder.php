@@ -23,11 +23,11 @@ class CarreraSeeder extends Seeder
         ]);
 
         Carrera::create([
-            'nombre' => 'Ingeniería en Electrónica y Telecomunicaciones',
+            'nombre' => 'Ingeniería en Electrónica y Comunicaciones',
             'desaparecera' => true,
             'titulo_mas' => 'Ingeniero en Electrónica y Comunicaciones',
             'titulo_fem' => 'Ingeniera en Electrónica y Comunicaciones',
-            'creditos' => 246,
+            'creditos' => 247,
         ]);
 
         Carrera::create([
@@ -35,35 +35,35 @@ class CarreraSeeder extends Seeder
             'desaparecera' => true,
             'titulo_mas' => 'Ingeniero Industrial en Procesos de Automatización',
             'titulo_fem' => 'Ingeniera Industrial en Procesos de Automatización',
-            'creditos' => 246,
+            'creditos' => 247,
         ]);
 
         Carrera::create([
             'nombre' => 'Tecnologías de la Información',
             'titulo_mas' => 'Ingeniero en Tecnologías de la Información',
             'titulo_fem' => 'Ingeniera en Tecnologías de la Información',
-            'creditos' => 246,
+            'creditos' => 135,
         ]);
 
         Carrera::create([
             'nombre' => 'Telecomunicaciones',
             'titulo_mas' => 'Ingeniero en Telecomunicaciones',
             'titulo_fem' => 'Ingeniera en Telecomunicaciones',
-            'creditos' => 246,
+            'creditos' => 135,
         ]);
 
         Carrera::create([
             'nombre' => 'Ingeniería Industrial',
             'titulo_mas' => 'Ingeniero Industrial',
             'titulo_fem' => 'Ingeniera Industrial',
-            'creditos' => 246,
+            'creditos' => 135,
         ]);
 
         Carrera::create([
             'nombre' => 'Software',
             'titulo_mas' => 'Ingeniero en Software',
             'titulo_fem' => 'Ingeniera en Software',
-            'creditos' => 246,
+            'creditos' => 135,
         ]);
     }
 }
