@@ -7,13 +7,17 @@ import InputLabel from "@mui/material/InputLabel";
 import ListItemText from "@mui/material/ListItemText";
 import MenuItem from "@mui/material/MenuItem";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
-import { SelectProps } from "./Select";
+import { ItemProps as ItemPropsBase, SelectProps } from "./Select";
 
-// FIXME:
+type ItemProps = {
+  id: number;
+} & Omit<ItemPropsBase, "id">;
+
 type SelectMultiProps = {
   onChange: (ids: number[]) => void;
   values: number[];
-} & Omit<SelectProps, "onChange" | "value">;
+  items: ItemProps[];
+} & Omit<SelectProps, "onChange" | "value" | "items">;
 
 export function SelectMulti({
   onChange,
