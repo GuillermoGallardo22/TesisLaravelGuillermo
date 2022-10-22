@@ -22,7 +22,7 @@ class ActaGrado extends Model
         "creditos_aprobados",
         "horas_practicas",
         "fecha_presentacion",
-        "docente_id",
+        // "docente_id",
         "estudiante_id",
         "carrera_id",
         "canton_id",
@@ -67,7 +67,7 @@ class ActaGrado extends Model
             "modalidad_acta_grado" => ResourceObject::make($this->modalidad),
             "estudiante" => ResourceObject::make($this->estudiante),
             "canton" => ResourceObject::make($this->canton),
-            "presidente" => ResourceObject::make($this->presidente),
+            // "presidente" => ResourceObject::make($this->presidente),
             "tipo_acta" => ResourceObject::make($this->tipoActa),
             "estado_acta" => ResourceObject::make($this->estadoActa),
         ];
@@ -111,5 +111,10 @@ class ActaGrado extends Model
     public function canton()
     {
         return $this->belongsTo(Canton::class, "canton_id");
+    }
+
+    public function miembros()
+    {
+        return $this->hasMany(MiembrosActaGrado::class, "acta_grado_id");
     }
 }
