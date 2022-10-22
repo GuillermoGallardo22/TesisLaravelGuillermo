@@ -11,6 +11,8 @@
 |
 */
 
+use App\Constants\UniqueConstraintNames;
+
 return [
     'accepted' => ':attribute debe ser aceptado.',
     'accepted_if' => ':attribute debe ser aceptado cuando :other sea :value.',
@@ -208,5 +210,12 @@ return [
                 ],
             ],
         ],
+        "miembro_acta_grado" => [
+            "create" => [
+                "unique" => [
+                    UniqueConstraintNames::ACTA_GRADO_ACTA_GRADO_ID_DOCENTE_ID => "No se puede ingresar el mismo docente",
+                ]
+            ]
+        ]
     ],
 ];
