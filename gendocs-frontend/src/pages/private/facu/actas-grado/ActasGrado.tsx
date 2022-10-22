@@ -1,8 +1,9 @@
-import { DialogContentText, Tooltip } from "@mui/material";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+import DialogContentText from "@mui/material/DialogContentText";
 import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
+import Tooltip from "@mui/material/Tooltip";
 import {
   DataGrid,
   GridActionsCellItem,

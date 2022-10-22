@@ -1,8 +1,8 @@
-import { UseAutocompleteProps as UseAutocompletePropsBase } from "@mui/material";
 import Autocomplete from "@mui/material/Autocomplete";
 import Chip from "@mui/material/Chip";
 import CircularProgress from "@mui/material/CircularProgress";
 import TextField from "@mui/material/TextField";
+import { UseAutocompleteProps as UseAutocompletePropsBase } from "@mui/material/useAutocomplete";
 import { useAutocompleteProps } from "hooks/useAutocomplete";
 import { useMultiAutocomplete } from "hooks/useMultiAutocomplete";
 import { useEffect } from "react";

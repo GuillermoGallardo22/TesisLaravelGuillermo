@@ -1,6 +1,7 @@
 import LoadingButton from "@mui/lab/LoadingButton";
-import { Autocomplete, CircularProgress } from "@mui/material";
+import Autocomplete from "@mui/material/Autocomplete";
 import Box from "@mui/material/Box";
+import CircularProgress from "@mui/material/CircularProgress";
 import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
