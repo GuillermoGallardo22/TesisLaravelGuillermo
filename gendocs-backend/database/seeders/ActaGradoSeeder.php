@@ -24,7 +24,7 @@ class ActaGradoSeeder extends Seeder
      */
     public function run()
     {
-        $carreras = Carrera::all();
+        $carreras = Carrera::orderBy('nombre')->get();
 
         $fecha = Carbon::today()->setHour(8)->setMinute(0)->setSecond(0)->addDays(7);
 
