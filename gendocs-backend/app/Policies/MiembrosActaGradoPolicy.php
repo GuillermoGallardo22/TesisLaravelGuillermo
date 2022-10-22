@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Constants\Permissions;
 use App\Models\MiembrosActaGrado;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
@@ -18,7 +19,7 @@ class MiembrosActaGradoPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return $user->getAllPermissions()->contains('name', Permissions::MiembroActaGrado['index']);
     }
 
     /**
@@ -30,7 +31,7 @@ class MiembrosActaGradoPolicy
      */
     public function view(User $user, MiembrosActaGrado $miembrosActaGrado)
     {
-        //
+        return $user->getAllPermissions()->contains('name', Permissions::MiembroActaGrado['index']);
     }
 
     /**
@@ -41,7 +42,7 @@ class MiembrosActaGradoPolicy
      */
     public function create(User $user)
     {
-        //
+        return $user->getAllPermissions()->contains('name', Permissions::MiembroActaGrado['create']);
     }
 
     /**
@@ -53,7 +54,7 @@ class MiembrosActaGradoPolicy
      */
     public function update(User $user, MiembrosActaGrado $miembrosActaGrado)
     {
-        //
+        return $user->getAllPermissions()->contains('name', Permissions::MiembroActaGrado['update']);
     }
 
     /**
@@ -65,7 +66,7 @@ class MiembrosActaGradoPolicy
      */
     public function delete(User $user, MiembrosActaGrado $miembrosActaGrado)
     {
-        //
+        return $user->getAllPermissions()->contains('name', Permissions::MiembroActaGrado['delete']);
     }
 
     /**
