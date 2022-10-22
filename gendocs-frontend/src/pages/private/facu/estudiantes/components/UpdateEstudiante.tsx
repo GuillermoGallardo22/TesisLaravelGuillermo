@@ -41,8 +41,7 @@ const UpdateEstudiante = () => {
                 id: item.id,
                 label: item.nombre,
               }))}
-              // FIXME:
-              value={formik.values.carrera as number}
+              value={formik.values.carrera}
               onChange={formik.handleChange}
               error={formik.touched.carrera && Boolean(formik.errors.carrera)}
               errorMessage={formik.touched.carrera && formik.errors.carrera}

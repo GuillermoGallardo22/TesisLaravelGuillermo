@@ -1,7 +1,11 @@
 import axios from "axios";
 import { format, parseISO } from "date-fns";
 import { HTTP_STATUS } from "models/enums/HttpStatus";
-import { IEstudiante, SimpleStudentForm } from "models/interfaces/IEstudiante";
+import {
+  IEstudiante,
+  IUpdateEstudiante,
+  SimpleStudentForm,
+} from "models/interfaces/IEstudiante";
 import {
   IFilterPaginationProps,
   IPagination,
@@ -120,7 +124,7 @@ export async function getEstudianteById(
 }
 
 export async function updateEstudiante(
-  form: IEstudiante
+  form: IUpdateEstudiante
 ): Promise<IResponse<IEstudiante>> {
   try {
     const { carrera, genero, fecha_nacimiento, ...rest } = form;

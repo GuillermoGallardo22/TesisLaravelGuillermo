@@ -1,8 +1,9 @@
 import { useFormik } from "formik";
+import { useErrorsResponse } from "hooks/useErrorsResponse";
 import { Genero } from "models/enums/Genero";
 import { HTTP_STATUS } from "models/enums/HttpStatus";
 import { ICarrera } from "models/interfaces/ICarrera";
-import { IEstudiante } from "models/interfaces/IEstudiante";
+import { IUpdateEstudiante } from "models/interfaces/IEstudiante";
 import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
 import { getAllCarreras } from "services/carreras";
@@ -11,7 +12,7 @@ import { CONSTANTS } from "utils/constants";
 import { VALIDATION_MESSAGES } from "utils/messages";
 import * as yup from "yup";
 
-const initialValues: IEstudiante = {
+const initialValues: IUpdateEstudiante = {
   id: -1,
   cedula: "",
   nombres: "",
@@ -22,7 +23,6 @@ const initialValues: IEstudiante = {
   correo_uta: "",
   matricula: "",
   folio: "",
-  // FIXME:
   carrera: -1,
   genero: -1,
   fecha_nacimiento: null,
@@ -32,10 +32,9 @@ export const useUpdateEstudiante = ({ studentId }: { studentId: string }) => {
   const { enqueueSnackbar } = useSnackbar();
   const [submitting, setSubmitting] = useState(false);
   const [carreras, setCarreras] = useState<ICarrera[]>([]);
-  const [estudiante, setEstudiante] = useState<IEstudiante>(initialValues);
-  const [errorSummary, setErrorSummary] = useState<
-    string | string[] | undefined
-  >();
+  const [estudiante, setEstudiante] = useState(initialValues);
+  const { cleanErrorsSumary, errorSummary, setErrorSummary } =
+    useErrorsResponse();
 
   const validationSchema = yup.object().shape({
     cedula: yup
@@ -116,12 +115,16 @@ export const useUpdateEstudiante = ({ studentId }: { studentId: string }) => {
     ]).then((results) => {
       const [_carreras, _estudiante] = results;
       setCarreras(_carreras);
-      setEstudiante(_estudiante.data);
+      const { carrera, ...rest } = _estudiante.data;
+      setEstudiante({
+        ...rest,
+        carrera: carrera.id,
+      });
     });
   }, [studentId]);
 
-  const onSubmit = async (form: IEstudiante) => {
-    setErrorSummary(undefined);
+  const onSubmit = async (form: IUpdateEstudiante) => {
+    cleanErrorsSumary();
 
     setSubmitting(true);
 
@@ -130,7 +133,7 @@ export const useUpdateEstudiante = ({ studentId }: { studentId: string }) => {
     if (result.status === HTTP_STATUS.ok) {
       enqueueSnackbar(result.message, { variant: "success" });
     } else {
-      setErrorSummary(result.errors || result.message);
+      setErrorSummary(result.errors);
     }
 
     setSubmitting(false);
