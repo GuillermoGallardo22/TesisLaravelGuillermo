@@ -75,3 +75,25 @@ export interface IAddActaGrado {
 export type useAddActaGradoProps = {
   estudiante?: IEstudiante | null | undefined;
 };
+
+export enum TipoAsistenteActaGradoEnum {
+  PRESIDENTE = "PRESIDENTE",
+  TUTOR = "TUTOR",
+  M_PRINCIPAL = "M_PRINCIPAL",
+  M_SUPLENTE = "M_SUPLENTE",
+}
+
+export interface IAddAsistenteActaGrado {
+  docente: number;
+  tipo: TipoAsistenteActaGradoEnum;
+  informacion_adicional: string;
+  actaGrado: number;
+}
+
+export interface IMiembroActaGrado {
+  acta: IActaGrado;
+  docente: IDocente;
+  informacion_adicional: string | null;
+  asistio: boolean;
+  notificado: boolean;
+}

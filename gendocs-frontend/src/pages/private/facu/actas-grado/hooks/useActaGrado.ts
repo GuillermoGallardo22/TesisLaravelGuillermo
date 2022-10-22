@@ -1,5 +1,5 @@
 import { useQuery } from "react-query";
-import { getActaGrado } from "services";
+import { getActaGrado, getMiembrosActaGrado } from "services";
 
 const useActaGrado = (actaGradoId: string) => {
   const { data: actaGrado, isLoading: isLoadingActaGrado } = useQuery(
@@ -7,22 +7,22 @@ const useActaGrado = (actaGradoId: string) => {
     () => getActaGrado(actaGradoId).then((r) => r.data)
   );
 
-  // const { data: miembros = [], isLoading } = useQuery(
-  //   ["consejos-miembros", consejo?.id],
-  //   () =>
-  //     getMiembros({
-  //       filters: {
-  //         consejo: consejoId,
-  //       },
-  //     }),
-  //   {
-  //     enabled: Boolean(consejo),
-  //   }
-  // );
+  const { data: miembros = [], isLoading: isLoadingMiembros } = useQuery(
+    ["miembros-acta-grados", actaGradoId],
+    () =>
+      getMiembrosActaGrado({
+        filters: {
+          actaGrado: actaGradoId,
+        },
+      }),
+    {
+      enabled: Boolean(actaGrado),
+    }
+  );
 
   return {
-    // miembros,
-    // isLoading,
+    miembros,
+    isLoadingMiembros,
     isLoadingActaGrado,
     actaGrado,
   };

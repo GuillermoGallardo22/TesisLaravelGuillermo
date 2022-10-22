@@ -2,17 +2,24 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import { DataGrid, GridColumns } from "@mui/x-data-grid";
-import { GridToolbarColumns, Icon, Skeleton, TitleNav } from "components";
+import {
+  BooleanCell,
+  GridToolbarColumns,
+  Icon,
+  Skeleton,
+  TitleNav,
+} from "components";
 import { useConfirmationDialog } from "hooks";
 import { useMemo } from "react";
 import { useParams } from "react-router-dom";
+import { getNombreCompletoMiembro } from "utils";
 import AddAsistenteActa from "../components/AddAsistenteActa";
 import useActaGrado from "../hooks/useActaGrado";
 
 const AsistenciaActaGrado = () => {
   const { actaGradoId = "" } = useParams<{ actaGradoId: string }>();
-
-  const { actaGrado, isLoadingActaGrado } = useActaGrado(actaGradoId);
+  const { actaGrado, isLoadingActaGrado, miembros, isLoadingMiembros } =
+    useActaGrado(actaGradoId);
 
   const {
     isVisible: isVisibleAddDocente,
@@ -26,13 +33,17 @@ const AsistenciaActaGrado = () => {
         field: "docente",
         headerName: "Docente",
         flex: 1,
-        // valueGetter: getNombreCompletoMiembro,
+        valueGetter: getNombreCompletoMiembro,
       },
       {
         field: "tipo",
         headerName: "Tipo",
         flex: 1,
-        // valueGetter: getNombreCompletoMiembro,
+      },
+      {
+        field: "informacion_adicional",
+        headerName: "Inf. adicional",
+        width: 250,
       },
       // {
       //   type: "boolean",
@@ -41,13 +52,13 @@ const AsistenciaActaGrado = () => {
       //   flex: 1,
       //   renderCell: (r) => <BooleanCell value={r.row.notificado} />,
       // },
-      // {
-      //   type: "boolean",
-      //   field: "asistio",
-      //   headerName: "Asistió",
-      //   flex: 1,
-      //   renderCell: (r) => <BooleanCell value={r.row.asistio} />,
-      // },
+      {
+        type: "boolean",
+        field: "asistio",
+        headerName: "Asistió",
+        flex: 1,
+        renderCell: (r) => <BooleanCell value={r.row.asistio} />,
+      },
       // {
       //   type: "boolean",
       //   field: "responsable",
@@ -87,6 +98,7 @@ const AsistenciaActaGrado = () => {
       <Box>
         <Button
           fullWidth
+          disabled={!actaGrado.fecha_presentacion}
           startIcon={<Icon icon="add" />}
           variant="outlined"
           onClick={openModalAddDocente}
@@ -108,8 +120,8 @@ const AsistenciaActaGrado = () => {
           // onColumnVisibilityModelChange={onColumnVisibilityModelChange}
           components={{ Toolbar: GridToolbarColumns }}
           columns={columns}
-          // loading={isLoading}
-          rows={[]}
+          loading={isLoadingMiembros}
+          rows={miembros}
         />
       </div>
 

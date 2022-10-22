@@ -11,6 +11,7 @@ export * from "./docentes";
 export * from "./documentos";
 export * from "./estadoActasGrado";
 export * from "./estudiantes";
+export * from "./miembro-acta-grado";
 export * from "./miembros";
 export * from "./modalidadActaGrado";
 export * from "./numeracion";

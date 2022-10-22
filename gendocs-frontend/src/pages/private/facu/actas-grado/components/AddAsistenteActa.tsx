@@ -1,12 +1,25 @@
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
-import { ConfirmationDialog, Select, SingleAutoComplete } from "components";
-import { useFormik } from "formik";
-import { IActaGrado, IDocente } from "models/interfaces";
-import { useEffect, useState } from "react";
+import {
+  ConfirmationDialog,
+  ErrorSummary,
+  Select,
+  SingleAutoComplete,
+} from "components";
+import { FormikHelpers, useFormik } from "formik";
+import { useErrorsResponse } from "hooks";
+import { HTTP_STATUS } from "models/enums";
+import {
+  IActaGrado,
+  IAddAsistenteActaGrado,
+  IDocente,
+  TipoAsistenteActaGradoEnum,
+} from "models/interfaces";
+import { useSnackbar } from "notistack";
+import { useEffect, useMemo, useState } from "react";
 import { useQueryClient } from "react-query";
-import { getDocentes } from "services";
+import { getDocentes, saveMiembroActaGrado } from "services";
 import {
   getOptionLabelDocente,
   isOptionEqualToValueDocente,
@@ -20,25 +33,34 @@ type AddAsistenteActaProps = {
   onCancel: () => void;
 };
 
-enum TipoAsistenteActaGradoEnum {
-  "TUTOR",
-  "M_PRINCIPAL",
-  "M_SUPLENTE",
-}
+const tiposAsistentesActaGrado = [
+  {
+    id: TipoAsistenteActaGradoEnum.TUTOR,
+    label: "Tutor",
+  },
+  {
+    id: TipoAsistenteActaGradoEnum.M_PRINCIPAL,
+    label: "Miembro principal",
+  },
+  {
+    id: TipoAsistenteActaGradoEnum.M_SUPLENTE,
+    label: "Miembro suplente",
+  },
+  {
+    id: TipoAsistenteActaGradoEnum.PRESIDENTE,
+    label: "Presidente",
+  },
+].sort((a, b) => a.label.localeCompare(b.label));
 
-interface IAddAsistenteActaGrado {
-  docente: number;
-  tipo: TipoAsistenteActaGradoEnum;
-  informacion_adicional: string;
+function esRequeridoIA(tipo: TipoAsistenteActaGradoEnum) {
+  return ![
+    TipoAsistenteActaGradoEnum.TUTOR,
+    TipoAsistenteActaGradoEnum.PRESIDENTE,
+  ].includes(tipo);
 }
-
-const initialValues: IAddAsistenteActaGrado = {
-  docente: -1,
-  tipo: TipoAsistenteActaGradoEnum.M_PRINCIPAL,
-  informacion_adicional: "",
-};
 
 const validationSchema = yup.object({
+  actaGrado: yup.number().required(VM.required).min(1, VM.invalidOption),
   docente: yup.number().required(VM.required).min(1, VM.invalidOption),
   tipo: yup
     .mixed()
@@ -46,7 +68,7 @@ const validationSchema = yup.object({
   informacion_adicional: yup
     .string()
     .test("isRequired", VM.required, (value, context) => {
-      if (context.parent.tipo !== TipoAsistenteActaGradoEnum.TUTOR) {
+      if (esRequeridoIA(context.parent.tipo)) {
         return Boolean(value && value.length > 0);
       }
 
@@ -62,18 +84,37 @@ const AddAsistenteActa: React.FunctionComponent<AddAsistenteActaProps> = ({
   const client = useQueryClient();
   const [acDocente, setACDocente] = useState<IDocente | null>(null);
 
-  const onSubmit = async (form: IAddAsistenteActaGrado) => {
-    console.log({ form });
-    await new Promise((r) => setTimeout(r, 1500));
+  const { enqueueSnackbar } = useSnackbar();
 
-    // closeModal();
-    // client.invalidateQueries(["consejos-miembros"]);
-    handleClose();
+  const { errorSummary, setErrorSummary, cleanErrorsSumary } =
+    useErrorsResponse();
+
+  const onSubmit = async (form: IAddAsistenteActaGrado) => {
+    cleanErrorsSumary();
+
+    const result = await saveMiembroActaGrado(form);
+
+    if (result.status === HTTP_STATUS.created) {
+      client.invalidateQueries(["miembros-acta-grados", actaGrado.id + ""]);
+
+      enqueueSnackbar(result.message, { variant: "success" });
+      handleCloseModal();
+    } else {
+      enqueueSnackbar(result.message, { variant: "error" });
+      setErrorSummary(result.errors);
+    }
+  };
+
+  const initialValues: IAddAsistenteActaGrado = {
+    docente: -1,
+    tipo: TipoAsistenteActaGradoEnum.M_PRINCIPAL,
+    informacion_adicional: "",
+    actaGrado: actaGrado.id,
   };
 
   const formik = useFormik({
     initialValues: initialValues,
-    onSubmit,
+    onSubmit: onSubmit,
     validationSchema,
   });
 
@@ -85,16 +126,20 @@ const AddAsistenteActa: React.FunctionComponent<AddAsistenteActaProps> = ({
 
   const handleReset = formik.handleReset;
 
-  const handleClose = () => {
-    closeModal();
+  const handleCloseModal = () => {
     formik.resetForm();
+    setACDocente(null);
+    closeModal();
   };
 
-  const noEsTutor = formik.values.tipo !== TipoAsistenteActaGradoEnum.TUTOR;
+  const requeridoIA = useMemo(
+    () => esRequeridoIA(formik.values.tipo),
+    [formik.values.tipo]
+  );
 
   useEffect(() => {
-    if (!noEsTutor) formik.setFieldValue("informacion_adicional", "");
-  }, [noEsTutor]);
+    if (!requeridoIA) formik.setFieldValue("informacion_adicional", "");
+  }, [requeridoIA]);
 
   return (
     <Box
@@ -109,7 +154,7 @@ const AddAsistenteActa: React.FunctionComponent<AddAsistenteActaProps> = ({
         keepMounted={true}
         isVisible={isVisible}
         title="Agregar miembros"
-        onCancel={handleClose}
+        onCancel={handleCloseModal}
         textApprove="Agregar"
         buttonColorCancel="error"
         loading={submitting}
@@ -155,20 +200,7 @@ const AddAsistenteActa: React.FunctionComponent<AddAsistenteActaProps> = ({
               name="tipo"
               label="Tipo de acta"
               disabled={submitting}
-              items={[
-                {
-                  id: TipoAsistenteActaGradoEnum.TUTOR,
-                  label: "Tutor",
-                },
-                {
-                  id: TipoAsistenteActaGradoEnum.M_PRINCIPAL,
-                  label: "Miembro principal",
-                },
-                {
-                  id: TipoAsistenteActaGradoEnum.M_SUPLENTE,
-                  label: "Miembro suplente",
-                },
-              ]}
+              items={tiposAsistentesActaGrado}
               value={formik.values.tipo}
               onChange={formik.handleChange}
               error={formik.touched.tipo && Boolean(formik.errors.tipo)}
@@ -178,9 +210,9 @@ const AddAsistenteActa: React.FunctionComponent<AddAsistenteActaProps> = ({
 
           <Grid item xs={12}>
             <TextField
-              required={noEsTutor}
+              required={requeridoIA}
               fullWidth
-              disabled={submitting || !noEsTutor}
+              disabled={submitting || !requeridoIA}
               margin="normal"
               id="informacion_adicional"
               name="informacion_adicional"
@@ -198,33 +230,7 @@ const AddAsistenteActa: React.FunctionComponent<AddAsistenteActaProps> = ({
             />
           </Grid>
 
-          {/* <Grid item xs={12}>
-            <pre>
-              {JSON.stringify(
-                { errors: formik.errors, touched: formik.touched },
-                null,
-                2
-              )}
-            </pre>
-          </Grid> */}
-
-          {/* <Grid item xs={12} sx={{ mb: 2 }}>
-            <FormLabel component="legend">Es responsable</FormLabel>
-            <FormControlLabel
-              control={
-                <Switch
-                  checked={formik.values.responsable}
-                  onChange={(e) =>
-                    formik.setFieldValue("responsable", e.target.checked)
-                  }
-                />
-              }
-              label={formik.values.responsable ? "Si" : "No"}
-              labelPlacement="start"
-            />
-          </Grid> */}
-
-          {/* {errorSummary && <ErrorSummary errors={errorSummary} />} */}
+          {errorSummary && <ErrorSummary errors={errorSummary} />}
         </Grid>
       </ConfirmationDialog>
     </Box>
