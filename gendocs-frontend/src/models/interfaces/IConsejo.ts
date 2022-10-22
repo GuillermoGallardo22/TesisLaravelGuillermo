@@ -22,6 +22,8 @@ export interface IConsejoForm {
   module: ModuleEnum;
 }
 
+export type IUpdateConsejoForm = Omit<IConsejoForm, "module">;
+
 export interface IActa {
   id: number;
   batch: IBatch;

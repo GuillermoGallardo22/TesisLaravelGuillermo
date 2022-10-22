@@ -1,7 +1,7 @@
 import { useFormik } from "formik";
 import { useErrorsResponse } from "hooks/useErrorsResponse";
 import { HTTP_STATUS } from "models/enums/HttpStatus";
-import { IConsejo, IConsejoForm } from "models/interfaces/IConsejo";
+import { IConsejo, IUpdateConsejoForm } from "models/interfaces/IConsejo";
 import { ITipoConsejo } from "models/interfaces/ITipoConsejo";
 import { useSnackbar } from "notistack";
 import { useCallback, useEffect, useState } from "react";
@@ -11,8 +11,7 @@ import { getTipoConsejos } from "services/tipo-consejos";
 import { VALIDATION_MESSAGES } from "utils/messages";
 import * as yup from "yup";
 
-// FIXME:
-const initialValues: IConsejoForm = {
+const initialValues: IUpdateConsejoForm = {
   id: -1,
   tipo_consejo: -1,
   nombre: "",
@@ -66,7 +65,7 @@ export function useUpdateConsejo({ consejoId }: useUpdateConsejoProps) {
     loadInitData();
   }, [loadInitData]);
 
-  const onSubmit = async (form: IConsejoForm) => {
+  const onSubmit = async (form: IUpdateConsejoForm) => {
     cleanErrorsSumary();
 
     const result = await updateConsejo(form);
@@ -98,7 +97,7 @@ export function useUpdateConsejo({ consejoId }: useUpdateConsejoProps) {
       .typeError(VALIDATION_MESSAGES.invalidDate),
   });
 
-  const formik = useFormik<IConsejoForm>({
+  const formik = useFormik({
     onSubmit,
     initialValues: consejo,
     validationSchema,

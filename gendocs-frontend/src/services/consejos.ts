@@ -1,6 +1,10 @@
 import axios from "axios";
 import { HTTP_STATUS } from "models/enums/HttpStatus";
-import { IConsejo, IConsejoForm } from "models/interfaces/IConsejo";
+import {
+  IConsejo,
+  IConsejoForm,
+  IUpdateConsejoForm,
+} from "models/interfaces/IConsejo";
 import {
   IFilterPaginationProps,
   IPagination,
@@ -71,7 +75,7 @@ export async function saveConsejo(
 }
 
 export async function updateConsejo(
-  form: IConsejoForm
+  form: IUpdateConsejoForm
 ): Promise<IResponse<IConsejo>> {
   try {
     const payload = {
