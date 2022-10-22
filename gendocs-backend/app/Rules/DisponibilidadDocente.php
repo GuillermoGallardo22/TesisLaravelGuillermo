@@ -12,18 +12,16 @@ class DisponibilidadDocente implements Rule
 {
     use DisponibilidadActa;
 
-    private $duracion;
-    private $fecha_presentacion;
+    private $actaGrado;
 
     /**
      * Create a new rule instance.
      *
      * @return void
      */
-    public function __construct($fecha_presentacion, $duracion)
+    public function __construct($actaGrado)
     {
-        $this->fecha_presentacion = $fecha_presentacion;
-        $this->duracion = $duracion;
+        $this->actaGrado = $actaGrado;
     }
 
     /**
@@ -35,57 +33,20 @@ class DisponibilidadDocente implements Rule
      */
     public function passes($attribute, $value)
     {
-        $fecha_presentacion = Carbon::parse($this->fecha_presentacion);
+        $actaGrado = ActaGrado::find($this->actaGrado);
 
-        // $rangoI = (clone $fecha_presentacion);
-        // $rangoF = (clone $fecha_presentacion)->addMinutes($this->duracion);
-
-        // Log::info([
-        //     "duracion" => $this->duracion,
-        //     "fecha_presentacion" => $fecha_presentacion->toDateTimeString(),
-        //     "rangoI" => $rangoI->toDateTimeString(),
-        //     "rangoF" => $rangoF->toDateTimeString(),
-        // ]);
+        $fecha_presentacion = Carbon::parse($actaGrado->fecha_presentacion);
 
         $actas = ActaGrado::query()
-            ->where("docente_id", $value)
+            ->with(['miembros'])
             ->whereDate("fecha_presentacion", $fecha_presentacion->toDateString())
             ->orderBy("fecha_presentacion")
-            ->get();
+            ->get()
+            ->filter(function ($item) use ($value) {
+                return $item->miembros->contains('docente_id', $value);
+            });
 
-        // foreach ($actas as $acta) {
-        //     $fecha_presentacion_ = Carbon::parse($acta->fecha_presentacion);
-        //     $duracion_ = $acta->duracion;
-
-        //     $rangoI_ = (clone $fecha_presentacion_);
-        //     $rangoF_ = (clone $fecha_presentacion_)->addMinutes($duracion_);
-
-        //     if (
-        //         $rangoI_->toDateTimeString() == $rangoI->toDateTimeString() and
-        //         $rangoF_->toDateTimeString() == $rangoF->toDateTimeString()
-        //     ) {
-        //         return false;
-        //     }
-
-        //     if (
-        //         $rangoI_->betweenExcluded($rangoI, $rangoF) or
-        //         $rangoF_->betweenExcluded($rangoI, $rangoF)
-        //     ) {
-        //         // Log::error([
-        //         //     "id" => $acta->id,
-        //         //     "duracion" => $acta->duracion,
-        //         //     "fecha_presentacion" => $acta->fecha_presentacion,
-        //         //     "rangoI_" => $rangoI_->toDateTimeString(),
-        //         //     "rangoF_" => $rangoF_->toDateTimeString(),
-        //         // ]);
-
-        //         return false;
-        //     }
-        // }
-
-        // Log::info("Salió");
-
-        return $this->check($actas, $fecha_presentacion, $this->duracion);
+        return $this->check($actas, $fecha_presentacion, $actaGrado->duracion);
     }
 
     /**
