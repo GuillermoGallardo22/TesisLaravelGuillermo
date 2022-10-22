@@ -1,5 +1,5 @@
 import axios from "axios";
-import { IModalidadActaGrado } from "models/interfaces";
+import { IModalidadActaGrado } from "models/interfaces/IModalidadActaGrado";
 
 export async function getModalidadesActaGrado(): Promise<
   IModalidadActaGrado[]

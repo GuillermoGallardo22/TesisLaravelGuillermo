@@ -1,5 +1,8 @@
 import { debounce } from "lodash";
-import { IFilterPaginationProps, IFilterProps } from "models/interfaces";
+import {
+  IFilterPaginationProps,
+  IFilterProps,
+} from "models/interfaces/IPagination";
 import { useEffect, useMemo, useState } from "react";
 
 export type useAutocompleteProps<T> = {

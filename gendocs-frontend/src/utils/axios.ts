@@ -1,6 +1,6 @@
 import axios from "axios";
-import { HTTP_STATUS } from "models/enums";
-import { IResponse } from "models/interfaces";
+import { HTTP_STATUS } from "models/enums/HttpStatus";
+import { IResponse } from "models/interfaces/IResponse";
 import { HTTP_MESSAGES } from "./messages";
 
 const API_PATH = import.meta.env.VITE_API_URL;

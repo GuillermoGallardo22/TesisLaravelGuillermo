@@ -1,18 +1,15 @@
 import axios from "axios";
-import { HTTP_STATUS } from "models/enums";
+import { HTTP_STATUS } from "models/enums/HttpStatus";
 import {
   ConsejoMiembroForm,
-  IFilterPaginationProps,
   IMiembro,
-  INotificationProps,
-  IResponse,
-} from "models/interfaces";
-import {
-  CUSTOM_HTTP_MESSAGES,
-  handleErrors,
-  HTTP_MESSAGES,
-  parseFilterPaginationProps,
-} from "utils";
+} from "models/interfaces/IConsejoMiembro";
+import { INotificationProps } from "models/interfaces/INotification";
+import { IFilterPaginationProps } from "models/interfaces/IPagination";
+import { IResponse } from "models/interfaces/IResponse";
+import { handleErrors } from "utils/axios";
+import { CUSTOM_HTTP_MESSAGES, HTTP_MESSAGES } from "utils/messages";
+import { parseFilterPaginationProps } from "utils/pagination";
 
 export async function getMiembros(
   props: IFilterPaginationProps

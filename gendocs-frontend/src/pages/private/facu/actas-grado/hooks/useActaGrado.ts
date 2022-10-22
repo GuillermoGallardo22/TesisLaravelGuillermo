@@ -1,5 +1,6 @@
 import { useQuery } from "react-query";
-import { getActaGrado, getMiembrosActaGrado } from "services";
+import { getActaGrado } from "services/actas-grado";
+import { getMiembrosActaGrado } from "services/miembro-acta-grado";
 
 const useActaGrado = (actaGradoId: string) => {
   const { data: actaGrado, isLoading: isLoadingActaGrado } = useQuery(

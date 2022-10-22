@@ -4,12 +4,13 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
-import { ErrorSummary, TitleNav } from "components";
-import { useAutocomplete } from "hooks";
-import { IDocente } from "models/interfaces";
+import ErrorSummary from "components/ErrorSummary";
+import TitleNav from "components/TitleNav";
+import { useAutocomplete } from "hooks/useAutocomplete";
+import { IDocente } from "models/interfaces/IDocente";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { getDocentes } from "services";
+import { getDocentes } from "services/docentes";
 import { useUpdateCargo } from "../hooks/useUpdateCargo";
 
 const UpdateCargo = () => {

@@ -1,19 +1,18 @@
 import axios from "axios";
-import { HTTP_STATUS } from "models/enums";
+import { HTTP_STATUS } from "models/enums/HttpStatus";
+import { IDocumento, IDocumentoForm } from "models/interfaces/IDocumento";
 import {
-  IDocumento,
-  IDocumentoForm,
   IFilterPaginationProps,
   IPagination,
-  IResponse,
-} from "models/interfaces";
+} from "models/interfaces/IPagination";
+import { IResponse } from "models/interfaces/IResponse";
+import { handleErrors } from "utils/axios";
+import { HTTP_MESSAGES } from "utils/messages";
 import {
   DEFAULT_PAGINATION_VALUES,
-  handleErrors,
-  HTTP_MESSAGES,
   parseFilterPaginationProps,
   parsePaginationData,
-} from "utils";
+} from "utils/pagination";
 
 export async function saveDocumento(
   form: IDocumentoForm

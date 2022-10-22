@@ -3,10 +3,11 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import { DatePicker } from "@mui/x-date-pickers";
-import { ErrorSummary, Select } from "components";
+import ErrorSummary from "components/ErrorSummary";
+import Select from "components/Select";
 import { subYears } from "date-fns";
-import { Genero } from "models/enums";
-import { CONSTANTS } from "utils";
+import { Genero } from "models/enums/Genero";
+import { CONSTANTS } from "utils/constants";
 import { useAddEstudiante } from "../hooks/useAddEstudiante";
 
 const { MAYOR_EDAD: MAYOR_DE_EDAD } = CONSTANTS;

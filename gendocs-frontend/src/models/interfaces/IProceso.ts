@@ -1,4 +1,4 @@
-import { ModuleEnum } from "models/enums";
+import { ModuleEnum } from "models/enums/Module";
 
 export interface IProceso {
   id: number;

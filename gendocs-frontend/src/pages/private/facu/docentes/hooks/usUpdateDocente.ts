@@ -1,12 +1,13 @@
 import { useFormik } from "formik";
-import { useErrorsResponse } from "hooks";
-import { HTTP_STATUS } from "models/enums";
-import { IDocente } from "models/interfaces";
+import { useErrorsResponse } from "hooks/useErrorsResponse";
+import { HTTP_STATUS } from "models/enums/HttpStatus";
+import { IDocente } from "models/interfaces/IDocente";
 import { useSnackbar } from "notistack";
 import { useQuery } from "react-query";
 import { useNavigate, useParams } from "react-router-dom";
-import { getDocente, updateDocente } from "services";
-import { CONSTANTS, VALIDATION_MESSAGES } from "utils";
+import { getDocente, updateDocente } from "services/docentes";
+import { CONSTANTS } from "utils/constants";
+import { VALIDATION_MESSAGES } from "utils/messages";
 import * as yup from "yup";
 
 const initialValues: IDocente = {

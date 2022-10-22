@@ -1,7 +1,7 @@
 import axios from "axios";
-import { IFilterPaginationProps } from "models/interfaces";
+import { IFilterPaginationProps } from "models/interfaces/IPagination";
 import { IPlantillaGlobal } from "models/interfaces/IPlantillaGlobal";
-import { parseFilterPaginationProps } from "utils";
+import { parseFilterPaginationProps } from "utils/pagination";
 
 export async function getPlantillaGlobalByCode(
   props: IFilterPaginationProps

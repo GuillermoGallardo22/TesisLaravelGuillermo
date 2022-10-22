@@ -1,10 +1,14 @@
 import { useFormik } from "formik";
-import { Genero, HTTP_STATUS } from "models/enums";
-import { ICarrera, IEstudiante } from "models/interfaces";
+import { Genero } from "models/enums/Genero";
+import { HTTP_STATUS } from "models/enums/HttpStatus";
+import { ICarrera } from "models/interfaces/ICarrera";
+import { IEstudiante } from "models/interfaces/IEstudiante";
 import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
-import { getAllCarreras, getEstudianteById, updateEstudiante } from "services";
-import { CONSTANTS, VALIDATION_MESSAGES } from "utils";
+import { getAllCarreras } from "services/carreras";
+import { getEstudianteById, updateEstudiante } from "services/estudiantes";
+import { CONSTANTS } from "utils/constants";
+import { VALIDATION_MESSAGES } from "utils/messages";
 import * as yup from "yup";
 
 const initialValues: IEstudiante = {
@@ -18,6 +22,7 @@ const initialValues: IEstudiante = {
   correo_uta: "",
   matricula: "",
   folio: "",
+  // FIXME:
   carrera: -1,
   genero: -1,
   fecha_nacimiento: null,

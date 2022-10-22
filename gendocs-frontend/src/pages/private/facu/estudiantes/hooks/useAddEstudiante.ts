@@ -1,11 +1,15 @@
 import { useFormik } from "formik";
-import { useErrorsResponse } from "hooks";
-import { Genero, HTTP_STATUS } from "models/enums";
-import { ICarrera, SimpleStudentForm } from "models/interfaces";
+import { useErrorsResponse } from "hooks/useErrorsResponse";
+import { Genero } from "models/enums/Genero";
+import { HTTP_STATUS } from "models/enums/HttpStatus";
+import { ICarrera } from "models/interfaces/ICarrera";
+import { SimpleStudentForm } from "models/interfaces/IEstudiante";
 import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
-import { getAllCarreras, saveEstudiante } from "services";
-import { CONSTANTS, VALIDATION_MESSAGES } from "utils";
+import { getAllCarreras } from "services/carreras";
+import { saveEstudiante } from "services/estudiantes";
+import { CONSTANTS } from "utils/constants";
+import { VALIDATION_MESSAGES } from "utils/messages";
 import * as yup from "yup";
 
 const initialValues: SimpleStudentForm = {

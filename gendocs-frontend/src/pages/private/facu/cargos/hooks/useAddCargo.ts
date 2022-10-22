@@ -1,10 +1,10 @@
 import { useFormik } from "formik";
-import { useErrorsResponse } from "hooks";
-import { HTTP_STATUS } from "models/enums";
-import { IAddCargo } from "models/interfaces";
+import { useErrorsResponse } from "hooks/useErrorsResponse";
+import { HTTP_STATUS } from "models/enums/HttpStatus";
+import { IAddCargo } from "models/interfaces/ICargo";
 import { useSnackbar } from "notistack";
-import { saveCargo } from "services";
-import { VALIDATION_MESSAGES } from "utils";
+import { saveCargo } from "services/cargos";
+import { VALIDATION_MESSAGES } from "utils/messages";
 import * as yup from "yup";
 
 const initialValues: IAddCargo = {

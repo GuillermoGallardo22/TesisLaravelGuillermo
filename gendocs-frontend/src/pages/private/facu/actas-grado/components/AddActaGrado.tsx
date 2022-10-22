@@ -9,11 +9,19 @@ import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import { DatePicker, DateTimePicker } from "@mui/x-date-pickers";
-import { ErrorSummary, Select, SingleAutoComplete, TitleNav } from "components";
-import { ModalidadActaGrado } from "models/enums";
-import { IAula, ICanton, IDocente, IEstudiante } from "models/interfaces";
+import ErrorSummary from "components/ErrorSummary";
+import Select from "components/Select";
+import { SingleAutoComplete } from "components/SingleAutoComplete";
+import TitleNav from "components/TitleNav";
+import { ModalidadActaGrado } from "models/enums/ModalidadActaGrado";
+import { IAula } from "models/interfaces/IAula";
+import { ICanton } from "models/interfaces/ICanton";
+import { IDocente } from "models/interfaces/IDocente";
+import { IEstudiante } from "models/interfaces/IEstudiante";
 import { useEffect, useState } from "react";
-import { getAulas, getCantones, getEstudiantes } from "services";
+import { getAulas } from "services/aulas";
+import { getCantones } from "services/cantones";
+import { getEstudiantes } from "services/estudiantes";
 import {
   getOptionLabelAula,
   getOptionLabelCanton,
@@ -21,7 +29,7 @@ import {
   isOptionEqualToValueAula,
   isOptionEqualToValueCanton,
   isOptionEqualToValueEstudiante,
-} from "utils";
+} from "utils/libs";
 
 import { useAddActaGrado } from "../hooks/useAddActaGrado";
 

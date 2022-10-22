@@ -1,12 +1,13 @@
 import { useModuleContext } from "contexts/ModuleContext";
 import { useFormik } from "formik";
-import { useConsejos, useErrorsResponse } from "hooks";
-import { HTTP_STATUS } from "models/enums";
-import { IReservaForm } from "models/interfaces";
+import { useErrorsResponse } from "hooks/useErrorsResponse";
+import { useConsejos } from "hooks/useQuery";
+import { HTTP_STATUS } from "models/enums/HttpStatus";
+import { IReservaForm } from "models/interfaces/INumeracion";
 import { useSnackbar } from "notistack";
 import { useQuery } from "react-query";
-import { createReserva, getNumeracion } from "services";
-import { VALIDATION_MESSAGES } from "utils";
+import { createReserva, getNumeracion } from "services/numeracion";
+import { VALIDATION_MESSAGES } from "utils/messages";
 import * as yup from "yup";
 
 export function useAddReserva() {

@@ -1,5 +1,5 @@
 import { ModuleContext } from "contexts/ModuleContext";
-import { ModuleContextProps as ModuleProviderProps } from "models/interfaces";
+import { ModuleContextProps as ModuleProviderProps } from "models/interfaces/IModule";
 
 const ModuleProvider: React.FunctionComponent<ModuleProviderProps> = ({
   module,

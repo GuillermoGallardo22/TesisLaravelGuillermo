@@ -1,10 +1,10 @@
 import { useAuthContext } from "contexts/AuthContext";
-import { ModuleEnum } from "models/enums";
+import { ModuleEnum } from "models/enums/Module";
 import { useMemo } from "react";
+import { getRoutes as getCurrRoutes } from "../routes/curr";
 import { getRoutes as getFacuRoutes } from "../routes/facu";
 import { getRoutes as getSudeRoutes } from "../routes/sude";
 import { getRoutes as getTituRoutes } from "../routes/titu";
-import { getRoutes as getCurrRoutes } from "../routes/curr";
 
 export function useRoutes() {
   const {

@@ -6,7 +6,8 @@ import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
 import Switch from "@mui/material/Switch";
 import TextField from "@mui/material/TextField";
-import { Select, TitleNav } from "components";
+import Select from "components/Select";
+import TitleNav from "components/TitleNav";
 import { useParams } from "react-router-dom";
 import { useUpdatePlantilla } from "../hooks/useUpdatePlantilla";
 

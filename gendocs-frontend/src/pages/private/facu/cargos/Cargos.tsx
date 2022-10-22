@@ -2,21 +2,17 @@ import { DialogContentText, Tooltip } from "@mui/material";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import { DataGrid, GridActionsCellItem, GridColumns } from "@mui/x-data-grid";
-import {
-  ConfirmationDialog,
-  GridToolbarWithoutExport,
-  Icon,
-  TitleNav,
-} from "components";
-import {
-  useConfirmationDialog,
-  useDeleteItem,
-  useGridColumnVisibilityModel,
-} from "hooks";
-import { ICargo } from "models/interfaces";
+import ConfirmationDialog from "components/ConfirmationDialog";
+import Icon from "components/Icon";
+import TitleNav from "components/TitleNav";
+import { GridToolbarWithoutExport } from "components/ToolbarDataGrid";
+import { useConfirmationDialog } from "hooks/useConfirmationDialog";
+import { useDeleteItem } from "hooks/useDeleteItem";
+import { useGridColumnVisibilityModel } from "hooks/useGridColumnVisibilityModel";
+import { ICargo } from "models/interfaces/ICargo";
 import { useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
-import { deleteCargo } from "services";
+import { deleteCargo } from "services/cargos";
 import { useListCargos } from "./hooks/useListCargos";
 
 const Cargos = () => {

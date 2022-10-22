@@ -1,21 +1,21 @@
-import { ModuleEnum } from "models/enums";
-import { IModule } from "models/interfaces";
+import { ModuleEnum } from "models/enums/Module";
+import { IModule } from "models/interfaces/IModule";
 import {
-  routes as facuRoutes,
+  DEFAULT_ROUTE as CURR_DEFAULT_ROUTE,
+  routes as currRoutes,
+} from "./curr";
+import {
   DEFAULT_ROUTE as FACU_DEFAULT_ROUTE,
+  routes as facuRoutes,
 } from "./facu";
 import {
-  routes as sudeRoutes,
   DEFAULT_ROUTE as SUDE_DEFAULT_ROUTE,
+  routes as sudeRoutes,
 } from "./sude";
 import {
-  routes as tituRoutes,
   DEFAULT_ROUTE as TITU_DEFAULT_ROUTE,
+  routes as tituRoutes,
 } from "./titu";
-import {
-  routes as currRoutes,
-  DEFAULT_ROUTE as CURR_DEFAULT_ROUTE,
-} from "./curr";
 
 export const allRoutes = [
   ...facuRoutes,

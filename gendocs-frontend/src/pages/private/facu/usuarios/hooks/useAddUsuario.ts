@@ -1,10 +1,13 @@
 import { useFormik } from "formik";
-import { HTTP_STATUS } from "models/enums";
-import { IModule, IRole, IUserForm } from "models/interfaces";
+import { HTTP_STATUS } from "models/enums/HttpStatus";
+import { IModule } from "models/interfaces/IModule";
+import { IRole } from "models/interfaces/IRole";
+import { IUserForm } from "models/interfaces/IUser";
 import { useSnackbar } from "notistack";
 import { useCallback, useEffect, useState } from "react";
-import { createUser, getModules, getRoles } from "services";
-import { CONSTANTS, VALIDATION_MESSAGES } from "utils";
+import { getRoles, getModules, createUser } from "services/auth";
+import { CONSTANTS } from "utils/constants";
+import { VALIDATION_MESSAGES } from "utils/messages";
 import * as yup from "yup";
 
 const initialValues: IUserForm = {

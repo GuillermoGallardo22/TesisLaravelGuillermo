@@ -6,7 +6,8 @@ import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
 import Switch from "@mui/material/Switch";
 import TextField from "@mui/material/TextField";
-import { ErrorSummary, TitleNav } from "components";
+import ErrorSummary from "components/ErrorSummary";
+import TitleNav from "components/TitleNav";
 import { useAddCarrera } from "../hooks/useAddCarrera";
 
 export default function AddCarrera() {

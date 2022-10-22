@@ -6,7 +6,10 @@ import IconButton from "@mui/material/IconButton";
 import InputAdornment from "@mui/material/InputAdornment";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
-import { ErrorSummary, Icon, Select, TitleNav } from "components";
+import ErrorSummary from "components/ErrorSummary";
+import Icon from "components/Icon";
+import Select from "components/Select";
+import TitleNav from "components/TitleNav";
 import { useAddReserva } from "../hooks/useAddReserva";
 
 export default function AddReserva() {

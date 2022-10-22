@@ -1,10 +1,11 @@
 import { useFormik } from "formik";
-import { useErrorsResponse } from "hooks";
-import { HTTP_STATUS } from "models/enums";
-import { DocenteForm } from "models/interfaces";
+import { useErrorsResponse } from "hooks/useErrorsResponse";
+import { HTTP_STATUS } from "models/enums/HttpStatus";
+import { DocenteForm } from "models/interfaces/IDocente";
 import { useSnackbar } from "notistack";
-import { saveDocente } from "services";
-import { CONSTANTS, VALIDATION_MESSAGES } from "utils";
+import { saveDocente } from "services/docentes";
+import { CONSTANTS } from "utils/constants";
+import { VALIDATION_MESSAGES } from "utils/messages";
 import * as yup from "yup";
 
 const initialValues: DocenteForm = {

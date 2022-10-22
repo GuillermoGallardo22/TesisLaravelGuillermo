@@ -1,10 +1,11 @@
 import { useFormik } from "formik";
-import { useErrorsResponse } from "hooks";
-import { HTTP_STATUS } from "models/enums";
-import { ConsejoMiembroForm, IConsejo } from "models/interfaces";
+import { useErrorsResponse } from "hooks/useErrorsResponse";
+import { HTTP_STATUS } from "models/enums/HttpStatus";
+import { IConsejo } from "models/interfaces/IConsejo";
+import { ConsejoMiembroForm } from "models/interfaces/IConsejoMiembro";
 import { useSnackbar } from "notistack";
-import { saveMiembros } from "services";
-import { VALIDATION_MESSAGES } from "utils";
+import { saveMiembros } from "services/miembros";
+import { VALIDATION_MESSAGES } from "utils/messages";
 import * as yup from "yup";
 
 const validationSchema = yup.object().shape({

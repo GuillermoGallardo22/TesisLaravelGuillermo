@@ -1,4 +1,4 @@
-import { IConsejo } from ".";
+import { IConsejo } from "./IConsejo";
 import { IDocente } from "./IDocente";
 
 export interface IMiembro {

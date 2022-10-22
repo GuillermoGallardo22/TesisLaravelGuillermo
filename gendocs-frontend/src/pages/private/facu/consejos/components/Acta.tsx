@@ -4,16 +4,14 @@ import Button from "@mui/material/Button";
 import DialogContentText from "@mui/material/DialogContentText";
 import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
-import {
-  ConfirmationDialog,
-  Icon,
-  LinearProgressWithLabel,
-  Skeleton,
-  TitleNav,
-} from "components";
-import { useConfirmationDialog } from "hooks";
-import { HTTP_STATUS } from "models/enums";
-import { IActa, IConsejo } from "models/interfaces";
+import ConfirmationDialog from "components/ConfirmationDialog";
+import Icon from "components/Icon";
+import { LinearProgressWithLabel } from "components/LinearProgress";
+import Skeleton from "components/Skeleton";
+import TitleNav from "components/TitleNav";
+import { useConfirmationDialog } from "hooks/useConfirmationDialog";
+import { HTTP_STATUS } from "models/enums/HttpStatus";
+import { IActa, IConsejo } from "models/interfaces/IConsejo";
 import { useSnackbar } from "notistack";
 import { useEffect, useMemo, useState } from "react";
 import { useQuery, useQueryClient } from "react-query";
@@ -23,9 +21,9 @@ import {
   createPlantillaActa as crearPlantillaActa,
   descargarActa,
   getActaById,
-  getBatch,
-  getConsejo,
-} from "services";
+} from "services/acta";
+import { getBatch } from "services/batch";
+import { getConsejo } from "services/consejos";
 
 export default function Acta() {
   const { consejoId = "" } = useParams<{ consejoId: string }>();

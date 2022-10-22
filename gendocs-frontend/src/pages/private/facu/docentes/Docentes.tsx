@@ -2,8 +2,10 @@ import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import Tooltip from "@mui/material/Tooltip";
 import { DataGrid, GridActionsCellItem, GridColumns } from "@mui/x-data-grid";
-import { GridToolbarWithoutExport, Icon, TitleNav } from "components";
-import { useGridColumnVisibilityModel } from "hooks";
+import Icon from "components/Icon";
+import TitleNav from "components/TitleNav";
+import { GridToolbarWithoutExport } from "components/ToolbarDataGrid";
+import { useGridColumnVisibilityModel } from "hooks/useGridColumnVisibilityModel";
 import { Link as RouterLink } from "react-router-dom";
 import { useListDocentes } from "./hooks/useListDocentes";
 

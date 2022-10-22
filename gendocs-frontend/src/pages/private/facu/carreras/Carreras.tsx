@@ -6,12 +6,10 @@ import {
   GridColumns,
   GridValueFormatterParams,
 } from "@mui/x-data-grid";
-import {
-  ChipStatus,
-  GridToolbarWithoutExport,
-  Icon,
-  TitleNav,
-} from "components";
+import ChipStatus from "components/ChipStatus";
+import Icon from "components/Icon";
+import TitleNav from "components/TitleNav";
+import { GridToolbarWithoutExport } from "components/ToolbarDataGrid";
 import { useMemo } from "react";
 import { Link } from "react-router-dom";
 import { useListCarreras } from "./hooks/useListCarreras";

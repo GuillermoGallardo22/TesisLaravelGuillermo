@@ -3,15 +3,17 @@ import IconButton from "@mui/material/IconButton";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import Tooltip from "@mui/material/Tooltip";
-import { GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
-import { ChipStatus, DataGrid, Icon, TitleNav } from "components";
+import { DataGrid, GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
+import ChipStatus from "components/ChipStatus";
+import Icon from "components/Icon";
+import TitleNav from "components/TitleNav";
 import { useModuleContext } from "contexts/ModuleContext";
-import { useFilterPagination } from "hooks";
-import { ModuleEnum } from "models/enums";
-import { IProceso } from "models/interfaces";
+import { useFilterPagination } from "hooks/useFilterPagination";
+import { ModuleEnum } from "models/enums/Module";
+import { IProceso } from "models/interfaces/IProceso";
 import ModuleProvider from "providers/ModuleProvider";
 import { Link as RouterLink, Outlet } from "react-router-dom";
-import { getProcesos } from "services";
+import { getProcesos } from "services/proceso";
 
 const columns: GridColDef[] = [
   { field: "nombre", headerName: "Nombre", flex: 1 },

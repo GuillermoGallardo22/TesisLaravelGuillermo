@@ -1,21 +1,20 @@
 import { useAuthContext } from "contexts/AuthContext";
 import { useFormik } from "formik";
-import { HTTP_STATUS } from "models/enums";
+import { HTTP_STATUS } from "models/enums/HttpStatus";
+import { IMiembro } from "models/interfaces/IConsejoMiembro";
 import {
-  IMiembro,
   NotificationEmailFormProps,
   NotificationEmailProps,
-} from "models/interfaces";
+} from "models/interfaces/INotification";
 import { useSnackbar } from "notistack";
 import { useMemo } from "react";
 import { useQueryClient } from "react-query";
-import { sendNotification } from "services";
+import { sendNotification } from "services/miembros";
 import {
-  CUSTOM_HTTP_MESSAGES,
   formatRecipients,
   getDefaultNotificationMessageAsistencia,
-  VALIDATION_MESSAGES,
-} from "utils";
+} from "utils/libs";
+import { CUSTOM_HTTP_MESSAGES, VALIDATION_MESSAGES } from "utils/messages";
 import * as yup from "yup";
 
 export function useAsistenciaNotificacion<T>({

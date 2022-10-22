@@ -5,9 +5,9 @@ import List from "@mui/material/List";
 import ListSubheader from "@mui/material/ListSubheader";
 import { styled } from "@mui/material/styles";
 import Toolbar from "@mui/material/Toolbar";
-import { Icon } from "components";
+import Icon from "components/Icon";
 import { useRoutes } from "layout/hooks/useRoutes";
-import { DRAWERWIDTH } from "utils";
+import { DRAWERWIDTH } from "utils/libs";
 import Link from "./Link";
 
 const drawerWidth = DRAWERWIDTH;

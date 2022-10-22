@@ -1,4 +1,4 @@
-import { ModuleEnum } from "models/enums";
+import { ModuleEnum } from "models/enums/Module";
 import { ITipoConsejo } from "./ITipoConsejo";
 
 export interface IConsejo {

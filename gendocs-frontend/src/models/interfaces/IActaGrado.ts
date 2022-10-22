@@ -1,8 +1,5 @@
-import {
-  EstadoActaEnum,
-  ModalidadActaGrado,
-  TipoActaGradoEnum,
-} from "models/enums";
+import { EstadoActaEnum, TipoActaGradoEnum } from "models/enums/ActaGrado";
+import { ModalidadActaGrado } from "models/enums/ModalidadActaGrado";
 import { ICanton } from "./ICanton";
 import { ICarrera } from "./ICarrera";
 import { IDocente } from "./IDocente";

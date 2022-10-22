@@ -10,21 +10,23 @@ import IconButton from "@mui/material/IconButton";
 import InputAdornment from "@mui/material/InputAdornment";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
-import { ErrorSummary, Icon, Select, TitleNav } from "components";
+import ErrorSummary from "components/ErrorSummary";
+import Icon from "components/Icon";
+import Select from "components/Select";
+import TitleNav from "components/TitleNav";
 import { useModuleContext } from "contexts/ModuleContext";
-import {
-  useAutocomplete,
-  useConfirmationDialog,
-  useMultiAutocomplete,
-} from "hooks";
-import { IDocente, IEstudiante, IPlantilla, IProceso } from "models/interfaces";
+import { useAutocomplete } from "hooks/useAutocomplete";
+import { useConfirmationDialog } from "hooks/useConfirmationDialog";
+import { useMultiAutocomplete } from "hooks/useMultiAutocomplete";
+import { IDocente } from "models/interfaces/IDocente";
+import { IEstudiante } from "models/interfaces/IEstudiante";
+import { IPlantilla } from "models/interfaces/IPlantilla";
+import { IProceso } from "models/interfaces/IProceso";
 import { useEffect } from "react";
-import {
-  getDocentes,
-  getEstudiantes,
-  getPlantillasByProcesoId,
-  getProcesos,
-} from "services";
+import { getDocentes } from "services/docentes";
+import { getEstudiantes } from "services/estudiantes";
+import { getPlantillasByProcesoId } from "services/plantillas";
+import { getProcesos } from "services/proceso";
 import useAddDocumento from "../hooks/useAddDocumento";
 import { NumeracionModal } from "./NumeracionModal";
 

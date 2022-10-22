@@ -6,11 +6,11 @@ import MenuItem from "@mui/material/MenuItem";
 import { styled } from "@mui/material/styles";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import { Icon } from "components";
-import { useAuth } from "hooks";
+import Icon from "components/Icon";
+import { useAuth } from "hooks/useAuth";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { DRAWERWIDTH } from "utils";
+import { DRAWERWIDTH } from "utils/libs";
 
 const drawerWidth = DRAWERWIDTH;
 

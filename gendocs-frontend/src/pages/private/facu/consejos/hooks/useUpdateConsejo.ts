@@ -1,15 +1,17 @@
 import { useFormik } from "formik";
-import { useErrorsResponse } from "hooks";
-import { HTTP_STATUS } from "models/enums";
-import { IConsejo, IConsejoForm, ITipoConsejo } from "models/interfaces";
+import { useErrorsResponse } from "hooks/useErrorsResponse";
+import { HTTP_STATUS } from "models/enums/HttpStatus";
+import { IConsejo, IConsejoForm } from "models/interfaces/IConsejo";
+import { ITipoConsejo } from "models/interfaces/ITipoConsejo";
 import { useSnackbar } from "notistack";
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getConsejo, updateConsejo } from "services";
+import { getConsejo, updateConsejo } from "services/consejos";
 import { getTipoConsejos } from "services/tipo-consejos";
-import { VALIDATION_MESSAGES } from "utils";
+import { VALIDATION_MESSAGES } from "utils/messages";
 import * as yup from "yup";
 
+// FIXME:
 const initialValues: IConsejoForm = {
   id: -1,
   tipo_consejo: -1,

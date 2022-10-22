@@ -5,21 +5,17 @@ import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
 import Tooltip from "@mui/material/Tooltip";
 import { DataGrid, GridActionsCellItem, GridColumns } from "@mui/x-data-grid";
-import {
-  ConfirmationDialog,
-  GridToolbarWithoutExport,
-  Icon,
-  Select,
-  TitleNav,
-} from "components";
+import ConfirmationDialog from "components/ConfirmationDialog";
+import Icon from "components/Icon";
+import Select from "components/Select";
+import TitleNav from "components/TitleNav";
+import { GridToolbarWithoutExport } from "components/ToolbarDataGrid";
 import { useAuthContext } from "contexts/AuthContext";
 import { useModuleContext } from "contexts/ModuleContext";
-import {
-  useConfirmationDialog,
-  useConsejos,
-  useGridColumnVisibilityModel,
-} from "hooks";
-import { IDocumento } from "models/interfaces";
+import { useConfirmationDialog } from "hooks/useConfirmationDialog";
+import { useGridColumnVisibilityModel } from "hooks/useGridColumnVisibilityModel";
+import { useConsejos } from "hooks/useQuery";
+import { IDocumento } from "models/interfaces/IDocumento";
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import {
@@ -29,7 +25,7 @@ import {
   getNombreCompleto,
   getPlantilla,
   getProceso,
-} from "utils";
+} from "utils/libs";
 import { useListDocumentos } from "../hooks/useListDocumentos";
 import { NotificationEmail } from "./NotificationEmail";
 

@@ -1,19 +1,18 @@
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
-import { ConfirmationDialog } from "components";
+import ConfirmationDialog from "components/ConfirmationDialog";
 import { useAuthContext } from "contexts/AuthContext";
 import { useFormik } from "formik";
-import { HTTP_STATUS } from "models/enums";
-import {
-  IDocumento,
-  IProceso,
-  NotificationEmailFormProps,
-} from "models/interfaces";
+import { HTTP_STATUS } from "models/enums/HttpStatus";
+import { IDocumento } from "models/interfaces/IDocumento";
+import { NotificationEmailFormProps } from "models/interfaces/INotification";
+import { IProceso } from "models/interfaces/IProceso";
 import { useSnackbar } from "notistack";
 import { useMemo } from "react";
-import { sendEmail } from "services";
-import { getDefaultNotificationMessage, VALIDATION_MESSAGES } from "utils";
+import { sendEmail } from "services/estudiantes";
+import { getDefaultNotificationMessage } from "utils/libs";
+import { VALIDATION_MESSAGES } from "utils/messages";
 import * as yup from "yup";
 
 type NotificationEmailProps = {

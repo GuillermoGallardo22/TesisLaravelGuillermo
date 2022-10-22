@@ -3,27 +3,26 @@ import {
   GridValueGetterParams,
 } from "@mui/x-data-grid";
 import { format, isValid, parseISO } from "date-fns";
-import { Genero } from "models/enums";
+import { isEmpty, isPlainObject, transform } from "lodash";
+import { Genero } from "models/enums/Genero";
+import { IAula } from "models/interfaces/IAula";
+import { ICanton } from "models/interfaces/ICanton";
+import { IConsejo } from "models/interfaces/IConsejo";
+import { IMiembro } from "models/interfaces/IConsejoMiembro";
+import { IDocente } from "models/interfaces/IDocente";
+import { IDocumento } from "models/interfaces/IDocumento";
 import {
-  IAula,
-  ICanton,
-  IConsejo,
-  IDocente,
-  IDocumento,
   IEstudiante,
-  IMiembro,
-  IProceso,
-  ITipoConsejo,
   MultipleStudentForm,
-} from "models/interfaces";
+} from "models/interfaces/IEstudiante";
+import { IProceso } from "models/interfaces/IProceso";
+import { ITipoConsejo } from "models/interfaces/ITipoConsejo";
 import { read, utils } from "xlsx";
 import { CONSTANTS } from "./constants";
 import { parseToDateTime } from "./date";
 
 export const DRAWERWIDTH = 240;
 const { FORMATO_FECHA_NACIMIENTO: FORMATO_FECHA } = CONSTANTS;
-
-import { isPlainObject, transform, isEmpty } from "lodash";
 
 export type CleanOptions = {
   cleanKeys?: string[];

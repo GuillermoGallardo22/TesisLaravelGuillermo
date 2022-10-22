@@ -5,7 +5,7 @@ import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
-import { Title } from "components";
+import Title from "components/Title";
 import usePassword from "./hooks/usePassword";
 import useProfile from "./hooks/useProfile";
 

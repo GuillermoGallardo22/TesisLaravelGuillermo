@@ -6,16 +6,16 @@ import FormLabel from "@mui/material/FormLabel";
 import Grid from "@mui/material/Grid";
 import Switch from "@mui/material/Switch";
 import TextField from "@mui/material/TextField";
-import {
-  ConfirmationDialog,
+import ConfirmationDialog, {
   ConfirmationDialogProps,
-  ErrorSummary,
-} from "components";
-import { useAutocomplete } from "hooks";
-import { IConsejo, IDocente } from "models/interfaces";
+} from "components/ConfirmationDialog";
+import ErrorSummary from "components/ErrorSummary";
+import { useAutocomplete } from "hooks/useAutocomplete";
+import { IConsejo } from "models/interfaces/IConsejo";
+import { IDocente } from "models/interfaces/IDocente";
 import { useEffect } from "react";
 import { useQueryClient } from "react-query";
-import { getDocentes } from "services";
+import { getDocentes } from "services/docentes";
 import { useAddMiembro } from "../hooks/useAddMiembro";
 
 interface AddMiembroProps

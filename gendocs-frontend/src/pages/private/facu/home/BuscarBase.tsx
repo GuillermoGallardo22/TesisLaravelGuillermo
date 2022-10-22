@@ -1,14 +1,17 @@
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import Tooltip from "@mui/material/Tooltip";
-import { GridActionsCellItem, GridColumns } from "@mui/x-data-grid";
-import { DataGrid, GridToolbarColumns, Icon, TitleNav } from "components";
+import { DataGrid, GridActionsCellItem, GridColumns } from "@mui/x-data-grid";
+import Icon from "components/Icon";
+import TitleNav from "components/TitleNav";
+import { GridToolbarColumns } from "components/ToolbarDataGrid";
 import { useModuleContext } from "contexts/ModuleContext";
-import { useFilterPagination, useGridColumnVisibilityModel } from "hooks";
-import { IDocumento } from "models/interfaces";
+import { useFilterPagination } from "hooks/useFilterPagination";
+import { useGridColumnVisibilityModel } from "hooks/useGridColumnVisibilityModel";
+import { IDocumento } from "models/interfaces/IDocumento";
 import { useMemo } from "react";
 import { Link } from "react-router-dom";
-import { filterDocumentos } from "services";
+import { filterDocumentos } from "services/documentos";
 import {
   getAutor,
   getConsejo,
@@ -16,7 +19,7 @@ import {
   getNombreCompleto,
   getPlantilla,
   getProceso,
-} from "utils";
+} from "utils/libs";
 
 const Home = () => {
   const { module } = useModuleContext();

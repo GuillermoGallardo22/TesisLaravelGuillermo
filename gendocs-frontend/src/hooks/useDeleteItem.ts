@@ -1,5 +1,5 @@
-import { HTTP_STATUS } from "models/enums";
-import { IResponse } from "models/interfaces";
+import { HTTP_STATUS } from "models/enums/HttpStatus";
+import { IResponse } from "models/interfaces/IResponse";
 import { useSnackbar } from "notistack";
 import { useState } from "react";
 

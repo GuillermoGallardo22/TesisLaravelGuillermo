@@ -3,7 +3,8 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
-import { ErrorSummary, TitleNav } from "components";
+import ErrorSummary from "components/ErrorSummary";
+import TitleNav from "components/TitleNav";
 import { useAddSimpleDocente } from "../hooks/useAddSimpleDocente";
 
 // TODO: ADD MULTIPLE TEACHER FUNCIONALITY

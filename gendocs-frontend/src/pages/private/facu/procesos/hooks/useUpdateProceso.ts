@@ -1,10 +1,10 @@
 import { useFormik } from "formik";
-import { HTTP_STATUS } from "models/enums";
-import { IProceso } from "models/interfaces";
+import { HTTP_STATUS } from "models/enums/HttpStatus";
+import { IProceso } from "models/interfaces/IProceso";
 import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
-import { getProcesoById, updateProceso } from "services";
-import { VALIDATION_MESSAGES } from "utils";
+import { getProcesoById, updateProceso } from "services/proceso";
+import { VALIDATION_MESSAGES } from "utils/messages";
 import * as yup from "yup";
 
 const validationSchema = yup.object().shape({

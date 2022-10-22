@@ -1,10 +1,15 @@
 import { useFormik } from "formik";
-import { Genero, HTTP_STATUS } from "models/enums";
-import { ICarrera, MultipleStudentForm } from "models/interfaces";
+import { Genero } from "models/enums/Genero";
+import { HTTP_STATUS } from "models/enums/HttpStatus";
+import { ICarrera } from "models/interfaces/ICarrera";
+import { MultipleStudentForm } from "models/interfaces/IEstudiante";
 import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
-import { getAllCarreras, saveListEstudiante } from "services";
-import { CONSTANTS, unique, VALIDATION_MESSAGES } from "utils";
+import { getAllCarreras } from "services/carreras";
+import { saveListEstudiante } from "services/estudiantes";
+import { CONSTANTS } from "utils/constants";
+import { unique } from "utils/libs";
+import { VALIDATION_MESSAGES } from "utils/messages";
 import * as yup from "yup";
 
 yup.addMethod(yup.array, "unique", unique);

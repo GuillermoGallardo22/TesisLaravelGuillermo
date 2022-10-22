@@ -11,34 +11,30 @@ import {
   GridValueFormatterParams,
   GridValueGetterParams,
 } from "@mui/x-data-grid";
-import {
-  BooleanCell,
-  ConfirmationDialog,
-  GridToolbarWithoutExport,
-  Icon,
-  Select,
-  TitleNav,
-} from "components";
-import {
-  useConfirmationDialog,
-  useDeleteItem,
-  useGridColumnVisibilityModel,
-} from "hooks";
+import BooleanCell from "components/BooleanCell";
+import ConfirmationDialog from "components/ConfirmationDialog";
+import Icon from "components/Icon";
+import Select from "components/Select";
+import TitleNav from "components/TitleNav";
+import { GridToolbarWithoutExport } from "components/ToolbarDataGrid";
+import { useConfirmationDialog } from "hooks/useConfirmationDialog";
+import { useDeleteItem } from "hooks/useDeleteItem";
+import { useGridColumnVisibilityModel } from "hooks/useGridColumnVisibilityModel";
 import {
   IActaGrado,
-  IAula,
-  ICanton,
-  IDocente,
   IEstadoActa,
-  IEstudiante,
-  IModalidadActaGrado,
   ITipoActaGrado,
-} from "models/interfaces";
+} from "models/interfaces/IActaGrado";
+import { IAula } from "models/interfaces/IAula";
+import { ICanton } from "models/interfaces/ICanton";
+import { IDocente } from "models/interfaces/IDocente";
+import { IEstudiante } from "models/interfaces/IEstudiante";
+import { IModalidadActaGrado } from "models/interfaces/IModalidadActaGrado";
 import { useMemo, useState } from "react";
 import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
-import { deleteActaGrado, getActasGrado } from "services";
-import { parseToDate, parseToDateTime } from "utils";
+import { deleteActaGrado, getActasGrado } from "services/actas-grado";
+import { parseToDate, parseToDateTime } from "utils/date";
 import { useListCarreras } from "../carreras/hooks/useListCarreras";
 import { useEstadoActasList } from "./hooks/useEstadoActasList";
 import { useModalidadActasList } from "./hooks/useModalidadActasList";

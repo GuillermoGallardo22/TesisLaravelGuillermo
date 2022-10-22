@@ -1,7 +1,7 @@
-import { useAutocompleteProps } from "hooks";
 import throttle from "lodash/throttle";
-import { IFilterPaginationProps } from "models/interfaces";
+import { IFilterPaginationProps } from "models/interfaces/IPagination";
 import { useEffect, useMemo, useState } from "react";
+import { useAutocompleteProps } from "./useAutocomplete";
 
 export function useMultiAutocomplete<T>({
   fetch,

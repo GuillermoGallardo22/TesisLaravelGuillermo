@@ -1,4 +1,4 @@
-import { IProceso } from ".";
+import { IProceso } from "./IProceso";
 import { IUser } from "./IUser";
 
 export interface IPlantilla {

@@ -1,7 +1,10 @@
 import Grid from "@mui/material/Grid";
 import { DataGrid } from "@mui/x-data-grid";
-import { ConfirmationDialog } from "components";
-import { INumeracionBase, INumeracionReservado } from "models/interfaces";
+import ConfirmationDialog from "components/ConfirmationDialog";
+import {
+  INumeracionBase,
+  INumeracionReservado,
+} from "models/interfaces/INumeracion";
 import { useMemo, useState } from "react";
 
 type NumeracionModalProps = {

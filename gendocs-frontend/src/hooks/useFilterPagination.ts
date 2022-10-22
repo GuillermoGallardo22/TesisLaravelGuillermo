@@ -1,11 +1,11 @@
+import { debounce } from "lodash";
 import {
   IFilterPaginationProps,
   IFilterProps,
   IPagination,
-} from "models/interfaces";
+} from "models/interfaces/IPagination";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { DEFAULT_PAGINATION_VALUES } from "utils";
-import { debounce } from "lodash";
+import { DEFAULT_PAGINATION_VALUES } from "utils/pagination";
 
 type useFilterPaginationProps<T> = {
   fetch: (props: IFilterPaginationProps) => Promise<IPagination<T>>;

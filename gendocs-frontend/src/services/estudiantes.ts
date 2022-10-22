@@ -1,23 +1,21 @@
 import axios from "axios";
 import { format, parseISO } from "date-fns";
-import { HTTP_STATUS } from "models/enums";
+import { HTTP_STATUS } from "models/enums/HttpStatus";
+import { IEstudiante, SimpleStudentForm } from "models/interfaces/IEstudiante";
 import {
-  IEstudiante,
   IFilterPaginationProps,
   IPagination,
-  IResponse,
-  SimpleStudentForm,
-} from "models/interfaces";
+} from "models/interfaces/IPagination";
+import { IResponse } from "models/interfaces/IResponse";
 import { BaseMultipleStudentForm } from "pages/private/facu/estudiantes/hooks/useAddEstudiantes";
+import { handleErrors } from "utils/axios";
+import { CONSTANTS } from "utils/constants";
+import { CUSTOM_HTTP_MESSAGES, HTTP_MESSAGES } from "utils/messages";
 import {
-  CONSTANTS,
-  CUSTOM_HTTP_MESSAGES,
   DEFAULT_PAGINATION_VALUES,
-  handleErrors,
-  HTTP_MESSAGES,
   parseFilterPaginationProps,
   parsePaginationData,
-} from "utils";
+} from "utils/pagination";
 
 const { FORMATO_FECHA_NACIMIENTO: MAYOR_EDAD } = CONSTANTS;
 

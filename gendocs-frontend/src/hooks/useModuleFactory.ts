@@ -1,4 +1,5 @@
-import { ModuleEnum, PlantillasGlobales } from "models/enums";
+import { ModuleEnum } from "models/enums/Module";
+import { PlantillasGlobales } from "models/enums/PlantillasGlobales";
 
 export function useModuleFactory(module: ModuleEnum) {
   const getPlantillasActa = (): PlantillasGlobales[] => {

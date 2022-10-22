@@ -1,4 +1,7 @@
-import { IFilterPaginationProps, IPagination } from "models/interfaces";
+import {
+  IFilterPaginationProps,
+  IPagination,
+} from "models/interfaces/IPagination";
 import { parseObjectToQueryParams } from "./libs";
 
 export const ROW_PER_PAGE = [10, 25, 50];

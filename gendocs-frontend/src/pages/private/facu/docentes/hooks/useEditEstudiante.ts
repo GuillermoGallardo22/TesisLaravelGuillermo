@@ -1,12 +1,16 @@
 import { useFormik } from "formik";
-import { HTTP_STATUS } from "models/enums";
-import { ICarrera, IEstudiante } from "models/interfaces";
+import { HTTP_STATUS } from "models/enums/HttpStatus";
+import { ICarrera } from "models/interfaces/ICarrera";
+import { IEstudiante } from "models/interfaces/IEstudiante";
 import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
-import { getAllCarreras, getEstudianteById, updateEstudiante } from "services";
-import { CONSTANTS, VALIDATION_MESSAGES } from "utils";
+import { getAllCarreras } from "services/carreras";
+import { getEstudianteById, updateEstudiante } from "services/estudiantes";
+import { CONSTANTS } from "utils/constants";
+import { VALIDATION_MESSAGES } from "utils/messages";
 import * as yup from "yup";
 
+// FIXME:
 const initialValues: IEstudiante = {
   id: -1,
   cedula: "",

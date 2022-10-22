@@ -1,8 +1,8 @@
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
-import { GoogleType } from "models/enums";
+import { GoogleType } from "models/enums/GoogleType";
 import { useParams, useSearchParams } from "react-router-dom";
-import { TitleNav } from "./TitleNav";
+import TitleNav from "./TitleNav";
 
 const DriveTemplate = () => {
   const { driveId = "" } = useParams<{ driveId: string }>();

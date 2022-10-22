@@ -1,4 +1,4 @@
-import { ModuleContextProps } from "models/interfaces";
+import { ModuleContextProps } from "models/interfaces/IModule";
 import { createContext, useContext } from "react";
 
 export const ModuleContext = createContext<ModuleContextProps>(

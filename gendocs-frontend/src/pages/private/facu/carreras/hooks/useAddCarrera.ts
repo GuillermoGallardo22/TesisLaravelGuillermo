@@ -1,10 +1,10 @@
 import { useFormik } from "formik";
-import { useErrorsResponse } from "hooks";
-import { HTTP_STATUS } from "models/enums";
-import { ICarrera } from "models/interfaces";
+import { useErrorsResponse } from "hooks/useErrorsResponse";
+import { HTTP_STATUS } from "models/enums/HttpStatus";
+import { ICarrera } from "models/interfaces/ICarrera";
 import { useSnackbar } from "notistack";
-import { saveCarrera } from "services";
-import { VALIDATION_MESSAGES } from "utils";
+import { saveCarrera } from "services/carreras";
+import { VALIDATION_MESSAGES } from "utils/messages";
 import * as yup from "yup";
 
 export const initialValues: ICarrera = {

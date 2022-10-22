@@ -5,11 +5,12 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
-import { ErrorSummary, TitleNav } from "components";
-import { useAutocomplete } from "hooks";
-import { IDocente } from "models/interfaces";
+import ErrorSummary from "components/ErrorSummary";
+import TitleNav from "components/TitleNav";
+import { useAutocomplete } from "hooks/useAutocomplete";
+import { IDocente } from "models/interfaces/IDocente";
 import { useEffect } from "react";
-import { getDocentes } from "services";
+import { getDocentes } from "services/docentes";
 import { useAddCargo } from "../hooks/useAddCargo";
 
 const AddCargo = () => {

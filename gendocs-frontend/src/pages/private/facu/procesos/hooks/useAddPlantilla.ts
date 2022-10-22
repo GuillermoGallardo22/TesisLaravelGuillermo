@@ -1,8 +1,8 @@
 import { useFormik } from "formik";
-import { HTTP_STATUS } from "models/enums";
-import { IPlantilla } from "models/interfaces";
+import { HTTP_STATUS } from "models/enums/HttpStatus";
+import { IPlantilla } from "models/interfaces/IPlantilla";
 import { useSnackbar } from "notistack";
-import { savePlantilla } from "services";
+import { savePlantilla } from "services/plantillas";
 
 export const useAddPlantilla = ({ processId }: { processId: number }) => {
   const { enqueueSnackbar } = useSnackbar();

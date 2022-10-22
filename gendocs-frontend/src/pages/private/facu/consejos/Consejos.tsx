@@ -6,29 +6,24 @@ import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import Tooltip from "@mui/material/Tooltip";
-import { GridActionsCellItem, GridColumns } from "@mui/x-data-grid";
-import {
-  ChipStatus,
-  ConfirmationDialog,
-  DataGrid,
-  Icon,
-  TitleNav,
-} from "components";
+import { DataGrid, GridActionsCellItem, GridColumns } from "@mui/x-data-grid";
+import ChipStatus from "components/ChipStatus";
+import ConfirmationDialog from "components/ConfirmationDialog";
+import Icon from "components/Icon";
+import TitleNav from "components/TitleNav";
 import { useModuleContext } from "contexts/ModuleContext";
-import {
-  useConfirmationDialog,
-  useDeleteItem,
-  useFilterPagination,
-  usePlantillasGlob,
-} from "hooks";
+import { useConfirmationDialog } from "hooks/useConfirmationDialog";
+import { useDeleteItem } from "hooks/useDeleteItem";
+import { useFilterPagination } from "hooks/useFilterPagination";
 import { useModuleFactory } from "hooks/useModuleFactory";
-import { ModuleEnum } from "models/enums";
-import { IConsejo } from "models/interfaces";
+import { usePlantillasGlob } from "hooks/useQuery";
+import { ModuleEnum } from "models/enums/Module";
+import { IConsejo } from "models/interfaces/IConsejo";
 import ModuleProvider from "providers/ModuleProvider";
 import { useMemo, useState } from "react";
 import { Link, Outlet } from "react-router-dom";
-import { cerrarConsejo, deleteConsejo, getConsejos } from "services";
-import { parseToDateTime } from "utils";
+import { cerrarConsejo, deleteConsejo, getConsejos } from "services/consejos";
+import { parseToDateTime } from "utils/date";
 
 export const Consejos = () => {
   const [token, setToken] = useState(1);

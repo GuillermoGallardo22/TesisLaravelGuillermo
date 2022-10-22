@@ -4,10 +4,7 @@ import Icon from "./Icon";
 type BooleanCellProps = {
   value: boolean;
 };
-
-export const BooleanCell: React.FunctionComponent<BooleanCellProps> = ({
-  value,
-}) => {
+const BooleanCell: React.FunctionComponent<BooleanCellProps> = ({ value }) => {
   return value ? (
     <Typography color={"green"}>
       <Icon icon="check" />
@@ -18,3 +15,5 @@ export const BooleanCell: React.FunctionComponent<BooleanCellProps> = ({
     </Typography>
   );
 };
+
+export default BooleanCell;

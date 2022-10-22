@@ -1,9 +1,9 @@
 import { useFormik } from "formik";
-import { HTTP_STATUS } from "models/enums";
-import { IUpdatePasswordForm } from "models/interfaces";
+import { HTTP_STATUS } from "models/enums/HttpStatus";
+import { IUpdatePasswordForm } from "models/interfaces/IUser";
 import { useSnackbar } from "notistack";
-import { updatePassword } from "services";
-import { VALIDATION_MESSAGES } from "utils";
+import { updatePassword } from "services/auth";
+import { VALIDATION_MESSAGES } from "utils/messages";
 import * as yup from "yup";
 
 const initialValues: IUpdatePasswordForm = {

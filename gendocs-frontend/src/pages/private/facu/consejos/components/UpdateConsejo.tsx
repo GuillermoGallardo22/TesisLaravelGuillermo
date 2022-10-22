@@ -4,7 +4,9 @@ import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
-import { ErrorSummary, Select, TitleNav } from "components";
+import ErrorSummary from "components/ErrorSummary";
+import Select from "components/Select";
+import TitleNav from "components/TitleNav";
 import { useParams } from "react-router-dom";
 import { useUpdateConsejo } from "../hooks/useUpdateConsejo";
 

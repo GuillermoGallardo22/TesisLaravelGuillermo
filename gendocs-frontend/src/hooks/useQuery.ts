@@ -1,8 +1,9 @@
-import { PlantillasGlobales } from "models/enums";
-import { IConsejo, IFilterPaginationProps } from "models/interfaces";
+import { PlantillasGlobales } from "models/enums/PlantillasGlobales";
+import { IConsejo } from "models/interfaces/IConsejo";
+import { IFilterPaginationProps } from "models/interfaces/IPagination";
 import { IPlantillaGlobal } from "models/interfaces/IPlantillaGlobal";
 import { useQuery, UseQueryResult } from "react-query";
-import { getConsejos } from "services";
+import { getConsejos } from "services/consejos";
 import { getPlantillaGlobalByCode } from "services/plantillasGlobales";
 
 /**

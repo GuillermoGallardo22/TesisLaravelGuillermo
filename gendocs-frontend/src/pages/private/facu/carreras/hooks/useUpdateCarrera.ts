@@ -1,11 +1,11 @@
 import { useFormik } from "formik";
-import { useErrorsResponse } from "hooks";
-import { HTTP_STATUS } from "models/enums";
-import { ICarrera } from "models/interfaces";
+import { useErrorsResponse } from "hooks/useErrorsResponse";
+import { HTTP_STATUS } from "models/enums/HttpStatus";
+import { ICarrera } from "models/interfaces/ICarrera";
 import { useSnackbar } from "notistack";
 import { useQuery } from "react-query";
 import { useNavigate, useParams } from "react-router-dom";
-import { getCarrera, updateCarrera } from "services";
+import { getCarrera, updateCarrera } from "services/carreras";
 import { initialValues, validationSchema } from "./useAddCarrera";
 
 export const useUpdateCarrera = () => {

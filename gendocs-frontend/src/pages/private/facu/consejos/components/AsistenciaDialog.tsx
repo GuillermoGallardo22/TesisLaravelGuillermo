@@ -2,14 +2,14 @@ import DialogContentText from "@mui/material/DialogContentText";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
-import { ConfirmationDialog } from "components";
-import { ConfirmationDialogReturnProps } from "hooks";
-import { IMiembro } from "models/interfaces";
+import ConfirmationDialog from "components/ConfirmationDialog";
+import { ConfirmationDialogReturnProps } from "hooks/useConfirmationDialog";
+import { IMiembro } from "models/interfaces/IConsejoMiembro";
 import { useSnackbar } from "notistack";
 import { useState } from "react";
 import { useQueryClient } from "react-query";
-import { marcarAsistencia } from "services";
-import { HTTP_MESSAGES } from "utils";
+import { marcarAsistencia } from "services/miembros";
+import { HTTP_MESSAGES } from "utils/messages";
 
 type AsistenciaDialog<T> = {
   miembros: IMiembro[];

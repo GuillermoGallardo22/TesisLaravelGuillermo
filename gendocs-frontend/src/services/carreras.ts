@@ -1,7 +1,11 @@
 import axios from "axios";
-import { HTTP_STATUS } from "models/enums";
-import { ICarrera, IFilterPaginationProps, IResponse } from "models/interfaces";
-import { handleErrors, HTTP_MESSAGES, parseFilterPaginationProps } from "utils";
+import { HTTP_STATUS } from "models/enums/HttpStatus";
+import { ICarrera } from "models/interfaces/ICarrera";
+import { IFilterPaginationProps } from "models/interfaces/IPagination";
+import { IResponse } from "models/interfaces/IResponse";
+import { handleErrors } from "utils/axios";
+import { HTTP_MESSAGES } from "utils/messages";
+import { parseFilterPaginationProps } from "utils/pagination";
 
 export async function getAllCarreras(
   props?: IFilterPaginationProps

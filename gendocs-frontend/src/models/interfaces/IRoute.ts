@@ -1,5 +1,6 @@
-import { IconTypes } from "components";
-import { ModuleEnum, RolEnum } from "models/enums";
+import { IconTypes } from "components/Icon";
+import { ModuleEnum } from "models/enums/Module";
+import { RolEnum } from "models/enums/Rol";
 
 export interface IRoute {
   path: string;

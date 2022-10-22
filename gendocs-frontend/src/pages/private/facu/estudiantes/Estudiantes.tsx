@@ -2,12 +2,15 @@ import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import Tooltip from "@mui/material/Tooltip";
-import { GridActionsCellItem, GridColumns } from "@mui/x-data-grid";
-import { DataGrid, GridToolbarColumns, Icon, TitleNav } from "components";
-import { useFilterPagination, useGridColumnVisibilityModel } from "hooks";
-import { IEstudiante } from "models/interfaces";
+import { DataGrid, GridActionsCellItem, GridColumns } from "@mui/x-data-grid";
+import Icon from "components/Icon";
+import TitleNav from "components/TitleNav";
+import { GridToolbarColumns } from "components/ToolbarDataGrid";
+import { useFilterPagination } from "hooks/useFilterPagination";
+import { useGridColumnVisibilityModel } from "hooks/useGridColumnVisibilityModel";
+import { IEstudiante } from "models/interfaces/IEstudiante";
 import { Link as RouterLink } from "react-router-dom";
-import { getEstudiantes } from "services";
+import { getEstudiantes } from "services/estudiantes";
 
 const columns: GridColumns = [
   { field: "cedula", headerName: "Cédula", width: 150 },

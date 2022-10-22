@@ -1,7 +1,8 @@
 import axios from "axios";
-import { HTTP_STATUS } from "models/enums";
-import { IResponse } from "models/interfaces";
-import { handleErrors, HTTP_MESSAGES } from "utils";
+import { HTTP_STATUS } from "models/enums/HttpStatus";
+import { IResponse } from "models/interfaces/IResponse";
+import { handleErrors } from "utils/axios";
+import { HTTP_MESSAGES } from "utils/messages";
 
 interface IBatch {
   id: string;

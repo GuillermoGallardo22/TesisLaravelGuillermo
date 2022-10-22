@@ -1,12 +1,12 @@
 import { useAuthContext } from "contexts/AuthContext";
 import { useFormik } from "formik";
-import { HTTP_STATUS } from "models/enums";
-import { IUser } from "models/interfaces";
+import { HTTP_STATUS } from "models/enums/HttpStatus";
+import { IUser } from "models/interfaces/IUser";
 import { useSnackbar } from "notistack";
 import { useNavigate } from "react-router-dom";
 import { AuthActionsEnum } from "reducers/AuthReducer";
-import { login, logout as _logout } from "services";
-import { VALIDATION_MESSAGES } from "utils";
+import { login, logout as _logout } from "services/auth";
+import { VALIDATION_MESSAGES } from "utils/messages";
 import * as yup from "yup";
 
 interface IAuth {

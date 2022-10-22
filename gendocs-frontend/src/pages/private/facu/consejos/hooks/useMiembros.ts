@@ -1,8 +1,9 @@
-import { HTTP_STATUS } from "models/enums";
+import { HTTP_STATUS } from "models/enums/HttpStatus";
 import { useSnackbar } from "notistack";
 import { useQuery } from "react-query";
 import { useNavigate, useParams } from "react-router-dom";
-import { getConsejo, getMiembros } from "services";
+import { getConsejo } from "services/consejos";
+import { getMiembros } from "services/miembros";
 
 export function useMiembros() {
   const { consejoId = "" } = useParams<{ consejoId: string }>();

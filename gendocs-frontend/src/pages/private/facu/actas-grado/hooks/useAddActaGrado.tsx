@@ -1,25 +1,24 @@
 import { subYears } from "date-fns";
 import { useFormik } from "formik";
-import { useErrorsResponse } from "hooks";
-import { HTTP_STATUS } from "models/enums";
+import { useErrorsResponse } from "hooks/useErrorsResponse";
+import { HTTP_STATUS } from "models/enums/HttpStatus";
 import {
   IAddActaGrado,
   IEstadoActa,
-  IModalidadActaGrado,
-  INumeracionBase,
   ITipoActaGrado,
   useAddActaGradoProps,
-} from "models/interfaces";
+} from "models/interfaces/IActaGrado";
+import { IModalidadActaGrado } from "models/interfaces/IModalidadActaGrado";
+import { INumeracionBase } from "models/interfaces/INumeracion";
 import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
-import {
-  addActaGrado,
-  getEstadoActasGrado,
-  getModalidadesActaGrado,
-  getNumeracionActaGrado,
-  getTipoActasGrado,
-} from "services";
-import { CONSTANTS, VALIDATION_MESSAGES as VM } from "utils";
+import { addActaGrado } from "services/actas-grado";
+import { getEstadoActasGrado } from "services/estadoActasGrado";
+import { getModalidadesActaGrado } from "services/modalidadActaGrado";
+import { getNumeracionActaGrado } from "services/numeracion";
+import { getTipoActasGrado } from "services/tipoActasGrado";
+import { CONSTANTS } from "utils/constants";
+import { VALIDATION_MESSAGES as VM } from "utils/messages";
 import * as yup from "yup";
 
 const { DURACION_ESTUDIOS, HORAS_PRACTICAS } = CONSTANTS;

@@ -1,6 +1,7 @@
 import axios from "axios";
-import { IEstadoActa, IFilterPaginationProps } from "models/interfaces";
-import { parseFilterPaginationProps } from "utils";
+import { IEstadoActa } from "models/interfaces/IActaGrado";
+import { IFilterPaginationProps } from "models/interfaces/IPagination";
+import { parseFilterPaginationProps } from "utils/pagination";
 
 export async function getEstadoActasGrado(
   props?: IFilterPaginationProps

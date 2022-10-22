@@ -1,4 +1,4 @@
-import { ModalidadActaGrado } from "models/enums";
+import { ModalidadActaGrado } from "models/enums/ModalidadActaGrado";
 
 export interface IModalidadActaGrado {
   id: number;

@@ -150,11 +150,7 @@ export const UpdateUsuario = lazy(
   () => import("pages/private/facu/usuarios/components/UpdateUsuario")
 );
 
-export const DriveTemplate = lazy(() =>
-  import("components").then((module) => ({
-    default: module.DriveTemplate,
-  }))
-);
+export const DriveTemplate = lazy(() => import("components/DriveTemplate"));
 
 export const Cargos = lazy(() => import("pages/private/facu/cargos/Cargos"));
 

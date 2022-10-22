@@ -1,6 +1,6 @@
-import Tooltip from "@mui/material/Tooltip";
 import { Box, Chip } from "@mui/material";
 import Stack from "@mui/material/Stack";
+import Tooltip from "@mui/material/Tooltip";
 import {
   DataGrid,
   GridActionsCellItem,
@@ -10,10 +10,13 @@ import {
   GridRowParams,
   GridValueGetterParams,
 } from "@mui/x-data-grid";
-import { GridToolbarWithoutExport, Icon, TitleNav } from "components";
-import { ICarrera, ITipoActaGrado } from "models/interfaces";
-import { usePlantillasActaGrado } from "../hooks/usePlantillasActaGrado";
+import Icon from "components/Icon";
+import TitleNav from "components/TitleNav";
+import { GridToolbarWithoutExport } from "components/ToolbarDataGrid";
+import { ITipoActaGrado } from "models/interfaces/IActaGrado";
+import { ICarrera } from "models/interfaces/ICarrera";
 import { Link } from "react-router-dom";
+import { usePlantillasActaGrado } from "../hooks/usePlantillasActaGrado";
 
 const columns: GridColumns = [
   {

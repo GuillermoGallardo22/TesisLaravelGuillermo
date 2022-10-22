@@ -1,4 +1,4 @@
-import { IUser } from "models/interfaces";
+import { IUser } from "models/interfaces/IUser";
 import { createContext, useContext } from "react";
 import { AuthActionsProps, AuthReducerState } from "reducers/AuthReducer";
 

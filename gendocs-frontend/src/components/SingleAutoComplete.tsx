@@ -1,10 +1,9 @@
 import { UseAutocompleteProps as UseAutocompletePropsBase } from "@mui/material";
 import Autocomplete from "@mui/material/Autocomplete";
 import CircularProgress from "@mui/material/CircularProgress";
-import TextField from "@mui/material/TextField";
-import { useAutocomplete, useAutocompleteProps } from "hooks";
+import TextField, { TextFieldProps } from "@mui/material/TextField";
+import { useAutocomplete, useAutocompleteProps } from "hooks/useAutocomplete";
 import { useEffect } from "react";
-import { TextFieldProps } from "@mui/material/TextField";
 
 type UseAutocompleteProps<T> = Pick<
   UseAutocompletePropsBase<T, undefined, undefined, undefined>,

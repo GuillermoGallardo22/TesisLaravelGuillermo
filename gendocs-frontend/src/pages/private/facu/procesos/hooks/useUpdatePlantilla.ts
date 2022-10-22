@@ -1,11 +1,13 @@
 import { useModuleContext } from "contexts/ModuleContext";
 import { useFormik } from "formik";
-import { HTTP_STATUS } from "models/enums";
-import { IPlantilla, IProceso } from "models/interfaces";
+import { HTTP_STATUS } from "models/enums/HttpStatus";
+import { IPlantilla } from "models/interfaces/IPlantilla";
+import { IProceso } from "models/interfaces/IProceso";
 import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getPlantillaById, getProcesos, updatePlantilla } from "services";
+import { getPlantillaById, updatePlantilla } from "services/plantillas";
+import { getProcesos } from "services/proceso";
 
 export const useUpdatePlantilla = ({ templateId }: { templateId: number }) => {
   const navigate = useNavigate();

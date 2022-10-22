@@ -1,7 +1,8 @@
-import { useConfirmationDialog, useDeleteItem } from "hooks";
-import { IDocumento } from "models/interfaces";
+import { useConfirmationDialog } from "hooks/useConfirmationDialog";
+import { useDeleteItem } from "hooks/useDeleteItem";
+import { IDocumento } from "models/interfaces/IDocumento";
 import { useQuery } from "react-query";
-import { deleteDocumento, getDocumentos } from "services";
+import { deleteDocumento, getDocumentos } from "services/documentos";
 
 export function useListDocumentos(consejo: number) {
   const {

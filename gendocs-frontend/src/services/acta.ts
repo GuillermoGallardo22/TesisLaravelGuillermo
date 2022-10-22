@@ -1,8 +1,10 @@
 import axios from "axios";
 import { saveAs } from "file-saver";
-import { HTTP_STATUS } from "models/enums";
-import { IActa, IResponse } from "models/interfaces";
-import { handleErrors, HTTP_MESSAGES } from "utils";
+import { HTTP_STATUS } from "models/enums/HttpStatus";
+import { IActa } from "models/interfaces/IConsejo";
+import { IResponse } from "models/interfaces/IResponse";
+import { handleErrors } from "utils/axios";
+import { HTTP_MESSAGES } from "utils/messages";
 
 export async function createActa(
   consejoId: string | number

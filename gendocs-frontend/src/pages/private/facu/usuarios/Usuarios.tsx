@@ -11,20 +11,20 @@ import {
   GridRenderCellParams,
   GridRowParams,
 } from "@mui/x-data-grid";
-import {
-  ChipStatus,
-  ConfirmationDialog,
-  GridToolbarWithoutExport,
-  Icon,
-  TitleNav,
-} from "components";
-import { useConfirmationDialog, useGridColumnVisibilityModel } from "hooks";
-import { HTTP_STATUS } from "models/enums";
-import { IModule, IUser } from "models/interfaces";
+import ChipStatus from "components/ChipStatus";
+import ConfirmationDialog from "components/ConfirmationDialog";
+import Icon from "components/Icon";
+import TitleNav from "components/TitleNav";
+import { GridToolbarWithoutExport } from "components/ToolbarDataGrid";
+import { useConfirmationDialog } from "hooks/useConfirmationDialog";
+import { useGridColumnVisibilityModel } from "hooks/useGridColumnVisibilityModel";
+import { HTTP_STATUS } from "models/enums/HttpStatus";
+import { IModule } from "models/interfaces/IModule";
+import { IUser } from "models/interfaces/IUser";
 import { useSnackbar } from "notistack";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
-import { getUsers, resetUserPassword } from "services";
+import { getUsers, resetUserPassword } from "services/auth";
 
 const Usuarios = () => {
   const { enqueueSnackbar } = useSnackbar();

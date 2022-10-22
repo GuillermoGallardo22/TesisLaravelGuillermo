@@ -1,21 +1,19 @@
 import { useModuleContext } from "contexts/ModuleContext";
 import { useFormik } from "formik";
-import { useErrorsResponse } from "hooks";
-import { HTTP_STATUS } from "models/enums";
+import { useErrorsResponse } from "hooks/useErrorsResponse";
+import { HTTP_STATUS } from "models/enums/HttpStatus";
+import { IConsejo } from "models/interfaces/IConsejo";
+import { IDocumentoForm } from "models/interfaces/IDocumento";
 import {
-  IConsejo,
-  IDocumentoForm,
   INumeracionBase,
   INumeracionReservado,
-} from "models/interfaces";
+} from "models/interfaces/INumeracion";
 import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
-import {
-  getConsejos,
-  getNumeracion as _getNumeracion,
-  saveDocumento,
-} from "services";
-import { VALIDATION_MESSAGES } from "utils";
+import { getConsejos } from "services/consejos";
+import { saveDocumento } from "services/documentos";
+import { getNumeracion as _getNumeracion } from "services/numeracion";
+import { VALIDATION_MESSAGES } from "utils/messages";
 import * as yup from "yup";
 
 type useAddDocumentoProps = {

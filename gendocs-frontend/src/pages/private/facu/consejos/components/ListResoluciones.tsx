@@ -1,8 +1,10 @@
 import Stack from "@mui/material/Stack";
 import Tooltip from "@mui/material/Tooltip";
 import { DataGrid, GridActionsCellItem, GridColumns } from "@mui/x-data-grid";
-import { GridToolbarWithoutExport, Icon, TitleNav } from "components";
-import { useGridColumnVisibilityModel } from "hooks";
+import Icon from "components/Icon";
+import TitleNav from "components/TitleNav";
+import { GridToolbarWithoutExport } from "components/ToolbarDataGrid";
+import { useGridColumnVisibilityModel } from "hooks/useGridColumnVisibilityModel";
 import { useListDocumentos } from "pages/private/facu/documentos/hooks/useListDocumentos";
 import { useMemo } from "react";
 import { Link, useParams } from "react-router-dom";
@@ -12,7 +14,7 @@ import {
   getNombreCompleto,
   getPlantilla,
   getProceso,
-} from "utils";
+} from "utils/libs";
 
 const ListResoluciones: React.FunctionComponent = () => {
   const { consejoId = "-1" } = useParams<{ consejoId: string }>();

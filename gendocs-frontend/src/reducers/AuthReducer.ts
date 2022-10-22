@@ -1,4 +1,4 @@
-import { IUser } from "models/interfaces";
+import { IUser } from "models/interfaces/IUser";
 
 export enum AuthActionsEnum {
   setCheckingAuth,
@@ -24,22 +24,22 @@ export function authReducer(
   const { payload, type } = actions;
 
   switch (type) {
-  case AuthActionsEnum.setIsAuth:
-    return {
-      ...state,
-      isAuth: payload as boolean,
-    };
-  case AuthActionsEnum.setCheckingAuth:
-    return {
-      ...state,
-      checkingAuth: payload as boolean,
-    };
-  case AuthActionsEnum.setUser:
-    return {
-      ...state,
-      user: payload as IUser,
-    };
-  default:
-    return state;
+    case AuthActionsEnum.setIsAuth:
+      return {
+        ...state,
+        isAuth: payload as boolean,
+      };
+    case AuthActionsEnum.setCheckingAuth:
+      return {
+        ...state,
+        checkingAuth: payload as boolean,
+      };
+    case AuthActionsEnum.setUser:
+      return {
+        ...state,
+        user: payload as IUser,
+      };
+    default:
+      return state;
   }
 }

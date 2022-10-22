@@ -1,6 +1,6 @@
-import { ICargo } from "models/interfaces";
+import { ICargo } from "models/interfaces/ICargo";
 import { useQuery } from "react-query";
-import { getCargos } from "services";
+import { getCargos } from "services/cargos";
 
 type useListCargosProps = {
   token?: number;

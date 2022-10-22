@@ -1,19 +1,11 @@
 import axios from "axios";
-import { HTTP_STATUS } from "models/enums";
-import {
-  IModule,
-  IResponse,
-  IRole,
-  IUpdatePasswordForm,
-  IUser,
-  IUserForm,
-} from "models/interfaces";
-import {
-  CUSTOM_HTTP_MESSAGES,
-  deleteAllCookies,
-  handleErrors,
-  HTTP_MESSAGES,
-} from "utils";
+import { HTTP_STATUS } from "models/enums/HttpStatus";
+import { IModule } from "models/interfaces/IModule";
+import { IResponse } from "models/interfaces/IResponse";
+import { IRole } from "models/interfaces/IRole";
+import { IUpdatePasswordForm, IUser, IUserForm } from "models/interfaces/IUser";
+import { deleteAllCookies, handleErrors } from "utils/axios";
+import { CUSTOM_HTTP_MESSAGES, HTTP_MESSAGES } from "utils/messages";
 
 async function getCsrf() {
   try {

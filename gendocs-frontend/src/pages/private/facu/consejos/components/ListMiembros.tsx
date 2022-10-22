@@ -10,23 +10,19 @@ import {
   GridColumns,
   GridSelectionModel,
 } from "@mui/x-data-grid";
-import {
-  BooleanCell,
-  ConfirmationDialog,
-  GridToolbarColumns,
-  Icon,
-  TitleNav,
-} from "components";
-import {
-  useConfirmationDialog,
-  useDeleteItem,
-  useGridColumnVisibilityModel,
-} from "hooks";
-import { IMiembro } from "models/interfaces";
+import BooleanCell from "components/BooleanCell";
+import ConfirmationDialog from "components/ConfirmationDialog";
+import Icon from "components/Icon";
+import TitleNav from "components/TitleNav";
+import { GridToolbarColumns } from "components/ToolbarDataGrid";
+import { useConfirmationDialog } from "hooks/useConfirmationDialog";
+import { useDeleteItem } from "hooks/useDeleteItem";
+import { useGridColumnVisibilityModel } from "hooks/useGridColumnVisibilityModel";
+import { IMiembro } from "models/interfaces/IConsejoMiembro";
 import { useMemo, useState } from "react";
 import { useQueryClient } from "react-query";
-import { deleteMiembro } from "services";
-import { getNombreCompletoMiembro } from "utils";
+import { deleteMiembro } from "services/miembros";
+import { getNombreCompletoMiembro } from "utils/libs";
 import { useMiembros } from "../hooks/useMiembros";
 import { AddMiembro } from "./AddMiembro";
 import { AsistenciaDialog } from "./AsistenciaDialog";

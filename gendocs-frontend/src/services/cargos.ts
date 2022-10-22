@@ -1,13 +1,11 @@
 import axios from "axios";
-import { HTTP_STATUS } from "models/enums";
-import {
-  IAddCargo,
-  ICargo,
-  IFilterPaginationProps,
-  IResponse,
-  IUpdateCargo,
-} from "models/interfaces";
-import { handleErrors, HTTP_MESSAGES, parseFilterPaginationProps } from "utils";
+import { HTTP_STATUS } from "models/enums/HttpStatus";
+import { IAddCargo, ICargo, IUpdateCargo } from "models/interfaces/ICargo";
+import { IFilterPaginationProps } from "models/interfaces/IPagination";
+import { IResponse } from "models/interfaces/IResponse";
+import { handleErrors } from "utils/axios";
+import { HTTP_MESSAGES } from "utils/messages";
+import { parseFilterPaginationProps } from "utils/pagination";
 
 export async function getCargos(
   props?: IFilterPaginationProps

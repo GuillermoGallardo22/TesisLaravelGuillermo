@@ -3,7 +3,8 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-import { Icon, TitleNav } from "components";
+import Icon from "components/Icon";
+import TitleNav from "components/TitleNav";
 import { FormEstudiante } from "./FormEstudiante";
 import { FormEstudiantes } from "./FormEstudiantes";
 

@@ -1,9 +1,9 @@
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
-import { ConfirmationDialog } from "components";
-import { NotificationEmailProps } from "models/interfaces";
-import { formatRecipients } from "utils";
+import ConfirmationDialog from "components/ConfirmationDialog";
+import { NotificationEmailProps } from "models/interfaces/INotification";
+import { formatRecipients } from "utils/libs";
 import { useAsistenciaNotificacion } from "../hooks/useAsistenciaNotificacion";
 
 export function NotificacionEmail<T>(props: NotificationEmailProps<T>) {

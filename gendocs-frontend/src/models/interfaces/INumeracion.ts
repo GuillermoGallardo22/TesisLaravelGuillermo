@@ -1,4 +1,4 @@
-import { ModuleEnum } from "../enums";
+import { ModuleEnum } from "models/enums/Module";
 import { IConsejo } from "./IConsejo";
 
 export interface IReservaForm {

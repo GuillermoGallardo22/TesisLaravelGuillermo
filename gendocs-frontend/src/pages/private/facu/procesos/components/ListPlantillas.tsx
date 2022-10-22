@@ -3,12 +3,14 @@ import IconButton from "@mui/material/IconButton";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import Tooltip from "@mui/material/Tooltip";
-import { GridColumns, GridRenderCellParams } from "@mui/x-data-grid";
-import { ChipStatus, DataGrid, Icon, TitleNav } from "components";
-import { useFilterPagination } from "hooks";
-import { Link as RouterLink, useParams } from "react-router-dom";
-import { getPlantillasByProcesoId } from "services";
+import { DataGrid, GridColumns, GridRenderCellParams } from "@mui/x-data-grid";
+import ChipStatus from "components/ChipStatus";
+import Icon from "components/Icon";
+import TitleNav from "components/TitleNav";
 import { useModuleContext } from "contexts/ModuleContext";
+import { useFilterPagination } from "hooks/useFilterPagination";
+import { Link as RouterLink, useParams } from "react-router-dom";
+import { getPlantillasByProcesoId } from "services/plantillas";
 
 const columns: GridColumns = [
   { field: "nombre", headerName: "Nombre", flex: 1 },

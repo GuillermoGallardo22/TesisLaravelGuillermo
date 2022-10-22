@@ -4,11 +4,13 @@ import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { ErrorSummary, Select, TitleNav } from "components";
+import ErrorSummary from "components/ErrorSummary";
+import Select from "components/Select";
+import TitleNav from "components/TitleNav";
 import { subYears } from "date-fns";
-import { Genero } from "models/enums";
+import { Genero } from "models/enums/Genero";
 import { useParams } from "react-router-dom";
-import { CONSTANTS } from "utils";
+import { CONSTANTS } from "utils/constants";
 import { useUpdateEstudiante } from "../hooks/useUpdateEstudiante";
 
 const { MAYOR_EDAD: MAYOR_DE_EDAD } = CONSTANTS;
@@ -39,6 +41,7 @@ const UpdateEstudiante = () => {
                 id: item.id,
                 label: item.nombre,
               }))}
+              // FIXME:
               value={formik.values.carrera as number}
               onChange={formik.handleChange}
               error={formik.touched.carrera && Boolean(formik.errors.carrera)}

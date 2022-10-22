@@ -1,5 +1,6 @@
-import { ModuleEnum, RolEnum } from "models/enums";
-import { IRoute } from "models/interfaces";
+import { ModuleEnum } from "models/enums/Module";
+import { RolEnum } from "models/enums/Rol";
+import { IRoute } from "models/interfaces/IRoute";
 import { Outlet } from "react-router-dom";
 import {
   Acta,

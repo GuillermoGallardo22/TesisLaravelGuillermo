@@ -1,4 +1,4 @@
-import { ModuleEnum } from "models/enums";
+import { ModuleEnum } from "models/enums/Module";
 import { IConsejo } from "./IConsejo";
 import { IEstudiante } from "./IEstudiante";
 import { IPlantilla } from "./IPlantilla";

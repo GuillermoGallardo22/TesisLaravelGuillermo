@@ -1,12 +1,11 @@
 import axios from "axios";
-import { HTTP_STATUS } from "models/enums";
-import {
-  DocenteForm,
-  IDocente,
-  IFilterPaginationProps,
-  IResponse,
-} from "models/interfaces";
-import { handleErrors, HTTP_MESSAGES, parseFilterPaginationProps } from "utils";
+import { HTTP_STATUS } from "models/enums/HttpStatus";
+import { DocenteForm, IDocente } from "models/interfaces/IDocente";
+import { IFilterPaginationProps } from "models/interfaces/IPagination";
+import { IResponse } from "models/interfaces/IResponse";
+import { handleErrors } from "utils/axios";
+import { HTTP_MESSAGES } from "utils/messages";
+import { parseFilterPaginationProps } from "utils/pagination";
 
 export async function saveDocente(
   form: DocenteForm

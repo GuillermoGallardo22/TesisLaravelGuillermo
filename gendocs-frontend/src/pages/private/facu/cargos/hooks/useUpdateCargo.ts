@@ -1,12 +1,12 @@
 import { useFormik } from "formik";
-import { useErrorsResponse } from "hooks";
-import { HTTP_STATUS } from "models/enums";
-import { ICargo, IDocente, IUpdateCargo } from "models/interfaces";
+import { useErrorsResponse } from "hooks/useErrorsResponse";
+import { HTTP_STATUS } from "models/enums/HttpStatus";
+import { ICargo, IUpdateCargo } from "models/interfaces/ICargo";
+import { IDocente } from "models/interfaces/IDocente";
 import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
-import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
-import { getCargo, updateCargo } from "services";
+import { getCargo, updateCargo } from "services/cargos";
 import { validationSchema } from "./useAddCargo";
 
 type useUpdateCargoProps = {

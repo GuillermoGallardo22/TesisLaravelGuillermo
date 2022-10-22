@@ -1,6 +1,7 @@
 import axios from "axios";
-import { IAula, IFilterPaginationProps } from "models/interfaces";
-import { parseFilterPaginationProps } from "utils";
+import { IAula } from "models/interfaces/IAula";
+import { IFilterPaginationProps } from "models/interfaces/IPagination";
+import { parseFilterPaginationProps } from "utils/pagination";
 
 export async function getAulas(
   props: IFilterPaginationProps

@@ -11,7 +11,7 @@ type TitleNavProps = {
   goback?: boolean;
 };
 
-export const TitleNav: React.FunctionComponent<TitleNavProps> = ({
+const TitleNav: React.FunctionComponent<TitleNavProps> = ({
   title,
   goback = true,
 }) => {
@@ -43,3 +43,5 @@ export const TitleNav: React.FunctionComponent<TitleNavProps> = ({
     </>
   );
 };
+
+export default TitleNav;

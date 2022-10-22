@@ -3,14 +3,15 @@ import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import Toolbar from "@mui/material/Toolbar";
-import { AccesDenied as AccessDenied, Skeleton } from "components";
+import AccessDenied from "components/AccesDenied";
+import Skeleton from "components/Skeleton";
 import { useAuthContext } from "contexts/AuthContext";
-import { IRoute } from "models/interfaces";
+import { IRoute } from "models/interfaces/IRoute";
 import { Suspense, useCallback, useMemo, useState } from "react";
 import { Navigate, Route, Routes } from "react-router";
 import AppBar from "./components/AppBar";
 import Drawer from "./components/Drawer";
-import { allRoutes as routes, getDefaultRoutes } from "./routes";
+import { allRoutes as routes, getDefaultRoutes } from "./routes/";
 
 const isToogleDrawer = localStorage.getItem("isToogleDrawer") || "true";
 const defaultState = Boolean(JSON.parse(isToogleDrawer));

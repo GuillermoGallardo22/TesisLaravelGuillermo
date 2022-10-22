@@ -6,7 +6,10 @@ import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
 import Switch from "@mui/material/Switch";
 import TextField from "@mui/material/TextField";
-import { ErrorSummary, Select, SelectMulti, TitleNav } from "components";
+import ErrorSummary from "components/ErrorSummary";
+import Select from "components/Select";
+import { SelectMulti } from "components/SelectMulti";
+import TitleNav from "components/TitleNav";
 import { useParams } from "react-router-dom";
 import { useUpdateUsuario } from "../hooks/useUpdateUsuario";
 

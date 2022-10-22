@@ -1,30 +1,27 @@
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
-import {
-  ConfirmationDialog,
-  ErrorSummary,
-  Select,
-  SingleAutoComplete,
-} from "components";
-import { FormikHelpers, useFormik } from "formik";
-import { useErrorsResponse } from "hooks";
-import { HTTP_STATUS } from "models/enums";
+import ConfirmationDialog from "components/ConfirmationDialog";
+import ErrorSummary from "components/ErrorSummary";
+import Select from "components/Select";
+import { SingleAutoComplete } from "components/SingleAutoComplete";
+import { useFormik } from "formik";
+import { useErrorsResponse } from "hooks/useErrorsResponse";
+import { HTTP_STATUS } from "models/enums/HttpStatus";
 import {
   IActaGrado,
   IAddAsistenteActaGrado,
-  IDocente,
   TipoAsistenteActaGradoEnum,
-} from "models/interfaces";
+} from "models/interfaces/IActaGrado";
+import { IDocente } from "models/interfaces/IDocente";
 import { useSnackbar } from "notistack";
 import { useEffect, useMemo, useState } from "react";
 import { useQueryClient } from "react-query";
-import { getDocentes, saveMiembroActaGrado } from "services";
-import {
-  getOptionLabelDocente,
-  isOptionEqualToValueDocente,
-  VALIDATION_MESSAGES as VM,
-} from "utils";
+import { getDocentes } from "services/docentes";
+import { saveMiembroActaGrado } from "services/miembro-acta-grado";
+import { getOptionLabelDocente, isOptionEqualToValueDocente } from "utils/libs";
+import { VALIDATION_MESSAGES as VM } from "utils/messages";
+
 import * as yup from "yup";
 
 type AddAsistenteActaProps = {

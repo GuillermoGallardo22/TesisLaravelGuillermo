@@ -1,13 +1,14 @@
 import { useModuleContext } from "contexts/ModuleContext";
 import { useFormik } from "formik";
-import { useErrorsResponse } from "hooks";
-import { HTTP_STATUS } from "models/enums";
-import { IConsejoForm, ITipoConsejo } from "models/interfaces";
+import { useErrorsResponse } from "hooks/useErrorsResponse";
+import { HTTP_STATUS } from "models/enums/HttpStatus";
+import { IConsejoForm } from "models/interfaces/IConsejo";
+import { ITipoConsejo } from "models/interfaces/ITipoConsejo";
 import { useSnackbar } from "notistack";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { saveConsejo } from "services";
+import { saveConsejo } from "services/consejos";
 import { getTipoConsejos } from "services/tipo-consejos";
-import { VALIDATION_MESSAGES } from "utils";
+import { VALIDATION_MESSAGES } from "utils/messages";
 import * as yup from "yup";
 
 export function useAddConsejo() {

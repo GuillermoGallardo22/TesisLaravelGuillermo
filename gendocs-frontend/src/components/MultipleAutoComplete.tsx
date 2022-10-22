@@ -3,7 +3,8 @@ import Autocomplete from "@mui/material/Autocomplete";
 import Chip from "@mui/material/Chip";
 import CircularProgress from "@mui/material/CircularProgress";
 import TextField from "@mui/material/TextField";
-import { useAutocompleteProps, useMultiAutocomplete } from "hooks";
+import { useAutocompleteProps } from "hooks/useAutocomplete";
+import { useMultiAutocomplete } from "hooks/useMultiAutocomplete";
 import { useEffect } from "react";
 
 type UseAutocompleteProps<T> = Pick<

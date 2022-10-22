@@ -2,17 +2,15 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import { DataGrid, GridColumns } from "@mui/x-data-grid";
-import {
-  BooleanCell,
-  GridToolbarColumns,
-  Icon,
-  Skeleton,
-  TitleNav,
-} from "components";
-import { useConfirmationDialog } from "hooks";
+import BooleanCell from "components/BooleanCell";
+import Icon from "components/Icon";
+import Skeleton from "components/Skeleton";
+import TitleNav from "components/TitleNav";
+import { GridToolbarColumns } from "components/ToolbarDataGrid";
+import { useConfirmationDialog } from "hooks/useConfirmationDialog";
 import { useMemo } from "react";
 import { useParams } from "react-router-dom";
-import { getNombreCompletoMiembro } from "utils";
+import { getNombreCompletoMiembro } from "utils/libs";
 import AddAsistenteActa from "../components/AddAsistenteActa";
 import useActaGrado from "../hooks/useActaGrado";
 

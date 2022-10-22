@@ -1,6 +1,7 @@
 import axios from "axios";
-import { ICanton, IFilterPaginationProps } from "models/interfaces";
-import { parseFilterPaginationProps } from "utils";
+import { ICanton } from "models/interfaces/ICanton";
+import { IFilterPaginationProps } from "models/interfaces/IPagination";
+import { parseFilterPaginationProps } from "utils/pagination";
 
 export async function getCantones(
   props: IFilterPaginationProps

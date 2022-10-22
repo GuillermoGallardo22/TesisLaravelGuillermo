@@ -1,4 +1,4 @@
-import { ConfirmationDialogReturnProps } from "hooks";
+import { ConfirmationDialogReturnProps } from "hooks/useConfirmationDialog";
 import { IConsejo } from "./IConsejo";
 import { IMiembro } from "./IConsejoMiembro";
 

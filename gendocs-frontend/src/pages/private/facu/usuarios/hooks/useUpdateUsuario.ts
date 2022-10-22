@@ -1,12 +1,15 @@
 import { useFormik } from "formik";
-import { useErrorsResponse } from "hooks";
-import { HTTP_STATUS } from "models/enums";
-import { IModule, IRole, IUser, IUserForm } from "models/interfaces";
+import { useErrorsResponse } from "hooks/useErrorsResponse";
+import { HTTP_STATUS } from "models/enums/HttpStatus";
+import { IModule } from "models/interfaces/IModule";
+import { IRole } from "models/interfaces/IRole";
+import { IUser, IUserForm } from "models/interfaces/IUser";
 import { useSnackbar } from "notistack";
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getModules, getRoles, getUserById, updateUser } from "services";
-import { CONSTANTS, VALIDATION_MESSAGES } from "utils";
+import { getModules, getRoles, getUserById, updateUser } from "services/auth";
+import { CONSTANTS } from "utils/constants";
+import { VALIDATION_MESSAGES } from "utils/messages";
 import * as yup from "yup";
 
 const initialValues: IUserForm = {
