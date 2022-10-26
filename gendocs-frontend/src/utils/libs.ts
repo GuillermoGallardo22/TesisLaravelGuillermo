@@ -5,6 +5,7 @@ import {
 import { format, isValid, parseISO } from "date-fns";
 import { isEmpty, isPlainObject, transform } from "lodash";
 import { Genero } from "models/enums/Genero";
+import { LocalStorageKeys } from "models/enums/LocalStorageKeys";
 import { IAula } from "models/interfaces/IAula";
 import { ICanton } from "models/interfaces/ICanton";
 import { IConsejo } from "models/interfaces/IConsejo";
@@ -385,4 +386,13 @@ export function isOptionEqualToValueEstudiante(
 
 export function getOptionLabelEstudiante(option: IEstudiante) {
   return getAutocompleteEstudiante(option);
+}
+
+export function getLocalStoragePreviousValue(
+  key: LocalStorageKeys,
+  defaultValue = -1
+) {
+  const previousValueSelected = localStorage.getItem(key);
+
+  return previousValueSelected ? +previousValueSelected : defaultValue;
 }

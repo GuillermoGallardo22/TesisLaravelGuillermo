@@ -21,6 +21,7 @@ import { GridToolbarWithoutExport } from "components/ToolbarDataGrid";
 import { useConfirmationDialog } from "hooks/useConfirmationDialog";
 import { useDeleteItem } from "hooks/useDeleteItem";
 import { useGridColumnVisibilityModel } from "hooks/useGridColumnVisibilityModel";
+import { LocalStorageKeys } from "models/enums/LocalStorageKeys";
 import {
   IActaGrado,
   IEstadoActa,
@@ -28,21 +29,25 @@ import {
 } from "models/interfaces/IActaGrado";
 import { IAula } from "models/interfaces/IAula";
 import { ICanton } from "models/interfaces/ICanton";
-import { IDocente } from "models/interfaces/IDocente";
 import { IEstudiante } from "models/interfaces/IEstudiante";
 import { IModalidadActaGrado } from "models/interfaces/IModalidadActaGrado";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
 import { deleteActaGrado, getActasGrado } from "services/actas-grado";
 import { parseToDate, parseToDateTime } from "utils/date";
+import { getLocalStoragePreviousValue } from "utils/libs";
 import { useListCarreras } from "../carreras/hooks/useListCarreras";
 import { useEstadoActasList } from "./hooks/useEstadoActasList";
 import { useModalidadActasList } from "./hooks/useModalidadActasList";
 import { useTipoActasList } from "./hooks/useTipoActasList";
 
 const ActasGrado: React.FunctionComponent = () => {
-  const [carrera, setCarrera] = useState(-1);
+  const [carrera, setCarrera] = useState(
+    getLocalStoragePreviousValue(
+      LocalStorageKeys.CARRERA_SELECCIONADA_ACTA_GRADO
+    )
+  );
   const { carreras, isLoading: loadingCarreras } = useListCarreras();
   const { estadoActas, isLoading: loadingEstadoActas } = useEstadoActasList();
   const { modalidades, isLoading: loadingModalidades } =
@@ -62,7 +67,6 @@ const ActasGrado: React.FunctionComponent = () => {
         },
       }).then((r) => r.data),
     {
-      refetchOnWindowFocus: false,
       enabled: carrera !== -1,
     }
   );
@@ -131,13 +135,6 @@ const ActasGrado: React.FunctionComponent = () => {
         type: "number",
         field: "horas_practicas",
         headerName: "Horas prác.",
-      },
-      {
-        field: "presidente",
-        headerName: "Presidente",
-        flex: 1,
-        valueGetter: (e: GridValueGetterParams<IDocente>) =>
-          e.value && e.value.nombres,
       },
       {
         field: "canton",
@@ -250,6 +247,13 @@ const ActasGrado: React.FunctionComponent = () => {
     useGridColumnVisibilityModel({
       key: "actasGradoTableModel",
     });
+
+  useEffect(() => {
+    localStorage.setItem(
+      LocalStorageKeys.CARRERA_SELECCIONADA_ACTA_GRADO,
+      carrera.toString()
+    );
+  }, [carrera]);
 
   const loading =
     loadingCarreras ||
