@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class MiembrosActaGrado extends Model
 {
-    use HasFactory, SoftDeletes, Filterable;
+    use HasFactory, Filterable;
 
     protected $fillable = [
         "acta_grado_id",

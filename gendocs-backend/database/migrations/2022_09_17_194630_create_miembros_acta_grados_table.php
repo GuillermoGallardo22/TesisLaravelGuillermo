@@ -35,7 +35,6 @@ class CreateMiembrosActaGradosTable extends Migration
 
             $table->unique(['acta_grado_id', 'docente_id'], UniqueConstraintNames::ACTA_GRADO_ACTA_GRADO_ID_DOCENTE_ID);
 
-            $table->softDeletes();
             $table->timestamps();
         });
     }
