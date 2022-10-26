@@ -10,13 +10,14 @@ use App\Http\Resources\ResourceCollection;
 use App\Http\Resources\ResourceObject;
 use App\Models\MiembrosActaGrado;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\Response;
 
 class MiembrosActaGradoController extends Controller
 {
     public function __construct()
     {
-        $this->authorizeResource(MiembrosActaGrado::class);
+        $this->authorizeResource(MiembrosActaGrado::class, "miembro_acta_grado");
     }
 
     public function index(Request $request)
@@ -72,8 +73,14 @@ class MiembrosActaGradoController extends Controller
         //
     }
 
-    public function destroy(MiembrosActaGrado $miembrosActaGrado)
+    public function destroy(MiembrosActaGrado $miembroActaGrado)
     {
-        //
+        $wasDeleted = $miembroActaGrado->delete();
+
+        if ($wasDeleted) {
+            return response()->noContent(Response::HTTP_OK);
+        }
+
+        return response()->noContent(Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 }
