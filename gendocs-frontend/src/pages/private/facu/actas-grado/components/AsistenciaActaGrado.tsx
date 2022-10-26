@@ -1,20 +1,27 @@
+import { DialogContentText, Tooltip } from "@mui/material";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
-import { DataGrid, GridColumns } from "@mui/x-data-grid";
+import { DataGrid, GridActionsCellItem, GridColumns } from "@mui/x-data-grid";
 import BooleanCell from "components/BooleanCell";
+import ConfirmationDialog from "components/ConfirmationDialog";
 import Icon from "components/Icon";
 import Skeleton from "components/Skeleton";
 import TitleNav from "components/TitleNav";
 import { GridToolbarColumns } from "components/ToolbarDataGrid";
 import { useConfirmationDialog } from "hooks/useConfirmationDialog";
+import { useDeleteItem } from "hooks/useDeleteItem";
+import { IMiembroActaGrado } from "models/interfaces/IActaGrado";
 import { useMemo } from "react";
+import { useQueryClient } from "react-query";
 import { useParams } from "react-router-dom";
+import { deleteMiembroActaGrado } from "services/miembro-acta-grado";
 import { getNombreCompletoMiembro } from "utils/libs";
 import AddAsistenteActa from "../components/AddAsistenteActa";
 import useActaGrado from "../hooks/useActaGrado";
 
 const AsistenciaActaGrado = () => {
+  const client = useQueryClient();
   const { actaGradoId = "" } = useParams<{ actaGradoId: string }>();
   const { actaGrado, isLoadingActaGrado, miembros, isLoadingMiembros } =
     useActaGrado(actaGradoId);
@@ -24,6 +31,22 @@ const AsistenciaActaGrado = () => {
     openJustModal: openModalAddDocente,
     closeModal: closeModalAddDocente,
   } = useConfirmationDialog();
+
+  const {
+    isVisible: isVisibleDeleteMiembroModal,
+    openModal: openDeleteMiembroModal,
+    closeModal: closeDeleteMiembroModal,
+    itemSelected: itemMiembroSelected,
+  } = useConfirmationDialog<IMiembroActaGrado>();
+
+  const { deleting, handleDelete } = useDeleteItem({
+    id: itemMiembroSelected?.id,
+    onDelete: deleteMiembroActaGrado,
+    callback: () => {
+      client.invalidateQueries(["miembros-acta-grados"]);
+      closeDeleteMiembroModal();
+    },
+  });
 
   const columns = useMemo(
     (): GridColumns => [
@@ -57,30 +80,23 @@ const AsistenciaActaGrado = () => {
         flex: 1,
         renderCell: (r) => <BooleanCell value={r.row.asistio} />,
       },
-      // {
-      //   type: "boolean",
-      //   field: "responsable",
-      //   headerName: "Responsable",
-      //   flex: 1,
-      //   renderCell: (r) => <BooleanCell value={r.row.responsable} />,
-      // },
       {
         type: "actions",
         field: "acciones",
         headerName: "Acciones",
         getActions: (p) => [
-          // <GridActionsCellItem
-          //   key={p.id}
-          //   color="error"
-          //   disabled={!consejo?.estado}
-          //   icon={
-          //     <Tooltip title="Eliminar" arrow>
-          //       <Icon icon="delete" />
-          //     </Tooltip>
-          //   }
-          //   label="Eliminar documento"
-          //   onClick={() => openDeleteMiembroModal(p.row as IMiembro)}
-          // />,
+          <GridActionsCellItem
+            key={p.id}
+            color="error"
+            // disabled={!consejo?.estado}
+            icon={
+              <Tooltip title="Eliminar" arrow>
+                <Icon icon="delete" />
+              </Tooltip>
+            }
+            label="Eliminar documento"
+            onClick={() => openDeleteMiembroModal(p.row)}
+          />,
         ],
       },
     ],
@@ -128,6 +144,23 @@ const AsistenciaActaGrado = () => {
         isVisible={isVisibleAddDocente}
         onCancel={closeModalAddDocente}
       />
+
+      <ConfirmationDialog
+        id="delete-asistente-acta-grado-modal"
+        title="Eliminar"
+        keepMounted={true}
+        isVisible={isVisibleDeleteMiembroModal}
+        onCancel={closeDeleteMiembroModal}
+        onApprove={handleDelete}
+        textApprove="ELIMINAR"
+        buttonColorApprove="error"
+        loading={deleting}
+      >
+        <DialogContentText>
+          ¿Está seguro que desea eliminar el registro{" "}
+          <strong>{itemMiembroSelected?.docente.nombres}</strong>?
+        </DialogContentText>
+      </ConfirmationDialog>
     </Stack>
   );
 };

@@ -88,6 +88,7 @@ export interface IAddAsistenteActaGrado {
 }
 
 export interface IMiembroActaGrado {
+  id: number;
   acta: IActaGrado;
   docente: IDocente;
   informacion_adicional: string | null;

@@ -44,3 +44,19 @@ export async function saveMiembroActaGrado(
     return handleErrors(error);
   }
 }
+
+export async function deleteMiembroActaGrado(
+  id: string | number
+): Promise<IResponse<null>> {
+  try {
+    await axios.delete("miembro-acta-grado/" + id);
+
+    return {
+      data: null,
+      status: HTTP_STATUS.ok,
+      message: HTTP_MESSAGES[HTTP_STATUS.ok],
+    };
+  } catch (error) {
+    return handleErrors(error);
+  }
+}
