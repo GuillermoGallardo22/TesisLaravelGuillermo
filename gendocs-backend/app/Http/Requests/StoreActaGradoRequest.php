@@ -42,14 +42,6 @@ class StoreActaGradoRequest extends FormRequest
             //
             "horas_practicas" => ["present", "numeric"],
             "fecha_presentacion" => ["sometimes", "nullable", "date"],
-            // "presidente" => [
-            //     "bail",
-            //     "sometimes",
-            //     "nullable",
-            //     "bail",
-            //     "exists:\App\Models\Docente,id",
-            //     new DisponibilidadDocente($this->fecha_presentacion, $this->duracion),
-            // ],
             "aula" => [
                 "bail",
                 "sometimes",
