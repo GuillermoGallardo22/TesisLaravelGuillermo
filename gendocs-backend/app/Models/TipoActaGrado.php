@@ -17,7 +17,7 @@ class TipoActaGrado extends Model
         'codigo',
     ];
 
-    public const FILTERS = ['carrera'];
+    public const FILTERS = ['carrera', 'codigo'];
 
     public function fields()
     {
@@ -27,7 +27,13 @@ class TipoActaGrado extends Model
             'codigo' => $this->codigo,
             'carreras' => ResourceCollection::make($this->carreras),
             'drive' => $this->archivo->google_drive_id,
+            "estados" => $this->estados,
         ];
+    }
+
+    public function scopeCodigo(Builder $query, $value)
+    {
+        return $query->where('codigo', $value);
     }
 
     public function scopeCarrera(Builder $query, $carreraId)
