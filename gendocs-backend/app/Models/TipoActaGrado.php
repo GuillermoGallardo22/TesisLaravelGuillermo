@@ -57,4 +57,9 @@ class TipoActaGrado extends Model
     {
         return $this->morphOne(DriveApi::class, 'model');
     }
+
+    public function estados()
+    {
+        return $this->belongsToMany(EstadoActa::class, TipoEstadoActaGrado::class, "tipo_acta_grado_id", "estado_acta_grado_id");
+    }
 }
