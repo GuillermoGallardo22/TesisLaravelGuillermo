@@ -4,7 +4,6 @@ import { useErrorsResponse } from "hooks/useErrorsResponse";
 import { HTTP_STATUS } from "models/enums/HttpStatus";
 import {
   IAddActaGrado,
-  IEstadoActa,
   ITipoActaGrado,
   useAddActaGradoProps,
 } from "models/interfaces/IActaGrado";
@@ -13,7 +12,6 @@ import { INumeracionBase } from "models/interfaces/INumeracion";
 import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
 import { addActaGrado } from "services/actas-grado";
-import { getEstadoActasGrado } from "services/estadoActasGrado";
 import { getModalidadesActaGrado } from "services/modalidadActaGrado";
 import { getNumeracionActaGrado } from "services/numeracion";
 import { getTipoActasGrado } from "services/tipoActasGrado";
@@ -30,9 +28,8 @@ TODAY.setMinutes(0);
 const initialValues: IAddActaGrado = {
   numeracion: 0,
   estudiante: -1,
-  presidente: -1,
   canton: -1,
-  tipo_acta: -1,
+  tipo_acta: "",
   titulo_bachiller: "",
   fecha_inicio_estudios: subYears(TODAY, DURACION_ESTUDIOS),
   fecha_fin_estudios: null,
@@ -42,7 +39,7 @@ const initialValues: IAddActaGrado = {
   estado_acta: -1,
   solicitar_especie: false,
   envio_financiero_especie: false,
-  modalidad_acta_grado: -1,
+  modalidad_acta_grado: "",
   link: "",
   aula: -1,
   duracion: 60,
@@ -55,7 +52,6 @@ const validationSchema = yup.object().shape({
     .required(VM.required)
     .min(1, VM.invalidOption)
     .typeError(VM.required),
-  presidente: yup.number().nullable(),
   canton: yup
     .number()
     .required(VM.required)
@@ -64,7 +60,7 @@ const validationSchema = yup.object().shape({
   tipo_acta: yup
     .string()
     .required(VM.required)
-    .test("invalid-option", VM.required, (v) => v !== "-1"),
+    .test("invalid-option", VM.required, (v) => v !== ""),
   titulo_bachiller: yup.string().required(VM.required),
   fecha_inicio_estudios: yup.date().required(VM.required),
   fecha_fin_estudios: yup
@@ -80,7 +76,10 @@ const validationSchema = yup.object().shape({
   estado_acta: yup.number().nullable(),
   solicitar_especie: yup.boolean(),
   envio_financiero_especie: yup.boolean(),
-  modalidad_acta_grado: yup.string().required(VM.required),
+  modalidad_acta_grado: yup
+    .string()
+    .required(VM.required)
+    .test("invalid-option", VM.required, (v) => v !== ""),
   link: yup.string().nullable(),
   aula: yup.number().nullable(),
   duracion: yup.number().required(VM.required).min(1, VM.invalidOption),
@@ -89,7 +88,6 @@ const validationSchema = yup.object().shape({
 export const useAddActaGrado = ({ estudiante }: useAddActaGradoProps) => {
   const { enqueueSnackbar } = useSnackbar();
 
-  const [estadoActas, setEstadoActas] = useState<IEstadoActa[]>([]);
   const [modalidades, setModalidades] = useState<IModalidadActaGrado[]>([]);
   const [tipoActasGrado, setTipoActasGrado] = useState<ITipoActaGrado[]>([]);
 
@@ -140,17 +138,15 @@ export const useAddActaGrado = ({ estudiante }: useAddActaGradoProps) => {
           carrera: carreraId,
         },
       }),
-      getEstadoActasGrado(),
       getModalidadesActaGrado(),
     ])
       .then((r) => {
-        const [_tiposActasGrado, _numeracion, estadoActas, modalidades] = r;
+        const [_tiposActasGrado, _numeracion, modalidades] = r;
 
         setTipoActasGrado(_tiposActasGrado);
 
         formik.setFieldValue("numeracion", _numeracion.data.siguiente);
 
-        setEstadoActas(estadoActas);
         setModalidades(modalidades);
 
         setEncolados(_numeracion.data.encolados);
@@ -171,7 +167,6 @@ export const useAddActaGrado = ({ estudiante }: useAddActaGradoProps) => {
     encolados,
     modalidades,
     handleReset,
-    estadoActas,
     errorSummary,
     tipoActasGrado,
     fetchingRequiredData,

@@ -57,7 +57,6 @@ export async function addActaGrado(
     const payload = clean(form, {
       cleanValues: [-1],
     });
-    console.log({ payload, form });
 
     const {
       data: { data },

@@ -13,7 +13,9 @@ import ErrorSummary from "components/ErrorSummary";
 import Select from "components/Select";
 import { SingleAutoComplete } from "components/SingleAutoComplete";
 import TitleNav from "components/TitleNav";
+import { Genero } from "models/enums/Genero";
 import { ModalidadActaGrado } from "models/enums/ModalidadActaGrado";
+import { IEstadoActa } from "models/interfaces/IActaGrado";
 import { IAula } from "models/interfaces/IAula";
 import { ICanton } from "models/interfaces/ICanton";
 import { IDocente } from "models/interfaces/IDocente";
@@ -39,13 +41,12 @@ const AddActaGrado: React.FunctionComponent = () => {
   const [acMiembrosPrin, setACMiembrosPrin] = useState<IDocente[]>([]);
   const [acMiembrosSecu, setACMiembrosSecu] = useState<IDocente[]>([]);
   const [acEstudiante, setACEstudiante] = useState<IEstudiante | null>(null);
-  const [acDocente, setACDocente] = useState<IDocente | null>(null);
+  const [estadoActas, setEstadoActas] = useState<IEstadoActa[]>([]);
 
   // FORM
 
   const {
     formik,
-    estadoActas,
     errorSummary,
     handleReset: handleResetForm,
     //
@@ -86,10 +87,6 @@ const AddActaGrado: React.FunctionComponent = () => {
   }, [acEstudiante]);
 
   useEffect(() => {
-    formik.setFieldValue("docente", acDocente?.id || null);
-  }, [acDocente]);
-
-  useEffect(() => {
     formik.setFieldValue("canton", acCanton?.id || null);
   }, [acCanton]);
 
@@ -110,6 +107,24 @@ const AddActaGrado: React.FunctionComponent = () => {
       acMiembrosSecu.map((d) => d.id).filter(Number)
     );
   }, [acMiembrosSecu.length]);
+
+  useEffect(() => {
+    formik.setFieldValue("estado_acta", -1);
+
+    const tipoActaSeleccionada = tipoActasGrado.find(
+      (i) => i.codigo == formik.values.tipo_acta
+    );
+
+    const estados = tipoActaSeleccionada?.estados || [];
+    const isFem = acEstudiante?.genero === Genero.FEMENINO;
+
+    setEstadoActas(
+      estados.map((i) => ({
+        ...i,
+        temp: isFem ? i.nombre_fem : i.nombre_mas,
+      }))
+    );
+  }, [formik.values.tipo_acta]);
 
   //
 
@@ -361,7 +376,7 @@ const AddActaGrado: React.FunctionComponent = () => {
               disabled={submitting || !estudianteSeleccionado}
               items={estadoActas.map((i) => ({
                 id: i.id,
-                label: i.nombre_fem,
+                label: i.temp,
               }))}
               value={formik.values.estado_acta}
               onChange={formik.handleChange}

@@ -1,24 +1,26 @@
 import { EstadoActaEnum, TipoActaGradoEnum } from "models/enums/ActaGrado";
 import { ModalidadActaGrado } from "models/enums/ModalidadActaGrado";
 import { ICanton } from "./ICanton";
-import { ICarrera } from "./ICarrera";
 import { IDocente } from "./IDocente";
 import { IEstudiante } from "./IEstudiante";
 import { IModalidadActaGrado } from "./IModalidadActaGrado";
-
-export interface ITipoActaGrado {
-  id: number;
-  nombre: string;
-  codigo: TipoActaGradoEnum;
-  carreras: ICarrera[];
-  drive: string;
-}
 
 export interface IEstadoActa {
   id: number;
   codigo: EstadoActaEnum;
   nombre_mas: string;
   nombre_fem: string;
+  //
+  temp: string;
+}
+
+export interface ITipoActaGrado {
+  id: number;
+  nombre: string;
+  codigo: TipoActaGradoEnum;
+  // carreras: ICarrera[];
+  estados: IEstadoActa[];
+  drive: string;
 }
 
 export interface IActaGrado {
@@ -47,9 +49,8 @@ export interface IActaGrado {
 export interface IAddActaGrado {
   numeracion: number;
   estudiante: number | null;
-  presidente: number | null;
   canton: number | null;
-  tipo_acta: number;
+  tipo_acta: string;
   titulo_bachiller: string;
   fecha_inicio_estudios: Date;
   fecha_fin_estudios: Date | null;
@@ -59,10 +60,8 @@ export interface IAddActaGrado {
   estado_acta: number;
   solicitar_especie: boolean;
   envio_financiero_especie: boolean;
-  // miembros_principales: number[];
-  // miembros_suplentes: number[];
   //
-  modalidad_acta_grado: ModalidadActaGrado | number;
+  modalidad_acta_grado: ModalidadActaGrado | string;
   link: string;
   aula: number;
   duracion: number;
