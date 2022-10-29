@@ -6,6 +6,7 @@ import Toolbar from "@mui/material/Toolbar";
 import AccessDenied from "components/AccesDenied";
 import Skeleton from "components/Skeleton";
 import { useAuthContext } from "contexts/AuthContext";
+import { LocalStorageKeys } from "models/enums/LocalStorageKeys";
 import { IRoute } from "models/interfaces/IRoute";
 import { Suspense, useCallback, useMemo, useState } from "react";
 import { Navigate, Route, Routes } from "react-router";
@@ -13,7 +14,9 @@ import AppBar from "./components/AppBar";
 import Drawer from "./components/Drawer";
 import { allRoutes as routes, getDefaultRoutes } from "./routes/";
 
-const isToogleDrawer = localStorage.getItem("isToogleDrawer") || "true";
+const isToogleDrawer =
+  localStorage.getItem(LocalStorageKeys.IS_TOOGLE_DRAWER) || "true";
+
 const defaultState = Boolean(JSON.parse(isToogleDrawer));
 
 const PrivateLayout = () => {
@@ -25,7 +28,10 @@ const PrivateLayout = () => {
 
   const toggleDrawer = () => {
     const state = !open;
-    localStorage.setItem("isToogleDrawer", JSON.stringify(state));
+    localStorage.setItem(
+      LocalStorageKeys.IS_TOOGLE_DRAWER,
+      JSON.stringify(state)
+    );
     setOpen(state);
   };
 

@@ -1,3 +1,4 @@
 export enum LocalStorageKeys {
   "CARRERA_SELECCIONADA_ACTA_GRADO" = "CARRERA_SELECCIONADA_ACTA_GRADO",
+  "IS_TOOGLE_DRAWER" = "isToogleDrawer",
 }
