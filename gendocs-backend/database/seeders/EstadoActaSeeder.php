@@ -26,5 +26,11 @@ class EstadoActaSeeder extends Seeder
             'nombre_mas' => "REPROBADO",
             'nombre_fem' => "REPROBADA",
         ]);
+
+        EstadoActa::create([
+            'codigo' => EstadoActas::NO_RESENTACION,
+            'nombre_mas' => "NO PRESENTACIÓN",
+            'nombre_fem' => "NO PRESENTACIÓN",
+        ]);
     }
 }
