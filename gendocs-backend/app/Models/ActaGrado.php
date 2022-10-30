@@ -2,9 +2,7 @@
 
 namespace App\Models;
 
-use App\Http\Resources\ResourceObject;
 use App\Traits\Filterable;
-use Google\Service\Resource;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -62,18 +60,30 @@ class ActaGrado extends Model
             "fecha_inicio_estudios" => $this->fecha_inicio_estudios,
             "fecha_fin_estudios" => $this->fecha_fin_estudios,
             "creditos_aprobados" => $this->creditos_aprobados,
-            "fecha_presentacion" => $this->fecha_presentacion,
             "horas_practicas" => $this->horas_practicas,
+            "fecha_presentacion" => $this->fecha_presentacion,
+            "duracion" => $this->duracion,
+            "link" => $this->link,
             "solicitar_especie" => $this->solicitar_especie,
             "envio_financiero_especie" => $this->envio_financiero_especie,
-            "link" => $this->link,
-            "duracion" => $this->duracion,
-            "aula" => ResourceObject::make($this->aula),
-            "modalidad_acta_grado" => ResourceObject::make($this->modalidad),
-            "estudiante" => ResourceObject::make($this->estudiante),
-            "canton" => ResourceObject::make($this->canton),
-            "tipo_acta" => ResourceObject::make($this->tipoActa),
-            "estado_acta" => ResourceObject::make($this->estadoActa),
+            //
+            "estudiante_id" => $this->estudiante_id,
+            "carrera_id" => $this->carrera_id,
+            "canton_id" => $this->canton_id,
+            "tipo_acta_id" => $this->tipo_acta_id,
+            "estado_acta_id" => $this->estado_acta_id,
+            "modalidad_acta_grado_id" => $this->modalidad_acta_grado_id,
+            "aula_id" => $this->aula_id,
+            //
+            "created_user_id" => $this->created_user_id,
+            "updated_user_id" => $this->updated_user_id,
+            //
+            // "aula" => ResourceObject::make($this->aula),
+            // "modalidad_acta_grado" => ResourceObject::make($this->modalidad),
+            // "estudiante" => ResourceObject::make($this->estudiante),
+            // "canton" => ResourceObject::make($this->canton),
+            // "tipo_acta" => ResourceObject::make($this->tipo),
+            // "estado_acta" => ResourceObject::make($this->estado),
         ];
     }
 
@@ -92,12 +102,12 @@ class ActaGrado extends Model
         return $this->belongsTo(ModalidadActaGrado::class, "modalidad_acta_grado_id");
     }
 
-    public function estadoActa()
+    public function estado()
     {
         return $this->belongsTo(EstadoActa::class, "estado_acta_id");
     }
 
-    public function tipoActa()
+    public function tipo()
     {
         return $this->belongsTo(TipoActaGrado::class, "tipo_acta_id");
     }

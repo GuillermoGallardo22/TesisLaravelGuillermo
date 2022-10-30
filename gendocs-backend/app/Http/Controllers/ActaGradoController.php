@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Exceptions\QueryException;
 use App\Http\Requests\StoreActaGradoRequest;
 use App\Http\Requests\UpdateActaGradoRequest;
+use App\Http\Resources\ActaGradoResource;
 use App\Http\Resources\ResourceCollection;
 use App\Http\Resources\ResourceObject;
 use App\Models\ActaGrado;
@@ -35,7 +36,7 @@ class ActaGradoController extends Controller
 
         $query->applyFilters($request->all());
 
-        return ResourceCollection::make($query->get());
+        return ActaGradoResource::collection($query->get());
     }
 
     public function store(StoreActaGradoRequest $request)
@@ -112,9 +113,9 @@ class ActaGradoController extends Controller
         }
     }
 
-    public function show(ActaGrado $actaGrado)
+    public function show(ActaGrado $actaGrado, Request $request)
     {
-        return ResourceObject::make($actaGrado);
+        return ActaGradoResource::make($actaGrado);
     }
 
     public function update(UpdateActaGradoRequest $request, ActaGrado $actaGrado)
