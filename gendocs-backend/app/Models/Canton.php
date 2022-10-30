@@ -12,6 +12,12 @@ class Canton extends Model
 
     protected $table = 'cantones';
 
+    protected $hidden = [
+        "created_at",
+        "updated_at",
+        "deleted_at",
+    ];
+
     protected $fillable = [
         'id',
         'nombre',

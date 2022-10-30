@@ -15,6 +15,12 @@ class Aula extends Model
         'nombre',
     ];
 
+    protected $hidden = [
+        "created_at",
+        "updated_at",
+        "deleted_at",
+    ];
+
     protected const FILTERS = ['search'];
 
     public function fields()

@@ -29,6 +29,12 @@ class Estudiante extends Model
         "fecha_nacimiento",
     ];
 
+    protected $hidden = [
+        "created_at",
+        "updated_at",
+        "deleted_at",
+    ];
+
     public const FILTERS = ['search'];
 
     public function fields()
