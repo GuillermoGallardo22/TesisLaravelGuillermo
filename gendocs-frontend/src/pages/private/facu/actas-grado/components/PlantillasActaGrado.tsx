@@ -69,7 +69,7 @@ const PlantillasActaGrado = () => {
 
   return (
     <Stack spacing={2}>
-      <TitleNav title="Carreras" />
+      <TitleNav title="Plantillas acta grado" />
       <div style={{ height: 700, width: "100%" }}>
         <DataGrid
           getRowHeight={() => "auto"}
