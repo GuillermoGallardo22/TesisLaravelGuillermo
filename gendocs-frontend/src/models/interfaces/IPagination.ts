@@ -24,5 +24,6 @@ export interface IFilterProps {
 
 export interface IFilterPaginationProps {
   filters?: IFilterProps;
+  include?: string;
   pagination?: IPaginationProps;
 }

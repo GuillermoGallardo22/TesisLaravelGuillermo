@@ -24,7 +24,7 @@ export function parseFilterPaginationProps(
 ): string {
   if (!props) return "";
 
-  const { filters: filterProps, pagination: paginationProps } = props;
+  const { filters: filterProps, pagination: paginationProps, include } = props;
 
   let pagination = {};
 
@@ -48,6 +48,7 @@ export function parseFilterPaginationProps(
   return parseObjectToQueryParams({
     ...pagination,
     ...filter,
+    include,
     //
   });
 }
