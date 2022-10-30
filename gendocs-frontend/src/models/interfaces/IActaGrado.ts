@@ -26,24 +26,34 @@ export interface ITipoActaGrado {
 export interface IActaGrado {
   id: number;
   numero: number;
-  estudiante: IEstudiante;
-  presidente?: IDocente | null;
-  canton: ICanton;
-  tipo_acta: ITipoActaGrado;
   titulo_bachiller: string;
   fecha_inicio_estudios: Date;
   fecha_fin_estudios: Date;
   creditos_aprobados: number;
   horas_practicas: number;
   fecha_presentacion: Date | null;
-  estado_acta: IEstadoActa;
   solicitar_especie: boolean;
   envio_financiero_especie: boolean;
-  //
-  modalidad_acta_grado: IModalidadActaGrado;
   link: string | null;
   aula: string | null;
   duracion: number | null;
+  estudiante_id: number;
+  carrera_id: number;
+  canton_id: number;
+  tipo_acta_id: number;
+  estado_acta_id: number | null;
+  aula_id: number | null;
+  modalidad_acta_grado_id: number;
+  directorio_id: number;
+  created_user_id: number;
+  updated_user_id: number | null;
+  // Relationships
+  estudiante: IEstudiante;
+  presidente?: IDocente | null;
+  canton: ICanton;
+  tipo_acta: ITipoActaGrado;
+  estado_acta: IEstadoActa;
+  modalidad_acta_grado: IModalidadActaGrado;
 }
 
 export interface IAddActaGrado {
