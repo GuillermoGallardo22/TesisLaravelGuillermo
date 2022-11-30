@@ -1,11 +1,20 @@
+import { IFilterPaginationProps } from "models/interfaces/IPagination";
 import { useQuery } from "react-query";
 import { getActaGrado } from "services/actas-grado";
 import { getMiembrosActaGrado } from "services/miembro-acta-grado";
 
-const useActaGrado = (actaGradoId: string) => {
+type useActaGradoProps = {
+  actaGradoId: string;
+  options?: IFilterPaginationProps;
+  props?: {
+    withMiembros?: boolean;
+  };
+};
+
+const useActaGrado = ({ actaGradoId, options, props }: useActaGradoProps) => {
   const { data: actaGrado, isLoading: isLoadingActaGrado } = useQuery(
     ["acta-grado", actaGradoId],
-    () => getActaGrado(actaGradoId).then((r) => r.data)
+    () => getActaGrado(actaGradoId, options).then((r) => r.data)
   );
 
   const { data: miembros = [], isLoading: isLoadingMiembros } = useQuery(
@@ -17,7 +26,7 @@ const useActaGrado = (actaGradoId: string) => {
         },
       }),
     {
-      enabled: Boolean(actaGrado),
+      enabled: Boolean(actaGrado) && props?.withMiembros,
     }
   );
 

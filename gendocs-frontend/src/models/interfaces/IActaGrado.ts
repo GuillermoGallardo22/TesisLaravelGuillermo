@@ -1,5 +1,6 @@
 import { EstadoActaEnum, TipoActaGradoEnum } from "models/enums/ActaGrado";
 import { ModalidadActaGrado } from "models/enums/ModalidadActaGrado";
+import { IAula } from "./IAula";
 import { ICanton } from "./ICanton";
 import { IDocente } from "./IDocente";
 import { IEstudiante } from "./IEstudiante";
@@ -34,8 +35,7 @@ export interface IActaGrado {
   fecha_presentacion: Date | null;
   solicitar_especie: boolean;
   envio_financiero_especie: boolean;
-  link: string | null;
-  aula: string | null;
+  link: string;
   duracion: number | null;
   estudiante_id: number;
   carrera_id: number;
@@ -48,12 +48,12 @@ export interface IActaGrado {
   created_user_id: number;
   updated_user_id: number | null;
   // Relationships
+  aula?: IAula;
   estudiante: IEstudiante;
-  presidente?: IDocente | null;
   canton: ICanton;
   tipo_acta: ITipoActaGrado;
-  estado_acta: IEstadoActa;
   modalidad_acta_grado: IModalidadActaGrado;
+  estado_acta?: IEstadoActa;
 }
 
 export interface IAddActaGrado {
@@ -76,6 +76,10 @@ export interface IAddActaGrado {
   aula: number;
   duracion: number;
   //
+}
+
+export interface IUpdateActaGrado extends IAddActaGrado {
+  id: number;
 }
 
 export type useAddActaGradoProps = {

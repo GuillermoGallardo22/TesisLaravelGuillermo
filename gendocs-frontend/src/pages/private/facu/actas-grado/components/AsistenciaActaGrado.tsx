@@ -24,7 +24,12 @@ const AsistenciaActaGrado = () => {
   const client = useQueryClient();
   const { actaGradoId = "" } = useParams<{ actaGradoId: string }>();
   const { actaGrado, isLoadingActaGrado, miembros, isLoadingMiembros } =
-    useActaGrado(actaGradoId);
+    useActaGrado({
+      actaGradoId,
+      props: {
+        withMiembros: true,
+      },
+    });
 
   const {
     isVisible: isVisibleAddDocente,

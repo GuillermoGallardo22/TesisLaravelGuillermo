@@ -33,12 +33,15 @@ export async function getActasGrado(
 }
 
 export async function getActaGrado(
-  actaGradoId: string | number
+  actaGradoId: string | number,
+  options?: IFilterPaginationProps
 ): Promise<IResponse<IActaGrado>> {
   try {
+    const params = parseFilterPaginationProps(options);
+
     const {
       data: { data },
-    } = await axios.get("acta-grado/" + actaGradoId);
+    } = await axios.get("acta-grado/" + actaGradoId + "?" + params);
 
     return {
       status: HTTP_STATUS.ok,

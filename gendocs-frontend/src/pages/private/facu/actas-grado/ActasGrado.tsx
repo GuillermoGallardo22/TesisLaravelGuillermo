@@ -214,12 +214,25 @@ const ActasGrado: React.FunctionComponent = () => {
         type: "actions",
         field: "acciones",
         headerName: "Acciones",
+        width: 130,
         getActions: (p: GridRowParams<IActaGrado>) => [
+          <GridActionsCellItem
+            key={p.id}
+            color="primary"
+            LinkComponent={Link}
+            to={p.row.id + ""}
+            icon={
+              <Tooltip title="Editar" arrow>
+                <Icon icon="edit" />
+              </Tooltip>
+            }
+            label="Editar"
+          />,
           <GridActionsCellItem
             key={p.id}
             color="success"
             LinkComponent={Link}
-            to={`asistencia/${p.row.id}`}
+            to={"asistencia/" + p.row.id}
             icon={
               <Tooltip title="Asistentes" arrow>
                 <Icon icon="people" />
