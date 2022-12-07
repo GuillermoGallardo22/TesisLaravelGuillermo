@@ -10,14 +10,14 @@ import { DatePicker, DateTimePicker } from "@mui/x-date-pickers";
 import Skeleton from "components/Skeleton";
 import TitleNav from "components/TitleNav";
 import { useFormik } from "formik";
-import { IUpdateActaGrado } from "models/interfaces/IActaGrado";
+import { IActaGrado, IUpdateActaGrado } from "models/interfaces/IActaGrado";
 import { useParams } from "react-router-dom";
 import { parseToDate } from "utils/date";
 import { getOptionLabelCanton, getOptionLabelEstudiante } from "utils/libs";
 import useActaGrado from "../hooks/useActaGrado";
 
 const UpdateActaGrado = () => {
-  const { actaGradoId = "" } = useParams<{ actaGradoId: string }>();
+  const { actaGradoId = "" } = useParams();
 
   const { actaGrado, isLoadingActaGrado } = useActaGrado({
     actaGradoId,
@@ -28,6 +28,10 @@ const UpdateActaGrado = () => {
 
   if (!actaGrado || isLoadingActaGrado) return <Skeleton />;
 
+  return <UpdateActaGradoBase actaGrado={actaGrado} />;
+};
+
+const UpdateActaGradoBase = ({ actaGrado }: { actaGrado: IActaGrado }) => {
   const initialValues: IUpdateActaGrado = {
     ...actaGrado,
     numeracion: actaGrado.numero,
@@ -38,6 +42,8 @@ const UpdateActaGrado = () => {
     estado_acta: actaGrado.estado_acta_id || -1,
     modalidad_acta_grado: actaGrado.modalidad_acta_grado.codigo,
     duracion: actaGrado.duracion || 60,
+    envio_financiero_especie: Boolean(actaGrado.envio_financiero_especie),
+    solicitar_especie: Boolean(actaGrado.solicitar_especie),
   };
 
   const onSubmit = async (form: any) => {
@@ -48,6 +54,7 @@ const UpdateActaGrado = () => {
   const formik = useFormik({
     initialValues,
     onSubmit,
+    enableReinitialize: true,
   });
 
   const handleReset = () => {
