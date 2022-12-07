@@ -14,6 +14,7 @@ import {
 import Icon from "components/Icon";
 import TitleNav from "components/TitleNav";
 import { GridToolbarWithoutExport } from "components/ToolbarDataGrid";
+import { EstadoActaEnum } from "models/enums/ActaGrado";
 import { GoogleType } from "models/enums/GoogleType";
 import { ITipoActaGrado } from "models/interfaces/IActaGrado";
 import { ICarrera } from "models/interfaces/ICarrera";
@@ -21,9 +22,9 @@ import { Link } from "react-router-dom";
 import { usePlantillasActaGrado } from "../hooks/usePlantillasActaGrado";
 
 const Colors = {
-  APRO: "primary",
-  REPR: "error",
-  NO_RESENTACION: "warning",
+  [EstadoActaEnum.APRO]: "primary",
+  [EstadoActaEnum.REPR]: "error",
+  [EstadoActaEnum.NO_RESENTACION]: "warning",
 };
 
 const columns: GridColumns = [

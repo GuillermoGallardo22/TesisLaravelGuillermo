@@ -11,4 +11,5 @@ export enum TipoActaGradoEnum {
 export enum EstadoActaEnum {
   APRO = "APRO",
   REPR = "REPR",
+  NO_RESENTACION = "NO_RESENTACION",
 }
