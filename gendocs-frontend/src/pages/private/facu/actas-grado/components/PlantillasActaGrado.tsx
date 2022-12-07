@@ -20,6 +20,12 @@ import { ICarrera } from "models/interfaces/ICarrera";
 import { Link } from "react-router-dom";
 import { usePlantillasActaGrado } from "../hooks/usePlantillasActaGrado";
 
+const Colors = {
+  APRO: "primary",
+  REPR: "error",
+  NO_RESENTACION: "warning",
+};
+
 const columns: GridColumns = [
   {
     field: "codigo",
@@ -43,6 +49,27 @@ const columns: GridColumns = [
         ))}
       </Box>
     ),
+  },
+  {
+    type: "actions",
+    field: "plantillas",
+    width: 200,
+    headerName: "Plantillas.",
+    getActions: (p: GridRowParams<ITipoActaGrado>) =>
+      p.row.estados.map((te) => (
+        <GridActionsCellItem
+          key={te.id}
+          color={Colors[te.estado.codigo]}
+          icon={
+            <Tooltip title={te.estado.nombre_mas} arrow>
+              <Icon icon="article" />
+            </Tooltip>
+          }
+          label="Editar"
+          LinkComponent={Link}
+          to={`drive/${te.drive}`}
+        />
+      )),
   },
   {
     type: "actions",

@@ -120,8 +120,8 @@ const AddActaGrado: React.FunctionComponent = () => {
 
     setEstadoActas(
       estados.map((i) => ({
-        ...i,
-        temp: isFem ? i.nombre_fem : i.nombre_mas,
+        ...i.estado,
+        temp: isFem ? i.estado.nombre_fem : i.estado.nombre_mas,
       }))
     );
   }, [formik.values.tipo_acta]);

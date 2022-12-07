@@ -15,12 +15,18 @@ export interface IEstadoActa {
   temp: string;
 }
 
+interface ITipoEstadoActaGrado {
+  id: number;
+  drive: string;
+  estado: IEstadoActa;
+}
+
 export interface ITipoActaGrado {
   id: number;
   nombre: string;
   codigo: TipoActaGradoEnum;
   // carreras: ICarrera[];
-  estados: IEstadoActa[];
+  estados: ITipoEstadoActaGrado[];
   drive: string;
 }
 
