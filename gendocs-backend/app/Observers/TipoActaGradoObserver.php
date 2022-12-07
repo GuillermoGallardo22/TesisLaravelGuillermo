@@ -28,9 +28,9 @@ class TipoActaGradoObserver
     public function created(TipoActaGrado $tipoActaGrado)
     {
         $file = $this->googleDrive->create(
-            $tipoActaGrado->nombre,
-            MimeType::DRIVE_DOC,
-            Directorio::activeDirectory()->drive_id,
+            $tipoActaGrado->codigo . " | " . $tipoActaGrado->nombre,
+            MimeType::DRIVE_SS,
+            config("services.google.agd")
         );
 
         $tipoActaGrado->archivo()->create([

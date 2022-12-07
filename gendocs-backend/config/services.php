@@ -45,6 +45,8 @@ return [
             'auth_provider_x509_cert_url' => env('GOOGLE_APPLICATION_CREDENTIALS_AUTH_PROVIDER_X509_CERT_URL'),
             'client_x509_cert_url' => env('GOOGLE_APPLICATION_CREDENTIALS_CLIENT_X509_CERT_URL'),
         ],
+        // DIRECTORIOS COMUNES
+        'agd' => env('GOOGLE_DRIVE_AGD_ID'),
     ],
 
 ];
