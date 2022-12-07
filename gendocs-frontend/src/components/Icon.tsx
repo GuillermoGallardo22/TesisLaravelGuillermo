@@ -37,9 +37,11 @@ import TopicIcon from "@mui/icons-material/Topic";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import SvgIcon from "@mui/material/SvgIcon";
 import PeopleIcon from "@mui/icons-material/People";
+import FunctionsIcon from "@mui/icons-material/Functions";
 import { forwardRef } from "react";
 
 export type IconTypes =
+  | "functions"
   | "people"
   | "style"
   | "search"
@@ -80,6 +82,7 @@ export type IconTypes =
   | "check";
 
 const ICONS = {
+  functions: FunctionsIcon,
   people: PeopleIcon,
   search: SearchIcon,
   close: CloseIcon,

@@ -14,6 +14,7 @@ import {
 import Icon from "components/Icon";
 import TitleNav from "components/TitleNav";
 import { GridToolbarWithoutExport } from "components/ToolbarDataGrid";
+import { GoogleType } from "models/enums/GoogleType";
 import { ITipoActaGrado } from "models/interfaces/IActaGrado";
 import { ICarrera } from "models/interfaces/ICarrera";
 import { Link } from "react-router-dom";
@@ -46,19 +47,19 @@ const columns: GridColumns = [
   {
     type: "actions",
     field: "acciones",
-    headerName: "Acciones",
+    headerName: "Calif.",
     getActions: (p: GridRowParams<ITipoActaGrado>) => [
       <GridActionsCellItem
         key={p.id}
-        color="primary"
+        color="success"
         icon={
-          <Tooltip title="Plantilla" arrow>
-            <Icon icon="article" />
+          <Tooltip title="Calif." arrow>
+            <Icon icon="functions" />
           </Tooltip>
         }
         label="Editar"
         LinkComponent={Link}
-        to={`drive/${p.row.drive}`}
+        to={`drive/${p.row.drive}?type=${GoogleType.SPREADSHEETS}`}
       />,
     ],
   },
