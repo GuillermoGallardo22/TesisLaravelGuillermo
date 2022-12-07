@@ -10,6 +10,7 @@ use App\Models\Plantillas;
 use App\Models\PlantillasGlobales;
 use App\Models\Proceso;
 use App\Models\TipoActaGrado;
+use App\Models\TipoEstadoActaGrado;
 use App\Observers\ActaObserver;
 use App\Observers\ConsejoObserver;
 use App\Observers\DocumentoObserver;
@@ -18,6 +19,7 @@ use App\Observers\PlantillaObserver;
 use App\Observers\PlantillasGlobalesObserver;
 use App\Observers\ProcesoObserver;
 use App\Observers\TipoActaGradoObserver;
+use App\Observers\TipoEstadoActaGradoObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -50,5 +52,6 @@ class EventServiceProvider extends ServiceProvider
         Miembro::observe(MiembroObserver::class);
         PlantillasGlobales::observe(PlantillasGlobalesObserver::class);
         TipoActaGrado::observe(TipoActaGradoObserver::class);
+        TipoEstadoActaGrado::observe(TipoEstadoActaGradoObserver::class);
     }
 }

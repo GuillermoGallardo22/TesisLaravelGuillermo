@@ -7,6 +7,7 @@ use App\Constants\TipoActaGrados;
 use App\Models\Carrera;
 use App\Models\EstadoActa;
 use App\Models\TipoActaGrado;
+use App\Models\TipoEstadoActaGrado;
 use Illuminate\Database\Seeder;
 
 class TipoActaGradoSeeder extends Seeder
@@ -48,13 +49,17 @@ class TipoActaGradoSeeder extends Seeder
 
             if ($tipo->codigo != TipoActaGrados::T_EGCC) {
                 foreach ($estados as $estado) {
-                    $tipo->estados()
-                        ->attach($estado);
+                    TipoEstadoActaGrado::create([
+                        'tipo_acta_grado_id' => $tipo->id,
+                        'estado_acta_grado_id' => $estado->id,
+                    ]);
                 }
             } else {
                 foreach ($estadosFiltrados as $estado) {
-                    $tipo->estados()
-                        ->attach($estado);
+                    TipoEstadoActaGrado::create([
+                        'tipo_acta_grado_id' => $tipo->id,
+                        'estado_acta_grado_id' => $estado->id,
+                    ]);
                 }
             }
 
@@ -92,13 +97,17 @@ class TipoActaGradoSeeder extends Seeder
 
             if ($tipo->codigo != TipoActaGrados::IC_EGCC) {
                 foreach ($estados as $estado) {
-                    $tipo->estados()
-                        ->attach($estado);
+                    TipoEstadoActaGrado::create([
+                        'tipo_acta_grado_id' => $tipo->id,
+                        'estado_acta_grado_id' => $estado->id,
+                    ]);
                 }
             } else {
                 foreach ($estadosFiltrados as $estado) {
-                    $tipo->estados()
-                        ->attach($estado);
+                    TipoEstadoActaGrado::create([
+                        'tipo_acta_grado_id' => $tipo->id,
+                        'estado_acta_grado_id' => $estado->id,
+                    ]);
                 }
             }
 

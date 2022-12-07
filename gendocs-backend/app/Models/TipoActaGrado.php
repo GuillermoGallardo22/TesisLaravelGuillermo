@@ -27,7 +27,7 @@ class TipoActaGrado extends Model
             'codigo' => $this->codigo,
             'carreras' => ResourceCollection::make($this->carreras),
             'drive' => $this->archivo->google_drive_id,
-            "estados" => $this->estados,
+            "estados" => ResourceCollection::make($this->estados),
         ];
     }
 
@@ -60,6 +60,6 @@ class TipoActaGrado extends Model
 
     public function estados()
     {
-        return $this->belongsToMany(EstadoActa::class, TipoEstadoActaGrado::class, "tipo_acta_grado_id", "estado_acta_grado_id");
+        return $this->hasMany(TipoEstadoActaGrado::class, "tipo_acta_grado_id");
     }
 }
