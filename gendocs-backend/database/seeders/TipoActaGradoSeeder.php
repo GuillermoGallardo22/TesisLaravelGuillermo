@@ -47,12 +47,12 @@ class TipoActaGradoSeeder extends Seeder
             ]);
 
             if ($tipo->codigo != TipoActaGrados::T_EGCC) {
-                foreach ($estadosFiltrados as $estado) {
+                foreach ($estados as $estado) {
                     $tipo->estados()
                         ->attach($estado);
                 }
             } else {
-                foreach ($estados as $estado) {
+                foreach ($estadosFiltrados as $estado) {
                     $tipo->estados()
                         ->attach($estado);
                 }
@@ -91,12 +91,12 @@ class TipoActaGradoSeeder extends Seeder
             ]);
 
             if ($tipo->codigo != TipoActaGrados::IC_EGCC) {
-                foreach ($estadosFiltrados as $estado) {
+                foreach ($estados as $estado) {
                     $tipo->estados()
                         ->attach($estado);
                 }
             } else {
-                foreach ($estados as $estado) {
+                foreach ($estadosFiltrados as $estado) {
                     $tipo->estados()
                         ->attach($estado);
                 }
