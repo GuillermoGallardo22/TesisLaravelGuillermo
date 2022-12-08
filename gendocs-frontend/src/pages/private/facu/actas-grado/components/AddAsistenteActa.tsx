@@ -50,10 +50,7 @@ const tiposAsistentesActaGrado = [
 ].sort((a, b) => a.label.localeCompare(b.label));
 
 function esRequeridoIA(tipo: TipoAsistenteActaGradoEnum) {
-  return ![
-    TipoAsistenteActaGradoEnum.TUTOR,
-    TipoAsistenteActaGradoEnum.PRESIDENTE,
-  ].includes(tipo);
+  return ![TipoAsistenteActaGradoEnum.TUTOR].includes(tipo);
 }
 
 const validationSchema = yup.object({
