@@ -1,8 +1,10 @@
 import { format } from "date-fns";
 
-export function parseToDate(date: string | Date) {
+export function parseToDate(date: string | Date | null) {
   if (typeof date === "string") {
     date = new Date(date);
+  } else if (date === null) {
+    return "";
   }
 
   return format(date, "dd/MM/yyyy");

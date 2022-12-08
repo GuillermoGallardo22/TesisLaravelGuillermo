@@ -35,7 +35,7 @@ export interface IActaGrado {
   numero: number;
   titulo_bachiller: string;
   fecha_inicio_estudios: Date;
-  fecha_fin_estudios: Date;
+  fecha_fin_estudios: Date | null;
   creditos_aprobados: number;
   horas_practicas: number;
   fecha_presentacion: Date | null;
