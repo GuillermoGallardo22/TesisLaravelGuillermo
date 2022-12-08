@@ -11,6 +11,7 @@ import {
   GridRowParams,
   GridValueFormatterParams,
   GridValueGetterParams,
+  ValueOptions,
 } from "@mui/x-data-grid";
 import BooleanCell from "components/BooleanCell";
 import ConfirmationDialog from "components/ConfirmationDialog";
@@ -159,8 +160,20 @@ const ActasGrado: React.FunctionComponent = () => {
         headerName: "Estado acta",
         width: 130,
         valueGetter: (e: GridValueGetterParams<IEstadoActa>) =>
-          e.value!.nombre_mas,
-        valueOptions: estadoActas.map((v) => v.nombre_mas),
+          e.value ? e.value.nombre_mas : "[VACÍO]",
+        valueFormatter: (e) => (e.value !== "[VACÍO]" ? e.value : ""),
+        valueOptions: [
+          ...estadoActas.map((v) => ({
+            label: v.nombre_mas,
+            value: v.nombre_mas,
+          })),
+          ...[
+            {
+              label: "[VACÍO]",
+              value: "[VACÍO]",
+            },
+          ],
+        ],
       },
       {
         type: "singleSelect",
