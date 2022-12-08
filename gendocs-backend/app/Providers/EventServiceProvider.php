@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Acta;
+use App\Models\ActaGrado;
 use App\Models\Consejo;
 use App\Models\Documento;
 use App\Models\Miembro;
@@ -11,6 +12,7 @@ use App\Models\PlantillasGlobales;
 use App\Models\Proceso;
 use App\Models\TipoActaGrado;
 use App\Models\TipoEstadoActaGrado;
+use App\Observers\ActaGradoObserver;
 use App\Observers\ActaObserver;
 use App\Observers\ConsejoObserver;
 use App\Observers\DocumentoObserver;
@@ -53,5 +55,6 @@ class EventServiceProvider extends ServiceProvider
         PlantillasGlobales::observe(PlantillasGlobalesObserver::class);
         TipoActaGrado::observe(TipoActaGradoObserver::class);
         TipoEstadoActaGrado::observe(TipoEstadoActaGradoObserver::class);
+        ActaGrado::observe(ActaGradoObserver::class);
     }
 }

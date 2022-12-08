@@ -77,14 +77,7 @@ class ActaGradoController extends Controller
                 "aula_id" => $validated["aula"],
             ]);
 
-            $tempNumeracion = new NumeracionActaGrado([
-                'numero' => $numero,
-                'usado' => 1,
-                'carrera_id' => $estudiante->carrera->id,
-            ]);
-
             $acta->save();
-            $tempNumeracion->save();
 
             DB::commit();
 
