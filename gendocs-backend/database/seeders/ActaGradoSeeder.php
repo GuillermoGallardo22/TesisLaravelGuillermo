@@ -32,8 +32,10 @@ class ActaGradoSeeder extends Seeder
 
             // $docente = Docente::inRandomOrder()->first();
             $canton = Canton::inRandomOrder()->first();
-            $tipoActa = TipoActaGrado::inRandomOrder()->first();
-            $estadoActa = EstadoActa::inRandomOrder()->first();
+            $tipoActa = TipoActaGrado::whereHas('carreras', function ($q) use ($carrera) {
+                $q->where('carrera_id', $carrera->id);
+            })->get()->random();
+            $estadoActa = $tipoActa->estados->random()->estadoActaGrado;
             $modalidad = ModalidadActaGrado::inRandomOrder()->first();
 
             $estudiante = Estudiante::query()
