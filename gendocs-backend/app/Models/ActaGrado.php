@@ -43,49 +43,19 @@ class ActaGrado extends Model
 
     protected const FILTERS = ["carrera"];
 
+    protected $dates = [
+        // "fecha_inicio_estudios",
+        // "fecha_fin_estudios",
+        "fecha_presentacion",
+    ];
+
     protected $cast = [
         "solicitar_especie" => "boolean",
         "envio_financiero_especie" => "boolean",
         "fecha_inicio_estudios" => "date",
         "fecha_fin_estudios" => "date",
-        "fecha_presentacion" => "dateTime"
+        // "fecha_presentacion" => "boolean",
     ];
-
-    public function fields()
-    {
-        return [
-            "id" => $this->id,
-            "numero" => $this->numero,
-            "titulo_bachiller" => $this->titulo_bachiller,
-            "fecha_inicio_estudios" => $this->fecha_inicio_estudios,
-            "fecha_fin_estudios" => $this->fecha_fin_estudios,
-            "creditos_aprobados" => $this->creditos_aprobados,
-            "horas_practicas" => $this->horas_practicas,
-            "fecha_presentacion" => $this->fecha_presentacion,
-            "duracion" => $this->duracion,
-            "link" => $this->link,
-            "solicitar_especie" => $this->solicitar_especie,
-            "envio_financiero_especie" => $this->envio_financiero_especie,
-            //
-            "estudiante_id" => $this->estudiante_id,
-            "carrera_id" => $this->carrera_id,
-            "canton_id" => $this->canton_id,
-            "tipo_acta_id" => $this->tipo_acta_id,
-            "estado_acta_id" => $this->estado_acta_id,
-            "modalidad_acta_grado_id" => $this->modalidad_acta_grado_id,
-            "aula_id" => $this->aula_id,
-            //
-            "created_user_id" => $this->created_user_id,
-            "updated_user_id" => $this->updated_user_id,
-            //
-            // "aula" => ResourceObject::make($this->aula),
-            // "modalidad_acta_grado" => ResourceObject::make($this->modalidad),
-            // "estudiante" => ResourceObject::make($this->estudiante),
-            // "canton" => ResourceObject::make($this->canton),
-            // "tipo_acta" => ResourceObject::make($this->tipo),
-            // "estado_acta" => ResourceObject::make($this->estado),
-        ];
-    }
 
     public function scopeCarrera(Builder $query, $value)
     {
