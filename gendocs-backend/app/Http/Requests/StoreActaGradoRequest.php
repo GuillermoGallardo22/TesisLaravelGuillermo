@@ -49,7 +49,7 @@ class StoreActaGradoRequest extends FormRequest
                 "bail",
                 "exists:\App\Models\Aula,id",
                 new ModalidadActa($this->modalidad_acta_grado, ModalidadesActaGrado::PRE),
-                new DisponibilidadAula($this->fecha_presentacion, $this->duracion),
+                DisponibilidadAula::onCreate($this->fecha_presentacion, $this->duracion),
             ],
             "link" => [
                 "bail",
