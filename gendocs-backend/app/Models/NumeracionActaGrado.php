@@ -18,6 +18,11 @@ class NumeracionActaGrado extends Model
         "carrera_id",
     ];
 
+    protected $cast = [
+        "encolado" => "boolean",
+        "usado" => "boolean",
+    ];
+
     protected const FILTERS = ["carrera"];
 
     public function scopeCarrera(Builder $builder, $value)
