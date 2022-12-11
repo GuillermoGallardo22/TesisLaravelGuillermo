@@ -66,7 +66,7 @@ const ActasGrado: React.FunctionComponent = () => {
         filters: {
           carrera,
         },
-        include: "estudiante,tipo,estado,modalidad,canton,provincia",
+        include: "aula,estudiante,tipo,estado,modalidad,canton,provincia",
       }).then((r) => r.data),
     {
       enabled: carrera !== -1,
