@@ -3,7 +3,6 @@
 namespace App\Exceptions;
 
 use Illuminate\Database\QueryException as QueryExceptionBase;
-use Log;
 use Symfony\Component\HttpFoundation\Response;
 
 class QueryException
@@ -34,11 +33,6 @@ class QueryException
 
         $messages = [];
         $statusCode = Response::HTTP_UNPROCESSABLE_ENTITY;
-
-        Log::info([
-            "errorCode" => $errorCode,
-            "message" => $message,
-        ]);
 
         switch ($errorCode) {
             case 1062: //code dublicate entry
