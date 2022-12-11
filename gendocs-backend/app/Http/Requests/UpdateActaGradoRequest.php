@@ -2,29 +2,60 @@
 
 namespace App\Http\Requests;
 
+use App\Constants\ModalidadesActaGrado;
+use App\Rules\DisponibilidadAula;
+use App\Rules\DisponibilidadLink;
+use App\Rules\ModalidadActa;
+use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateActaGradoRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
+
     public function authorize()
     {
-        return false;
+        return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array
-     */
     public function rules()
     {
         return [
-            //
+            "estado_acta" => ["sometimes", "nullable", "exists:\App\Models\EstadoActa,id"],
+            "fecha_fin_estudios" => ["sometimes", "nullable", "date"],
+            "horas_practicas" => ["present", "numeric"],
+            "fecha_presentacion" => ["sometimes", "nullable", "date"],
+            "solicitar_especie" => ["required", "boolean"],
+            "envio_financiero_especie" => ["required", "boolean"],
+            "aula" => [
+                "bail",
+                "sometimes",
+                "nullable",
+                "bail",
+                "exists:\App\Models\Aula,id",
+                new ModalidadActa($this->modalidad_acta_grado, ModalidadesActaGrado::PRE),
+                DisponibilidadAula::onUpdate($this->fecha_presentacion, $this->duracion, $this->id),
+            ],
+            "link" => [
+                "bail",
+                "sometimes",
+                "nullable",
+                "url",
+                new ModalidadActa($this->modalidad_acta_grado, ModalidadesActaGrado::ONL),
+                DisponibilidadLink::onUpdate($this->fecha_presentacion, $this->duracion, $this->id),
+            ],
         ];
+    }
+
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            "fecha_fin_estudios" => $this->fecha_fin_estudios ? Carbon::parse($this->fecha_fin_estudios)->setSecond(0)->setMilli(0)->toDateString() : null,
+            "fecha_presentacion" => $this->fecha_presentacion ? Carbon::parse($this->fecha_presentacion)->setSecond(0)->setMilli(0) : null,
+            //
+            "estado_acta" => $this->estado_acta ? $this->estado_acta : null,
+            "horas_practicas" => isset($this->horas_practicas) ? $this->horas_practicas : null,
+            "aula" => $this->aula ? $this->aula : null,
+            "link" => $this->link ? $this->link : null,
+        ]);
     }
 }

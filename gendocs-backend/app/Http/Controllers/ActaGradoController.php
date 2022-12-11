@@ -113,7 +113,46 @@ class ActaGradoController extends Controller
 
     public function update(UpdateActaGradoRequest $request, ActaGrado $actaGrado)
     {
-        //
+        $validated = $request->validated();
+
+        try {
+            DB::beginTransaction();
+
+            $actaGrado->fecha_fin_estudios = $validated["fecha_fin_estudios"];
+            $actaGrado->estado_acta_id = $validated["estado_acta"];
+            $actaGrado->solicitar_especie = $validated["solicitar_especie"];
+            $actaGrado->envio_financiero_especie = $validated["envio_financiero_especie"];
+            $actaGrado->horas_practicas = $validated["horas_practicas"];
+            $actaGrado->fecha_presentacion = $validated["fecha_presentacion"];
+            $actaGrado->link = $validated["link"];
+            $actaGrado->aula_id = $validated["aula"];
+
+            $actaGrado->update();
+
+            DB::commit();
+
+            return ActaGradoResource::make($actaGrado);
+        } catch (\Illuminate\Database\QueryException $ex) {
+
+            $handle = new QueryException($ex);
+
+            $handle->setMessageTranskey("acta_grado");
+            $handle->setUniqueRestrictionNames([
+                "unique_restriction_link_fecha_presentacion",
+                "unique_restriction_numero_carrera_id_directorio_id",
+            ]);
+
+            [$message, $code] = $handle->execute();
+
+            return response($message, $code);
+        } catch (\Throwable $th) {
+
+            return response([
+                "errors" => $th->getMessage(),
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        } finally {
+            DB::rollBack();
+        }
     }
 
     public function destroy(ActaGrado $actaGrado)
