@@ -16,17 +16,14 @@ class ActaGradoObserver
      */
     public function created(ActaGrado $actaGrado)
     {
-        Log::info("En ActaGradoObserver");
-
         $tempNumeracion = new NumeracionActaGrado([
             'numero' => $actaGrado->numero,
-            'usado' => 1,
+            'usado' => true,
+            'encolado' => false,
             'carrera_id' => $actaGrado->estudiante->carrera->id,
         ]);
 
-        Log::info("Antes de tempNumeracion->save()");
         $tempNumeracion->save();
-        Log::info("Despues de tempNumeracion->save()");
     }
 
     /**
@@ -48,7 +45,15 @@ class ActaGradoObserver
      */
     public function deleted(ActaGrado $actaGrado)
     {
-        //
+        $num = NumeracionActaGrado::query()->where([
+            'numero' => $actaGrado->numero,
+            'carrera_id' => $actaGrado->estudiante->carrera->id,
+        ]);
+
+        $num->usado = false;
+        $num->encolado = true;
+
+        $num->save();
     }
 
     /**
