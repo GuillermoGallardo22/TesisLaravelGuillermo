@@ -81,7 +81,7 @@ class ActaGradoController extends Controller
 
             DB::commit();
 
-            return ResourceObject::make($acta);
+            return ActaGradoResource::make($acta);
         } catch (\Illuminate\Database\QueryException $ex) {
 
             $handle = new QueryException($ex);
