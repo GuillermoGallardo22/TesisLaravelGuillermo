@@ -32,19 +32,12 @@ class ValidarNumeroActa implements Rule
     {
         $estudiante = Estudiante::find($this->estudiante);
 
-        $query = NumeracionActaGrado::query()
+        $num = NumeracionActaGrado::query()
             ->where("numero", $numero)
-            ->where("usado", false)
-            ->where("carrera_id", $estudiante->carrera->id);
+            ->where("carrera_id", $estudiante->carrera->id)
+            ->first();
 
-        Log::info([
-            "exists" => $query->exists(),
-            "numero" => $numero,
-            "estudiante" => $estudiante->id,
-            "carrera" => $estudiante->carrera->id,
-        ]);
-
-        return !$query->exists();
+        return !$num || ($num->encolado && !$num->usado);
     }
 
     /**
@@ -54,6 +47,6 @@ class ValidarNumeroActa implements Rule
      */
     public function message()
     {
-        return 'El número ya esta asignado, no sea gil';
+        return trans('validation.custom.acta_grado.create.validation.numero_asignado');
     }
 }
