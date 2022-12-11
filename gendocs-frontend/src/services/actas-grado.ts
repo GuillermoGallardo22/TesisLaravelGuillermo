@@ -1,6 +1,10 @@
 import axios from "axios";
 import { HTTP_STATUS } from "models/enums/HttpStatus";
-import { IActaGrado, IAddActaGrado } from "models/interfaces/IActaGrado";
+import {
+  IActaGrado,
+  IAddActaGrado,
+  IUpdateActaGrado,
+} from "models/interfaces/IActaGrado";
 import { IFilterPaginationProps } from "models/interfaces/IPagination";
 import { IResponse } from "models/interfaces/IResponse";
 import { handleErrors } from "utils/axios";
@@ -68,6 +72,28 @@ export async function addActaGrado(
     return {
       status: HTTP_STATUS.created,
       message: HTTP_MESSAGES[HTTP_STATUS.created],
+      data,
+    };
+  } catch (error) {
+    return handleErrors(error);
+  }
+}
+
+export async function updateActaGrado(
+  form: IUpdateActaGrado
+): Promise<IResponse<IActaGrado>> {
+  try {
+    const payload = clean(form, {
+      cleanValues: [-1],
+    });
+
+    const {
+      data: { data },
+    } = await axios.put("acta-grado/" + form.id, payload);
+
+    return {
+      status: HTTP_STATUS.ok,
+      message: HTTP_MESSAGES[HTTP_STATUS.ok],
       data,
     };
   } catch (error) {

@@ -1,4 +1,5 @@
 import LoadingButton from "@mui/lab/LoadingButton";
+import { Fade } from "@mui/material";
 import Box from "@mui/material/Box";
 import Checkbox from "@mui/material/Checkbox";
 import Divider from "@mui/material/Divider";
@@ -7,31 +8,105 @@ import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import { DatePicker, DateTimePicker } from "@mui/x-date-pickers";
+import ErrorSummary from "components/ErrorSummary";
+import Select from "components/Select";
+import { SingleAutoComplete } from "components/SingleAutoComplete";
 import Skeleton from "components/Skeleton";
 import TitleNav from "components/TitleNav";
 import { useFormik } from "formik";
-import { IActaGrado, IUpdateActaGrado } from "models/interfaces/IActaGrado";
+import { useErrorsResponse } from "hooks/useErrorsResponse";
+import { Genero } from "models/enums/Genero";
+import { HTTP_STATUS } from "models/enums/HttpStatus";
+import { ModalidadActaGrado } from "models/enums/ModalidadActaGrado";
+import {
+  IActaGrado,
+  IEstadoActa,
+  ITipoActaGrado,
+  IUpdateActaGrado,
+} from "models/interfaces/IActaGrado";
+import { IAula } from "models/interfaces/IAula";
+import { useSnackbar } from "notistack";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { updateActaGrado } from "services/actas-grado";
+import { getAulas } from "services/aulas";
+import { getTipoActasGrado } from "services/tipoActasGrado";
 import { parseToDate } from "utils/date";
-import { getOptionLabelCanton, getOptionLabelEstudiante } from "utils/libs";
+import {
+  getOptionLabelAula,
+  getOptionLabelCanton,
+  getOptionLabelEstudiante,
+  isOptionEqualToValueAula,
+} from "utils/libs";
 import useActaGrado from "../hooks/useActaGrado";
 
 const UpdateActaGrado = () => {
   const { actaGradoId = "" } = useParams();
 
+  const [loading, setLoading] = useState(true);
+
+  const [tipoActasGrado, setTipoActasGrado] = useState<ITipoActaGrado[]>([]);
+
   const { actaGrado, isLoadingActaGrado } = useActaGrado({
     actaGradoId,
     options: {
-      include: "estudiante,carrera,canton,provincia,estado,modalidad,tipo",
+      include: "aula,estudiante,carrera,canton,provincia,estado,modalidad,tipo",
     },
   });
 
-  if (!actaGrado || isLoadingActaGrado) return <Skeleton />;
+  useEffect(() => {
+    if (!actaGrado) {
+      return;
+    }
 
-  return <UpdateActaGradoBase actaGrado={actaGrado} />;
+    setLoading(true);
+
+    Promise.all([
+      getTipoActasGrado({
+        filters: {
+          carrera: actaGrado.estudiante.carrera.id,
+        },
+      }),
+      // getModalidadesActaGrado(),
+    ])
+      .then((r) => {
+        const [_tiposActasGrado] = r;
+
+        setTipoActasGrado(_tiposActasGrado);
+
+        // setModalidades(modalidades);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, [actaGrado]);
+
+  if (!actaGrado || isLoadingActaGrado || loading) return <Skeleton />;
+
+  return (
+    <UpdateActaGradoBase
+      actaGrado={actaGrado}
+      tipoActasGrado={tipoActasGrado}
+    />
+  );
 };
 
-const UpdateActaGradoBase = ({ actaGrado }: { actaGrado: IActaGrado }) => {
+const renderCount = 1;
+
+const UpdateActaGradoBase = ({
+  actaGrado,
+  // modalidades,
+  tipoActasGrado,
+}: {
+  actaGrado: IActaGrado;
+  // modalidades: IModalidadActaGrado[];
+  tipoActasGrado: ITipoActaGrado[];
+}) => {
+  const [acAula, setACAula] = useState<IAula | null>(actaGrado.aula || null);
+  const [estadoActas, setEstadoActas] = useState<IEstadoActa[]>([]);
+  const { enqueueSnackbar } = useSnackbar();
+  const { errorSummary, setErrorSummary } = useErrorsResponse();
+
   const initialValues: IUpdateActaGrado = {
     ...actaGrado,
     numeracion: actaGrado.numero,
@@ -44,11 +119,21 @@ const UpdateActaGradoBase = ({ actaGrado }: { actaGrado: IActaGrado }) => {
     duracion: actaGrado.duracion || 60,
     envio_financiero_especie: Boolean(actaGrado.envio_financiero_especie),
     solicitar_especie: Boolean(actaGrado.solicitar_especie),
+    link: actaGrado?.link || "",
   };
 
-  const onSubmit = async (form: any) => {
-    console.log({ form });
-    await new Promise((r) => setTimeout(r, 1500));
+  const onSubmit = async (form: IUpdateActaGrado) => {
+    setErrorSummary(undefined);
+
+    const result = await updateActaGrado(form);
+
+    if (result.status === HTTP_STATUS.ok) {
+      enqueueSnackbar(result.message, { variant: "success" });
+      // handleReset();
+    } else {
+      enqueueSnackbar(result.message, { variant: "error" });
+      setErrorSummary(result.errors);
+    }
   };
 
   const formik = useFormik({
@@ -60,6 +145,35 @@ const UpdateActaGradoBase = ({ actaGrado }: { actaGrado: IActaGrado }) => {
   const handleReset = () => {
     //
   };
+
+  useEffect(() => {
+    formik.setFieldValue("aula", acAula?.id || -1);
+  }, [acAula]);
+
+  useEffect(() => {
+    if (renderCount !== 1) {
+      formik.setFieldValue("estado_acta", -1);
+    }
+
+    const tipoActaSeleccionada = tipoActasGrado.find(
+      (i) => i.codigo == formik.values.tipo_acta
+    );
+
+    const estados = tipoActaSeleccionada?.estados || [];
+    const isFem = actaGrado.estudiante.genero === Genero.FEMENINO;
+
+    setEstadoActas(
+      estados.map((i) => ({
+        ...i.estado,
+        temp: isFem ? i.estado.nombre_fem : i.estado.nombre_mas,
+      }))
+    );
+  }, [formik.values.tipo_acta]);
+
+  const isPRE =
+    actaGrado.modalidad_acta_grado.codigo === ModalidadActaGrado.PRE;
+  const isONL =
+    actaGrado.modalidad_acta_grado.codigo === ModalidadActaGrado.ONL;
 
   const submitting = formik.isSubmitting;
 
@@ -201,12 +315,16 @@ const UpdateActaGradoBase = ({ actaGrado }: { actaGrado: IActaGrado }) => {
               disabled
               margin="normal"
               label="Tipo de acta"
-              value={formik.values.tipo_acta}
+              value={
+                tipoActasGrado.find(
+                  (ta) => ta.codigo === formik.values.tipo_acta
+                )?.nombre
+              }
             />
           </Grid>
 
           <Grid item xs={12} sm={6}>
-            {/* <Select
+            <Select
               id="estado_acta"
               name="estado_acta"
               label="Estado acta"
@@ -223,7 +341,7 @@ const UpdateActaGradoBase = ({ actaGrado }: { actaGrado: IActaGrado }) => {
               errorMessage={
                 formik.touched.estado_acta && formik.errors.estado_acta
               }
-            /> */}
+            />
           </Grid>
 
           <Grid item xs={12} sm={4}>
@@ -245,12 +363,12 @@ const UpdateActaGradoBase = ({ actaGrado }: { actaGrado: IActaGrado }) => {
               disabled
               margin="normal"
               label="Modalidad acta"
-              value={formik.values.modalidad_acta_grado}
+              value={actaGrado.modalidad_acta_grado.nombre}
             />
           </Grid>
 
           <Grid item xs={12} sm={4}>
-            {/* <Box sx={{ display: isONL ? "inline" : "none" }}>
+            <Box sx={{ display: isONL ? "inline" : "none" }}>
               <Fade in={isONL}>
                 <TextField
                   fullWidth
@@ -292,7 +410,7 @@ const UpdateActaGradoBase = ({ actaGrado }: { actaGrado: IActaGrado }) => {
                   />
                 </Box>
               </Fade>
-            </Box> */}
+            </Box>
           </Grid>
 
           <Grid item xs={12}>
@@ -350,11 +468,7 @@ const UpdateActaGradoBase = ({ actaGrado }: { actaGrado: IActaGrado }) => {
             </Stack>
           </Grid>
 
-          {/* {errorSummary && <ErrorSummary errors={errorSummary} />} */}
-
-          {/* <Grid item xs={12}>
-            <pre>{JSON.stringify(formik.values, null, 2)}</pre>
-          </Grid> */}
+          {errorSummary && <ErrorSummary errors={errorSummary} />}
 
           <Grid item xs={12} sm={6}>
             <LoadingButton
