@@ -13,16 +13,38 @@ class DisponibilidadLink implements Rule
 
     protected $fecha_presentacion;
     protected $duracion;
+    protected $actaGradoId;
 
-    /**
-     * Create a new rule instance.
-     * @param $fecha_presentacion
-     * @param $duracion
-     */
-    public function __construct($fecha_presentacion, $duracion)
+    public function __construct()
     {
-        $this->fecha_presentacion = $fecha_presentacion;
-        $this->duracion = $duracion;
+    }
+
+    public static function onCreate($fecha_presentacion, $duracion)
+    {
+        $instance = new self();
+        $instance->fill([
+            "fecha_presentacion" => $fecha_presentacion,
+            "duracion" => $duracion
+        ]);
+        return $instance;
+    }
+
+    public static function onUpdate($fecha_presentacion, $duracion, $actaGradoId)
+    {
+        $instance = new self();
+        $instance->fill([
+            "fecha_presentacion" => $fecha_presentacion,
+            "duracion" => $duracion,
+            "actaGradoId" => $actaGradoId,
+        ]);
+        return $instance;
+    }
+
+    protected function fill($row)
+    {
+        $this->fecha_presentacion = isset($row['fecha_presentacion']) ? $row['fecha_presentacion'] : null;
+        $this->duracion = isset($row['duracion']) ? $row['duracion'] : null;
+        $this->actaGradoId = isset($row['actaGradoId']) ? $row['actaGradoId'] : null;
     }
 
     /**
@@ -34,7 +56,15 @@ class DisponibilidadLink implements Rule
      */
     public function passes($attribute, $value)
     {
+
         $fecha_presentacion = Carbon::parse($this->fecha_presentacion);
+
+        if ($this->actaGradoId !== null) {
+            $actaGrado = ActaGrado::find($this->actaGradoId);
+            if ($actaGrado->link === $value && $fecha_presentacion == $actaGrado->fecha_presentacion) {
+                return true;
+            }
+        }
 
         $actas = ActaGrado::query()
             ->where("link", $value)

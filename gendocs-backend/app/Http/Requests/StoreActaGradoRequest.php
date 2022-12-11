@@ -57,7 +57,7 @@ class StoreActaGradoRequest extends FormRequest
                 "nullable",
                 "url",
                 new ModalidadActa($this->modalidad_acta_grado, ModalidadesActaGrado::ONL),
-                new DisponibilidadLink($this->fecha_presentacion, $this->duracion),
+                DisponibilidadLink::onCreate($this->fecha_presentacion, $this->duracion),
             ],
         ];
     }

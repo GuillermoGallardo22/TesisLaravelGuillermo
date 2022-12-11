@@ -4,6 +4,7 @@ namespace App\Traits;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Log;
 
 trait DisponibilidadActa
 {
@@ -37,17 +38,11 @@ trait DisponibilidadActa
             }
 
             if (
-                $rangoI_->betweenExcluded($rangoI, $rangoF) or
-                $rangoF_->betweenExcluded($rangoI, $rangoF)
+                ($rangoI_->betweenExcluded($rangoI, $rangoF) or
+                    $rangoF_->betweenExcluded($rangoI, $rangoF)) or
+                ($rangoI->betweenExcluded($rangoI_, $rangoF_) or
+                    $rangoF->betweenExcluded($rangoI_, $rangoF_))
             ) {
-                // Log::error([
-                //     "id" => $acta->id,
-                //     "duracion" => $acta->duracion,
-                //     "fecha_presentacion" => $acta->fecha_presentacion,
-                //     "rangoI_" => $rangoI_->toDateTimeString(),
-                //     "rangoF_" => $rangoF_->toDateTimeString(),
-                // ]);
-
                 return false;
             }
         }
