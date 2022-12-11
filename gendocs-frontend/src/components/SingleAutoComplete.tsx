@@ -32,7 +32,10 @@ export function SingleAutoComplete<T>(props: SingleAutoCompleteProps<T>) {
     onChange: onChangeCurrentValue,
     onInputChange,
     resetValue,
-  } = useAutocomplete(hookProps);
+  } = useAutocomplete({
+    ...hookProps,
+    initValue: value,
+  });
 
   useEffect(() => {
     onChange(currentValue);

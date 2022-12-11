@@ -9,17 +9,19 @@ export type useAutocompleteProps<T> = {
   fetch: (props: IFilterPaginationProps) => Promise<any>;
   filters?: IFilterProps;
   preventSubmitOnOpen?: boolean;
+  initValue?: T | null | undefined;
 };
 
 export const useAutocomplete = <T>({
   fetch,
   filters,
   preventSubmitOnOpen = false,
+  initValue,
 }: useAutocompleteProps<T>) => {
   const [inputValue, setInputValue] = useState("");
 
   const [items, setItems] = useState<Array<T>>([]);
-  const [value, setValue] = useState<T | null>(null);
+  const [value, setValue] = useState<T | null>(initValue || null);
 
   const [isOpen, setIsOpen] = useState(false);
 
