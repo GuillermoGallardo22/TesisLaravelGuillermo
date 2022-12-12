@@ -1,3 +1,4 @@
+import Alert from "@mui/material/Alert";
 import Grid from "@mui/material/Grid";
 import { DataGrid } from "@mui/x-data-grid";
 import ConfirmationDialog from "components/ConfirmationDialog";
@@ -69,57 +70,67 @@ export const NumeracionModal: React.FC<NumeracionModalProps> = ({
       maxWidth="md"
     >
       <Grid container direction="column" gap={2}>
-        <Grid item>
-          <div style={{ height: 380, width: "100%" }}>
-            <DataGrid
-              pagination
-              density="compact"
-              rows={reservados}
-              onSelectionModelChange={(s) => handleChange(s[0], "reservados")}
-              columns={[
-                {
-                  field: "numero",
-                  headerName: "Números reservados",
-                  flex: 1,
-                  type: "number",
-                  align: "left",
-                  headerAlign: "left",
-                  valueFormatter: ({ value }) => value,
-                },
-                {
-                  field: "consejo",
-                  headerName: "Consejo",
-                  flex: 1,
-                  type: "singleSelect",
-                  valueGetter: ({ value }) => value.nombre,
-                  valueOptions: nombreConsejos,
-                },
-              ]}
-            />
-          </div>
-        </Grid>
+        {reservados.length > 0 && (
+          <Grid item>
+            <div style={{ height: 380, width: "100%" }}>
+              <DataGrid
+                pagination
+                density="compact"
+                rows={reservados}
+                onSelectionModelChange={(s) => handleChange(s[0], "reservados")}
+                columns={[
+                  {
+                    field: "numero",
+                    headerName: "Números reservados",
+                    flex: 1,
+                    type: "number",
+                    align: "left",
+                    headerAlign: "left",
+                    valueFormatter: ({ value }) => value,
+                  },
+                  {
+                    field: "consejo",
+                    headerName: "Consejo",
+                    flex: 1,
+                    type: "singleSelect",
+                    valueGetter: ({ value }) => value.nombre,
+                    valueOptions: nombreConsejos,
+                  },
+                ]}
+              />
+            </div>
+          </Grid>
+        )}
 
-        <Grid item>
-          <div style={{ height: 380, width: "100%" }}>
-            <DataGrid
-              pagination
-              density="compact"
-              rows={encolados}
-              onSelectionModelChange={(s) => handleChange(s[0], "encolados")}
-              columns={[
-                {
-                  field: "numero",
-                  headerName: "Números encolados",
-                  flex: 1,
-                  type: "number",
-                  align: "left",
-                  headerAlign: "left",
-                  valueFormatter: ({ value }) => value,
-                },
-              ]}
-            />
-          </div>
-        </Grid>
+        {encolados.length > 0 && (
+          <Grid item>
+            <div style={{ height: 380, width: "100%" }}>
+              <DataGrid
+                pagination
+                density="compact"
+                rows={encolados}
+                onSelectionModelChange={(s) => handleChange(s[0], "encolados")}
+                columns={[
+                  {
+                    field: "numero",
+                    headerName: "Números encolados",
+                    flex: 1,
+                    type: "number",
+                    align: "left",
+                    headerAlign: "left",
+                    valueFormatter: ({ value }) => value,
+                  },
+                ]}
+              />
+            </div>
+          </Grid>
+        )}
+
+        {!reservados.length && !encolados.length && (
+          <Grid item>
+            <Alert severity="info">No existe numeración</Alert>
+          </Grid>
+        )}
       </Grid>
     </ConfirmationDialog>
   );
