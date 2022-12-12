@@ -134,6 +134,7 @@ const UpdateActaGradoBase = ({
 
   const initialValues: IUpdateActaGrado = {
     ...actaGrado,
+    fecha_inicio_estudios: new Date(actaGrado.fecha_inicio_estudios),
     numeracion: actaGrado.numero,
     estudiante: actaGrado.estudiante_id,
     canton: actaGrado.canton_id,
