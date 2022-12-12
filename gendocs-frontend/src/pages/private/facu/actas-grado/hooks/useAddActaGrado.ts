@@ -162,6 +162,23 @@ export const useAddActaGrado = ({ estudiante }: useAddActaGradoProps) => {
     setErrorSummary(undefined);
   };
 
+  const refreshNumeracion = () => {
+    if (!estudiante) return;
+
+    setFetchingRequiredData(true);
+
+    getNumeracionActaGrado({
+      filters: {
+        carrera: estudiante.carrera.id,
+      },
+    })
+      .then((r) => {
+        setEncolados(r.data.encolados);
+        formik.setFieldValue("numeracion", r.data.siguiente);
+      })
+      .finally(() => setFetchingRequiredData(false));
+  };
+
   return {
     formik,
     encolados,
@@ -169,6 +186,7 @@ export const useAddActaGrado = ({ estudiante }: useAddActaGradoProps) => {
     handleReset,
     errorSummary,
     tipoActasGrado,
+    refreshNumeracion,
     fetchingRequiredData,
   };
 };

@@ -1,7 +1,6 @@
 import LoadingButton from "@mui/lab/LoadingButton";
 import Box from "@mui/material/Box";
 import Checkbox from "@mui/material/Checkbox";
-import CircularProgress from "@mui/material/CircularProgress";
 import Divider from "@mui/material/Divider";
 import Fade from "@mui/material/Fade";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -13,6 +12,7 @@ import ErrorSummary from "components/ErrorSummary";
 import Select from "components/Select";
 import { SingleAutoComplete } from "components/SingleAutoComplete";
 import TitleNav from "components/TitleNav";
+import { useConfirmationDialog } from "hooks/useConfirmationDialog";
 import { Genero } from "models/enums/Genero";
 import { ModalidadActaGrado } from "models/enums/ModalidadActaGrado";
 import { IEstadoActa } from "models/interfaces/IActaGrado";
@@ -32,8 +32,10 @@ import {
   isOptionEqualToValueCanton,
   isOptionEqualToValueEstudiante,
 } from "utils/libs";
+import { NumeracionModal } from "../../documentos/components/NumeracionModal";
 
 import { useAddActaGrado } from "../hooks/useAddActaGrado";
+import NumeracionAdornment from "./NumeracionAdornment";
 
 const AddActaGrado: React.FunctionComponent = () => {
   const [acAula, setACAula] = useState<IAula | null>(null);
@@ -53,6 +55,8 @@ const AddActaGrado: React.FunctionComponent = () => {
     tipoActasGrado,
     modalidades,
     fetchingRequiredData,
+    encolados,
+    refreshNumeracion,
   } = useAddActaGrado({
     estudiante: acEstudiante,
   });
@@ -137,9 +141,19 @@ const AddActaGrado: React.FunctionComponent = () => {
       !fetchingRequiredData
   );
 
+  const { closeModal, isVisible, openModal } = useConfirmationDialog();
+
   return (
     <Stack spacing={2}>
       <TitleNav title="Agregar acta de grado" />
+
+      <NumeracionModal
+        isVisible={isVisible}
+        onCancel={closeModal}
+        onApprove={(n) => formik.setFieldValue("numeracion", n)}
+        reservados={[]}
+        encolados={encolados}
+      />
 
       <Box
         component="form"
@@ -193,9 +207,14 @@ const AddActaGrado: React.FunctionComponent = () => {
               }
               helperText={formik.touched.numeracion && formik.errors.numeracion}
               InputProps={{
-                endAdornment: fetchingRequiredData ? (
-                  <CircularProgress color="inherit" size={20} />
-                ) : null,
+                endAdornment: (
+                  <NumeracionAdornment
+                    loading={fetchingRequiredData}
+                    disabled={submitting || !estudianteSeleccionado}
+                    edit={openModal}
+                    refresh={refreshNumeracion}
+                  />
+                ),
               }}
             />
           </Grid>
