@@ -266,8 +266,8 @@ const UpdateActaGradoBase = ({
               fullWidth
               disabled={true}
               margin="normal"
-              name="Fecha inicio estudios"
-              label="Título bachiller"
+              name="fecha_inicio_estudios"
+              label="Fecha inicio estudios"
               value={parseToDate(formik.values.fecha_inicio_estudios)}
             />
           </Grid>
