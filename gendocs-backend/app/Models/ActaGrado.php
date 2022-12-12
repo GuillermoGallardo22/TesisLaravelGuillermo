@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ActaGrado extends Model
 {
-    use HasFactory, Filterable, SoftDeletes;
+    use HasFactory, Filterable;
 
     protected $fillable = [
         "numero",
