@@ -16,14 +16,34 @@ class ActaGradoObserver
      */
     public function created(ActaGrado $actaGrado)
     {
-        $tempNumeracion = new NumeracionActaGrado([
+        $num = NumeracionActaGrado::query()->where([
             'numero' => $actaGrado->numero,
-            'usado' => true,
-            'encolado' => false,
             'carrera_id' => $actaGrado->estudiante->carrera->id,
-        ]);
+        ])->first();
 
-        $tempNumeracion->save();
+        if (!$num) {
+
+            $ultimoNum = NumeracionActaGrado::query()
+                ->where('carrera_id', $actaGrado->estudiante->carrera->id)
+                ->orderBy("numero", "DESC")
+                ->first();
+
+            $desde = $ultimoNum?->numero || 0;
+
+            for ($i = $desde + 1; $i <= $actaGrado->numero; $i++) {
+
+                NumeracionActaGrado::create([
+                    'numero' => $i,
+                    'usado' => $i == $actaGrado->numero,
+                    'encolado' => ($i != $actaGrado->numero),
+                    'carrera_id' => $actaGrado->estudiante->carrera->id,
+                ]);
+            }
+        } else {
+            $num->usado = true;
+            $num->encolado = false;
+            $num->save();
+        }
     }
 
     /**

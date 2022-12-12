@@ -15,6 +15,7 @@ class NumeracionActaGrado extends Model
     protected $fillable = [
         "numero",
         "usado",
+        "encolado",
         "carrera_id",
     ];
 
