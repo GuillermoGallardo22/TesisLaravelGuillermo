@@ -28,7 +28,7 @@ class ActaGradoObserver
                 ->orderBy("numero", "DESC")
                 ->first();
 
-            $desde = $ultimoNum?->numero || 0;
+            $desde = $ultimoNum?->numero ?? 0;
 
             for ($i = $desde + 1; $i <= $actaGrado->numero; $i++) {
 
