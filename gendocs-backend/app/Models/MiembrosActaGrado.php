@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Http\Resources\ActaGradoResource;
 use App\Http\Resources\ResourceObject;
 use App\Traits\Filterable;
 use Illuminate\Database\Eloquent\Builder;
@@ -31,7 +32,7 @@ class MiembrosActaGrado extends Model
     {
         return [
             "id" => $this->id,
-            "actaGrado" => ResourceObject::make($this->actaGrado),
+            "actaGrado" => ActaGradoResource::make($this->actaGrado),
             "docente" => ResourceObject::make($this->docente),
             "tipo" => $this->tipo,
             "informacion_adicional" => $this->informacion_adicional,
