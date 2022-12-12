@@ -48,7 +48,7 @@ class ActaGradoObserver
         $num = NumeracionActaGrado::query()->where([
             'numero' => $actaGrado->numero,
             'carrera_id' => $actaGrado->estudiante->carrera->id,
-        ]);
+        ])->first();
 
         $num->usado = false;
         $num->encolado = true;
