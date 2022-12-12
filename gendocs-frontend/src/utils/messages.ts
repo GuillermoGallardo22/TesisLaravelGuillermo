@@ -9,6 +9,7 @@ export const VALIDATION_MESSAGES = {
   passwordConfirmation: "Las contraseñas deben coincidir.",
   consejoNumeracion:
     "Al consejo seleccionado no se le puede asignar la numeración deseda",
+  fechaSusReq: "Fecha sustentación/incorporación es requerida",
 };
 
 export const HTTP_MESSAGES: { [code: number]: string } = {

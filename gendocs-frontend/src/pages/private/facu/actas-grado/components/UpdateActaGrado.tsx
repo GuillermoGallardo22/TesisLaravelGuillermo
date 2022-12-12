@@ -39,6 +39,9 @@ import {
   isOptionEqualToValueAula,
 } from "utils/libs";
 import useActaGrado from "../hooks/useActaGrado";
+import { testFechaSustentacion } from "utils/libs";
+import { VALIDATION_MESSAGES as VM } from "utils/messages";
+import * as yup from "yup";
 
 const UpdateActaGrado = () => {
   const { actaGradoId = "" } = useParams();
@@ -92,6 +95,28 @@ const UpdateActaGrado = () => {
 };
 
 const renderCount = 1;
+const TODAY = new Date();
+
+const validationSchema = yup.object().shape({
+  fecha_fin_estudios: yup
+    .date()
+    .nullable()
+    .min(yup.ref("fecha_inicio_estudios"), VM.invalidDate),
+  fecha_presentacion: yup.date().min(TODAY, VM.invalidDate).nullable(),
+  horas_practicas: yup.number(),
+  estado_acta: yup.number().nullable(),
+  solicitar_especie: yup.boolean(),
+  envio_financiero_especie: yup.boolean(),
+  link: yup
+    .string()
+    .nullable()
+    .test("invalid-link", VM.fechaSusReq, testFechaSustentacion),
+  aula: yup
+    .number()
+    .nullable()
+    .test("invalid-aula", VM.fechaSusReq, testFechaSustentacion),
+  duracion: yup.number().required(VM.required).min(1, VM.invalidOption),
+});
 
 const UpdateActaGradoBase = ({
   actaGrado,
@@ -140,6 +165,7 @@ const UpdateActaGradoBase = ({
     initialValues,
     onSubmit,
     enableReinitialize: true,
+    validationSchema,
   });
 
   const handleReset = () => {

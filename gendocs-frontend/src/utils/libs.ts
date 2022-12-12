@@ -396,3 +396,11 @@ export function getLocalStoragePreviousValue(
 
   return previousValueSelected ? +previousValueSelected : defaultValue;
 }
+
+export function testFechaSustentacion(v: any, c: any) {
+  if (!v || v === -1) {
+    return true;
+  }
+  const { fecha_presentacion } = c.parent;
+  return Boolean(fecha_presentacion);
+}

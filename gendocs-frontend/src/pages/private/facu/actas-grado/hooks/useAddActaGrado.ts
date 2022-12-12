@@ -16,6 +16,7 @@ import { getModalidadesActaGrado } from "services/modalidadActaGrado";
 import { getNumeracionActaGrado } from "services/numeracion";
 import { getTipoActasGrado } from "services/tipoActasGrado";
 import { CONSTANTS } from "utils/constants";
+import { testFechaSustentacion } from "utils/libs";
 import { VALIDATION_MESSAGES as VM } from "utils/messages";
 import * as yup from "yup";
 
@@ -80,8 +81,14 @@ const validationSchema = yup.object().shape({
     .string()
     .required(VM.required)
     .test("invalid-option", VM.required, (v) => v !== ""),
-  link: yup.string().nullable(),
-  aula: yup.number().nullable(),
+  link: yup
+    .string()
+    .nullable()
+    .test("invalid-link", VM.fechaSusReq, testFechaSustentacion),
+  aula: yup
+    .number()
+    .nullable()
+    .test("invalid-aula", VM.fechaSusReq, testFechaSustentacion),
   duracion: yup.number().required(VM.required).min(1, VM.invalidOption),
 });
 
