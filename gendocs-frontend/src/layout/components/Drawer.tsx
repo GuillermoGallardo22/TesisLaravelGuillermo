@@ -76,7 +76,7 @@ const Drawer: React.FC<DrawerProps> = ({ open, toggleDrawer }) => {
       {hasFacuModule && (
         <List>
           <ListSubheader component="div" inset>
-            FACULTAD
+            CONSEJO DIRECTIVO
           </ListSubheader>
 
           {facuRoutes.map(
@@ -97,7 +97,7 @@ const Drawer: React.FC<DrawerProps> = ({ open, toggleDrawer }) => {
       {hasSudeModule && (
         <List>
           <ListSubheader component="div" inset>
-            SUBDECANATO
+            CONSEJO ACADÉMICO
           </ListSubheader>
 
           {sudeRoutes.map(
@@ -139,7 +139,7 @@ const Drawer: React.FC<DrawerProps> = ({ open, toggleDrawer }) => {
       {hasCurrModule && (
         <List>
           <ListSubheader component="div" inset>
-            U. CURRICULAR
+            INT. CURRICULAR
           </ListSubheader>
 
           {currRoutes.map(
