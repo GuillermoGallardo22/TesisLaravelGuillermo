@@ -68,7 +68,7 @@ class UserController extends Controller
 
             $permission = $this->googleDriveService->shareFolder(
                 $userCreated->email_gmail,
-                Directorio::query()->activeDirectory()->drive_id,
+                config("services.google.root_directory"),
                 $role->name_role_drive,
             );
 
@@ -120,7 +120,7 @@ class UserController extends Controller
                     $permission = $user->permission;
                     if ($permission) {
                         $this->googleDriveService->deletePermission(
-                            Directorio::query()->activeDirectory()->drive_id,
+                            config("services.google.root_directory"),
                             $user->permission->google_drive_id
                         );
 
@@ -138,7 +138,7 @@ class UserController extends Controller
                 $permission = $user->permission;
                 if ($permission) {
                     $this->googleDriveService->deletePermission(
-                        Directorio::query()->activeDirectory()->drive_id,
+                        config("services.google.root_directory"),
                         $user->permission->google_drive_id
                     );
 
@@ -148,7 +148,7 @@ class UserController extends Controller
                 // Add new permissions to new email
                 $permission = $this->googleDriveService->shareFolder(
                     $user->email_gmail,
-                    Directorio::query()->activeDirectory()->drive_id,
+                    config("services.google.root_directory"),
                     $role->name_role_drive,
                 );
 
