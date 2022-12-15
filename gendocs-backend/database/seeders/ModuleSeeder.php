@@ -17,12 +17,12 @@ class ModuleSeeder extends Seeder
     {
         Module::create([
             'code' => Modulos::FACU,
-            'name' => 'FACULTAD'
+            'name' => 'CONSEJO DIRECTIVO'
         ]);
 
         Module::create([
             'code' => Modulos::SUDE,
-            'name' => 'SUBDECANATO'
+            'name' => 'CONSEJO ACADÉMICO'
         ]);
 
         Module::create([
@@ -32,7 +32,7 @@ class ModuleSeeder extends Seeder
 
         Module::create([
             'code' => Modulos::CURR,
-            'name' => 'UNIDAD CURRICULAR',
+            'name' => 'INT. CURRICULAR',
         ]);
     }
 }
