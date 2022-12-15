@@ -75,7 +75,7 @@ const Drawer: React.FC<DrawerProps> = ({ open, toggleDrawer }) => {
       <Divider />
       {hasFacuModule && (
         <List>
-          <ListSubheader component="div" inset>
+          <ListSubheader sx={{ color: "#512da8" }} component="div" inset>
             CONSEJO DIRECTIVO
           </ListSubheader>
 
@@ -96,7 +96,7 @@ const Drawer: React.FC<DrawerProps> = ({ open, toggleDrawer }) => {
 
       {hasSudeModule && (
         <List>
-          <ListSubheader component="div" inset>
+          <ListSubheader sx={{ color: "#03a9f4" }} component="div" inset>
             CONSEJO ACADÉMICO
           </ListSubheader>
 
@@ -117,7 +117,7 @@ const Drawer: React.FC<DrawerProps> = ({ open, toggleDrawer }) => {
 
       {hasTituModule && (
         <List>
-          <ListSubheader component="div" inset>
+          <ListSubheader sx={{ color: "#00796b" }} component="div" inset>
             TITULACIÓN
           </ListSubheader>
 
@@ -138,7 +138,7 @@ const Drawer: React.FC<DrawerProps> = ({ open, toggleDrawer }) => {
 
       {hasCurrModule && (
         <List>
-          <ListSubheader component="div" inset>
+          <ListSubheader sx={{ color: "#ad1457" }} component="div" inset>
             INT. CURRICULAR
           </ListSubheader>
 
