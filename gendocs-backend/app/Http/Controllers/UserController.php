@@ -81,7 +81,9 @@ class UserController extends Controller
             return ResourceObject::make($userCreated);
         } catch (\Exception $e) {
             DB::rollBack();
-            return response()->noContent(ResponseAlias::HTTP_UNPROCESSABLE_ENTITY);
+            return response()->json([
+                'errors' => $e->getMessage(),
+            ], ResponseAlias::HTTP_UNPROCESSABLE_ENTITY);
         }
     }
 
