@@ -38,6 +38,15 @@ class NumeroConsejo implements Rule
             $query->where('code', $moduleCode);
         });
 
+        if ((clone $queryBase)
+            ->where('numero', $numero)
+            ->where("reservado", true)
+            ->where("consejo_id", "<>", $consejo)
+            ->exists()
+        ) {
+            return false;
+        }
+
         if (
             // SI EL CONSEJO TIENE NUMERACIONES RESERVADAS PARA EL MÓDULO
             (clone $queryBase)->where('consejo_id', $consejo)->exists()
