@@ -17,6 +17,11 @@ class TipoActaGrado extends Model
         'codigo',
     ];
 
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+    ];
+
     public const FILTERS = ['carrera', 'codigo'];
 
     public function fields()

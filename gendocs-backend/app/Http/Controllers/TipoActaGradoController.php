@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\ResourceCollection;
+use App\Http\Resources\TipoActaGradoResource;
 use App\Models\TipoActaGrado;
 use Illuminate\Http\Request;
 
@@ -21,7 +22,7 @@ class TipoActaGradoController extends Controller
 
         $query->applyFilters($request->all());
 
-        return ResourceCollection::make($query->get());
+        return TipoActaGradoResource::collection($query->get());
     }
 
     /**
