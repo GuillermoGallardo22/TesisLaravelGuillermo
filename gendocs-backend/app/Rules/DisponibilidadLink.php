@@ -61,7 +61,7 @@ class DisponibilidadLink implements Rule
 
         if ($this->actaGradoId !== null) {
             $actaGrado = ActaGrado::find($this->actaGradoId);
-            if ($actaGrado->link === $value && $fecha_presentacion == $actaGrado->fecha_presentacion) {
+            if ($actaGrado->link === $value) {
                 return true;
             }
         }

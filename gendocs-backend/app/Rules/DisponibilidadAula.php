@@ -53,7 +53,7 @@ class DisponibilidadAula implements Rule
 
         if ($this->actaGradoId !== null) {
             $actaGrado = ActaGrado::find($this->actaGradoId);
-            if ($actaGrado->aula_id === $value && $fecha_presentacion == $actaGrado->fecha_presentacion) {
+            if ($actaGrado->aula_id === $value) {
                 return true;
             }
         }
