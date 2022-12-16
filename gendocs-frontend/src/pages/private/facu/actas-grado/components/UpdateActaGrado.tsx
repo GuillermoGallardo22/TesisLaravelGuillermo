@@ -69,6 +69,7 @@ const UpdateActaGrado = () => {
         filters: {
           carrera: actaGrado.estudiante.carrera.id,
         },
+        include: "estados,estado",
       }),
       // getModalidadesActaGrado(),
     ])

@@ -94,7 +94,9 @@ const columns: GridColumns = [
 ];
 
 const PlantillasActaGrado = () => {
-  const { isLoading, plantillas } = usePlantillasActaGrado();
+  const { isLoading, plantillas } = usePlantillasActaGrado({
+    include: "carreras,estados,estado,celda-notas",
+  });
 
   return (
     <Stack spacing={2}>

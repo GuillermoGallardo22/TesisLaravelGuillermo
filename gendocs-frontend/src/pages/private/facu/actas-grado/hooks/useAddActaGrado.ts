@@ -139,6 +139,7 @@ export const useAddActaGrado = ({ estudiante }: useAddActaGradoProps) => {
         filters: {
           carrera: carreraId,
         },
+        include: "estados,estado",
       }),
       getNumeracionActaGrado({
         filters: {
