@@ -76,6 +76,9 @@ class CreateActaGradosTable extends Migration
                 ->references("id")
                 ->on("users");
 
+            $table->string("documento_notas")
+                ->nullable();
+
             $table->boolean("solicitar_especie")->default(false);
             $table->boolean("envio_financiero_especie")->default(false);
 
