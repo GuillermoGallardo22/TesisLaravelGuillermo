@@ -231,7 +231,7 @@ const ActasGrado: React.FunctionComponent = () => {
         getActions: (p: GridRowParams<IActaGrado>) => [
           <GridActionsCellItem
             key={p.id}
-            color="primary"
+            // color="primary"
             LinkComponent={Link}
             to={p.row.id + ""}
             icon={
@@ -251,7 +251,7 @@ const ActasGrado: React.FunctionComponent = () => {
                 <Icon icon="people" />
               </Tooltip>
             }
-            label="Ver documento"
+            label="Asistentes"
           />,
           <GridActionsCellItem
             key={p.id}
@@ -265,6 +265,18 @@ const ActasGrado: React.FunctionComponent = () => {
               </Tooltip>
             }
             label="Notas"
+          />,
+          <GridActionsCellItem
+            key={p.id}
+            color="primary"
+            LinkComponent={Link}
+            to={`documento/${p.row.id}`}
+            icon={
+              <Tooltip title="Documento" arrow>
+                <Icon icon="article" />
+              </Tooltip>
+            }
+            label="Documento"
           />,
           <GridActionsCellItem
             key={p.id}

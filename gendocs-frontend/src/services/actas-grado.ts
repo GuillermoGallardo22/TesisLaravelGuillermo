@@ -116,3 +116,21 @@ export async function deleteActaGrado(
     return handleErrors(error);
   }
 }
+
+export async function generarDocumentoActaGrado(
+  id: number
+): Promise<IResponse<IActaGrado>> {
+  try {
+    const {
+      data: { data },
+    } = await axios.post("acta-grado/" + id + "/documento");
+
+    return {
+      status: HTTP_STATUS.ok,
+      message: HTTP_MESSAGES[HTTP_STATUS.ok],
+      data,
+    };
+  } catch (error) {
+    return handleErrors(error);
+  }
+}

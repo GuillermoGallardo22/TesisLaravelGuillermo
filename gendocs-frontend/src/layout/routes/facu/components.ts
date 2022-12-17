@@ -1,5 +1,9 @@
 import { lazy } from "react";
 
+export const DocumentoActaGrado = lazy(
+  () => import("pages/private/facu/actas-grado/components/DocumentoActaGrado")
+);
+
 export const UpdateActaGrado = lazy(
   () => import("pages/private/facu/actas-grado/components/UpdateActaGrado")
 );

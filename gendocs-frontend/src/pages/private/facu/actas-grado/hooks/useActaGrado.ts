@@ -12,9 +12,12 @@ type useActaGradoProps = {
 };
 
 const useActaGrado = ({ actaGradoId, options, props }: useActaGradoProps) => {
-  const { data: actaGrado, isLoading: isLoadingActaGrado } = useQuery(
-    ["acta-grado", actaGradoId],
-    () => getActaGrado(actaGradoId, options).then((r) => r.data)
+  const {
+    data: actaGrado,
+    isLoading: isLoadingActaGrado,
+    refetch,
+  } = useQuery(["acta-grado", actaGradoId], () =>
+    getActaGrado(actaGradoId, options).then((r) => r.data)
   );
 
   const { data: miembros = [], isLoading: isLoadingMiembros } = useQuery(
@@ -35,6 +38,7 @@ const useActaGrado = ({ actaGradoId, options, props }: useActaGradoProps) => {
     isLoadingMiembros,
     isLoadingActaGrado,
     actaGrado,
+    refetch,
   };
 };
 
