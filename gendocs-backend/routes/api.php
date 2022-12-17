@@ -7,6 +7,7 @@ use App\Http\Controllers\BatchController;
 use App\Http\Controllers\CantonController;
 use App\Http\Controllers\CargoController;
 use App\Http\Controllers\CarreraController;
+use App\Http\Controllers\CeldasNotasTipoActaGradoController;
 use App\Http\Controllers\ConsejoController;
 use App\Http\Controllers\DocenteController;
 use App\Http\Controllers\DocumentoController;
@@ -74,6 +75,7 @@ Route::middleware(["auth:sanctum", "isUserActive"])->group(function () {
 
     Route::apiResource("acta-grado", ActaGradoController::class);
     Route::apiResource("miembro-acta-grado", MiembrosActaGradoController::class);
+    Route::apiResource("celdas-nota-tipo-acta-grado", CeldasNotasTipoActaGradoController::class)->except(['update', 'show']);
 
     Route::apiResource('numeracion', NumeracionController::class)->only(['index', 'store']);
     Route::apiResource('numeracion-acta-grado', NumeracionActaGradoController::class)->only(['index']);

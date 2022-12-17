@@ -67,4 +67,9 @@ class TipoActaGrado extends Model
     {
         return $this->hasMany(TipoEstadoActaGrado::class, "tipo_acta_grado_id");
     }
+
+    public function celdasNotas()
+    {
+        return $this->hasMany(CeldasNotasTipoActaGrado::class, "tipo_acta_grado_id");
+    }
 }

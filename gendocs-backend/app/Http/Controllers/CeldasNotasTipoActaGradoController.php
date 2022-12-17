@@ -4,7 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreCeldasNotasTipoActaGradoRequest;
 use App\Http\Requests\UpdateCeldasNotasTipoActaGradoRequest;
+use App\Http\Resources\CeldasNotasTipoActaGradoResource;
 use App\Models\CeldasNotasTipoActaGrado;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
 class CeldasNotasTipoActaGradoController extends Controller
 {
@@ -13,9 +17,15 @@ class CeldasNotasTipoActaGradoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $query = CeldasNotasTipoActaGrado::query();
+
+        $query->orderBy('created_at', 'DESC');
+
+        $query->applyFilters($request->all());
+
+        return CeldasNotasTipoActaGradoResource::collection($query->get());
     }
 
     /**
@@ -36,7 +46,15 @@ class CeldasNotasTipoActaGradoController extends Controller
      */
     public function store(StoreCeldasNotasTipoActaGradoRequest $request)
     {
-        //
+        $validated = $request;
+
+        $celdaNota = CeldasNotasTipoActaGrado::create([
+            "tipo_acta_grado_id" => $validated["tipo_acta_grado"],
+            "celda" => $validated["celda"],
+            "descripcion" => $validated["descripcion"],
+        ]);
+
+        return CeldasNotasTipoActaGradoResource::make($celdaNota);
     }
 
     /**
@@ -79,8 +97,10 @@ class CeldasNotasTipoActaGradoController extends Controller
      * @param  \App\Models\CeldasNotasTipoActaGrado  $celdasNotasTipoActaGrado
      * @return \Illuminate\Http\Response
      */
-    public function destroy(CeldasNotasTipoActaGrado $celdasNotasTipoActaGrado)
+    public function destroy(CeldasNotasTipoActaGrado $celdasNotaTipoActaGrado)
     {
-        //
+        $celdasNotaTipoActaGrado->delete();
+
+        return response()->noContent(ResponseAlias::HTTP_OK);
     }
 }

@@ -13,7 +13,7 @@ class StoreCeldasNotasTipoActaGradoRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,9 @@ class StoreCeldasNotasTipoActaGradoRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            "tipo_acta_grado" => ["exists:\App\Models\TipoActaGrado,id"],
+            "celda" => ["required", "string"],
+            "descripcion" => ["required", "string"],
         ];
     }
 }
