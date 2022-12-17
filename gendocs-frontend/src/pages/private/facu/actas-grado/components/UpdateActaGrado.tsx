@@ -70,7 +70,7 @@ const UpdateActaGrado = () => {
     Promise.all([
       getTipoActasGrado({
         filters: {
-          carrera: actaGrado.canton_id,
+          carrera: actaGrado.carrera_id,
         },
         include: "estados,estado",
       }),
