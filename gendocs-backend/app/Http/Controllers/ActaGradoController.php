@@ -14,6 +14,7 @@ use App\Models\Estudiante;
 use App\Models\ModalidadActaGrado;
 use App\Models\NumeracionActaGrado;
 use App\Models\TipoActaGrado;
+use App\Services\ActaGradoService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -39,7 +40,7 @@ class ActaGradoController extends Controller
         return ActaGradoResource::collection($query->get());
     }
 
-    public function store(StoreActaGradoRequest $request)
+    public function store(StoreActaGradoRequest $request, ActaGradoService $service)
     {
         $validated = $request->validated();
 
@@ -78,6 +79,8 @@ class ActaGradoController extends Controller
             ]);
 
             $acta->save();
+
+            $acta = $service->generarDocumentoNotas($acta);
 
             DB::commit();
 
