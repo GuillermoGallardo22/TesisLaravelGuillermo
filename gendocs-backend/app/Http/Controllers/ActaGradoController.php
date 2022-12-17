@@ -164,4 +164,10 @@ class ActaGradoController extends Controller
 
         return response()->noContent();
     }
+
+    public function generarDocumento(ActaGrado $actaGrado, ActaGradoService $service)
+    {
+        $actaGrado = $service->generarDocumento($actaGrado);
+        return ActaGradoResource::make($actaGrado);
+    }
 }
