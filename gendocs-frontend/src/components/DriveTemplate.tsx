@@ -4,17 +4,27 @@ import { GoogleType } from "models/enums/GoogleType";
 import { useParams, useSearchParams } from "react-router-dom";
 import TitleNav from "./TitleNav";
 
-const DriveTemplate = () => {
-  const { driveId = "" } = useParams<{ driveId: string }>();
+type DriveTemplateProps = {
+  driveId?: string | undefined;
+  withTitle?: boolean;
+};
+
+const DriveTemplate: React.FunctionComponent<DriveTemplateProps> = ({
+  driveId: id,
+  withTitle = true,
+}) => {
+  const { driveId = id } = useParams<{ driveId: string | undefined }>();
 
   const [params] = useSearchParams();
   const type = params.get("type") || GoogleType.DOCUMENT;
 
   return (
     <Stack spacing={2}>
-      <Box>
-        <TitleNav title="" />
-      </Box>
+      {withTitle && (
+        <Box>
+          <TitleNav title="" />
+        </Box>
+      )}
 
       <Box>
         <iframe
