@@ -35,6 +35,7 @@ class DatabaseSeeder extends Seeder
             CantonSeeder::class,
             EstadoActaSeeder::class,
             TipoActaGradoSeeder::class,
+            CeldasNotasTipoActaGradoSeeder::class,
             AulaSeeder::class,
             ModalidadActaGradoSeeder::class,
             ActaGradoSeeder::class,
