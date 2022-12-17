@@ -19,7 +19,7 @@ export interface IPaginationProps {
 }
 
 export interface IFilterProps {
-  [filter: string]: string | number;
+  [filter: string]: string | number | undefined;
 }
 
 export interface IFilterPaginationProps {
