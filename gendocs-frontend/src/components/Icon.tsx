@@ -38,9 +38,11 @@ import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import SvgIcon from "@mui/material/SvgIcon";
 import PeopleIcon from "@mui/icons-material/People";
 import FunctionsIcon from "@mui/icons-material/Functions";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { forwardRef } from "react";
 
 export type IconTypes =
+  | "moreVert"
   | "functions"
   | "people"
   | "style"
@@ -82,6 +84,7 @@ export type IconTypes =
   | "check";
 
 const ICONS = {
+  moreVert: MoreVertIcon,
   functions: FunctionsIcon,
   people: PeopleIcon,
   search: SearchIcon,
