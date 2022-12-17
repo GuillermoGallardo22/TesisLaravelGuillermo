@@ -37,11 +37,11 @@ import {
   getOptionLabelCanton,
   getOptionLabelEstudiante,
   isOptionEqualToValueAula,
+  testFechaSustentacion,
 } from "utils/libs";
-import useActaGrado from "../hooks/useActaGrado";
-import { testFechaSustentacion } from "utils/libs";
 import { VALIDATION_MESSAGES as VM } from "utils/messages";
 import * as yup from "yup";
+import useActaGrado from "../hooks/useActaGrado";
 
 const UpdateActaGrado = () => {
   const { actaGradoId = "" } = useParams();
@@ -55,6 +55,9 @@ const UpdateActaGrado = () => {
     options: {
       include: "aula,estudiante,carrera,canton,provincia,estado,modalidad,tipo",
     },
+    props: {
+      withMiembros: false,
+    },
   });
 
   useEffect(() => {
@@ -67,7 +70,7 @@ const UpdateActaGrado = () => {
     Promise.all([
       getTipoActasGrado({
         filters: {
-          carrera: actaGrado.estudiante.carrera.id,
+          carrera: actaGrado.canton_id,
         },
         include: "estados,estado",
       }),
