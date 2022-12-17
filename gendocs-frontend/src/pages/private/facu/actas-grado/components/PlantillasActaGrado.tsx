@@ -14,89 +14,110 @@ import {
 import Icon from "components/Icon";
 import TitleNav from "components/TitleNav";
 import { GridToolbarWithoutExport } from "components/ToolbarDataGrid";
-import { EstadoActaEnum } from "models/enums/ActaGrado";
 import { GoogleType } from "models/enums/GoogleType";
 import { ITipoActaGrado } from "models/interfaces/IActaGrado";
 import { ICarrera } from "models/interfaces/ICarrera";
+import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
+import { CONSTANTS } from "utils/constants";
 import { usePlantillasActaGrado } from "../hooks/usePlantillasActaGrado";
-
-const Colors = {
-  [EstadoActaEnum.APRO]: "primary",
-  [EstadoActaEnum.REPR]: "error",
-  [EstadoActaEnum.NO_RESENTACION]: "warning",
-};
-
-const columns: GridColumns = [
-  {
-    field: "codigo",
-    headerName: "Código",
-  },
-  {
-    field: "nombre",
-    headerName: "Nombre",
-    flex: 1,
-  },
-  {
-    field: "carreras",
-    headerName: "Carreras",
-    flex: 2,
-    valueGetter: (param: GridValueGetterParams<ICarrera[]>) =>
-      param.value?.map((c) => c.nombre),
-    renderCell: (item: GridRenderCellParams<string[]>) => (
-      <Box display={"grid"} gap={1}>
-        {(item?.value || []).map((c, i) => (
-          <Chip key={i} label={c} size="small" />
-        ))}
-      </Box>
-    ),
-  },
-  {
-    type: "actions",
-    field: "plantillas",
-    width: 200,
-    headerName: "Plantillas.",
-    getActions: (p: GridRowParams<ITipoActaGrado>) =>
-      p.row.estados.map((te) => (
-        <GridActionsCellItem
-          key={te.id}
-          color={Colors[te.estado.codigo]}
-          icon={
-            <Tooltip title={te.estado.nombre_mas} arrow>
-              <Icon icon="article" />
-            </Tooltip>
-          }
-          label="Editar"
-          LinkComponent={Link}
-          to={`drive/${te.drive}`}
-        />
-      )),
-  },
-  {
-    type: "actions",
-    field: "acciones",
-    headerName: "Calif.",
-    getActions: (p: GridRowParams<ITipoActaGrado>) => [
-      <GridActionsCellItem
-        key={p.id}
-        color="success"
-        icon={
-          <Tooltip title="Calif." arrow>
-            <Icon icon="functions" />
-          </Tooltip>
-        }
-        label="Editar"
-        LinkComponent={Link}
-        to={`drive/${p.row.drive}?type=${GoogleType.SPREADSHEETS}`}
-      />,
-    ],
-  },
-];
+import CeldaNotasDialog from "./CeldaNotasDialog";
 
 const PlantillasActaGrado = () => {
   const { isLoading, plantillas } = usePlantillasActaGrado({
-    include: "carreras,estados,estado,celda-notas",
+    include: "carreras,estados,estado",
   });
+
+  const [selected, setSelected] = useState<ITipoActaGrado | null>(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  const columns = useMemo(
+    (): GridColumns => [
+      {
+        field: "codigo",
+        headerName: "Código",
+      },
+      {
+        field: "nombre",
+        headerName: "Nombre",
+        flex: 1,
+      },
+      {
+        field: "carreras",
+        headerName: "Carreras",
+        flex: 2,
+        valueGetter: (param: GridValueGetterParams<ICarrera[]>) =>
+          param.value?.map((c) => c.nombre),
+        renderCell: (item: GridRenderCellParams<string[]>) => (
+          <Box display={"grid"} gap={1}>
+            {(item?.value || []).map((c, i) => (
+              <Chip key={i} label={c} size="small" />
+            ))}
+          </Box>
+        ),
+      },
+      {
+        type: "actions",
+        field: "plantillas",
+        width: 200,
+        headerName: "Plantillas.",
+        getActions: (p: GridRowParams<ITipoActaGrado>) =>
+          p.row.estados.map((te) => (
+            <GridActionsCellItem
+              key={te.id}
+              color={CONSTANTS.COLORS[te.estado.codigo]}
+              icon={
+                <Tooltip title={te.estado.nombre_mas} arrow>
+                  <Icon icon="article" />
+                </Tooltip>
+              }
+              label="Editar"
+              LinkComponent={Link}
+              to={`drive/${te.drive}`}
+            />
+          )),
+      },
+      {
+        type: "actions",
+        field: "acciones",
+        width: 160,
+        headerName: "Calificaciones.",
+        getActions: (p: GridRowParams<ITipoActaGrado>) => [
+          <GridActionsCellItem
+            key="plantilla"
+            color="success"
+            icon={
+              <Tooltip title="Plantilla" arrow>
+                <Icon icon="functions" />
+              </Tooltip>
+            }
+            label="Editar"
+            LinkComponent={Link}
+            to={`drive/${p.row.drive}?type=${GoogleType.SPREADSHEETS}`}
+          />,
+          <GridActionsCellItem
+            key="celdas"
+            icon={
+              <Tooltip title="Celdas" arrow>
+                <Icon icon="moreVert" />
+              </Tooltip>
+            }
+            label="Celdas"
+            onClick={() => {
+              setSelected(p.row);
+              setIsVisible(true);
+            }}
+          />,
+        ],
+      },
+    ],
+    [plantillas.length]
+  );
+
+  const onCloseModal = () => {
+    setIsVisible(false);
+    setSelected(null);
+  };
 
   return (
     <Stack spacing={2}>
@@ -116,6 +137,12 @@ const PlantillasActaGrado = () => {
           rows={plantillas}
         />
       </div>
+
+      <CeldaNotasDialog
+        selected={selected}
+        isVisible={isVisible}
+        onCloseModal={onCloseModal}
+      />
     </Stack>
   );
 };

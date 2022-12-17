@@ -2,6 +2,7 @@ import { EstadoActaEnum, TipoActaGradoEnum } from "models/enums/ActaGrado";
 import { ModalidadActaGrado } from "models/enums/ModalidadActaGrado";
 import { IAula } from "./IAula";
 import { ICanton } from "./ICanton";
+import { ICeldaNota } from "./ICeldaNota";
 import { IDocente } from "./IDocente";
 import { IEstudiante } from "./IEstudiante";
 import { IModalidadActaGrado } from "./IModalidadActaGrado";
@@ -25,7 +26,7 @@ export interface ITipoActaGrado {
   id: number;
   nombre: string;
   codigo: TipoActaGradoEnum;
-  // carreras: ICarrera[];
+  celdasNotas: ICeldaNota[];
   estados: ITipoEstadoActaGrado[];
   drive: string;
 }
