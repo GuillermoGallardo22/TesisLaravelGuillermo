@@ -1,3 +1,5 @@
+import { EstadoActaEnum } from "models/enums/ActaGrado";
+
 export const CONSTANTS = {
   EMAIL_UTA_REGEX: /^[^\s\\]*@uta\.edu\.ec$/gm,
   EMAIL_GMAIL_REGEX: /^[a-z0-9](\.?[a-z0-9]){3,}@g(oogle)?mail\.com$/gm,
@@ -7,4 +9,9 @@ export const CONSTANTS = {
   FORMATO_FECHA_NACIMIENTO: "Y-MM-d", // FECHA NACIMIENTO
   DURACION_ESTUDIOS: 5,
   HORAS_PRACTICAS: 0,
+  COLORS: {
+    [EstadoActaEnum.APRO]: "primary",
+    [EstadoActaEnum.REPR]: "error",
+    [EstadoActaEnum.NO_RESENTACION]: "warning",
+  },
 };
