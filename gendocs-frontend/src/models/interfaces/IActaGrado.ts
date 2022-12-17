@@ -54,6 +54,7 @@ export interface IActaGrado {
   directorio_id: number;
   created_user_id: number;
   updated_user_id: number | null;
+  documento_notas: string | null;
   // Relationships
   aula?: IAula;
   estudiante: IEstudiante;

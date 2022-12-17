@@ -11,7 +11,6 @@ import {
   GridRowParams,
   GridValueFormatterParams,
   GridValueGetterParams,
-  ValueOptions,
 } from "@mui/x-data-grid";
 import BooleanCell from "components/BooleanCell";
 import ConfirmationDialog from "components/ConfirmationDialog";
@@ -22,6 +21,7 @@ import { GridToolbarWithoutExport } from "components/ToolbarDataGrid";
 import { useConfirmationDialog } from "hooks/useConfirmationDialog";
 import { useDeleteItem } from "hooks/useDeleteItem";
 import { useGridColumnVisibilityModel } from "hooks/useGridColumnVisibilityModel";
+import { GoogleType } from "models/enums/GoogleType";
 import { LocalStorageKeys } from "models/enums/LocalStorageKeys";
 import {
   IActaGrado,
@@ -227,7 +227,7 @@ const ActasGrado: React.FunctionComponent = () => {
         type: "actions",
         field: "acciones",
         headerName: "Acciones",
-        width: 130,
+        width: 200,
         getActions: (p: GridRowParams<IActaGrado>) => [
           <GridActionsCellItem
             key={p.id}
@@ -252,6 +252,19 @@ const ActasGrado: React.FunctionComponent = () => {
               </Tooltip>
             }
             label="Ver documento"
+          />,
+          <GridActionsCellItem
+            key={p.id}
+            color="secondary"
+            LinkComponent={Link}
+            disabled={!p.row.documento_notas}
+            to={`drive/${p.row.documento_notas}?type=${GoogleType.SPREADSHEETS}`}
+            icon={
+              <Tooltip title="Notas" arrow>
+                <Icon icon="functions" />
+              </Tooltip>
+            }
+            label="Notas"
           />,
           <GridActionsCellItem
             key={p.id}

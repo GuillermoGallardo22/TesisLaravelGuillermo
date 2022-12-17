@@ -48,6 +48,10 @@ export const routes: IRoute[] = [
         roles: [RolEnum.ADMIN, RolEnum.ADMINTEMP, RolEnum.WRITER],
       },
       {
+        path: "drive/:driveId",
+        component: Components.DriveTemplate,
+      },
+      {
         path: "plantillas",
         component: Outlet,
         roles: [RolEnum.ADMIN, RolEnum.ADMINTEMP, RolEnum.WRITER],
