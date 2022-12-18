@@ -14,6 +14,7 @@ use App\Models\Estudiante;
 use App\Models\ModalidadActaGrado;
 use App\Models\NumeracionActaGrado;
 use App\Models\TipoActaGrado;
+use App\Models\TipoEstadoActaGrado;
 use App\Services\ActaGradoService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -167,7 +168,21 @@ class ActaGradoController extends Controller
 
     public function generarDocumento(ActaGrado $actaGrado, ActaGradoService $service)
     {
-        $actaGrado = $service->generarDocumento($actaGrado);
+        $plantilla = TipoEstadoActaGrado::query()
+            ->where("estado_acta_grado_id", $actaGrado?->estado?->id)
+            ->where("tipo_acta_grado_id", $actaGrado?->tipo?->id)
+            ->first();
+
+        if (!$plantilla) {
+            return response(
+                [
+                    "errors" => trans('validation.custom.acta_grado.documento.create.tipo_estado'),
+                ],
+                Response::HTTP_UNPROCESSABLE_ENTITY,
+            );
+        }
+
+        $actaGrado = $service->generarDocumento($actaGrado, $plantilla);
         return ActaGradoResource::make($actaGrado);
     }
 }

@@ -42,16 +42,12 @@ class ActaGradoService
         return $actaGrado;
     }
 
-    public function generarDocumento(ActaGrado $actaGrado)
+    public function generarDocumento(ActaGrado $actaGrado, TipoEstadoActaGrado $plantilla)
     {
         $documentoDrive = $this->googleDrive->copyFile(
             $actaGrado->estudiante->cedula . " | " . $actaGrado->tipo->codigo,
             Directorio::activeDirectory()->directorio_id,
-            TipoEstadoActaGrado::where("estado_acta_grado_id", $actaGrado->estado->id)
-                ->where("tipo_acta_grado_id", $actaGrado->tipo->id)
-                ->first()
-                ->archivo
-                ->google_drive_id,
+            $plantilla->archivo->google_drive_id,
         );
 
         $actaGrado->documento = $documentoDrive->id;

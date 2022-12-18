@@ -210,6 +210,11 @@ return [
                     "unique_restriction_numero_carrera_id_directorio_id" => "El número seleccionado ya está en uso",
                 ],
             ],
+            "documento" => [
+                "create" => [
+                    "tipo_estado" => "El acta aun no tiene un estado o tipo asignado"
+                ]
+            ]
         ],
         "miembro_acta_grado" => [
             "create" => [
