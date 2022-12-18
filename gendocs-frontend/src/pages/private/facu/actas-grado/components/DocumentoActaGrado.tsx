@@ -1,5 +1,5 @@
 import { LoadingButton } from "@mui/lab";
-import { DialogContentText } from "@mui/material";
+import { Alert, DialogContentText } from "@mui/material";
 import { Box, Stack } from "@mui/system";
 import ConfirmationDialog from "components/ConfirmationDialog";
 import DriveTemplate from "components/DriveTemplate";
@@ -22,8 +22,6 @@ import useActaGrado from "../hooks/useActaGrado";
 
 const DocumentoActaGrado = () => {
   const { actaGradoId = "" } = useParams();
-
-  console.log({ actaGradoId });
 
   const { actaGrado, isLoadingActaGrado, refetch } = useActaGrado({
     actaGradoId,
@@ -75,12 +73,13 @@ const DocumentoActaGradoBase: React.FunctionComponent<
     if (result.status === HTTP_STATUS.ok) {
       enqueueSnackbar(result.message, { variant: "success" });
     } else {
-      enqueueSnackbar(result.message, { variant: "error" });
+      enqueueSnackbar(result.errors || result.message, { variant: "error" });
     }
 
     refetch();
 
     setGenerating(false);
+    setWasApproved(false);
   };
 
   useEffect(() => {
@@ -91,13 +90,17 @@ const DocumentoActaGradoBase: React.FunctionComponent<
     process();
   }, [isVisible, wasApproved]);
 
+  const invalidActa = Boolean(
+    !actaGrado.estado_acta_id || !actaGrado.tipo_acta_id
+  );
+
   return (
     <Stack spacing={2}>
       <Box>
         <LoadingButton
           fullWidth
           loading={generating}
-          disabled={generating}
+          disabled={generating || invalidActa}
           startIcon={<Icon icon="settings" />}
           onClick={process}
           variant="outlined"
@@ -105,6 +108,12 @@ const DocumentoActaGradoBase: React.FunctionComponent<
           Generar documento
         </LoadingButton>
       </Box>
+
+      {invalidActa && (
+        <Alert severity="warning">
+          El acta de grado actual aún no tiene un estado o tipo asignado
+        </Alert>
+      )}
 
       {actaGrado.documento && !generating && (
         <DriveTemplate withTitle={false} driveId={actaGrado.documento} />
