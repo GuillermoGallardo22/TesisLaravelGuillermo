@@ -5,6 +5,7 @@ namespace App\Traits;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
 use NumberFormatter;
+use NumberToWords\NumberToWords;
 
 trait ReplaceableDocText
 {
@@ -33,8 +34,12 @@ trait ReplaceableDocText
     // -----
     public function converNumberToWords($number)
     {
-        $f = new NumberFormatter("es", NumberFormatter::SPELLOUT);
-        return $f->format($number);
+        [$entera, $decimal] = explode(".", $number);
+        return implode(" ", array(
+            NumberToWords::transformNumber("es", $entera),
+            "punto",
+            NumberToWords::transformNumber("es", $decimal),
+        ));
     }
 
     public function getMonthName($date)
