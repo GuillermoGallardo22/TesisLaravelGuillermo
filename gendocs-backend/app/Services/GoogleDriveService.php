@@ -3,11 +3,13 @@
 namespace App\Services;
 
 use App\Constants\MimeType;
+use Exception;
 use Google\Client;
 use Google\Service\Docs;
 use Google\Service\Docs\BatchUpdateDocumentRequest;
 use Google\Service\Docs\Request;
 use Google\Service\Drive;
+use Google\Service\Sheets;
 use Google\Service\Drive\DriveFile;
 use Google\Service\Drive\Permission;
 
@@ -15,6 +17,7 @@ class GoogleDriveService
 {
     private Drive $service;
     private Docs $serviceDocs;
+    private Sheets $serviceSheets;
 
     public function __construct()
     {
@@ -26,6 +29,7 @@ class GoogleDriveService
 
         $this->service = new Drive($client);
         $this->serviceDocs = new Docs($client);
+        $this->serviceSheets = new Sheets($client);
     }
 
     public function create(
@@ -145,5 +149,18 @@ class GoogleDriveService
 
         $batchUpdateRequest = new BatchUpdateDocumentRequest(['requests' => $requests]);
         return $this->serviceDocs->documents->batchUpdate($fileId, $batchUpdateRequest);
+    }
+
+    function getValues($spreadsheetId, $range)
+    {
+        $result = $this->serviceSheets->spreadsheets_values->get($spreadsheetId, $range);
+        try {
+            $numRows = $result->getValues() != null ? count($result->getValues()) : 0;
+            printf("%d rows retrieved.", $numRows);
+            return $result;
+        } catch (Exception $e) {
+            dd($e);
+            echo 'Message: ' . $e->getMessage();
+        }
     }
 }
