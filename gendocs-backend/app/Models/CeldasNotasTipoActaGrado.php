@@ -15,7 +15,8 @@ class CeldasNotasTipoActaGrado extends Model
     protected $fillable = [
         'tipo_acta_grado_id',
         'celda',
-        'descripcion',
+        'variable_nota',
+        'variable_nota_texto',
     ];
 
     protected $hidden = [

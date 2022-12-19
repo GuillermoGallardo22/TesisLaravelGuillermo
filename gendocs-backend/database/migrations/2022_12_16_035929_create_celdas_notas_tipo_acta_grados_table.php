@@ -20,8 +20,10 @@ class CreateCeldasNotasTipoActaGradosTable extends Migration
                 ->references('id')
                 ->on('tipo_acta_grados');
 
-            $table->string("descripcion");
             $table->string("celda");
+
+            $table->string("variable_nota");
+            $table->string("variable_nota_texto");
 
             $table->timestamps();
         });

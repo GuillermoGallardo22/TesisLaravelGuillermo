@@ -18,26 +18,30 @@ class CeldasNotasTipoActaGradoSeeder extends Seeder
         foreach (TipoActaGrado::all() as $t) {
             CeldasNotasTipoActaGrado::create([
                 'tipo_acta_grado_id' => $t->id,
-                'celda' => "C5",
-                'descripcion' => "NOTA 1",
-            ]);
-
-            CeldasNotasTipoActaGrado::create([
-                'tipo_acta_grado_id' => $t->id,
-                'celda' => "C6",
-                'descripcion' => "NOTA 2",
+                'celda' => "C10",
+                'variable_nota' => "NOTA_4",
+                'variable_nota_texto' => "NOTA_4_TEXTO",
             ]);
 
             CeldasNotasTipoActaGrado::create([
                 'tipo_acta_grado_id' => $t->id,
                 'celda' => "C7",
-                'descripcion' => "NOTA 3",
+                'variable_nota' => "NOTA_3",
+                'variable_nota_texto' => "NOTA_3_TEXTO",
+            ]);
+            
+            CeldasNotasTipoActaGrado::create([
+                'tipo_acta_grado_id' => $t->id,
+                'celda' => "C6",
+                'variable_nota' => "NOTA_2",
+                'variable_nota_texto' => "NOTA_2_TEXTO",
             ]);
 
             CeldasNotasTipoActaGrado::create([
                 'tipo_acta_grado_id' => $t->id,
-                'celda' => "C10",
-                'descripcion' => "TOTAL",
+                'celda' => "C5",
+                'variable_nota' => "NOTA_1",
+                'variable_nota_texto' => "NOTA_1_TEXTO",
             ]);
         }
     }

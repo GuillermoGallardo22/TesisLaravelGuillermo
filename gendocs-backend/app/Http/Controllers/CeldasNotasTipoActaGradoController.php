@@ -51,7 +51,8 @@ class CeldasNotasTipoActaGradoController extends Controller
         $celdaNota = CeldasNotasTipoActaGrado::create([
             "tipo_acta_grado_id" => $validated["tipo_acta_grado"],
             "celda" => $validated["celda"],
-            "descripcion" => $validated["descripcion"],
+            "variable_nota" => $validated["variable_nota"],
+            "variable_nota_texto" => $validated["variable_nota"] . "_TEXTO",
         ]);
 
         return CeldasNotasTipoActaGradoResource::make($celdaNota);

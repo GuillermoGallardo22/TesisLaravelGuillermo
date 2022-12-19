@@ -26,7 +26,7 @@ class StoreCeldasNotasTipoActaGradoRequest extends FormRequest
         return [
             "tipo_acta_grado" => ["exists:\App\Models\TipoActaGrado,id"],
             "celda" => ["required", "string"],
-            "descripcion" => ["required", "string"],
+            "variable_nota" => ["required", "string"],
         ];
     }
 }
