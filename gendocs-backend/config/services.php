@@ -31,6 +31,7 @@ return [
     ],
 
     'google' => [
+        'timeout_processing' => env('TIMEOUT_DOCUMENT_PROCESSING', 500000),
         'root_directory' => env('GOOGLE_DRIVE_ROOT_DIRECTORY_ID'),
         'default_template' => env('DEFAULT_TEMPLATE'),
         'credentials' => [

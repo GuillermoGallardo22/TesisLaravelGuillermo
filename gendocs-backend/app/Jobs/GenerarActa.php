@@ -49,7 +49,7 @@ class GenerarActa implements ShouldQueue, ShouldBeUnique
     public function handle(GoogleDriveService $service)
     {
         // timeout to avoid restrictions by GOOGLE API
-        usleep(env('TIMEOUT_DOCUMENT_PROCESSING', 500000));
+        usleep(config("services.google.timeout_processing"));
 
         $consejo = $this->consejo;
         $documento = $this->documento;
