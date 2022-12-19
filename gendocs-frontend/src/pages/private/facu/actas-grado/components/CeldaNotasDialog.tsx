@@ -54,8 +54,13 @@ const CeldaNotasDialog: React.FunctionComponent<CeldaNotasDialogProps> = ({
   const columns = useMemo(
     (): GridColumns => [
       {
-        field: "descripcion",
-        headerName: "Descripción",
+        field: "variable_nota",
+        headerName: "Variable nota",
+        flex: 1,
+      },
+      {
+        field: "variable_nota_texto",
+        headerName: "Variable texto nota",
         flex: 1,
       },
       {

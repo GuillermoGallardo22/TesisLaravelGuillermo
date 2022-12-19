@@ -17,15 +17,19 @@ const AddCelda: React.FunctionComponent<AddCeldaProps> = ({ tipoActa }) => {
             fullWidth
             required
             disabled={submitting}
-            id="descripcion"
-            name="descripcion"
-            label="Descripción"
-            value={formik.values.descripcion}
+            id="variable_nota"
+            name="variable_nota"
+            label="Variable"
+            value={formik.values.variable_nota}
             onChange={formik.handleChange}
             error={
-              formik.touched.descripcion && Boolean(formik.errors.descripcion)
+              formik.touched.variable_nota &&
+              Boolean(formik.errors.variable_nota)
             }
-            helperText={formik.touched.descripcion && formik.errors.descripcion}
+            helperText={
+              formik.touched.variable_nota && formik.errors.variable_nota
+            }
+            inputProps={{ style: { textTransform: "uppercase" } }}
           />
         </Grid>
         <Grid item xs={4} sm={4}>

@@ -9,13 +9,17 @@ import { VALIDATION_MESSAGES as VM } from "utils/messages";
 import * as yup from "yup";
 
 const initialValues: ICreateCeldaNota = {
-  descripcion: "",
+  variable_nota: "",
   celda: "",
   tipo_acta_grado: -1,
 };
 
 const validationSchema = yup.object().shape({
-  descripcion: yup.string().required(VM.required).max(100, VM.maxLength(100)),
+  variable_nota: yup
+    .string()
+    .required(VM.required)
+    .max(100, VM.maxLength(100))
+    .matches(/^[a-zA-Z0-9_]*$/, VM.invalidFormat),
   celda: yup
     .string()
     .required(VM.required)

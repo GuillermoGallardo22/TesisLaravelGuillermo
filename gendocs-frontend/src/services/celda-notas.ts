@@ -27,9 +27,11 @@ export async function createCeldaNota(
   form: ICreateCeldaNota
 ): Promise<IResponse<ICeldaNota>> {
   try {
+    const { tipo_acta_grado } = form;
     const payload: ICreateCeldaNota = {
-      ...form,
+      tipo_acta_grado,
       celda: form.celda.toUpperCase(),
+      variable_nota: form.variable_nota.toUpperCase(),
     };
 
     const {
