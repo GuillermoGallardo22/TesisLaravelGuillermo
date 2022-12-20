@@ -35,17 +35,22 @@ export const routes: IRoute[] = [
       {
         path: "asistencia/:actaGradoId",
         component: Components.AsistentesActaGrado,
-        roles: [RolEnum.ADMIN, RolEnum.ADMINTEMP],
+        roles: [
+          RolEnum.ADMIN,
+          RolEnum.ADMINTEMP,
+          RolEnum.READER,
+          RolEnum.WRITER,
+        ],
       },
       {
         path: ":actaGradoId",
         component: Components.UpdateActaGrado,
-        roles: [RolEnum.ADMIN, RolEnum.ADMINTEMP],
+        roles: [RolEnum.ADMIN, RolEnum.ADMINTEMP, RolEnum.READER],
       },
       {
         path: "nuevo",
         component: Components.AddActaGrado,
-        roles: [RolEnum.ADMIN, RolEnum.ADMINTEMP, RolEnum.WRITER],
+        roles: [RolEnum.ADMIN, RolEnum.ADMINTEMP],
       },
       {
         path: "drive/:driveId",
@@ -64,7 +69,7 @@ export const routes: IRoute[] = [
       {
         path: "plantillas",
         component: Outlet,
-        roles: [RolEnum.ADMIN, RolEnum.ADMINTEMP, RolEnum.WRITER],
+        roles: [RolEnum.ADMIN, RolEnum.ADMINTEMP],
         childrens: [
           {
             path: "drive/:driveId",
