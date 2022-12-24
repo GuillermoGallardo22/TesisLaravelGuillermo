@@ -23,4 +23,9 @@ abstract class Modulos
      * UNIDAD CURRICULAR
      */
     const CURR = 'CURR';
+
+    /**
+     * MODULOS COMPARTIDOS
+     */
+    const COMM = 'COMM';
 }

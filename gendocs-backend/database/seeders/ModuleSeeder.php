@@ -34,5 +34,10 @@ class ModuleSeeder extends Seeder
             'code' => Modulos::CURR,
             'name' => 'INT. CURRICULAR',
         ]);
+
+        Module::create([
+            'code' => Modulos::COMM,
+            'name' => 'COMUNES',
+        ]);
     }
 }

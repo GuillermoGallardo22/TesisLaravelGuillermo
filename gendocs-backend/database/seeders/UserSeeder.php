@@ -18,7 +18,7 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        $module = Module::where('code', Modulos::FACU)->first();
+        $modules = Module::whereIn('code', [Modulos::FACU, Modulos::COMM])->get();
 
         $user = User::create([
             'name' => 'Guillermo',
@@ -27,7 +27,7 @@ class UserSeeder extends Seeder
             'password' => Hash::make('12345678'),
         ]);
 
-        $user->modules()->attach($module);
+        $user->modules()->attach($modules);
         $user->assignRole(Roles::Admin);
 
         $user = User::create([
@@ -37,7 +37,7 @@ class UserSeeder extends Seeder
             'password' => Hash::make('12345678'),
         ]);
 
-        $user->modules()->attach($module);
+        $user->modules()->attach($modules);
         $user->assignRole(Roles::Reader);
     }
 }
