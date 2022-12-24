@@ -61,10 +61,10 @@ abstract class Permissions
     ];
 
     const ConsejosMiembros = [
-        'index' => 'consejo.miembro.index',
-        'create' => 'consejo.miembro.create',
-        'update' => 'consejo.miembro.update',
-        'delete' => 'consejo.miembro.delete',
+        'index' => 'consejo-miembro.index',
+        'create' => 'consejo-miembro.create',
+        'update' => 'consejo-miembro.update',
+        'delete' => 'consejo-miembro.delete',
     ];
 
     const Cargos = [
@@ -82,9 +82,9 @@ abstract class Permissions
     ];
 
     const MiembroActaGrado = [
-        'index' =>  'acta-grado.miembro.index',
-        'create' => 'acta-grado.miembro.create',
-        'update' => 'acta-grado.miembro.update',
-        'delete' => 'acta-grado.miembro.delete',
+        'index' =>  'acta-grado-miembro.index',
+        'create' => 'acta-grado-miembro.create',
+        'update' => 'acta-grado-miembro.update',
+        'delete' => 'acta-grado-miembro.delete',
     ];
 }
