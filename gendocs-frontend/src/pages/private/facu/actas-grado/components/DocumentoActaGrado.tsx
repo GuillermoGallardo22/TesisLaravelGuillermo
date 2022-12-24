@@ -7,9 +7,9 @@ import Icon from "components/Icon";
 import Skeleton from "components/Skeleton";
 import TitleNav from "components/TitleNav";
 import { useConfirmationDialog } from "hooks/useConfirmationDialog";
+import { useHandleResult } from "hooks/useHandleResult";
 import { HTTP_STATUS } from "models/enums/HttpStatus";
 import { IActaGrado } from "models/interfaces/IActaGrado";
-import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
 import {
   QueryObserverResult,
@@ -54,11 +54,10 @@ type DocumentoActaGradoBaseProps = {
 const DocumentoActaGradoBase: React.FunctionComponent<
   DocumentoActaGradoBaseProps
 > = ({ actaGrado, refetch }) => {
-  const { enqueueSnackbar } = useSnackbar();
-
   const [generating, setGenerating] = useState(false);
   const [wasApproved, setWasApproved] = useState(false);
   const { openJustModal, isVisible, closeModal } = useConfirmationDialog();
+  const { handleResult } = useHandleResult();
 
   const process = async () => {
     if (actaGrado.documento && !wasApproved) {
@@ -70,11 +69,10 @@ const DocumentoActaGradoBase: React.FunctionComponent<
 
     const result = await generarDocumentoActaGrado(actaGrado.id);
 
-    if (result.status === HTTP_STATUS.ok) {
-      enqueueSnackbar(result.message, { variant: "success" });
-    } else {
-      enqueueSnackbar(result.errors || result.message, { variant: "error" });
-    }
+    handleResult({
+      result: result,
+      status: HTTP_STATUS.ok,
+    });
 
     refetch();
 
