@@ -488,6 +488,8 @@ const AddActaGrado: React.FunctionComponent = () => {
                       label: "Aula",
                       placeholder: "Nombre",
                       disabled: submitting || !estudianteSeleccionado,
+                      error: formik.touched.aula && Boolean(formik.errors.aula),
+                      helperText: formik.touched.aula && formik.errors.aula,
                     }}
                   />
                 </Box>
