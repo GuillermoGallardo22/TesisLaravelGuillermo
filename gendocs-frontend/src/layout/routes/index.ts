@@ -1,6 +1,10 @@
 import { ModuleEnum } from "models/enums/Module";
 import { IModule } from "models/interfaces/IModule";
 import {
+  DEFAULT_ROUTE as COMM_DEFAULT_ROUTE,
+  routes as commRoutes,
+} from "./common";
+import {
   DEFAULT_ROUTE as CURR_DEFAULT_ROUTE,
   routes as currRoutes,
 } from "./curr";
@@ -22,6 +26,7 @@ export const allRoutes = [
   ...sudeRoutes,
   ...tituRoutes,
   ...currRoutes,
+  ...commRoutes,
 ];
 
 export function getDefaultRoutes(modules: IModule[]): string {
@@ -36,6 +41,8 @@ export function getDefaultRoutes(modules: IModule[]): string {
       return TITU_DEFAULT_ROUTE;
     case ModuleEnum.CURR:
       return CURR_DEFAULT_ROUTE;
+    case ModuleEnum.COMM:
+      return COMM_DEFAULT_ROUTE;
     default:
       throw new Error("DEFAULT ROUTE NOT FOUND");
   }

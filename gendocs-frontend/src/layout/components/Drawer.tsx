@@ -51,11 +51,13 @@ const Drawer: React.FC<DrawerProps> = ({ open, toggleDrawer }) => {
     hasSudeModule,
     hasTituModule,
     hasCurrModule,
+    hasCommModule,
     //
     sudeRoutes,
     tituRoutes,
     facuRoutes,
     currRoutes,
+    commRoutes,
   } = useRoutes();
 
   return (
@@ -73,6 +75,28 @@ const Drawer: React.FC<DrawerProps> = ({ open, toggleDrawer }) => {
         </IconButton>
       </Toolbar>
       <Divider />
+
+      {hasCommModule && (
+        <List>
+          <ListSubheader sx={{ color: "#bf360c" }} component="div" inset>
+            COMUNES
+          </ListSubheader>
+
+          {commRoutes.map(
+            (item) =>
+              item.icon &&
+              item.label && (
+                <Link
+                  key={item.path}
+                  icon={<Icon icon={item.icon} />}
+                  label={item.label}
+                  path={item.path}
+                />
+              )
+          )}
+        </List>
+      )}
+
       {hasFacuModule && (
         <List>
           <ListSubheader sx={{ color: "#512da8" }} component="div" inset>

@@ -1,6 +1,7 @@
 import { useAuthContext } from "contexts/AuthContext";
 import { ModuleEnum } from "models/enums/Module";
 import { useMemo } from "react";
+import { getRoutes as getCommRoutes } from "../routes/common";
 import { getRoutes as getCurrRoutes } from "../routes/curr";
 import { getRoutes as getFacuRoutes } from "../routes/facu";
 import { getRoutes as getSudeRoutes } from "../routes/sude";
@@ -31,6 +32,11 @@ export function useRoutes() {
     [user.modulos]
   );
 
+  const hasCommModule = useMemo(
+    () => user.modulos.some((m) => m.code === ModuleEnum.COMM),
+    [user.modulos]
+  );
+
   const facuRoutes = useMemo(
     () =>
       getFacuRoutes(
@@ -49,6 +55,7 @@ export function useRoutes() {
     []
   );
 
+  const commRoutes = useMemo(() => getCommRoutes(), []);
   const tituRoutes = useMemo(() => getTituRoutes(), []);
   const currRoutes = useMemo(() => getCurrRoutes(), []);
 
@@ -57,10 +64,12 @@ export function useRoutes() {
     hasTituModule,
     hasSudeModule,
     hasCurrModule,
+    hasCommModule,
     //
     facuRoutes,
     sudeRoutes,
     tituRoutes,
     currRoutes,
+    commRoutes,
   };
 }

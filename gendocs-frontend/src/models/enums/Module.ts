@@ -3,4 +3,5 @@ export enum ModuleEnum {
   SUDE = "SUDE",
   TITU = "TITU",
   CURR = "CURR",
+  COMM = "COMM",
 }
