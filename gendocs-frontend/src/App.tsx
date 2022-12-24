@@ -8,8 +8,8 @@ import esLocale from "date-fns/locale/es";
 import { HTTP_STATUS } from "models/enums/HttpStatus";
 import { SnackbarProvider } from "notistack";
 import AuthProvider from "providers/AuthProvider";
-import { lazy, Suspense, useCallback, useEffect } from "react";
-import { QueryClient, QueryClientProvider } from "react-query";
+import { lazy, Suspense, useEffect } from "react";
+import { QueryClient, QueryClientProvider, useQuery } from "react-query";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { AuthActionsEnum } from "reducers/AuthReducer";
 import { getUser } from "services/auth";
@@ -50,22 +50,22 @@ const AuthCheck = () => {
     dispatch,
   } = useAuthContext();
 
-  const checkAuth = useCallback(async () => {
-    const { status, data } = await getUser();
+  const { data } = useQuery(["me"], () => getUser());
+
+  useEffect(() => {
+    if (!data) return;
+
+    const { status, data: user } = data;
 
     if (status === HTTP_STATUS.ok) {
-      dispatch({ type: AuthActionsEnum.setUser, payload: data });
+      dispatch({ type: AuthActionsEnum.setUser, payload: user });
       dispatch({ type: AuthActionsEnum.setIsAuth, payload: true });
       dispatch({ type: AuthActionsEnum.setCheckingAuth, payload: false });
     } else {
       dispatch({ type: AuthActionsEnum.setIsAuth, payload: false });
       dispatch({ type: AuthActionsEnum.setCheckingAuth, payload: false });
     }
-  }, []);
-
-  useEffect(() => {
-    checkAuth();
-  }, [checkAuth]);
+  }, [data]);
 
   return checkingAuth ? <LoadingScreen /> : <AppBase />;
 };

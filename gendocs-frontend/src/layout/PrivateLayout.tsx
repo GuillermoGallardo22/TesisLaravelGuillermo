@@ -66,7 +66,7 @@ const PrivateLayout = () => {
         {childrens.map(handleRoute)}
       </Route>
     );
-  }, []);
+  }, [user]);
 
   return (
     <Box sx={{ display: "flex" }}>
