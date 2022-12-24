@@ -212,7 +212,8 @@ return [
             ],
             "documento" => [
                 "create" => [
-                    "tipo_estado" => "El acta aun no tiene un estado o tipo asignado"
+                    "tipo_estado" => "El acta aun no tiene un estado o tipo asignado",
+                    "documento_notas" => "El acta aun no tiene un documento con notas asignadas",
                 ]
             ]
         ],

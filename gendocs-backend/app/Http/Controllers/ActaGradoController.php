@@ -184,6 +184,15 @@ class ActaGradoController extends Controller
             );
         }
 
+        if (!$actaGrado->documento_notas) {
+            return response(
+                [
+                    "errors" => trans('validation.custom.acta_grado.documento.create.documento_notas'),
+                ],
+                Response::HTTP_UNPROCESSABLE_ENTITY,
+            );
+        }
+
         $actaGrado = $service->generarDocumento($actaGrado, $plantilla);
         return ActaGradoResource::make($actaGrado);
     }
