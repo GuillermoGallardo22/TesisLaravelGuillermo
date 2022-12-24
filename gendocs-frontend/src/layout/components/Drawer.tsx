@@ -78,7 +78,7 @@ const Drawer: React.FC<DrawerProps> = ({ open, toggleDrawer }) => {
 
       {hasCommModule && (
         <List>
-          <ListSubheader sx={{ color: "#bf360c" }} component="div" inset>
+          <ListSubheader sx={{ color: "#f4511e" }} component="div" inset>
             COMUNES
           </ListSubheader>
 
