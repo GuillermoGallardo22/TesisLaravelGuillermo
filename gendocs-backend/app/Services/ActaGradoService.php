@@ -53,7 +53,8 @@ class ActaGradoService
             $values = $this->googleDrive->getValues($actaGrado->documento_notas, "Sheet1!" . $item->celda);
             $values = collect($values?->getValues() ?? [])->flatten();
 
-            $value = $values->count() > 0 ? $values->toArray()[0] : 0;
+            $value = $values->count() > 0 ? $values->toArray()[0] : "0.0";
+
             $words = $this->converNumberToWords($value);
 
             usleep(config("services.google.timeout_processing"));
