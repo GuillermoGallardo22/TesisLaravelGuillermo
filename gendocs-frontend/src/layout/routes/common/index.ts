@@ -27,7 +27,7 @@ export const routes: IRoute[] = [
       {
         path: ":actaGradoId",
         component: Components.UpdateActaGrado,
-        roles: [RolEnum.ADMIN, RolEnum.ADMINTEMP, RolEnum.READER],
+        roles: [RolEnum.ADMIN, RolEnum.ADMINTEMP, RolEnum.WRITER],
       },
       {
         path: "nuevo",
