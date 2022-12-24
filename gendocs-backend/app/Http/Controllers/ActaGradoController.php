@@ -168,6 +168,8 @@ class ActaGradoController extends Controller
 
     public function generarDocumento(ActaGrado $actaGrado, ActaGradoService $service)
     {
+        $this->authorize('update', $actaGrado);
+
         $plantilla = TipoEstadoActaGrado::query()
             ->where("estado_acta_grado_id", $actaGrado?->estado?->id)
             ->where("tipo_acta_grado_id", $actaGrado?->tipo?->id)
