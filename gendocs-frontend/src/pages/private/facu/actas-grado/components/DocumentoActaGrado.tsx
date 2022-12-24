@@ -103,7 +103,7 @@ const DocumentoActaGradoBase: React.FunctionComponent<
           onClick={process}
           variant="outlined"
         >
-          Generar documento
+          Generar acta de grado
         </LoadingButton>
       </Box>
 
