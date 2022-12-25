@@ -3,6 +3,7 @@
 namespace App\Traits;
 
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Support\Facades\Log;
 use NumberFormatter;
 use NumberToWords\NumberToWords;
@@ -34,12 +35,29 @@ trait ReplaceableDocText
     // -----
     public function converNumberToWords($number)
     {
-        [$entera, $decimal] = explode(".", $number);
-        return implode(" ", array(
-            NumberToWords::transformNumber("es", $entera),
-            "punto",
-            NumberToWords::transformNumber("es", $decimal),
-        ));
+        if (!is_numeric($number)) {
+            return "NO_ES_UN_VALOR_NUMÉRICO";
+        }
+
+        if (is_float($number)) {
+            $list = explode(".", $number);
+
+            $entera = 0;
+            $decimal = 0;
+
+            if (count($list) == 2) {
+                $entera = $list[0];
+                $decimal = $list[1];
+            }
+
+            return implode(" ", array(
+                NumberToWords::transformNumber("es", $entera),
+                "punto",
+                NumberToWords::transformNumber("es", $decimal),
+            ));
+        }
+
+        return NumberToWords::transformNumber("es", $number);
     }
 
     public function getMonthName($date)
