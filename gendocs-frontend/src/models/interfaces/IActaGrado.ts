@@ -93,6 +93,7 @@ export interface IUpdateActaGrado extends IAddActaGrado {
 
 export type useAddActaGradoProps = {
   estudiante?: IEstudiante | null | undefined;
+  onSuccess?: () => void;
 };
 
 export enum TipoAsistenteActaGradoEnum {

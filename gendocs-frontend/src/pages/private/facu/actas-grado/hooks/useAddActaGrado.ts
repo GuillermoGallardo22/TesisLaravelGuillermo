@@ -92,7 +92,10 @@ const validationSchema = yup.object().shape({
   duracion: yup.number().required(VM.required).min(1, VM.invalidOption),
 });
 
-export const useAddActaGrado = ({ estudiante }: useAddActaGradoProps) => {
+export const useAddActaGrado = ({
+  estudiante,
+  onSuccess,
+}: useAddActaGradoProps) => {
   const { enqueueSnackbar } = useSnackbar();
 
   const [modalidades, setModalidades] = useState<IModalidadActaGrado[]>([]);
@@ -110,7 +113,9 @@ export const useAddActaGrado = ({ estudiante }: useAddActaGradoProps) => {
 
     if (result.status === HTTP_STATUS.created) {
       enqueueSnackbar(result.message, { variant: "success" });
-      // handleReset();
+      if (onSuccess) {
+        onSuccess();
+      }
     } else {
       enqueueSnackbar(result.message, { variant: "error" });
       setErrorSummary(result.errors);

@@ -59,6 +59,9 @@ const AddActaGrado: React.FunctionComponent = () => {
     refreshNumeracion,
   } = useAddActaGrado({
     estudiante: acEstudiante,
+    onSuccess: () => {
+      setACEstudiante();
+    },
   });
 
   const submitting = formik.isSubmitting;
