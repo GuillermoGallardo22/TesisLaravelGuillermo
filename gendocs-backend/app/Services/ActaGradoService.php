@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Constants\MimeType;
 use App\Constants\Variables;
+use App\Factories\Variables\VariablesFactory;
 use App\Models\ActaGrado;
 use App\Models\Cargo;
 use App\Models\Directorio;
@@ -71,6 +72,11 @@ class ActaGradoService
             ];
         })->collapse()->toArray();
 
+        // VARIABLES
+        $variables = (new VariablesFactory())
+            ->getVariables($actaGrado)
+            ->procecess();
+
         // CREAR DOCUMENTO FINAL
 
         $documentoDrive = $this->googleDrive->copyFile(
@@ -88,6 +94,7 @@ class ActaGradoService
         $this->googleDrive->replaceTextOnDocument(
             array_merge(
                 $notas,
+                $variables,
             ),
             $documentoDrive->id,
         );
