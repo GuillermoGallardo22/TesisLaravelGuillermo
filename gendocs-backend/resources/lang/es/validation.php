@@ -214,6 +214,8 @@ return [
                 "create" => [
                     "tipo_estado" => "El acta aun no tiene un estado o tipo asignado",
                     "documento_notas" => "El acta aun no tiene un documento con notas asignadas",
+                    "estudiante" => "Los datos del estudiante se encuentran incompletos",
+                    "actaGrado" => "Los datos del acta se encuentran incompletos",
                 ]
             ]
         ],

@@ -175,6 +175,31 @@ class ActaGradoController extends Controller
             ->where("tipo_acta_grado_id", $actaGrado?->tipo?->id)
             ->first();
 
+        if (
+            $actaGrado->fecha_presentacion == null ||
+            $actaGrado->fecha_fin_estudios == null ||
+            (!is_numeric($actaGrado->horas_practicas) || (int)($actaGrado->horas_practicas) == 0)
+        ) {
+            return response(
+                [
+                    "errors" => trans('validation.custom.acta_grado.documento.create.actaGrado'),
+                ],
+                Response::HTTP_UNPROCESSABLE_ENTITY,
+            );
+        }
+
+        if (
+            $actaGrado->estudiante->genero == null ||
+            $actaGrado->estudiante->fecha_nacimiento == null
+        ) {
+            return response(
+                [
+                    "errors" => trans('validation.custom.acta_grado.documento.create.estudiante'),
+                ],
+                Response::HTTP_UNPROCESSABLE_ENTITY,
+            );
+        }
+
         if (!$plantilla) {
             return response(
                 [
