@@ -54,7 +54,9 @@ class ActaGrado extends Model
         "envio_financiero_especie" => "boolean",
         "fecha_inicio_estudios" => "date",
         "fecha_fin_estudios" => "date",
-        // "fecha_presentacion" => "boolean",
+        "horas_practicas" => "integer",
+        "creditos_aprobados" => "integer",
+        "duracion" => "integer",
     ];
 
     public function scopeCarrera(Builder $query, $value)

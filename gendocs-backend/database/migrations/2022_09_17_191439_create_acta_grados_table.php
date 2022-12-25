@@ -23,8 +23,8 @@ class CreateActaGradosTable extends Migration
             $table->date("fecha_inicio_estudios");
             $table->date("fecha_fin_estudios")->nullable();
 
-            $table->decimal("creditos_aprobados");
-            $table->decimal("horas_practicas")->nullable();
+            $table->integer("creditos_aprobados");
+            $table->integer("horas_practicas")->nullable();
 
             $table->dateTime("fecha_presentacion")->nullable();
 

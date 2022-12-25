@@ -30,17 +30,17 @@ class StoreActaGradoRequest extends FormRequest
             "canton" => ["required", "exists:\App\Models\Canton,id"],
             "titulo_bachiller" => ["required", "string", "max:255"],
             "fecha_inicio_estudios" => ["required", "date"],
-            "creditos_aprobados" => ["required", "numeric", "min:1"],
+            "creditos_aprobados" => ["required", "integer", "min:1"],
             "tipo_acta" => ["required", "exists:\App\Models\TipoActaGrado,codigo"],
             "solicitar_especie" => ["required", "boolean"],
             "envio_financiero_especie" => ["required", "boolean"],
-            "duracion" => ["required", "numeric", "min:1"],
+            "duracion" => ["required", "integer", "min:1"],
             "modalidad_acta_grado" => ["required", "exists:\App\Models\ModalidadActaGrado,codigo"],
             //
             "estado_acta" => ["sometimes", "nullable", "exists:\App\Models\EstadoActa,id"],
             "fecha_fin_estudios" => ["sometimes", "nullable", "date"],
             //
-            "horas_practicas" => ["present", "numeric"],
+            "horas_practicas" => ["present", "integer"],
             "fecha_presentacion" => ["sometimes", "nullable", "date"],
             "aula" => [
                 "bail",
@@ -71,7 +71,9 @@ class StoreActaGradoRequest extends FormRequest
             "presidente" => (!boolval($this->presidente) || $this->presidente < 1) ? null : $this->presidente,
             //
             "estado_acta" => $this->estado_acta ? $this->estado_acta : null,
-            "horas_practicas" => isset($this->horas_practicas) ? $this->horas_practicas : null,
+            "horas_practicas" => isset($this->horas_practicas) ? (int)$this->horas_practicas : null,
+            "duracion" => isset($this->duracion) ? (int)$this->duracion : null,
+            "creditos_aprobados" => isset($this->creditos_aprobados) ? (int)$this->creditos_aprobados : null,
             "aula" => $this->aula ? $this->aula : null,
             "link" => $this->link ? $this->link : null,
         ]);

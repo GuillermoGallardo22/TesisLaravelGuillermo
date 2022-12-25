@@ -22,7 +22,7 @@ class UpdateActaGradoRequest extends FormRequest
         return [
             "estado_acta" => ["sometimes", "nullable", "exists:\App\Models\EstadoActa,id"],
             "fecha_fin_estudios" => ["sometimes", "nullable", "date"],
-            "horas_practicas" => ["present", "numeric"],
+            "horas_practicas" => ["present", "integer"],
             "fecha_presentacion" => ["sometimes", "nullable", "date"],
             "solicitar_especie" => ["required", "boolean"],
             "envio_financiero_especie" => ["required", "boolean"],
@@ -53,7 +53,7 @@ class UpdateActaGradoRequest extends FormRequest
             "fecha_presentacion" => $this->fecha_presentacion ? Carbon::parse($this->fecha_presentacion)->setSecond(0)->setMilli(0) : null,
             //
             "estado_acta" => $this->estado_acta ? $this->estado_acta : null,
-            "horas_practicas" => isset($this->horas_practicas) ? $this->horas_practicas : null,
+            "horas_practicas" => isset($this->horas_practicas) ? (int)$this->horas_practicas : null,
             "aula" => $this->aula ? $this->aula : null,
             "link" => $this->link ? $this->link : null,
         ]);
