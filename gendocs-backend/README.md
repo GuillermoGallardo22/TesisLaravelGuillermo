@@ -83,6 +83,28 @@
 |  {{NO_ASISTIERON}}  |           Ing. Juanito Garcia           |
 |  {{DOCENTE_N_$i}}   |       Variable docentes dinámica        |
 
+## VARIABLES DE ACTAS DE GRADOS
+
+|                 **VARIABLE**                 |                                            **VALOR**                                            |
+| :------------------------------------------: | :---------------------------------------------------------------------------------------------: |
+|                {{ACTAGRADO_TIPO}}                 |                                    PROYECTO DE INVESTIGACION                                    |
+|             {{DISNACION_GENERO}}             |     [el señor/la señorita, portador/portadora, El mencionado señor/La mencionada señorita]      |
+|       {{ESTUDIANTE_FECHA_NACIMIENTO}}        |                                    10 de septiembre de 2020                                     |
+|                {{PROVINCIA}}                 |                                           Tungurahua                                            |
+|                  {{CANTON}}                  |                                             Ambato                                              |
+|            {{ESTUDIANTE_TITULO}}             |                            Ingeniero en Electrónica y Comunicaciones                            |
+|         {{ESTUDIANTE_TITULO_UPPER}}          |                            INGENIERO EN ELECTRÓNICA Y COMUNICACIONES                            |
+|             {{ESTUDIANTE_TEMA}}              |     DISPOSITIVO ELECTRÓNICO NO INVASIVO PARA LA MEDICIÓN DE NIVELES DE GLUCOSA EN LA SANGRE     |
+|                 {{NOTA_$i}}                  |                                              9.80                                               |
+|              {{NOTA_$i_TEXTO}}               |                                       nueve punto ochenta                                       |
+|       {{ESTUDIANTE_TITULO_BACHILLER}}        | Bachiller Técnico en Informática en el Instituto Tecnológico Superior Bolívar del cantón Ambato |
+| {{ESTUDIANTE_FECHA_INICIO_ESTUDIOS_FECHAUP}} |                                       18 de marzo de 2013                                       |
+|  {{ESTUDIANTE_FECHA_FIN_ESTUDIOS_FECHAUP}}   |                                       18 de marzo de 2013                                       |
+|             {{CREDITOS_NUMEROS}}             |                                               247                                               |
+|              {{CREDITOS_TEXTO}}              |                                   DOSCIENTOS CUARENTA Y SIETE                                   |
+|         {{HORAS_PRACTICAS_NUMEROS}}          |                                               400                                               |
+|          {{ESTADO_ACTAGRADO_UPPER}}          |                                            APROBADO                                             |
+
 ## DUDAS
 
 1. ¿Cuando se genere el acta y se seleccione la modalidad(virtual/presencial), solo habrá que considerar la duración en el caso presencial, por temas de disponibilidad de aulas?
