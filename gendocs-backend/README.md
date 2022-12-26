@@ -103,7 +103,7 @@
 |             {{CREDITOS_NUMEROS}}             |                                               247                                               |
 |              {{CREDITOS_TEXTO}}              |                                   DOSCIENTOS CUARENTA Y SIETE                                   |
 |         {{HORAS_PRACTICAS_NUMEROS}}          |                                               400                                               |
-|          {{ESTADO_ACTAGRADO_UPPER}}          |                                            APROBADO                                             |
+|          {{ACTAGRADO_ESTADO_UPPER}}          |                                            APROBADO                                             |
 
 ## DUDAS
 

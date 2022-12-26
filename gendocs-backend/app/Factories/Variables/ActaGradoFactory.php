@@ -94,7 +94,7 @@ class ActaGradoFactory implements IVariable
                 "{{DISNACION_GENERO_1}}" => $this::DESIGNACION_GENERO[1][$estudiante->genero],
                 "{{DISNACION_GENERO_2}}" => $this::DESIGNACION_GENERO[2][$estudiante->genero],
                 //
-                "{{ESTADO_ACTAGRADO_UPPER}}" => $this->textToUpperLower(
+                "{{ACTAGRADO_ESTADO_UPPER}}" => $this->textToUpperLower(
                     $estudiante->genero == Genero::FEMENINO ?
                         $model->estado->nombre_fem :
                         $model->estado->nombre_mas,
