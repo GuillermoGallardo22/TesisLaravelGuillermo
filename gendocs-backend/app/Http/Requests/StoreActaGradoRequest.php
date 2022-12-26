@@ -42,6 +42,7 @@ class StoreActaGradoRequest extends FormRequest
             //
             "horas_practicas" => ["present", "integer"],
             "fecha_presentacion" => ["sometimes", "nullable", "date"],
+            "tema" => ["sometimes", "nullable", "string"],
             "aula" => [
                 "bail",
                 "sometimes",

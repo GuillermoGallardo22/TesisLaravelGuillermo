@@ -33,6 +33,7 @@ class ActaGrado extends Model
         "solicitar_especie",
         "envio_financiero_especie",
         "created_user_id",
+        "tema",
     ];
 
     protected $hidden = [

@@ -26,6 +26,7 @@ class UpdateActaGradoRequest extends FormRequest
             "fecha_presentacion" => ["sometimes", "nullable", "date"],
             "solicitar_especie" => ["required", "boolean"],
             "envio_financiero_especie" => ["required", "boolean"],
+            "tema" => ["sometimes", "nullable", "string"],
             "aula" => [
                 "bail",
                 "sometimes",

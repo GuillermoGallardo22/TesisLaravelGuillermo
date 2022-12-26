@@ -20,6 +20,8 @@ class CreateActaGradosTable extends Migration
 
             $table->string("titulo_bachiller");
 
+            $table->string("tema")->nullable();
+
             $table->date("fecha_inicio_estudios");
             $table->date("fecha_fin_estudios")->nullable();
 

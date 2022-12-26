@@ -77,6 +77,7 @@ class ActaGradoController extends Controller
                 "fecha_presentacion" => $validated["fecha_presentacion"],
                 "link" => $validated["link"],
                 "aula_id" => $validated["aula"],
+                "tema" => $validated["tema"],
             ]);
 
             $acta->save();
@@ -130,6 +131,7 @@ class ActaGradoController extends Controller
             $actaGrado->fecha_presentacion = $validated["fecha_presentacion"];
             $actaGrado->link = $validated["link"];
             $actaGrado->aula_id = $validated["aula"];
+            $actaGrado->tema = $validated["tema"];
 
             $actaGrado->update();
 
