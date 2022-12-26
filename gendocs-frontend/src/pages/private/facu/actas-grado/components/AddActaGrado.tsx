@@ -60,7 +60,7 @@ const AddActaGrado: React.FunctionComponent = () => {
   } = useAddActaGrado({
     estudiante: acEstudiante,
     onSuccess: () => {
-      setACEstudiante();
+      setACEstudiante(null);
     },
   });
 
