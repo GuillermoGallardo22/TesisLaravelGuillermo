@@ -2,7 +2,9 @@
 
 namespace App\Factories\Variables;
 
+use App\Constants\EstadoActas;
 use App\Constants\Genero;
+use App\Constants\TipoActaGrados;
 use App\Constants\Variables;
 use App\Interfaces\IVariable;
 use App\Models\Canton;
@@ -45,8 +47,6 @@ class ActaGradoFactory implements IVariable
 
         $estudiante = $model->estudiante;
 
-        // TODO: CREAR VARIABLES PARA TODOS LOS DEMAS TIPOS DE ACTA DE GRADO
-
         $infoAdicionalEstudiante = array(
             // Variables::ESTUDIANTE_TEMA=>$model->tema,
             Variables::ESTUDIANTE_TITULO_BACHILLER => $model->titulo_bachiller,
@@ -57,7 +57,19 @@ class ActaGradoFactory implements IVariable
             "{{HORAS_PRACTICAS_NUMEROS}}" => $model->horas_practicas,
         );
 
-        return array_merge(
+        // TODO: CREAR VARIABLES PARA TODOS LOS DEMAS TIPOS DE ACTA DE GRADO
+
+        if (
+            collect(TipoActaGrados::T_AA, TipoActaGrados::T_PI)->contains($model->tipo->codigo) &&
+            $model->estado->codigo == EstadoActas::APRO
+        ) {
+        } elseif (
+            collect(TipoActaGrados::T_AA, TipoActaGrados::T_PI)->contains($model->tipo->codigo) &&
+            $model->estado->codigo == EstadoActas::REPR
+        ) {
+        }
+
+        $variables = collect(array_merge(
             $this->getVariablesFromEstudiante($estudiante),
             $infoAdicionalEstudiante,
             //
@@ -105,7 +117,13 @@ class ActaGradoFactory implements IVariable
                 // Variables::ASISTIERON => $this->asis($asistieron),
                 // Variables::NO_ASISTIERON => $this->no_asis($no_asistieron),
             ),
-        );
+        ));
+
+        $variables = $variables->map(function ($i) {
+            return $i != null ? strval($i) : $i;
+        });
+
+        return $variables->toArray();
     }
 
     public function getVariablesFromCanton(Canton $canton)

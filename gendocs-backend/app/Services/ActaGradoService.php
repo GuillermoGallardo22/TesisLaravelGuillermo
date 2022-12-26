@@ -91,11 +91,15 @@ class ActaGradoService
 
         // REEMPLAZAR
 
+        $variables = array_merge(
+            $notas,
+            $variables,
+        );
+
+        Log::info($variables);
+
         $this->googleDrive->replaceTextOnDocument(
-            array_merge(
-                $notas,
-                $variables,
-            ),
+            $variables,
             $documentoDrive->id,
         );
 
