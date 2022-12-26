@@ -14,6 +14,10 @@ import {
 import Icon from "components/Icon";
 import TitleNav from "components/TitleNav";
 import { GridToolbarWithoutExport } from "components/ToolbarDataGrid";
+import {
+  DataGridFilterModelKeys,
+  useDataGridFilterModel,
+} from "hooks/useDataGridFilterModel";
 import { GoogleType } from "models/enums/GoogleType";
 import { ITipoActaGrado } from "models/interfaces/IActaGrado";
 import { ICarrera } from "models/interfaces/ICarrera";
@@ -119,6 +123,10 @@ const PlantillasActaGrado = () => {
     setSelected(null);
   };
 
+  const { initialState, onFilterModelChange } = useDataGridFilterModel(
+    DataGridFilterModelKeys.PLANTILLASACTAGRADO
+  );
+
   return (
     <Stack spacing={2}>
       <TitleNav title="Plantillas acta grado" />
@@ -135,6 +143,8 @@ const PlantillasActaGrado = () => {
           columns={columns}
           loading={isLoading}
           rows={plantillas}
+          initialState={initialState()}
+          onFilterModelChange={onFilterModelChange}
         />
       </div>
 
