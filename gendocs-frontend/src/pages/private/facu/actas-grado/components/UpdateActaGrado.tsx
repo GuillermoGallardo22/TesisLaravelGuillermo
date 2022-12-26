@@ -17,7 +17,6 @@ import { useFormik } from "formik";
 import { useErrorsResponse } from "hooks/useErrorsResponse";
 import { Genero } from "models/enums/Genero";
 import { HTTP_STATUS } from "models/enums/HttpStatus";
-import { ModalidadActaGrado } from "models/enums/ModalidadActaGrado";
 import {
   IActaGrado,
   IEstadoActa,
@@ -42,6 +41,7 @@ import {
 import { VALIDATION_MESSAGES as VM } from "utils/messages";
 import * as yup from "yup";
 import useActaGrado from "../hooks/useActaGrado";
+import { useActaGradoRules } from "../hooks/useActaGradoRules";
 
 const UpdateActaGrado = () => {
   const { actaGradoId = "" } = useParams();
@@ -120,6 +120,7 @@ const validationSchema = yup.object().shape({
     .nullable()
     .test("invalid-aula", VM.fechaSusReq, testFechaSustentacion),
   duracion: yup.number().required(VM.required).min(1, VM.invalidOption),
+  tema: yup.string(),
 });
 
 const UpdateActaGradoBase = ({
@@ -150,6 +151,7 @@ const UpdateActaGradoBase = ({
     envio_financiero_especie: Boolean(actaGrado.envio_financiero_especie),
     solicitar_especie: Boolean(actaGrado.solicitar_especie),
     link: actaGrado?.link || "",
+    tema: actaGrado.tema || "",
   };
 
   const onSubmit = async (form: IUpdateActaGrado) => {
@@ -201,10 +203,10 @@ const UpdateActaGradoBase = ({
     );
   }, [formik.values.tipo_acta]);
 
-  const isPRE =
-    actaGrado.modalidad_acta_grado.codigo === ModalidadActaGrado.PRE;
-  const isONL =
-    actaGrado.modalidad_acta_grado.codigo === ModalidadActaGrado.ONL;
+  const { isONL, isPRE, hasTema } = useActaGradoRules({
+    modalidad: actaGrado.modalidad_acta_grado.codigo,
+    tipoActaGrado: actaGrado.tipo_acta.codigo,
+  });
 
   const submitting = formik.isSubmitting;
 
@@ -442,6 +444,21 @@ const UpdateActaGradoBase = ({
                 </Box>
               </Fade>
             </Box>
+          </Grid>
+
+          <Grid sx={{ display: hasTema ? "inline" : "none" }} item xs={12}>
+            <TextField
+              fullWidth
+              margin="normal"
+              id="tema"
+              name="tema"
+              label="Tema"
+              disabled={submitting}
+              value={formik.values.tema}
+              onChange={formik.handleChange}
+              error={formik.touched.tema && Boolean(formik.errors.tema)}
+              helperText={formik.touched.tema && formik.errors.tema}
+            />
           </Grid>
 
           <Grid item xs={12}>

@@ -14,7 +14,6 @@ import { SingleAutoComplete } from "components/SingleAutoComplete";
 import TitleNav from "components/TitleNav";
 import { useConfirmationDialog } from "hooks/useConfirmationDialog";
 import { Genero } from "models/enums/Genero";
-import { ModalidadActaGrado } from "models/enums/ModalidadActaGrado";
 import { IEstadoActa } from "models/interfaces/IActaGrado";
 import { IAula } from "models/interfaces/IAula";
 import { ICanton } from "models/interfaces/ICanton";
@@ -33,7 +32,7 @@ import {
   isOptionEqualToValueEstudiante,
 } from "utils/libs";
 import { NumeracionModal } from "../../documentos/components/NumeracionModal";
-
+import { useActaGradoRules } from "../hooks/useActaGradoRules";
 import { useAddActaGrado } from "../hooks/useAddActaGrado";
 import NumeracionAdornment from "./NumeracionAdornment";
 
@@ -62,6 +61,13 @@ const AddActaGrado: React.FunctionComponent = () => {
     onSuccess: () => {
       setACEstudiante(null);
     },
+  });
+
+  //
+
+  const { isONL, isPRE, hasTema } = useActaGradoRules({
+    modalidad: formik.values.modalidad_acta_grado,
+    tipoActaGrado: formik.values.tipo_acta,
   });
 
   const submitting = formik.isSubmitting;
@@ -133,10 +139,13 @@ const AddActaGrado: React.FunctionComponent = () => {
     );
   }, [formik.values.tipo_acta]);
 
-  //
+  useEffect(() => {
+    if (!hasTema) {
+      formik.setFieldValue("tema", "");
+    }
+  }, [hasTema]);
 
-  const isPRE = formik.values.modalidad_acta_grado === ModalidadActaGrado.PRE;
-  const isONL = formik.values.modalidad_acta_grado === ModalidadActaGrado.ONL;
+  //
 
   const estudianteSeleccionado = Boolean(
     formik.values.estudiante &&
@@ -498,6 +507,21 @@ const AddActaGrado: React.FunctionComponent = () => {
                 </Box>
               </Fade>
             </Box>
+          </Grid>
+
+          <Grid sx={{ display: hasTema ? "inline" : "none" }} item xs={12}>
+            <TextField
+              fullWidth
+              margin="normal"
+              id="tema"
+              name="tema"
+              label="Tema"
+              disabled={submitting || !estudianteSeleccionado}
+              value={formik.values.tema}
+              onChange={formik.handleChange}
+              error={formik.touched.tema && Boolean(formik.errors.tema)}
+              helperText={formik.touched.tema && formik.errors.tema}
+            />
           </Grid>
 
           <Grid item xs={12}>

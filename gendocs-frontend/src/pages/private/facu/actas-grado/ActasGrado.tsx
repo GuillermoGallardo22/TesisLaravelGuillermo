@@ -104,6 +104,11 @@ const ActasGrado: React.FunctionComponent = () => {
           e.value!.nombres + " " + e.value!.apellidos,
       },
       {
+        field: "tema",
+        headerName: "Tema",
+        flex: 1,
+      },
+      {
         field: "titulo_bachiller",
         headerName: "Título bachiller",
         flex: 1,

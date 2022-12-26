@@ -44,6 +44,7 @@ const initialValues: IAddActaGrado = {
   link: "",
   aula: -1,
   duracion: 60,
+  tema: "",
 };
 
 const validationSchema = yup.object().shape({
@@ -90,6 +91,7 @@ const validationSchema = yup.object().shape({
     .nullable()
     .test("invalid-aula", VM.fechaSusReq, testFechaSustentacion),
   duracion: yup.number().required(VM.required).min(1, VM.invalidOption),
+  tema: yup.string(),
 });
 
 export const useAddActaGrado = ({

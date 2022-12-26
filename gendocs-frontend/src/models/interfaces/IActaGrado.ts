@@ -63,6 +63,7 @@ export interface IActaGrado {
   tipo_acta: ITipoActaGrado;
   modalidad_acta_grado: IModalidadActaGrado;
   estado_acta?: IEstadoActa;
+  tema: string | null;
 }
 
 export interface IAddActaGrado {
@@ -85,6 +86,7 @@ export interface IAddActaGrado {
   aula: number;
   duracion: number;
   //
+  tema: string;
 }
 
 export interface IUpdateActaGrado extends IAddActaGrado {
