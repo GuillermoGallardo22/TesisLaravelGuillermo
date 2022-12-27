@@ -77,6 +77,7 @@ class StoreActaGradoRequest extends FormRequest
             "creditos_aprobados" => isset($this->creditos_aprobados) ? (int)$this->creditos_aprobados : null,
             "aula" => $this->aula ? $this->aula : null,
             "link" => $this->link ? $this->link : null,
+            "tema" => isset($this->tema) ? $this->tema : "",
         ]);
     }
 }

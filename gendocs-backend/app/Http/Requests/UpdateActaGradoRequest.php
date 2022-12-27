@@ -57,6 +57,7 @@ class UpdateActaGradoRequest extends FormRequest
             "horas_practicas" => isset($this->horas_practicas) ? (int)$this->horas_practicas : null,
             "aula" => $this->aula ? $this->aula : null,
             "link" => $this->link ? $this->link : null,
+            "tema" => isset($this->tema) ? $this->tema : "",
         ]);
     }
 }
