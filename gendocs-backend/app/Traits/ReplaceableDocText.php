@@ -39,25 +39,26 @@ trait ReplaceableDocText
             return "NO_ES_UN_VALOR_NUMÉRICO";
         }
 
-        if (is_float($number)) {
-            $list = explode(".", $number);
+        $list = explode(".", $number);
 
-            $entera = 0;
-            $decimal = 0;
+        $entera = 0;
+        $decimal = 0;
 
-            if (count($list) == 2) {
-                $entera = $list[0];
-                $decimal = $list[1];
-            }
+        if (count($list) == 2) {
+
+            $entera = $list[0];
+            $decimal = $list[1];
 
             return implode(" ", array(
                 NumberToWords::transformNumber("es", $entera),
                 "punto",
                 NumberToWords::transformNumber("es", $decimal),
             ));
+        } elseif (count($list) == 1) {
+            $entera = $list[0];
         }
 
-        return NumberToWords::transformNumber("es", $number);
+        return NumberToWords::transformNumber("es", $entera);
     }
 
     public function getMonthName($date)
