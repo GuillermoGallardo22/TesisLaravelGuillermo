@@ -77,6 +77,7 @@ class ActaGradoFactory implements IVariable
             //
             array(
                 "{{ACTAGRADO_TIPO}}" => $this->textToUpperLower($model->tipo->nombre, "upper"),
+                "{{ACTAGRADO_TEMA}}" => $this->textToUpperLower($model->tema, "upper"),
                 //
 
                 //
