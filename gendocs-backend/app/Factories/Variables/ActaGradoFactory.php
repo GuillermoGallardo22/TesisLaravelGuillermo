@@ -43,7 +43,7 @@ class ActaGradoFactory implements IVariable
     {
         $model = $this->model;
 
-        $now = Carbon::parse($model->fecha_presentacion);
+        $now = Carbon::parse($model->fecha_presentacion)->timezone("GMT-5");
 
         $estudiante = $model->estudiante;
 
@@ -59,16 +59,6 @@ class ActaGradoFactory implements IVariable
 
         // TODO: CREAR VARIABLES PARA TODOS LOS DEMAS TIPOS DE ACTA DE GRADO
 
-        if (
-            collect(TipoActaGrados::T_AA, TipoActaGrados::T_PI)->contains($model->tipo->codigo) &&
-            $model->estado->codigo == EstadoActas::APRO
-        ) {
-        } elseif (
-            collect(TipoActaGrados::T_AA, TipoActaGrados::T_PI)->contains($model->tipo->codigo) &&
-            $model->estado->codigo == EstadoActas::REPR
-        ) {
-        }
-
         $variables = collect(array_merge(
             $this->getVariablesFromEstudiante($estudiante),
             $infoAdicionalEstudiante,
@@ -79,18 +69,11 @@ class ActaGradoFactory implements IVariable
                 "{{ACTAGRADO_TIPO}}" => $this->textToUpperLower($model->tipo->nombre, "upper"),
                 "{{ACTAGRADO_TEMA}}" => $this->textToUpperLower($model->tema, "upper"),
                 //
-
-                //
                 Variables::NUMDOC => $this->format_NUMACT($model->numero),
                 Variables::Y => $this->format_Y($now),
                 //
                 Variables::FECHA => $this->formatDate($now),
-                // Variables::RESPONSABLE => $consejo->responsable->docente->nombres,
                 //
-                // Variables::NUMACT => $this->format_NUMACT($numActa),
-                // Variables::FECHA_U => $this->format_FECHA_U($fecha),
-                // Variables::SESIONUP => strtoupper($tipoConsejo->nombre),
-                // Variables::SESION_L => mb_strtolower($tipoConsejo->nombre),
                 Variables::Y => $this->format_Y($now),
                 Variables::DIASEM_T => $this->format_DIASEM_T($now),
                 Variables::NUMMES_T_U => $this->format_NUMMES_T_U($now),
@@ -100,8 +83,7 @@ class ActaGradoFactory implements IVariable
                 Variables::NUMANIO_T_L => $this->format_NUMANIO_T_L($now),
                 Variables::DIAS_T => $this->format_DIAS_T($now),
                 //
-                Variables::HORA_T_L => $this->converNumberToWords($now->hour),
-                Variables::MINUTOS_T_L => $this->converNumberToWords($now->hour),
+                Variables::HORA_MINUTOS_TEXTO_L => $this->format_HORA_MINUTOS_TEXTO_L($now->toTimeString()),
                 //
                 "{{DISNACION_GENERO_0}}" => $this::DESIGNACION_GENERO[0][$estudiante->genero],
                 "{{DISNACION_GENERO_1}}" => $this::DESIGNACION_GENERO[1][$estudiante->genero],
@@ -113,10 +95,6 @@ class ActaGradoFactory implements IVariable
                         $model->estado->nombre_mas,
                     "upper"
                 ),
-                // Variables::HORA_T_L => $this->converNumberToWords($fecha->hour),
-                // Variables::MINUTOS_T_L => $this->converNumberToWords($fecha->minute),
-                // Variables::ASISTIERON => $this->asis($asistieron),
-                // Variables::NO_ASISTIERON => $this->no_asis($no_asistieron),
             ),
         ));
 

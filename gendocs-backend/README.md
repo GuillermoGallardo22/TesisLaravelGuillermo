@@ -87,7 +87,8 @@
 
 |                 **VARIABLE**                 |                                            **VALOR**                                            |
 | :------------------------------------------: | :---------------------------------------------------------------------------------------------: |
-|                {{ACTAGRADO_TIPO}}                 |                                    PROYECTO DE INVESTIGACION                                    |
+|           {{HORA_MINUTOS_TEXTO_L}}           |                                  trece horas y treinta minutos                                  |
+|              {{ACTAGRADO_TIPO}}              |                                    PROYECTO DE INVESTIGACION                                    |
 |             {{DISNACION_GENERO}}             |     [el señor/la señorita, portador/portadora, El mencionado señor/La mencionada señorita]      |
 |       {{ESTUDIANTE_FECHA_NACIMIENTO}}        |                                    10 de septiembre de 2020                                     |
 |                {{PROVINCIA}}                 |                                           Tungurahua                                            |

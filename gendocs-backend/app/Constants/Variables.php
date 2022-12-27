@@ -71,4 +71,9 @@ abstract class Variables
     const MINUTOS_T_L = "{{MINUTOS_T_L}}";  // treinta
     const ASISTIERON = "{{ASISTIERON}}";    // miembros que asistieron
     const NO_ASISTIERON = "{{NO_ASISTIERON}}";  // miembros que no asistieron
+
+    /**
+     * FECHAS
+     */
+    const HORA_MINUTOS_TEXTO_L = "{{HORA_MINUTOS_TEXTO_L}}";
 }

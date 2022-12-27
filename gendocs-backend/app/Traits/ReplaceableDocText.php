@@ -147,4 +147,40 @@ trait ReplaceableDocText
 
         return env('NO_ASIS_MENSSAGE') . implode(", ", $asis);
     }
+
+    /**
+     * @param string $time la hora a convertir en texto: 13:20
+     * @return string texto: trece horas y veinte minutos
+     */
+    public function format_HORA_MINUTOS_TEXTO_L($time)
+    {
+        $list = explode(":", $time);
+
+        $hor = 0;
+        $min = 0;
+
+        if (count($list) >= 2) {
+            $hor = $list[0];
+            $min = $list[1];
+        }
+
+        $text = implode(" ", array(
+            $this->converNumberToWords($hor),
+            "horas",
+            "y",
+            $this->converNumberToWords($min),
+            "minutos"
+        ));
+
+        Log::info(
+            array(
+                "time" => $time,
+                "hor" => $hor,
+                "min" => $min,
+                "text" => $text,
+            )
+        );
+
+        return $text;
+    }
 }
