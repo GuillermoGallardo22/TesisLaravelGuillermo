@@ -1,11 +1,12 @@
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
+import { DatePicker } from "@mui/x-date-pickers";
 import ConfirmationDialog from "components/ConfirmationDialog";
 import ErrorSummary from "components/ErrorSummary";
 import Select from "components/Select";
 import { SingleAutoComplete } from "components/SingleAutoComplete";
-import { useFormik } from "formik";
+import { FormikHelpers, useFormik } from "formik";
 import { useErrorsResponse } from "hooks/useErrorsResponse";
 import { HTTP_STATUS } from "models/enums/HttpStatus";
 import {
@@ -68,6 +69,7 @@ const validationSchema = yup.object({
 
       return true;
     }),
+  fecha_asignacion: yup.date().nullable(),
 });
 
 const AddAsistenteActa: React.FunctionComponent<AddAsistenteActaProps> = ({
@@ -83,7 +85,10 @@ const AddAsistenteActa: React.FunctionComponent<AddAsistenteActaProps> = ({
   const { errorSummary, setErrorSummary, cleanErrorsSumary } =
     useErrorsResponse();
 
-  const onSubmit = async (form: IAddAsistenteActaGrado) => {
+  const onSubmit = async (
+    form: IAddAsistenteActaGrado,
+    helpers: FormikHelpers<IAddAsistenteActaGrado>
+  ) => {
     cleanErrorsSumary();
 
     const result = await saveMiembroActaGrado(form);
@@ -92,6 +97,7 @@ const AddAsistenteActa: React.FunctionComponent<AddAsistenteActaProps> = ({
       client.invalidateQueries(["miembros-acta-grados", actaGrado.id + ""]);
 
       enqueueSnackbar(result.message, { variant: "success" });
+      helpers.resetForm();
       handleCloseModal();
     } else {
       enqueueSnackbar(result.message, { variant: "error" });
@@ -104,6 +110,7 @@ const AddAsistenteActa: React.FunctionComponent<AddAsistenteActaProps> = ({
     tipo: TipoAsistenteActaGradoEnum.M_PRINCIPAL,
     informacion_adicional: "",
     actaGrado: actaGrado.id,
+    fecha_asignacion: null,
   };
 
   const formik = useFormik({
@@ -134,6 +141,12 @@ const AddAsistenteActa: React.FunctionComponent<AddAsistenteActaProps> = ({
   useEffect(() => {
     if (!requeridoIA) formik.setFieldValue("informacion_adicional", "");
   }, [requeridoIA]);
+
+  useEffect(() => {
+    if (!isVisible) {
+      formik.resetForm();
+    }
+  }, [isVisible]);
 
   return (
     <Box
@@ -221,6 +234,32 @@ const AddAsistenteActa: React.FunctionComponent<AddAsistenteActaProps> = ({
                 formik.touched.informacion_adicional &&
                 formik.errors.informacion_adicional
               }
+            />
+          </Grid>
+
+          <Grid item xs={12}>
+            <DatePicker
+              disabled={submitting}
+              label="Fecha asignación"
+              value={formik.values.fecha_asignacion}
+              onChange={(date) =>
+                formik.setFieldValue("fecha_asignacion", date)
+              }
+              renderInput={(props) => (
+                <TextField
+                  {...props}
+                  margin="normal"
+                  fullWidth
+                  error={
+                    formik.touched.fecha_asignacion &&
+                    Boolean(formik.errors.fecha_asignacion)
+                  }
+                  helperText={
+                    formik.touched.fecha_asignacion &&
+                    formik.errors.fecha_asignacion
+                  }
+                />
+              )}
             />
           </Grid>
 

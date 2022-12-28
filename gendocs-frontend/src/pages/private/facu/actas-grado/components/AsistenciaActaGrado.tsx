@@ -3,7 +3,6 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import { DataGrid, GridActionsCellItem, GridColumns } from "@mui/x-data-grid";
-import BooleanCell from "components/BooleanCell";
 import ConfirmationDialog from "components/ConfirmationDialog";
 import Icon from "components/Icon";
 import Skeleton from "components/Skeleton";
@@ -16,6 +15,7 @@ import { useMemo } from "react";
 import { useQueryClient } from "react-query";
 import { useParams } from "react-router-dom";
 import { deleteMiembroActaGrado } from "services/miembro-acta-grado";
+import { parseToDate } from "utils/date";
 import { getNombreCompletoMiembro } from "utils/libs";
 import AddAsistenteActa from "../components/AddAsistenteActa";
 import useActaGrado from "../hooks/useActaGrado";
@@ -64,26 +64,19 @@ const AsistenciaActaGrado = () => {
       {
         field: "tipo",
         headerName: "Tipo",
-        flex: 1,
+        width: 200,
       },
       {
         field: "informacion_adicional",
-        headerName: "Inf. adicional",
-        width: 250,
-      },
-      // {
-      //   type: "boolean",
-      //   field: "notificado",
-      //   headerName: "Notificado",
-      //   flex: 1,
-      //   renderCell: (r) => <BooleanCell value={r.row.notificado} />,
-      // },
-      {
-        type: "boolean",
-        field: "asistio",
-        headerName: "Asistió",
+        headerName: "Doc. asignación",
         flex: 1,
-        renderCell: (r) => <BooleanCell value={r.row.asistio} />,
+      },
+      {
+        type: "date",
+        field: "fecha_asignacion",
+        headerName: "F. asignación",
+        width: 150,
+        valueFormatter: (v) => parseToDate(v.value),
       },
       {
         type: "actions",

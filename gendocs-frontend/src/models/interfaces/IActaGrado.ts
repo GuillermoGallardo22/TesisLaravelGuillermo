@@ -110,6 +110,7 @@ export interface IAddAsistenteActaGrado {
   tipo: TipoAsistenteActaGradoEnum;
   informacion_adicional: string;
   actaGrado: number;
+  fecha_asignacion: Date | null;
 }
 
 export interface IMiembroActaGrado {
@@ -119,4 +120,5 @@ export interface IMiembroActaGrado {
   informacion_adicional: string | null;
   asistio: boolean;
   notificado: boolean;
+  fecha_asignacion: string;
 }
