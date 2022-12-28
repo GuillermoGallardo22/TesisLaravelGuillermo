@@ -19,13 +19,15 @@ class MiembrosActaGrado extends Model
         "docente_id",
         "tipo",
         "informacion_adicional",
+        "fecha_asignacion",
     ];
 
     protected const FILTERS = ["actaGrado"];
 
     protected $casts = [
         "notificado" => "boolean",
-        "asistio" => "boolean"
+        "asistio" => "boolean",
+        "fecha_asignacion" => "date",
     ];
 
     public function fields()
@@ -38,6 +40,7 @@ class MiembrosActaGrado extends Model
             "informacion_adicional" => $this->informacion_adicional,
             "notificado" => $this->notificado,
             "asistio" => $this->asistio,
+            "fecha_asignacion" => $this->fecha_asignacion,
         ];
     }
 

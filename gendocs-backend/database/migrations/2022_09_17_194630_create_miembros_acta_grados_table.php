@@ -29,6 +29,7 @@ class CreateMiembrosActaGradosTable extends Migration
             $table->enum('tipo', [TipoAsistenteActaGrado::TUTOR, TipoAsistenteActaGrado::M_PRINCIPAL, TipoAsistenteActaGrado::M_SUPLENTE, TipoAsistenteActaGrado::PRESIDENTE]);
 
             $table->string("informacion_adicional")->nullable();
+            $table->date("fecha_asignacion")->nullable();
 
             $table->boolean("asistio")->default(false);
             $table->boolean("notificado")->default(false);

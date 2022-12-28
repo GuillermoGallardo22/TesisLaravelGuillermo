@@ -41,6 +41,7 @@ class MiembrosActaGradoController extends Controller
                 "acta_grado_id" => $validated["actaGrado"],
                 "tipo" => $validated["tipo"],
                 "informacion_adicional" => $validated["informacion_adicional"],
+                "fecha_asignacion" => $validated["fecha_asignacion"],
             ]);
 
             return ResourceObject::make($miembroActaGrado);
