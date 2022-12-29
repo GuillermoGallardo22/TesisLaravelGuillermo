@@ -39,6 +39,7 @@ class StoreMiembrosActaGradoRequest extends FormRequest
     {
         $this->merge([
             "informacion_adicional" => isset($this->informacion_adicional) ? $this->informacion_adicional : null,
+            "fecha_asignacion" => isset($this->fecha_asignacion) ? $this->fecha_asignacion : null,
         ]);
     }
 }
