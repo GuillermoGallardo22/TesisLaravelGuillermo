@@ -289,7 +289,7 @@ export const routes: IRoute[] = [
     label: "Perfil",
     component: Components.Profile,
     icon: "accountCircle",
-    modules: [ModuleEnum.FACU, ModuleEnum.SUDE, ModuleEnum.TITU],
+    modules: [],
   },
 ];
 
