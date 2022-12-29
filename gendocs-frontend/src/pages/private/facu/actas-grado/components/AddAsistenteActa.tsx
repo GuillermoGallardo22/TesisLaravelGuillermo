@@ -163,6 +163,7 @@ const AddAsistenteActa: React.FunctionComponent<AddAsistenteActaProps> = ({
         title="Agregar miembros"
         onCancel={handleCloseModal}
         textApprove="Agregar"
+        maxWidth="md"
         buttonColorCancel="error"
         loading={submitting}
         onCancelButtonProps={{
@@ -225,6 +226,7 @@ const AddAsistenteActa: React.FunctionComponent<AddAsistenteActaProps> = ({
               name="informacion_adicional"
               label="Documento de asignación"
               value={formik.values.informacion_adicional}
+              placeholder="Memorando Nro. UTA-FISEI-2022-0001-M | Resolución 0001-P-CD-FISEI-UTA-2022"
               onChange={formik.handleChange}
               error={
                 formik.touched.informacion_adicional &&
