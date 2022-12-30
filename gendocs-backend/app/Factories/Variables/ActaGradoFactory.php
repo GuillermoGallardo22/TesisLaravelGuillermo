@@ -137,11 +137,9 @@ class ActaGradoFactory implements IVariable
         $miembro2 = "NOT_IMPLEMENTED";
         $variable = "NOT_IMPLEMENTED";
 
-        Log::info($miembrosTribunal);
-
         if (count($miembrosTribunal) == 2) {
-            $m1 = $miembrosTribunal[1];
-            $m2 = $miembrosTribunal[2];
+            $m1 = $miembrosTribunal->first();
+            $m2 = $miembrosTribunal->last();
 
             $c = strtolower(mb_substr($m2->docente->nombres, 0, 1)) == "i" ? "e" : "y";
 
