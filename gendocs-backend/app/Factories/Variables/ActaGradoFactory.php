@@ -5,13 +5,16 @@ namespace App\Factories\Variables;
 use App\Constants\EstadoActas;
 use App\Constants\Genero;
 use App\Constants\TipoActaGrados;
+use App\Constants\TipoAsistenteActaGrado;
 use App\Constants\Variables;
 use App\Interfaces\IVariable;
 use App\Models\Canton;
 use App\Models\Estudiante;
+use App\Models\MiembrosActaGrado;
 use App\Traits\ReplaceableDocText;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 
 class ActaGradoFactory implements IVariable
 {
@@ -58,10 +61,12 @@ class ActaGradoFactory implements IVariable
         );
 
         // TODO: CREAR VARIABLES PARA TODOS LOS DEMAS TIPOS DE ACTA DE GRADO
+        $miembros = $this->miembros($model->miembros);
 
         $variables = collect(array_merge(
             $this->getVariablesFromEstudiante($estudiante),
             $infoAdicionalEstudiante,
+            $miembros,
             //
             $this->getVariablesFromCanton($model->canton),
             //
@@ -103,6 +108,84 @@ class ActaGradoFactory implements IVariable
         });
 
         return $variables->toArray();
+    }
+
+    public function miembros(Collection $miembros)
+    {
+        $datosPresidente = array();
+
+        $miembroPresidente = $miembros
+            ->where('tipo', TipoAsistenteActaGrado::PRESIDENTE)
+            ->where('asistio', true)
+            ->first();
+
+        if ($miembroPresidente) {
+            $datosPresidente = array(
+                "{{ACTAGRADO_PRESIDENTE}}" => $miembroPresidente->docente->nombres,
+                "{{ACTAGRADO_PRESIDENTE_DOCU_ASIGNACION}}" => $miembroPresidente->informacion_adicional,
+            );
+        }
+
+        $datosMiembrosTribunal = array();
+
+        $miembrosTribunal = $miembros
+            ->whereIn('tipo', [TipoAsistenteActaGrado::M_PRINCIPAL, TipoAsistenteActaGrado::M_PRINCIPAL])
+            ->where('asistio', true);
+
+        $miembro1 = "NOT_IMPLEMENTED";
+        $miembro2 = "NOT_IMPLEMENTED";
+        $variable = "NOT_IMPLEMENTED";
+
+        if ($miembrosTribunal->count() == 2) {
+            $m1 = $miembrosTribunal->get(1);
+            $m2 = $miembrosTribunal->get(2);
+
+            if ($m1->informacion_adicional == $m2->informacion_adicional) {
+                $variable = "%m1 e %m2, designados con %d, de fecha %f";
+                $variable = str_replace(
+                    array("%m1", "%m2", "%d", "%f"),
+                    array(
+                        $m1->docente->nombres,
+                        $m2->docente->nombres,
+                        $m1->informacion_adicional,
+                        $this->formatDateText($m2->fecha_asignacion),
+                    ),
+                    $variable,
+                );
+            } else {
+                $variable = "%m1, designado mediante %d1 de fecha %f1 %c %m2, designado mediante %d2 de fecha %f2";
+                $variable = str_replace(
+                    array("%m1", "%d1", "%f1", "%m2", "%d2", "%f2", "%c"),
+                    array(
+                        $m1->docente->nombres,
+                        $m1->informacion_adicional,
+                        $this->formatDateText($m1->fecha_asignacion),
+                        //
+                        $m2->docente->nombres,
+                        $m2->informacion_adicional,
+                        $this->formatDateText($m2->fecha_asignacion),
+                        //
+                        strtolower(mb_substr($m2->docente->nombres, 0, 1)) == "i" ? "e" : "y",
+                    ),
+                    $variable,
+                );
+            }
+
+            $miembro1 = $m1->docente->nombres;
+            $miembro2 = $m2->docente->nombres;
+        }
+
+        $datosMiembrosTribunal = array(
+            "{{ACTAGRADO_MIEMBROS}}" => $variable,
+            "{{ACTAGRADO_MIEMBRO1}}" => $miembro1,
+            "{{ACTAGRADO_MIEMBRO2}}" => $miembro2,
+            "{{CREADOPOR}}" => auth()->user()->name,
+        );
+
+        return array_merge(
+            $datosPresidente,
+            $datosMiembrosTribunal,
+        );
     }
 
     public function getVariablesFromCanton(Canton $canton)
