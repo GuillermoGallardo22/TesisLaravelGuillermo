@@ -1,8 +1,14 @@
-import { DialogContentText, Tooltip } from "@mui/material";
+import { DialogContentText, Grid, Tooltip } from "@mui/material";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
-import { DataGrid, GridActionsCellItem, GridColumns } from "@mui/x-data-grid";
+import {
+  DataGrid,
+  GridActionsCellItem,
+  GridColumns,
+  GridSelectionModel,
+} from "@mui/x-data-grid";
+import BooleanCell from "components/BooleanCell";
 import ConfirmationDialog from "components/ConfirmationDialog";
 import Icon from "components/Icon";
 import Skeleton from "components/Skeleton";
@@ -10,26 +16,50 @@ import TitleNav from "components/TitleNav";
 import { GridToolbarColumns } from "components/ToolbarDataGrid";
 import { useConfirmationDialog } from "hooks/useConfirmationDialog";
 import { useDeleteItem } from "hooks/useDeleteItem";
-import { IMiembroActaGrado } from "models/interfaces/IActaGrado";
-import { useMemo } from "react";
+import { useGridColumnVisibilityModel } from "hooks/useGridColumnVisibilityModel";
+import { IActaGrado, IMiembroActaGrado } from "models/interfaces/IActaGrado";
+import { useMemo, useState } from "react";
 import { useQueryClient } from "react-query";
 import { useParams } from "react-router-dom";
-import { deleteMiembroActaGrado } from "services/miembro-acta-grado";
+import {
+  deleteMiembroActaGrado,
+  marcarAsistencia,
+} from "services/miembro-acta-grado";
 import { parseToDate } from "utils/date";
 import { getNombreCompletoMiembro } from "utils/libs";
+import { AsistenciaDialog } from "../../consejos/components/AsistenciaDialog";
 import AddAsistenteActa from "../components/AddAsistenteActa";
 import useActaGrado from "../hooks/useActaGrado";
+import useMiembrosActaGrado from "../hooks/useMiembrosActaGrado";
 
-const AsistenciaActaGrado = () => {
-  const client = useQueryClient();
+const LoadingAsistenciaActaGrado = () => {
   const { actaGradoId = "" } = useParams<{ actaGradoId: string }>();
-  const { actaGrado, isLoadingActaGrado, miembros, isLoadingMiembros } =
-    useActaGrado({
-      actaGradoId,
-      props: {
-        withMiembros: true,
-      },
-    });
+  const { actaGrado, isLoadingActaGrado } = useActaGrado({
+    actaGradoId,
+    props: {
+      withMiembros: true,
+    },
+  });
+
+  return !actaGrado || isLoadingActaGrado ? (
+    <Skeleton />
+  ) : (
+    <AsistenciaActaGradoBase actaGrado={actaGrado} />
+  );
+};
+
+type AsistenciaActaGradoBaseProps = {
+  actaGrado: IActaGrado;
+};
+
+const AsistenciaActaGradoBase: React.FunctionComponent<
+  AsistenciaActaGradoBaseProps
+> = ({ actaGrado }) => {
+  const client = useQueryClient();
+
+  const { isLoadingMiembros, miembros } = useMiembrosActaGrado({
+    actaGradoId: actaGrado.id.toString(),
+  });
 
   const {
     isVisible: isVisibleAddDocente,
@@ -79,6 +109,13 @@ const AsistenciaActaGrado = () => {
         valueFormatter: (v) => parseToDate(v.value),
       },
       {
+        type: "boolean",
+        field: "asistio",
+        headerName: "Asistió",
+        flex: 1,
+        renderCell: (r) => <BooleanCell value={r.row.asistio} />,
+      },
+      {
         type: "actions",
         field: "acciones",
         headerName: "Acciones",
@@ -101,35 +138,65 @@ const AsistenciaActaGrado = () => {
     []
   );
 
-  if (!actaGrado || isLoadingActaGrado) return <Skeleton />;
+  const {
+    isVisible: isVisibleA,
+    openJustModal: openModalA,
+    closeModal: closeModalA,
+  } = useConfirmationDialog();
+
+  const { columnVisibilityModel, onColumnVisibilityModelChange } =
+    useGridColumnVisibilityModel({
+      key: "asistentesActaGradoTableModel",
+    });
+
+  const [selectionModel, setSelectionModel] = useState<GridSelectionModel>([]);
+
+  const miembrosSeleccionados = useMemo(
+    (): IMiembroActaGrado[] =>
+      miembros.filter((m) => selectionModel.some((s) => s === m.id)),
+    [selectionModel.length]
+  );
 
   return (
     <Stack spacing={2}>
       <TitleNav title="Asistentes" />
 
       <Box>
-        <Button
-          fullWidth
-          disabled={!actaGrado.fecha_presentacion}
-          startIcon={<Icon icon="add" />}
-          variant="outlined"
-          onClick={openModalAddDocente}
-        >
-          AGREGAR
-        </Button>
+        <Grid container spacing={2} columns={{ xs: 2 }}>
+          <Grid item xs={1} sm={2} md={1}>
+            <Button
+              fullWidth
+              disabled={!actaGrado.fecha_presentacion}
+              startIcon={<Icon icon="add" />}
+              variant="outlined"
+              onClick={openModalAddDocente}
+            >
+              AGREGAR
+            </Button>
+          </Grid>
+          <Grid item xs={1}>
+            <Button
+              fullWidth
+              disabled={!selectionModel.length}
+              startIcon={<Icon icon="factCheck" />}
+              variant="outlined"
+              onClick={openModalA}
+            >
+              Marcar asistencia
+            </Button>
+          </Grid>
+        </Grid>
       </Box>
 
       <div style={{ height: 700, width: "100%" }}>
         <DataGrid
-          // selectionModel={selectionModel}
-          // onSelectionModelChange={(newSelectionModel) => {
-          //   setSelectionModel(newSelectionModel);
-          // }}
-          // checkboxSelection
-          // disableSelectionOnClick
+          selectionModel={selectionModel}
+          onSelectionModelChange={setSelectionModel}
+          checkboxSelection
+          disableSelectionOnClick
           disableColumnMenu
-          // columnVisibilityModel={columnVisibilityModel}
-          // onColumnVisibilityModelChange={onColumnVisibilityModelChange}
+          columnVisibilityModel={columnVisibilityModel}
+          onColumnVisibilityModelChange={onColumnVisibilityModelChange}
           components={{ Toolbar: GridToolbarColumns }}
           columns={columns}
           loading={isLoadingMiembros}
@@ -141,6 +208,15 @@ const AsistenciaActaGrado = () => {
         actaGrado={actaGrado}
         isVisible={isVisibleAddDocente}
         onCancel={closeModalAddDocente}
+      />
+
+      <AsistenciaDialog
+        isVisible={isVisibleA}
+        closeModal={closeModalA}
+        miembros={miembrosSeleccionados}
+        queryKey={["miembros-acta-grados"]}
+        nameKey={"docente"}
+        onSummit={marcarAsistencia}
       />
 
       <ConfirmationDialog
@@ -162,5 +238,7 @@ const AsistenciaActaGrado = () => {
     </Stack>
   );
 };
+
+const AsistenciaActaGrado = LoadingAsistenciaActaGrado;
 
 export default AsistenciaActaGrado;

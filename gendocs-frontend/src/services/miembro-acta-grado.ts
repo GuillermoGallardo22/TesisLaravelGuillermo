@@ -60,3 +60,24 @@ export async function deleteMiembroActaGrado(
     return handleErrors(error);
   }
 }
+
+export async function marcarAsistencia(
+  miembro: IMiembroActaGrado,
+  asistio: boolean
+): Promise<IResponse<IMiembroActaGrado>> {
+  try {
+    const {
+      data: { data },
+    } = await axios.patch("miembro-acta-grado/" + miembro.id, {
+      asistio,
+    });
+
+    return {
+      data: data,
+      message: HTTP_MESSAGES[200],
+      status: HTTP_STATUS.ok,
+    };
+  } catch (error) {
+    return handleErrors(error);
+  }
+}
