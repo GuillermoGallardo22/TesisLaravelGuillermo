@@ -15,6 +15,7 @@ use App\Traits\ReplaceableDocText;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Log;
 
 class ActaGradoFactory implements IVariable
 {
@@ -128,17 +129,20 @@ class ActaGradoFactory implements IVariable
 
         $datosMiembrosTribunal = array();
 
+        Log::info();
+
         $miembrosTribunal = $miembros
-            ->whereIn('tipo', [TipoAsistenteActaGrado::M_PRINCIPAL, TipoAsistenteActaGrado::M_PRINCIPAL])
-            ->where('asistio', true);
+            ->whereIn('tipo', [TipoAsistenteActaGrado::M_PRINCIPAL, TipoAsistenteActaGrado::M_SUPLENTE])
+            ->where('asistio', true)
+            ->toArray();
 
         $miembro1 = "NOT_IMPLEMENTED";
         $miembro2 = "NOT_IMPLEMENTED";
         $variable = "NOT_IMPLEMENTED";
 
-        if ($miembrosTribunal->count() == 2) {
-            $m1 = $miembrosTribunal->get(1);
-            $m2 = $miembrosTribunal->get(2);
+        if (count($miembrosTribunal) == 2) {
+            $m1 = $miembrosTribunal[0];
+            $m2 = $miembrosTribunal[1];
 
             $c = strtolower(mb_substr($m2->docente->nombres, 0, 1)) == "i" ? "e" : "y";
 
