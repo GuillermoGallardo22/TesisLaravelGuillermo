@@ -21,7 +21,7 @@ import { useGridColumnVisibilityModel } from "hooks/useGridColumnVisibilityModel
 import { IMiembro } from "models/interfaces/IConsejoMiembro";
 import { useMemo, useState } from "react";
 import { useQueryClient } from "react-query";
-import { deleteMiembro } from "services/miembros";
+import { deleteMiembro, marcarAsistencia } from "services/miembros";
 import { getNombreCompletoMiembro } from "utils/libs";
 import { useMiembros } from "../hooks/useMiembros";
 import { AddMiembro } from "./AddMiembro";
@@ -212,6 +212,9 @@ export default function ListMiembros() {
         isVisible={isVisibleA}
         closeModal={closeModalA}
         miembros={miembrosSeleccionados}
+        queryKey={["consejos-miembros"]}
+        nameKey="docente"
+        onSummit={marcarAsistencia}
       />
 
       {itemMiembroSelected && isVisibleDeleteMiembroModal && (
