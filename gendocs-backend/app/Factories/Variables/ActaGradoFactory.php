@@ -131,16 +131,17 @@ class ActaGradoFactory implements IVariable
 
         $miembrosTribunal = $miembros
             ->whereIn('tipo', [TipoAsistenteActaGrado::M_PRINCIPAL, TipoAsistenteActaGrado::M_SUPLENTE])
-            ->where('asistio', true)
-            ->toArray();
+            ->where('asistio', true);
 
         $miembro1 = "NOT_IMPLEMENTED";
         $miembro2 = "NOT_IMPLEMENTED";
         $variable = "NOT_IMPLEMENTED";
 
+        Log::info($miembrosTribunal);
+
         if (count($miembrosTribunal) == 2) {
-            $m1 = $miembrosTribunal[0];
-            $m2 = $miembrosTribunal[1];
+            $m1 = $miembrosTribunal[1];
+            $m2 = $miembrosTribunal[2];
 
             $c = strtolower(mb_substr($m2->docente->nombres, 0, 1)) == "i" ? "e" : "y";
 
