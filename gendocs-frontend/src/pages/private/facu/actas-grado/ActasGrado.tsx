@@ -49,11 +49,27 @@ const ActasGrado: React.FunctionComponent = () => {
       LocalStorageKeys.CARRERA_SELECCIONADA_ACTA_GRADO
     )
   );
-  const { carreras, isLoading: loadingCarreras } = useListCarreras();
-  const { estadoActas, isLoading: loadingEstadoActas } = useEstadoActasList();
-  const { modalidades, isLoading: loadingModalidades } =
-    useModalidadActasList();
-  const { tiposActas, isLoading: loadingTipoActas } = useTipoActasList();
+
+  const { carreras, isLoading: loadingCarreras } = useListCarreras({
+    useQueryOptions: {
+      refetchOnWindowFocus: false,
+    },
+  });
+  const { estadoActas, isLoading: loadingEstadoActas } = useEstadoActasList({
+    useQueryOptions: {
+      refetchOnWindowFocus: false,
+    },
+  });
+  const { modalidades, isLoading: loadingModalidades } = useModalidadActasList({
+    useQueryOptions: {
+      refetchOnWindowFocus: false,
+    },
+  });
+  const { tiposActas, isLoading: loadingTipoActas } = useTipoActasList({
+    useQueryOptions: {
+      refetchOnWindowFocus: false,
+    },
+  });
 
   const {
     data: actasGrado = [],
