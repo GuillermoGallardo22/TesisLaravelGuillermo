@@ -48,6 +48,8 @@ class ActaGradoFactory implements IVariable
         ],
     ];
 
+    const NUM_MIEMBROS = 2;
+
     protected Model $model;
 
     public function __construct(Model $model)
@@ -143,7 +145,9 @@ class ActaGradoFactory implements IVariable
 
         $miembrosTribunal = $miembros
             ->whereIn('tipo', [TipoAsistenteActaGrado::M_PRINCIPAL, TipoAsistenteActaGrado::M_SUPLENTE])
-            ->where('asistio', true);
+            ->where('asistio', true)
+            ->sortBy('created_at')
+            ->take($this::NUM_MIEMBROS);
 
         $miembro1 = "NOT_IMPLEMENTED";
         $miembro2 = "NOT_IMPLEMENTED";
@@ -152,7 +156,7 @@ class ActaGradoFactory implements IVariable
         // PRINCIPAL->RESOLUCION => designado mediante/designados mediante
         // SUPLENTE->MEMORADOM => principalizado con/principalizados con
 
-        if (count($miembrosTribunal) == 2) {
+        if ($miembrosTribunal->count() == $this::NUM_MIEMBROS) {
 
             $m1 = $miembrosTribunal->first();
             $m2 = $miembrosTribunal->last();
