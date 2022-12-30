@@ -4,21 +4,27 @@ import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import ConfirmationDialog from "components/ConfirmationDialog";
 import { ConfirmationDialogReturnProps } from "hooks/useConfirmationDialog";
-import { IMiembro } from "models/interfaces/IConsejoMiembro";
+import { IDocente } from "models/interfaces/IDocente";
+import { IResponse } from "models/interfaces/IResponse";
 import { useSnackbar } from "notistack";
 import { useState } from "react";
 import { useQueryClient } from "react-query";
-import { marcarAsistencia } from "services/miembros";
 import { HTTP_MESSAGES } from "utils/messages";
 
 type AsistenciaDialog<T> = {
-  miembros: IMiembro[];
+  miembros: T[];
+  onSummit: (miembro: T, asistio: boolean) => Promise<IResponse<T>>;
+  queryKey: string[];
+  nameKey: keyof T;
 } & Pick<ConfirmationDialogReturnProps<T>, "isVisible" | "closeModal">;
 
 export function AsistenciaDialog<T>({
   miembros,
   isVisible,
   closeModal,
+  queryKey,
+  onSummit,
+  nameKey,
 }: AsistenciaDialog<T>) {
   const [submitting, setSubmitting] = useState(false);
   const client = useQueryClient();
@@ -29,13 +35,13 @@ export function AsistenciaDialog<T>({
 
     setSubmitting(true);
 
-    await Promise.all(miembros.map((m) => marcarAsistencia(m, true)));
+    await Promise.all(miembros.map((m) => onSummit(m, true)));
+    client.invalidateQueries(queryKey);
 
     setSubmitting(false);
     closeModal();
 
     enqueueSnackbar(HTTP_MESSAGES[200], { variant: "success" });
-    client.invalidateQueries(["consejos-miembros"]);
   };
 
   return (
@@ -51,12 +57,12 @@ export function AsistenciaDialog<T>({
     >
       <DialogContentText>
         Se actualizará a un estado de <strong>asistido</strong> a los siguientes
-        miembros:
+        docentes:
       </DialogContentText>
       <List>
         {miembros.map((m, i) => (
           <ListItem key={i}>
-            <ListItemText primary={m.docente.nombres} />
+            <ListItemText primary={(m[nameKey] as IDocente).nombres} />
           </ListItem>
         ))}
       </List>
