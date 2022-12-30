@@ -23,6 +23,7 @@ import { useEffect, useState } from "react";
 import { getAulas } from "services/aulas";
 import { getCantones } from "services/cantones";
 import { getEstudiantes } from "services/estudiantes";
+import { CONSTANTS } from "utils/constants";
 import {
   getOptionLabelAula,
   getOptionLabelCanton,
@@ -280,6 +281,7 @@ const AddActaGrado: React.FunctionComponent = () => {
 
           <Grid item xs={12} sm={6}>
             <DatePicker
+              views={CONSTANTS.DATEPICKER}
               disabled={submitting || !estudianteSeleccionado}
               label="Fecha inicio estudios"
               value={formik.values.fecha_inicio_estudios}
@@ -307,6 +309,7 @@ const AddActaGrado: React.FunctionComponent = () => {
 
           <Grid item xs={12} sm={6}>
             <DatePicker
+              views={CONSTANTS.DATEPICKER}
               label="Fecha fin estudios"
               disabled={submitting || !estudianteSeleccionado}
               value={formik.values.fecha_fin_estudios}

@@ -1,3 +1,4 @@
+import { CalendarPickerView } from "@mui/x-date-pickers";
 import { EstadoActaEnum } from "models/enums/ActaGrado";
 
 export const CONSTANTS = {
@@ -14,4 +15,5 @@ export const CONSTANTS = {
     [EstadoActaEnum.REPR]: "error",
     [EstadoActaEnum.NO_RESENTACION]: "warning",
   },
+  DATEPICKER: ["year", "month", "day"] as CalendarPickerView[],
 };

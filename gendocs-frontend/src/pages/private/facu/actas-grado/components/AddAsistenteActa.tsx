@@ -20,6 +20,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useQueryClient } from "react-query";
 import { getDocentes } from "services/docentes";
 import { saveMiembroActaGrado } from "services/miembro-acta-grado";
+import { CONSTANTS } from "utils/constants";
 import { getOptionLabelDocente, isOptionEqualToValueDocente } from "utils/libs";
 import { VALIDATION_MESSAGES as VM } from "utils/messages";
 
@@ -241,6 +242,7 @@ const AddAsistenteActa: React.FunctionComponent<AddAsistenteActaProps> = ({
 
           <Grid item xs={12}>
             <DatePicker
+              views={CONSTANTS.DATEPICKER}
               disabled={submitting}
               label="Fecha asignación"
               value={formik.values.fecha_asignacion}

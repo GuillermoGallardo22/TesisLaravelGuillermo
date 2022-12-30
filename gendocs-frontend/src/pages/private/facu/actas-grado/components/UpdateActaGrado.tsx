@@ -30,6 +30,7 @@ import { useParams } from "react-router-dom";
 import { updateActaGrado } from "services/actas-grado";
 import { getAulas } from "services/aulas";
 import { getTipoActasGrado } from "services/tipoActasGrado";
+import { CONSTANTS } from "utils/constants";
 import { parseToDate } from "utils/date";
 import {
   getOptionLabelAula,
@@ -280,6 +281,7 @@ const UpdateActaGradoBase = ({
 
           <Grid item xs={12} sm={6}>
             <DatePicker
+              views={CONSTANTS.DATEPICKER}
               label="Fecha fin estudios"
               disabled={submitting}
               value={formik.values.fecha_fin_estudios}
