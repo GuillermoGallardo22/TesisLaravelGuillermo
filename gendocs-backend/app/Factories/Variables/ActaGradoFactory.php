@@ -140,15 +140,18 @@ class ActaGradoFactory implements IVariable
             $m1 = $miembrosTribunal->get(1);
             $m2 = $miembrosTribunal->get(2);
 
+            $c = strtolower(mb_substr($m2->docente->nombres, 0, 1)) == "i" ? "e" : "y";
+
             if ($m1->informacion_adicional == $m2->informacion_adicional) {
-                $variable = "%m1 e %m2, designados con %d, de fecha %f";
+                $variable = "%m1 %c %m2, designados con %d, de fecha %f";
                 $variable = str_replace(
-                    array("%m1", "%m2", "%d", "%f"),
+                    array("%m1", "%m2", "%d", "%f", "%c"),
                     array(
                         $m1->docente->nombres,
                         $m2->docente->nombres,
                         $m1->informacion_adicional,
                         $this->formatDateText($m2->fecha_asignacion),
+                        $c,
                     ),
                     $variable,
                 );
@@ -165,7 +168,7 @@ class ActaGradoFactory implements IVariable
                         $m2->informacion_adicional,
                         $this->formatDateText($m2->fecha_asignacion),
                         //
-                        strtolower(mb_substr($m2->docente->nombres, 0, 1)) == "i" ? "e" : "y",
+                        $c,
                     ),
                     $variable,
                 );
