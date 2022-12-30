@@ -129,8 +129,6 @@ class ActaGradoFactory implements IVariable
 
         $datosMiembrosTribunal = array();
 
-        Log::info();
-
         $miembrosTribunal = $miembros
             ->whereIn('tipo', [TipoAsistenteActaGrado::M_PRINCIPAL, TipoAsistenteActaGrado::M_SUPLENTE])
             ->where('asistio', true)
