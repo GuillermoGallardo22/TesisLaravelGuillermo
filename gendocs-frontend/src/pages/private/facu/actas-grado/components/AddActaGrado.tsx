@@ -273,8 +273,9 @@ const AddActaGrado: React.FunctionComponent = () => {
                 Boolean(formik.errors.titulo_bachiller)
               }
               helperText={
-                formik.touched.titulo_bachiller &&
-                formik.errors.titulo_bachiller
+                (formik.touched.titulo_bachiller &&
+                  formik.errors.titulo_bachiller) ||
+                "En el caso de cambio de universidad, ingresar el título de bachiller y Universidad"
               }
             />
           </Grid>
