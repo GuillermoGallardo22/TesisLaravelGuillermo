@@ -2,6 +2,7 @@
 
 namespace App\Factories\Variables;
 
+use App\Constants\Adjetivo;
 use App\Constants\EstadoActas;
 use App\Constants\Genero;
 use App\Constants\TipoActaGrados;
@@ -33,6 +34,17 @@ class ActaGradoFactory implements IVariable
         [
             Genero::FEMENINO => 'La mencionada señorita',
             Genero::MASCULINO => 'El mencionado señor',
+        ],
+    ];
+
+    const DESIGNACION_MIEMBROS = [
+        TipoAsistenteActaGrado::M_PRINCIPAL => [
+            Adjetivo::SINGUL => "designado mediante",
+            Adjetivo::PLURAL => "designados mediante",
+        ],
+        TipoAsistenteActaGrado::M_SUPLENTE => [
+            Adjetivo::SINGUL => "principalizado con",
+            Adjetivo::PLURAL => "principalizados con",
         ],
     ];
 
@@ -137,29 +149,41 @@ class ActaGradoFactory implements IVariable
         $miembro2 = "NOT_IMPLEMENTED";
         $variable = "NOT_IMPLEMENTED";
 
+        // PRINCIPAL->RESOLUCION => designado mediante/designados mediante
+        // SUPLENTE->MEMORADOM => principalizado con/principalizados con
+
         if (count($miembrosTribunal) == 2) {
+
             $m1 = $miembrosTribunal->first();
             $m2 = $miembrosTribunal->last();
 
             $c = strtolower(mb_substr($m2->docente->nombres, 0, 1)) == "i" ? "e" : "y";
 
             if ($m1->informacion_adicional == $m2->informacion_adicional) {
-                $variable = "%m1 %c %m2, designados con %d, de fecha %f";
+                $variable = "%m1 %c %m2, %v %d, de fecha %f";
+
+                $v = $this::DESIGNACION_MIEMBROS[$m1->tipo][Adjetivo::PLURAL];
+
                 $variable = str_replace(
-                    array("%m1", "%m2", "%d", "%f", "%c"),
+                    array("%m1", "%m2", "%d", "%f", "%c", "%v"),
                     array(
                         $m1->docente->nombres,
                         $m2->docente->nombres,
                         $m1->informacion_adicional,
                         $this->formatDateText($m2->fecha_asignacion),
                         $c,
+                        $v,
                     ),
                     $variable,
                 );
             } else {
-                $variable = "%m1, designado mediante %d1 de fecha %f1 %c %m2, designado mediante %d2 de fecha %f2";
+                $variable = "%m1, %v1 %d1 de fecha %f1 %c %m2, %v2 %d2 de fecha %f2";
+
+                $v1 = $this::DESIGNACION_MIEMBROS[$m1->tipo][Adjetivo::SINGUL];
+                $v2 = $this::DESIGNACION_MIEMBROS[$m2->tipo][Adjetivo::SINGUL];
+
                 $variable = str_replace(
-                    array("%m1", "%d1", "%f1", "%m2", "%d2", "%f2", "%c"),
+                    array("%m1", "%d1", "%f1", "%m2", "%d2", "%f2", "%c", "%v1", "%v2"),
                     array(
                         $m1->docente->nombres,
                         $m1->informacion_adicional,
@@ -170,6 +194,8 @@ class ActaGradoFactory implements IVariable
                         $this->formatDateText($m2->fecha_asignacion),
                         //
                         $c,
+                        $v1,
+                        $v2,
                     ),
                     $variable,
                 );
