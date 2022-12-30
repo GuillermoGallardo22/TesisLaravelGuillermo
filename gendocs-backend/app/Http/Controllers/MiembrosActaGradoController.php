@@ -24,6 +24,7 @@ class MiembrosActaGradoController extends Controller
     {
         $query = MiembrosActaGrado::query();
 
+        $query->orderBy('tipo');
         $query->orderBy('created_at');
 
         $query->applyFilters($request->all());
