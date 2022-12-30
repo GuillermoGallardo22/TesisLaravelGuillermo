@@ -112,7 +112,6 @@ const AsistenciaActaGradoBase: React.FunctionComponent<
         type: "boolean",
         field: "asistio",
         headerName: "Asistió",
-        flex: 1,
         renderCell: (r) => <BooleanCell value={r.row.asistio} />,
       },
       {
