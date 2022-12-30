@@ -69,9 +69,15 @@ class MiembrosActaGradoController extends Controller
         //
     }
 
-    public function update(UpdateMiembrosActaGradoRequest $request, MiembrosActaGrado $miembrosActaGrado)
+    public function update(UpdateMiembrosActaGradoRequest $request, MiembrosActaGrado $miembroActaGrado)
     {
-        //
+        $validated = $request->validated();
+
+        $miembroActaGrado->asistio = $validated["asistio"];
+
+        $miembroActaGrado->save();
+
+        return ResourceObject::make($miembroActaGrado);
     }
 
     public function destroy(MiembrosActaGrado $miembroActaGrado)
