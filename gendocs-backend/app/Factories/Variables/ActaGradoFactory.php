@@ -9,6 +9,7 @@ use App\Constants\TipoActaGrados;
 use App\Constants\TipoAsistenteActaGrado;
 use App\Constants\Variables;
 use App\Interfaces\IVariable;
+use App\Models\ActaGrado;
 use App\Models\Canton;
 use App\Models\Estudiante;
 use App\Models\MiembrosActaGrado;
@@ -61,7 +62,7 @@ class ActaGradoFactory implements IVariable
     {
         $model = $this->model;
 
-        $now = Carbon::parse($model->fecha_presentacion)->timezone("GMT-5");
+        $fechaPresentacion = Carbon::parse($model->fecha_presentacion)->timezone("GMT-5");
 
         $estudiante = $model->estudiante;
 
@@ -75,35 +76,15 @@ class ActaGradoFactory implements IVariable
             "{{HORAS_PRACTICAS_NUMEROS}}" => $model->horas_practicas,
         );
 
-        // TODO: CREAR VARIABLES PARA TODOS LOS DEMAS TIPOS DE ACTA DE GRADO
         $miembros = $this->miembros($model->miembros);
 
         $variables = collect(array_merge(
             $this->getVariablesFromEstudiante($estudiante),
             $infoAdicionalEstudiante,
             $miembros,
-            //
             $this->getVariablesFromCanton($model->canton),
             //
             array(
-                "{{ACTAGRADO_TIPO}}" => $this->textToUpperLower($model->tipo->nombre, "upper"),
-                "{{ACTAGRADO_TEMA}}" => $this->textToUpperLower($model->tema, "upper"),
-                //
-                Variables::NUMDOC => $this->format_NUMACT($model->numero),
-                Variables::Y => $this->format_Y($now),
-                //
-                Variables::FECHA => $this->formatDate($now),
-                //
-                Variables::Y => $this->format_Y($now),
-                Variables::DIASEM_T => $this->format_DIASEM_T($now),
-                Variables::NUMMES_T_U => $this->format_NUMMES_T_U($now),
-                Variables::MES_T_L => $this->format_MES_T_L($now),
-                Variables::DIAS_T => $this->format_NUMDIA_T($now),
-                Variables::NUMANIO_T => $this->format_NUMANIO_T($now),
-                Variables::NUMANIO_T_L => $this->format_NUMANIO_T_L($now),
-                Variables::DIAS_T => $this->format_DIAS_T($now),
-                //
-                Variables::HORA_MINUTOS_TEXTO_L => $this->format_HORA_MINUTOS_TEXTO_L($now->toTimeString()),
                 //
                 "{{DISNACION_GENERO_0}}" => $this::DESIGNACION_GENERO[0][$estudiante->genero],
                 "{{DISNACION_GENERO_1}}" => $this::DESIGNACION_GENERO[1][$estudiante->genero],
@@ -118,11 +99,43 @@ class ActaGradoFactory implements IVariable
             ),
         ));
 
+        if ($model->carrera->desaparecera) {
+            $variables = $variables->merge(
+                $this->titulacion($model, $fechaPresentacion),
+            );
+        } else {
+            # code...
+        }
+
         $variables = $variables->map(function ($i) {
             return $i != null ? strval($i) : $i;
         });
 
         return $variables->toArray();
+    }
+
+    public function titulacion(ActaGrado $model, Carbon $fechaPresentacion)
+    {
+        return collect(array(
+            "{{ACTAGRADO_TIPO}}" => $this->textToUpperLower($model->tipo->nombre, "upper"),
+            "{{ACTAGRADO_TEMA}}" => $this->textToUpperLower($model->tema, "upper"),
+            //
+            Variables::NUMDOC => $this->format_NUMACT($model->numero),
+            Variables::Y => $this->format_Y($fechaPresentacion),
+            //
+            Variables::FECHA => $this->formatDate($fechaPresentacion),
+            //
+            Variables::Y => $this->format_Y($fechaPresentacion),
+            Variables::DIASEM_T => $this->format_DIASEM_T($fechaPresentacion),
+            Variables::NUMMES_T_U => $this->format_NUMMES_T_U($fechaPresentacion),
+            Variables::MES_T_L => $this->format_MES_T_L($fechaPresentacion),
+            Variables::DIAS_T => $this->format_NUMDIA_T($fechaPresentacion),
+            Variables::NUMANIO_T => $this->format_NUMANIO_T($fechaPresentacion),
+            Variables::NUMANIO_T_L => $this->format_NUMANIO_T_L($fechaPresentacion),
+            Variables::DIAS_T => $this->format_DIAS_T($fechaPresentacion),
+            //
+            Variables::HORA_MINUTOS_TEXTO_L => $this->format_HORA_MINUTOS_TEXTO_L($fechaPresentacion->toTimeString()),
+        ));
     }
 
     public function miembros(Collection $miembros)

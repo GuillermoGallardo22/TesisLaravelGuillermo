@@ -90,6 +90,11 @@ class ActaGrado extends Model
         return $this->belongsTo(Estudiante::class, "estudiante_id");
     }
 
+    public function carrera()
+    {
+        return $this->belongsTo(Carrera::class, "carrera_id");
+    }
+
     public function canton()
     {
         return $this->belongsTo(Canton::class, "canton_id");
