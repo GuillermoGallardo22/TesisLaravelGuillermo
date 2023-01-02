@@ -100,13 +100,9 @@ class ActaGradoFactory implements IVariable
         ));
 
         // DATOS ACTA
-        if ($model->carrera->desaparecera) {
-            $variables = $variables->merge(
-                $this->titulacion($model, $fechaPresentacion),
-            );
-        } else {
-            # code...
-        }
+        $variables = $variables->merge(
+            $this->titulacion($model, $fechaPresentacion),
+        );
 
         // SANITALIZE
         $variables = $variables->map(function ($i) {
