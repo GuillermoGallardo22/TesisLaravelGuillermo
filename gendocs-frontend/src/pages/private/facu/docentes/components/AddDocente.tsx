@@ -5,11 +5,14 @@ import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import ErrorSummary from "components/ErrorSummary";
 import TitleNav from "components/TitleNav";
+import { Genero } from "models/enums/Genero";
 import { useAddSimpleDocente } from "../hooks/useAddSimpleDocente";
+import Select from "components/Select";
+
 
 // TODO: ADD MULTIPLE TEACHER FUNCIONALITY
 const AddDocente = () => {
-  const { formik, errorSummary } = useAddSimpleDocente();
+  const { formik, carreras, errorSummary } = useAddSimpleDocente();
 
   const submitting = formik.isSubmitting;
 
@@ -23,6 +26,46 @@ const AddDocente = () => {
         noValidate
       >
         <Grid container spacing={2}>
+
+        <Grid item xs={12} sm={6}>
+          <Select
+            id="carrera"
+            name="carrera"
+            label="Carrera"
+            items={carreras.map((item) => ({
+              id: item.id,
+              label: item.nombre,
+            }))}
+            value={formik.values.carrera}
+            onChange={formik.handleChange}
+            error={formik.touched.carrera && Boolean(formik.errors.carrera)}
+            errorMessage={formik.touched.carrera && formik.errors.carrera}
+          />
+        </Grid>
+
+        <Grid item xs={12} sm={6}>
+          <Select
+            id="genero"
+            name="genero"
+            label="Género"
+            items={[
+              {
+                id: Genero.MASCULINO,
+                label: "Masculino",
+              },
+              {
+                id: Genero.FEMENINO,
+                label: "Femenino",
+              },
+            ]}
+            value={formik.values.genero || ""}
+            onChange={formik.handleChange}
+            error={formik.touched.genero && Boolean(formik.errors.genero)}
+            errorMessage={formik.touched.genero && formik.errors.genero}
+          />
+        </Grid>
+
+
           <Grid item xs={12} sm={6}>
             <TextField
               required
