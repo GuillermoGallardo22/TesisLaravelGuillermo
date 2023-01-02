@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Constants\Genero;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateDocenteRequest extends FormRequest
 {
@@ -30,6 +32,8 @@ class UpdateDocenteRequest extends FormRequest
             'telefono' => ['present', 'string', 'nullable', 'max:25'],
             'correo' => ['present', 'string', 'nullable', 'max:150'],
             'correo_uta' => ['required', 'string', 'max:150'],
+            'genero' => ['present', Rule::in([Genero::FEMENINO, Genero::MASCULINO, ""])],
+            'carrera_id' => ['required', 'exists:\App\Models\Carrera,id'],
         ];
     }
 }

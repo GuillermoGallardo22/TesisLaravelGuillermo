@@ -1,8 +1,12 @@
 import { useFormik } from "formik";
 import { useErrorsResponse } from "hooks/useErrorsResponse";
+import { Genero } from "models/enums/Genero";
 import { HTTP_STATUS } from "models/enums/HttpStatus";
+import { ICarrera } from "models/interfaces/ICarrera";
 import { DocenteForm } from "models/interfaces/IDocente";
 import { useSnackbar } from "notistack";
+import { useEffect, useState } from "react";
+import { getAllCarreras } from "services/carreras";
 import { saveDocente } from "services/docentes";
 import { CONSTANTS } from "utils/constants";
 import { VALIDATION_MESSAGES } from "utils/messages";
@@ -15,10 +19,13 @@ const initialValues: DocenteForm = {
   correo_uta: "",
   nombres: "",
   telefono: "",
+  genero: -1,
+  carrera: -1,
 };
 
 export const useAddSimpleDocente = () => {
   const { enqueueSnackbar } = useSnackbar();
+  const [carreras, setCarreras] = useState<ICarrera[]>([]);
 
   const validationSchema = yup.object().shape({
     cedula: yup
@@ -47,6 +54,21 @@ export const useAddSimpleDocente = () => {
       .matches(CONSTANTS.EMAIL_UTA_REGEX, VALIDATION_MESSAGES.invalidFormat)
       .required(VALIDATION_MESSAGES.required)
       .max(150, VALIDATION_MESSAGES.maxLength(150)),
+   genero: yup
+      .mixed()
+      .nullable()
+      .oneOf(
+        [Genero.MASCULINO, Genero.FEMENINO, -1],
+        VALIDATION_MESSAGES.invalidOption
+      )
+      .typeError(VALIDATION_MESSAGES.required),
+   carrera: yup
+      .mixed()
+      .oneOf(
+        carreras.map((item) => item.id),
+        VALIDATION_MESSAGES.invalidOption
+      )
+      .required(VALIDATION_MESSAGES.required),
   });
 
   const { errorSummary, setErrorSummary } = useErrorsResponse();
@@ -71,8 +93,18 @@ export const useAddSimpleDocente = () => {
     validationSchema,
   });
 
+  useEffect(() => {
+    Promise.all([getAllCarreras({ filters: { estado: 1 } })]).then(
+      (results) => {
+        const [_carreras] = results;
+        setCarreras(_carreras);
+      }
+    );
+  }, []);
+
   return {
     formik,
+    carreras,
     errorSummary,
   };
 };
