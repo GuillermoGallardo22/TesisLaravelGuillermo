@@ -9,6 +9,7 @@ use App\Constants\TipoActaGrados;
 use App\Constants\TipoAsistenteActaGrado;
 use App\Constants\Variables;
 use App\Interfaces\IVariable;
+use App\Models\ActaGrado;
 use App\Models\Canton;
 use App\Models\Estudiante;
 use App\Models\MiembrosActaGrado;
@@ -34,6 +35,10 @@ class ActaGradoFactory implements IVariable
         [
             Genero::FEMENINO => 'La mencionada señorita',
             Genero::MASCULINO => 'El mencionado señor',
+        ],
+        [
+            Genero::FEMENINO => 'La mencionada',
+            Genero::MASCULINO => 'El mencionado',
         ],
     ];
 
@@ -61,68 +66,78 @@ class ActaGradoFactory implements IVariable
     {
         $model = $this->model;
 
-        $now = Carbon::parse($model->fecha_presentacion)->timezone("GMT-5");
+        $fechaPresentacion = Carbon::parse($model->fecha_presentacion)->timezone("GMT-5");
 
+        // ESTUDIANTE
         $estudiante = $model->estudiante;
 
+        $infoEstudiante = $this->getVariablesFromEstudiante($estudiante);
         $infoAdicionalEstudiante = array(
-            // Variables::ESTUDIANTE_TEMA=>$model->tema,
             Variables::ESTUDIANTE_TITULO_BACHILLER => $model->titulo_bachiller,
             Variables::ESTUDIANTE_FECHA_INICIO_ESTUDIOS_FECHAUP => $this->formatDateText($model->fecha_inicio_estudios),
             Variables::ESTUDIANTE_FECHA_FIN_ESTUDIOS_FECHAUP => $this->formatDateText($model->fecha_fin_estudios),
             "{{CREDITOS_TEXTO}}" => $this->converNumberToWords($model->creditos_aprobados),
             "{{CREDITOS_NUMEROS}}" => $model->creditos_aprobados,
             "{{HORAS_PRACTICAS_NUMEROS}}" => $model->horas_practicas,
+            "{{ACTAGRADO_ESTADO_UPPER}}" => $this->textToUpperLower(
+                $estudiante->genero == Genero::FEMENINO ?
+                    $model->estado->nombre_fem :
+                    $model->estado->nombre_mas,
+                "upper"
+            ),
         );
+        $infoCantonEstudiante = $this->getVariablesFromCanton($model->canton);
 
-        // TODO: CREAR VARIABLES PARA TODOS LOS DEMAS TIPOS DE ACTA DE GRADO
+        // MIEMBROS
         $miembros = $this->miembros($model->miembros);
 
+        // MERGE
         $variables = collect(array_merge(
-            $this->getVariablesFromEstudiante($estudiante),
+            $infoEstudiante,
             $infoAdicionalEstudiante,
             $miembros,
-            //
-            $this->getVariablesFromCanton($model->canton),
-            //
-            array(
-                "{{ACTAGRADO_TIPO}}" => $this->textToUpperLower($model->tipo->nombre, "upper"),
-                "{{ACTAGRADO_TEMA}}" => $this->textToUpperLower($model->tema, "upper"),
-                //
-                Variables::NUMDOC => $this->format_NUMACT($model->numero),
-                Variables::Y => $this->format_Y($now),
-                //
-                Variables::FECHA => $this->formatDate($now),
-                //
-                Variables::Y => $this->format_Y($now),
-                Variables::DIASEM_T => $this->format_DIASEM_T($now),
-                Variables::NUMMES_T_U => $this->format_NUMMES_T_U($now),
-                Variables::MES_T_L => $this->format_MES_T_L($now),
-                Variables::DIAS_T => $this->format_NUMDIA_T($now),
-                Variables::NUMANIO_T => $this->format_NUMANIO_T($now),
-                Variables::NUMANIO_T_L => $this->format_NUMANIO_T_L($now),
-                Variables::DIAS_T => $this->format_DIAS_T($now),
-                //
-                Variables::HORA_MINUTOS_TEXTO_L => $this->format_HORA_MINUTOS_TEXTO_L($now->toTimeString()),
-                //
-                "{{DISNACION_GENERO_0}}" => $this::DESIGNACION_GENERO[0][$estudiante->genero],
-                "{{DISNACION_GENERO_1}}" => $this::DESIGNACION_GENERO[1][$estudiante->genero],
-                "{{DISNACION_GENERO_2}}" => $this::DESIGNACION_GENERO[2][$estudiante->genero],
-                //
-                "{{ACTAGRADO_ESTADO_UPPER}}" => $this->textToUpperLower(
-                    $estudiante->genero == Genero::FEMENINO ?
-                        $model->estado->nombre_fem :
-                        $model->estado->nombre_mas,
-                    "upper"
-                ),
-            ),
+            $infoCantonEstudiante,
         ));
 
+        // DATOS ACTA
+        if ($model->carrera->desaparecera) {
+            $variables = $variables->merge(
+                $this->titulacion($model, $fechaPresentacion),
+            );
+        } else {
+            # code...
+        }
+
+        // SANITALIZE
         $variables = $variables->map(function ($i) {
             return $i != null ? strval($i) : $i;
         });
 
         return $variables->toArray();
+    }
+
+    public function titulacion(ActaGrado $model, Carbon $fechaPresentacion)
+    {
+        return collect(array(
+            "{{ACTAGRADO_TIPO}}" => $this->textToUpperLower($model->tipo->nombre, "upper"),
+            "{{ACTAGRADO_TEMA}}" => $this->textToUpperLower($model->tema, "upper"),
+            //
+            Variables::NUMDOC => $this->format_NUMACT($model->numero),
+            Variables::Y => $this->format_Y($fechaPresentacion),
+            //
+            Variables::FECHA => $this->formatDate($fechaPresentacion),
+            //
+            Variables::Y => $this->format_Y($fechaPresentacion),
+            Variables::DIASEM_T => $this->format_DIASEM_T($fechaPresentacion),
+            Variables::NUMMES_T_U => $this->format_NUMMES_T_U($fechaPresentacion),
+            Variables::MES_T_L => $this->format_MES_T_L($fechaPresentacion),
+            Variables::DIAS_T => $this->format_NUMDIA_T($fechaPresentacion),
+            Variables::NUMANIO_T => $this->format_NUMANIO_T($fechaPresentacion),
+            Variables::NUMANIO_T_L => $this->format_NUMANIO_T_L($fechaPresentacion),
+            Variables::DIAS_T => $this->format_DIAS_T($fechaPresentacion),
+            //
+            Variables::HORA_MINUTOS_TEXTO_L => $this->format_HORA_MINUTOS_TEXTO_L($fechaPresentacion->toTimeString()),
+        ));
     }
 
     public function miembros(Collection $miembros)
@@ -237,21 +252,30 @@ class ActaGradoFactory implements IVariable
 
         $titulo = $estudiante->genero === Genero::FEMENINO ? $carrera->titulo_fem : $carrera->titulo_mas;
 
-        return array(
-            Variables::ESTUDIANTE => mb_convert_encoding(mb_convert_case($estudianteFullName, MB_CASE_TITLE), 'UTF-8'),
-            Variables::ESTUDIANTEUP => mb_strtoupper($estudianteFullName, 'UTF-8'),
-            Variables::CEDULA => $estudiante->cedula,
-            Variables::MATRICULA => $estudiante->matricula,
-            Variables::FOLIO => $estudiante->folio,
-            Variables::TELEFONO => $estudiante->telefono,
-            Variables::CELULAR => $estudiante->celular,
-            Variables::CORREO => $estudiante->correo,
-            Variables::CORREOUTA => $estudiante->correo_uta,
-            Variables::NOMBRECARRERA => $carrera->nombre,
-            Variables::NOMBRECARRERAUP => mb_strtoupper($carrera->nombre, 'UTF-8'),
-            Variables::ESTUDIANTE_FECHA_NACIMIENTO => $this->formatDateText($estudiante->fecha_nacimiento),
-            Variables::ESTUDIANTE_TITULO => $titulo,
-            Variables::ESTUDIANTE_TITULO_UPPER => $this->textToUpperLower($titulo, "upper"),
+        $variacionesGenero = collect();
+
+        for ($i = 0; $i < count($this::DESIGNACION_GENERO); $i++) {
+            $variacionesGenero[] = ["{{DISNACION_GENERO_$i}}" => $this::DESIGNACION_GENERO[$i][$estudiante->genero]];
+        }
+
+        return array_merge(
+            $variacionesGenero->collapse()->toArray(),
+            array(
+                Variables::ESTUDIANTE => mb_convert_encoding(mb_convert_case($estudianteFullName, MB_CASE_TITLE), 'UTF-8'),
+                Variables::ESTUDIANTEUP => mb_strtoupper($estudianteFullName, 'UTF-8'),
+                Variables::CEDULA => $estudiante->cedula,
+                Variables::MATRICULA => $estudiante->matricula,
+                Variables::FOLIO => $estudiante->folio,
+                Variables::TELEFONO => $estudiante->telefono,
+                Variables::CELULAR => $estudiante->celular,
+                Variables::CORREO => $estudiante->correo,
+                Variables::CORREOUTA => $estudiante->correo_uta,
+                Variables::NOMBRECARRERA => $carrera->nombre,
+                Variables::NOMBRECARRERAUP => mb_strtoupper($carrera->nombre, 'UTF-8'),
+                Variables::ESTUDIANTE_FECHA_NACIMIENTO => $this->formatDateText($estudiante->fecha_nacimiento),
+                Variables::ESTUDIANTE_TITULO => $titulo,
+                Variables::ESTUDIANTE_TITULO_UPPER => $this->textToUpperLower($titulo, "upper"),
+            ),
         );
     }
 }
