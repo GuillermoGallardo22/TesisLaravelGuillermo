@@ -235,11 +235,11 @@ class ActaGradoFactory implements IVariable
         $decana = Cargo::query()->where("variable", Variables::DECANA)->first();
         $presidenteIC = Cargo::query()->where("variable", Variables::PRESIDENTE_UNIDAD_IC)->first();
 
-        if ($decana->exists()) {
+        if ($decana) {
             $infoEC[] = [Variables::DECANA => $decana->docente->nombres];
         }
 
-        if ($presidenteIC->exists()) {
+        if ($presidenteIC) {
             $infoEC[] = [Variables::PRESIDENTE_UNIDAD_IC => $presidenteIC->docente->nombres];
         }
 
