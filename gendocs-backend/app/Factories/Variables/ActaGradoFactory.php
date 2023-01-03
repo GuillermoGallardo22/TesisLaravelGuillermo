@@ -11,6 +11,7 @@ use App\Constants\Variables;
 use App\Interfaces\IVariable;
 use App\Models\ActaGrado;
 use App\Models\Canton;
+use App\Models\Cargo;
 use App\Models\Estudiante;
 use App\Models\MiembrosActaGrado;
 use App\Traits\ReplaceableDocText;
@@ -222,14 +223,30 @@ class ActaGradoFactory implements IVariable
 
         $datosMiembrosTribunal = array(
             "{{ACTAGRADO_MIEMBROS}}" => $variable,
+            Variables::ACTAGRADO_MIEMBROS_EC => $variable,
             "{{ACTAGRADO_MIEMBRO1}}" => $miembro1,
             "{{ACTAGRADO_MIEMBRO2}}" => $miembro2,
             "{{CREADOPOR}}" => auth()->user()->name,
         );
 
+        // DATOS EXAMEN COMPLEXIVO
+        $infoEC = collect();
+
+        $decana = Cargo::query()->where("variable", Variables::DECANA)->first();
+        $presidenteIC = Cargo::query()->where("variable", Variables::PRESIDENTE_UNIDAD_IC)->first();
+
+        if ($decana->exists()) {
+            $infoEC[] = [Variables::DECANA => $decana->docente->nombres];
+        }
+
+        if ($presidenteIC->exists()) {
+            $infoEC[] = [Variables::PRESIDENTE_UNIDAD_IC => $presidenteIC->docente->nombres];
+        }
+
         return array_merge(
             $datosPresidente,
             $datosMiembrosTribunal,
+            $infoEC->collapse()->toArray(),
         );
     }
 

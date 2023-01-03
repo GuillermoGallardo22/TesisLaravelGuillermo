@@ -76,4 +76,15 @@ abstract class Variables
      * FECHAS
      */
     const HORA_MINUTOS_TEXTO_L = "{{HORA_MINUTOS_TEXTO_L}}";
+
+    /**
+     * ACTA GRADO
+     */
+    const ACTAGRADO_MIEMBROS_EC = "{{ACTAGRADO_MIEMBROS_EC}}";
+
+    /**
+     * 
+     */
+    const DECANA = "{{DECANA}}";
+    const PRESIDENTE_UNIDAD_IC = "{{PRESIDENTE_UNIDAD_IC}}";
 }
