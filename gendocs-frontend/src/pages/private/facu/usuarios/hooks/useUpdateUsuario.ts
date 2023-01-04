@@ -1,4 +1,5 @@
-import { useFormik } from "formik";
+import { useAuthContext } from "contexts/AuthContext";
+import { FormikHelpers, useFormik } from "formik";
 import { useErrorsResponse } from "hooks/useErrorsResponse";
 import { HTTP_STATUS } from "models/enums/HttpStatus";
 import { IModule } from "models/interfaces/IModule";
@@ -6,6 +7,7 @@ import { IRole } from "models/interfaces/IRole";
 import { IUser, IUserForm } from "models/interfaces/IUser";
 import { useSnackbar } from "notistack";
 import { useCallback, useEffect, useState } from "react";
+import { useQueryClient } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { getModules, getRoles, getUserById, updateUser } from "services/auth";
 import { CONSTANTS } from "utils/constants";
@@ -33,6 +35,10 @@ export const useUpdateUsuario = ({ userId }: useUpdateUserProps) => {
   const [user, setUser] = useState(initialValues);
   const [roles, setRoles] = useState<IRole[]>([]);
   const [modulos, setModulos] = useState<IModule[]>([]);
+  const client = useQueryClient();
+  const {
+    context: { user: currentUser },
+  } = useAuthContext();
 
   const { errorSummary, setErrorSummary, cleanErrorsSumary } =
     useErrorsResponse();
@@ -74,7 +80,10 @@ export const useUpdateUsuario = ({ userId }: useUpdateUserProps) => {
     loadInitData();
   }, [loadInitData]);
 
-  const onSubmit = async (form: IUserForm): Promise<void> => {
+  const onSubmit = async (
+    form: IUserForm,
+    helpers: FormikHelpers<IUserForm>
+  ): Promise<void> => {
     cleanErrorsSumary();
 
     const { status, message, errors, data } = await updateUser(form);
@@ -82,7 +91,10 @@ export const useUpdateUsuario = ({ userId }: useUpdateUserProps) => {
     if (status === HTTP_STATUS.ok) {
       handleSetUser(data, roles);
       enqueueSnackbar(message, { variant: "success" });
-      formik.resetForm();
+      helpers.resetForm();
+      if (form.id == currentUser.id) {
+        client.invalidateQueries(["me"]);
+      }
     } else {
       enqueueSnackbar(message, { variant: "error" });
       setErrorSummary(errors);
