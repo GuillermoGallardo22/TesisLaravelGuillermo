@@ -77,108 +77,123 @@ const Drawer: React.FC<DrawerProps> = ({ open, toggleDrawer }) => {
       <Divider />
 
       {hasCommModule && (
-        <List>
-          <ListSubheader sx={{ color: "#f4511e" }} component="div" inset>
-            COMUNES
-          </ListSubheader>
+        <>
+          <List>
+            <ListSubheader sx={{ color: "#f4511e" }} component="div" inset>
+              COMUNES
+            </ListSubheader>
 
-          {commRoutes.map(
-            (item) =>
-              item.icon &&
-              item.label && (
-                <Link
-                  key={item.path}
-                  icon={<Icon icon={item.icon} />}
-                  label={item.label}
-                  path={item.path}
-                />
-              )
-          )}
-        </List>
+            {commRoutes.map(
+              (item) =>
+                item.icon &&
+                item.label && (
+                  <Link
+                    key={item.path}
+                    icon={<Icon icon={item.icon} />}
+                    label={item.label}
+                    path={item.path}
+                  />
+                )
+            )}
+          </List>
+          <Divider />
+        </>
       )}
 
       {hasFacuModule && (
-        <List>
-          <ListSubheader sx={{ color: "#512da8" }} component="div" inset>
-            CONSEJO DIRECTIVO
-          </ListSubheader>
+        <>
+          <List>
+            <ListSubheader sx={{ color: "#512da8" }} component="div" inset>
+              CONSEJO DIRECTIVO
+            </ListSubheader>
 
-          {facuRoutes.map(
-            (item) =>
-              item.icon &&
-              item.label && (
-                <Link
-                  key={item.path}
-                  icon={<Icon icon={item.icon} />}
-                  label={item.label}
-                  path={item.path}
-                />
-              )
-          )}
-        </List>
+            {facuRoutes.map(
+              (item) =>
+                item.icon &&
+                item.label && (
+                  <Link
+                    key={item.path}
+                    icon={<Icon icon={item.icon} />}
+                    label={item.label}
+                    path={item.path}
+                  />
+                )
+            )}
+          </List>
+          <Divider />
+        </>
       )}
 
       {hasSudeModule && (
-        <List>
-          <ListSubheader sx={{ color: "#03a9f4" }} component="div" inset>
-            CONSEJO ACADÉMICO
-          </ListSubheader>
+        <>
+          <List>
+            <ListSubheader sx={{ color: "#03a9f4" }} component="div" inset>
+              CONSEJO ACADÉMICO
+            </ListSubheader>
 
-          {sudeRoutes.map(
-            (item) =>
-              item.icon &&
-              item.label && (
-                <Link
-                  key={item.path}
-                  icon={<Icon icon={item.icon} />}
-                  label={item.label}
-                  path={item.path}
-                />
-              )
-          )}
-        </List>
+            {sudeRoutes.map(
+              (item) =>
+                item.icon &&
+                item.label && (
+                  <Link
+                    key={item.path}
+                    icon={<Icon icon={item.icon} />}
+                    label={item.label}
+                    path={item.path}
+                  />
+                )
+            )}
+          </List>
+          <Divider />
+        </>
       )}
 
       {hasTituModule && (
-        <List>
-          <ListSubheader sx={{ color: "#00796b" }} component="div" inset>
-            TITULACIÓN
-          </ListSubheader>
+        <>
+          <List>
+            <ListSubheader sx={{ color: "#00796b" }} component="div" inset>
+              TITULACIÓN
+            </ListSubheader>
 
-          {tituRoutes.map(
-            (item) =>
-              item.icon &&
-              item.label && (
-                <Link
-                  key={item.path}
-                  icon={<Icon icon={item.icon} />}
-                  label={item.label}
-                  path={item.path}
-                />
-              )
-          )}
-        </List>
+            {tituRoutes.map(
+              (item) =>
+                item.icon &&
+                item.label && (
+                  <Link
+                    key={item.path}
+                    icon={<Icon icon={item.icon} />}
+                    label={item.label}
+                    path={item.path}
+                  />
+                )
+            )}
+          </List>
+          <Divider />
+        </>
       )}
 
       {hasCurrModule && (
-        <List>
-          <ListSubheader sx={{ color: "#ad1457" }} component="div" inset>
-            INT. CURRICULAR
-          </ListSubheader>
+        <>
+          <List>
+            <ListSubheader sx={{ color: "#ad1457" }} component="div" inset>
+              INT. CURRICULAR
+            </ListSubheader>
 
-          {currRoutes.map(
-            (item) =>
-              item.icon &&
-              item.label && (
-                <Link
-                  key={item.path}
-                  icon={<Icon icon={item.icon} />}
-                  label={item.label}
-                  path={item.path}
-                />
-              )
-          )}
-        </List>
+            {currRoutes.map(
+              (item) =>
+                item.icon &&
+                item.label && (
+                  <Link
+                    key={item.path}
+                    icon={<Icon icon={item.icon} />}
+                    label={item.label}
+                    path={item.path}
+                  />
+                )
+            )}
+          </List>
+          <Divider />
+        </>
       )}
     </DrawerBase>
   );
