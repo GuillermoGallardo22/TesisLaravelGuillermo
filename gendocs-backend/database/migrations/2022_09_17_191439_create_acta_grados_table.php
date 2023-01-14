@@ -89,7 +89,7 @@ class CreateActaGradosTable extends Migration
 
             $table->unique(['fecha_presentacion', 'aula_id']);
             $table->unique(["link", "fecha_presentacion"], "unique_restriction_link_fecha_presentacion");
-            $table->unique(["numero", "carrera_id", "directorio_id"], "unique_restriction_numero_carrera_id_directorio_id");
+            // $table->unique(["numero", "carrera_id", "directorio_id"], "unique_restriction_numero_carrera_id_directorio_id");
 
             $table->softDeletes();
             $table->timestamps();
