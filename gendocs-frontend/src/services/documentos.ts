@@ -30,6 +30,23 @@ export async function saveDocumento(
   }
 }
 
+export async function updateDocumento(
+  form: IDocumento
+): Promise<IResponse<IDocumento>> {
+  try {
+    const {
+      data: { data },
+    } = await axios.put("documentos/" + form.id, form);
+    return {
+      status: HTTP_STATUS.ok,
+      data: data,
+      message: HTTP_MESSAGES[200],
+    };
+  } catch (error) {
+    return handleErrors(error);
+  }
+}
+
 export async function getDocumentos(
   props?: IFilterPaginationProps
 ): Promise<IPagination<IDocumento>> {

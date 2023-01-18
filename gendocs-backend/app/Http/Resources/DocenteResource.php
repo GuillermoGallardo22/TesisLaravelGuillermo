@@ -20,7 +20,8 @@ class DocenteResource extends JsonResource
         return array_merge(
             parent::toArray($request),
             array(
-                "carrera" => $this->when(Str::contains($include, 'carrera'), $this->carrera),
+                // "carrera" => $this->when(Str::contains($include, 'carrera'), $this->carrera),
+                "carrera" => $this->when(Str::contains($include, 'carrera'), CarreraResource::make($this->carrera)),
             ),
         );
     }

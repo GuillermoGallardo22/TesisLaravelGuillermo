@@ -15,11 +15,12 @@ class CarreraSeeder extends Seeder
     public function run()
     {
         Carrera::create([
-            'nombre' => 'Ingeniería en Sistemas Computacionales e Informaticos',
+            'nombre' => 'Ingeniería en Sistemas Computacionales e Informáticos',
             'desaparecera' => true,
             'titulo_mas' => 'Ingeniero en Sistemas Computacionales e Informáticos',
             'titulo_fem' => 'Ingeniera en Sistemas Computacionales e Informáticos',
             'creditos' => 246,
+            'coordinador' => 'Clay Fernando Aldás Flores',
         ]);
 
         Carrera::create([
@@ -28,6 +29,7 @@ class CarreraSeeder extends Seeder
             'titulo_mas' => 'Ingeniero en Electrónica y Comunicaciones',
             'titulo_fem' => 'Ingeniera en Electrónica y Comunicaciones',
             'creditos' => 247,
+            'coordinador' => 'Geovanni Danilo Brito Moncayo',
         ]);
 
         Carrera::create([
@@ -36,6 +38,7 @@ class CarreraSeeder extends Seeder
             'titulo_mas' => 'Ingeniero Industrial en Procesos de Automatización',
             'titulo_fem' => 'Ingeniera Industrial en Procesos de Automatización',
             'creditos' => 247,
+            'coordinador' => 'Chrisian José Mariño Rivera',
         ]);
 
         Carrera::create([
@@ -43,6 +46,7 @@ class CarreraSeeder extends Seeder
             'titulo_mas' => 'Ingeniero en Tecnologías de la Información',
             'titulo_fem' => 'Ingeniera en Tecnologías de la Información',
             'creditos' => 135,
+            'coordinador' => 'Clay Fernando Aldás Flores',
         ]);
 
         Carrera::create([
@@ -50,6 +54,7 @@ class CarreraSeeder extends Seeder
             'titulo_mas' => 'Ingeniero en Telecomunicaciones',
             'titulo_fem' => 'Ingeniera en Telecomunicaciones',
             'creditos' => 135,
+            'coordinador' => 'Geovanni Danilo Brito Moncayo',
         ]);
 
         Carrera::create([
@@ -57,6 +62,7 @@ class CarreraSeeder extends Seeder
             'titulo_mas' => 'Ingeniero Industrial',
             'titulo_fem' => 'Ingeniera Industrial',
             'creditos' => 135,
+            'coordinador' => 'Chrisian José Mariño Rivera',
         ]);
 
         Carrera::create([
@@ -64,6 +70,7 @@ class CarreraSeeder extends Seeder
             'titulo_mas' => 'Ingeniero en Software',
             'titulo_fem' => 'Ingeniera en Software',
             'creditos' => 135,
+            'coordinador' => 'Clay Fernando Aldás Flores',
         ]);
     }
 }

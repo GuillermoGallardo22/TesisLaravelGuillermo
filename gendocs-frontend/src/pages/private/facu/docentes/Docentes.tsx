@@ -16,7 +16,7 @@ const columns: GridColumns = [
   { field: "telefono", headerName: "Teléfono", flex: 1 },
   { field: "correo_uta", headerName: "Correo UTA", flex: 1 },
   { field: "correo", headerName: "Correo", flex: 1 },
-  { field: "genero", headerName: "Género", width: 80 },
+  // { field: "genero", headerName: "Género", width: 80 },
   {
     type: "actions",
     field: "acciones",

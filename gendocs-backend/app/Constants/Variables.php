@@ -51,6 +51,7 @@ abstract class Variables
     const ESTUDIANTE_TITULO_BACHILLER = "{{ESTUDIANTE_TITULO_BACHILLER}}";
     const ESTUDIANTE_FECHA_INICIO_ESTUDIOS_FECHAUP = "{{ESTUDIANTE_FECHA_INICIO_ESTUDIOS_FECHAUP}}";
     const ESTUDIANTE_FECHA_FIN_ESTUDIOS_FECHAUP = "{{ESTUDIANTE_FECHA_FIN_ESTUDIOS_FECHAUP}}";
+    const COORDINADOR = "{{COORDINADOR}}";
 
     /**
      * Variables utilizadas para generar la plantilla del acta
@@ -60,6 +61,7 @@ abstract class Variables
     const SESION_L = "{{SESION_L}}";        // ordinaria
     const NUMACT = "{{NUMACT}}";            // 001
     const Y = "{{Y}}";                      // 2022
+    const YEAR = "{{YEAR}}";                      // 2022
     const DIASEM_T = "{{DIASEM_T}}";        // VIERNES
     const NUMMES_T_U = "{{NUMMES_T_U}}";    // JULIO
     const MES_T_L = "{{MES_T_L}}";          // julio
@@ -83,7 +85,7 @@ abstract class Variables
     const ACTAGRADO_MIEMBROS_EC = "{{ACTAGRADO_MIEMBROS_EC}}";
 
     /**
-     * 
+     *
      */
     const DECANA = "{{DECANA}}";
     const PRESIDENTE_UNIDAD_IC = "{{PRESIDENTE_UNIDAD_IC}}";

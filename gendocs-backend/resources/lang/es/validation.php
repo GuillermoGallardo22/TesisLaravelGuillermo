@@ -199,7 +199,7 @@ return [
         "acta_grado" => [
             "create" => [
                 "validation" => [
-                    "disponibilidad_docente" => "El docente ya se encuentra asignado en otra fecha y hora",
+                    "disponibilidad_docente" => "El docente ya se encuentra asignado en otro grado en la misma fecha y hora",
                     "disponibilidad_aula" => "El aula ya se encuentra asignada en otra fecha y hora",
                     "disponibilidad_link" => "El link ya se encuentra asignado en otra fecha y hora",
                     "numero_asignado" => "El número ya esta asignado",

@@ -18,6 +18,7 @@ class Carrera extends Model
         'titulo_mas',
         'titulo_fem',
         'creditos',
+        'coordinador',
     ];
 
     protected $hidden = [
@@ -42,6 +43,7 @@ class Carrera extends Model
             "titulo_mas" => $this->titulo_mas,
             "titulo_fem" => $this->titulo_fem,
             "creditos" => $this->creditos,
+            "coordinador" => $this->coordinador,
         ];
     }
 

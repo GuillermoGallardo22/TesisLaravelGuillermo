@@ -2,6 +2,7 @@ import { EstadoActaEnum, TipoActaGradoEnum } from "models/enums/ActaGrado";
 import { ModalidadActaGrado } from "models/enums/ModalidadActaGrado";
 import { IAula } from "./IAula";
 import { ICanton } from "./ICanton";
+import { ICarrera } from "./ICarrera";
 import { ICeldaNota } from "./ICeldaNota";
 import { IDocente } from "./IDocente";
 import { IEstudiante } from "./IEstudiante";
@@ -58,6 +59,7 @@ export interface IActaGrado {
   documento: string | null;
   // Relationships
   aula?: IAula;
+  carrera:ICarrera;
   estudiante: IEstudiante;
   canton: ICanton;
   tipo_acta: ITipoActaGrado;

@@ -27,7 +27,7 @@ const AddDocente = () => {
       >
         <Grid container spacing={2}>
 
-        <Grid item xs={12} sm={6}>
+        {/* <Grid item xs={12} sm={6}>
           <Select
             id="carrera"
             name="carrera"
@@ -63,7 +63,7 @@ const AddDocente = () => {
             error={formik.touched.genero && Boolean(formik.errors.genero)}
             errorMessage={formik.touched.genero && formik.errors.genero}
           />
-        </Grid>
+        </Grid> */}
 
 
           <Grid item xs={12} sm={6}>

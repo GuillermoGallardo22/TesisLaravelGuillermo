@@ -14,7 +14,7 @@ class Documento extends Model
 {
     use HasFactory, Pageable, Filterable, SoftDeletes;
 
-    public const FILTERS = ["consejo", "estudiante", "module"];
+    public const FILTERS = ["consejo", "estudiante", "module", 'estado'];
 
     protected $fillable = [
         'consejo_id',
@@ -23,10 +23,12 @@ class Documento extends Model
         'plantilla_id',
         'autor_id',
         'descripcion',
-        'variables'
+        'variables',
+        'estado'
     ];
 
     protected $casts = [
+        'estado' => 'boolean',
         'created_at' => 'datetime'
     ];
 
@@ -41,7 +43,8 @@ class Documento extends Model
             'plantilla' => $this->plantilla,
             'autor' => $this->autor,
             'drive' => $this->archivo?->google_drive_id,
-            'creado' => $this->created_at
+            'creado' => $this->created_at,
+            'estado' => $this->estado
         ];
     }
 
