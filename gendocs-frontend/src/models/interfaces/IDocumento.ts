@@ -26,4 +26,5 @@ export interface IDocumento {
   autor: IUser;
   drive: string | null;
   creado: string | Date;
+  estado: boolean;
 }

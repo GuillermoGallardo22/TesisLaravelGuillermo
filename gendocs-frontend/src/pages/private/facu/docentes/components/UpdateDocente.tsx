@@ -29,7 +29,7 @@ const UpdateDocente = () => {
       >
         <Grid container spacing={2}>
 
-        <Grid item xs={12} sm={6}>
+        {/* <Grid item xs={12}>
             <Select
               id="carrera"
               name="carrera"
@@ -43,8 +43,8 @@ const UpdateDocente = () => {
               error={formik.touched.carrera && Boolean(formik.errors.carrera)}
               errorMessage={formik.touched.carrera && formik.errors.carrera}
             />
-          </Grid>
-
+          </Grid> */}
+{/* 
           <Grid item xs={12} sm={6}>
             <Select
               id="genero"
@@ -65,7 +65,7 @@ const UpdateDocente = () => {
               error={formik.touched.genero && Boolean(formik.errors.genero)}
               errorMessage={formik.touched.genero && formik.errors.genero}
             />
-          </Grid>
+          </Grid> */}
 
 
           <Grid item xs={12} sm={6}>
