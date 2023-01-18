@@ -23,6 +23,7 @@ class ActaGradoResource extends JsonResource
             parent::toArray($request),
             array(
                 "aula" => $this->when(Str::contains($include, 'aula'), AulaResource::make($this->aula)),
+                "carrera" => $this->when(Str::contains($include, 'carrera'), CarreraResource::make($this->carrera)),
                 "modalidad_acta_grado" => $this->when(Str::contains($include, 'modalidad'), ModalidadActaGradoResource::make($this->modalidad)),
                 "estudiante" => $this->when(Str::contains($include, 'estudiante'), EstudianteResource::make($this->estudiante)),
                 "canton" => $this->when(Str::contains($include, 'canton'), CantonResource::make($this->canton)),

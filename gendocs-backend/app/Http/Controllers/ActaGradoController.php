@@ -41,6 +41,16 @@ class ActaGradoController extends Controller
         return ActaGradoResource::collection($query->get());
     }
 
+    public function reporteEstudiantePorCarrera(){
+
+        $query=ActaGrado::selectRaw('COUNT(carrera_id) AS conteo,carrera_id')->with('carrera')->groupBy('carrera_id');
+
+      // return response($datos);
+        return response($query->get()->toJson());
+      //  return ResourceCollection::make($query->get());
+
+    }
+
     public function store(StoreActaGradoRequest $request, ActaGradoService $service)
     {
         $validated = $request->validated();

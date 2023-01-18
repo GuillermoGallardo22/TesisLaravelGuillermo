@@ -66,6 +66,8 @@ class DocumentoService
             $estudianteFullName = implode(' ', [$estudiante->nombres, $estudiante->apellidos]);
             $carrera = $estudiante->carrera;
 
+            $now = now();
+
             $estudianteData = [
                 Variables::ESTUDIANTE => mb_convert_encoding(mb_convert_case($estudianteFullName, MB_CASE_TITLE), 'UTF-8'),
                 Variables::ESTUDIANTEUP => mb_strtoupper($estudianteFullName, 'UTF-8'),
@@ -78,6 +80,8 @@ class DocumentoService
                 Variables::CORREOUTA => $estudiante->correo_uta,
                 Variables::NOMBRECARRERA => $carrera->nombre,
                 Variables::NOMBRECARRERAUP => mb_strtoupper($carrera->nombre, 'UTF-8'),
+                Variables::COORDINADOR => $carrera->coordinador,
+                Variables::YEAR => $this->format_Y($now),
             ];
         }
 

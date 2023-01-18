@@ -14,10 +14,40 @@ class AulaSeeder extends Seeder
      */
     public function run()
     {
-        for ($i = 1; $i <= 10; $i++) {
-            Aula::create([
-                'nombre' => 'Aula ' . $i,
-            ]);
-        }
+        Aula::create([
+            'nombre' => 'AULA C08',
+        ]);
+
+        Aula::create([
+            'nombre' => 'AULA F01',
+        ]);
+
+        Aula::create([
+            'nombre' => 'AULA F02',
+        ]);
+
+        Aula::create([
+            'nombre' => 'LAB. REDES 2',
+        ]);
+
+        Aula::create([
+            'nombre' => 'LAB. CTT',
+        ]);
+
+        Aula::create([
+            'nombre' => 'AUDIOVISUALES',
+        ]);
+
+        Aula::create([
+            'nombre' => 'AUDITORIO',
+        ]);
+
+        Aula::create([
+            'nombre' => 'CONSEJO DIRECTIVO',
+        ]);
+
+        Aula::create([
+            'nombre' => 'CONSEJO ACADÉMICO',
+        ]);
     }
 }

@@ -26,6 +26,7 @@ class CreateCarrerasTable extends Migration
             $table->string("titulo_fem");
 
             $table->integer("creditos");
+            $table->string("coordinador");
 
             $table->timestamps();
             $table->softDeletes();

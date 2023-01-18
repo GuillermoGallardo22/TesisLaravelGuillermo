@@ -89,8 +89,12 @@ class ActaGradoFactory implements IVariable
         );
         $infoCantonEstudiante = $this->getVariablesFromCanton($model->canton);
 
-        // MIEMBROS
+       // MIEMBROS
         $miembros = $this->miembros($model->miembros);
+
+        $cargos = Cargo::query()->with(['docente'])->get()->map(function ($i, $k) {
+            return [$i['variable'] => $i['docente']['nombres']];
+        })->collapse()->toArray();
 
         // MERGE
         $variables = collect(array_merge(
@@ -98,6 +102,7 @@ class ActaGradoFactory implements IVariable
             $infoAdicionalEstudiante,
             $miembros,
             $infoCantonEstudiante,
+            $cargos,
         ));
 
         // DATOS ACTA

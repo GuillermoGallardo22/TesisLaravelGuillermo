@@ -14,6 +14,14 @@ class MiembrosActaGradoResource extends JsonResource
      */
     public function toArray($request)
     {
+         // $include = $request->get('include');
+        // return array_merge(
+        //     parent::toArray($request),
+        //     array(
+        //         "acta_grado" => $this->when(Str::contains($include, 'acta_grado'), ActaGradoResource::make($this->acta_grado)),
+        //         "docente" => $this->when(Str::contains($include, 'docente'), DocenteResource::make($this->docente)),
+        //     ),
+        // );
         return parent::toArray($request);
     }
 }

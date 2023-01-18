@@ -28,7 +28,8 @@ class UpdateCarreraRequest extends FormRequest
             'estado' => ['nullable', 'boolean'],
             'titulo_mas' => ['required', 'string', 'max:512'],
             'titulo_fem' => ['required', 'string', 'max:512'],
-            'creditos' => ['required', 'numeric', 'min:0']
+            'creditos' => ['required', 'numeric', 'min:0'],
+            'coordinador' => ['required', 'string', 'max:512']
         ];
     }
 }
