@@ -15,12 +15,12 @@ class NumeracionActaGradoSeeder extends Seeder
      */
     public function run()
     {
-        foreach (Carrera::all() as $carrera) {
-            NumeracionActaGrado::create([
-                'numero' => 0,
-                'usado' => 1,
-                'carrera_id' => $carrera->id,
-            ]);
-        }
+        // foreach (Carrera::all() as $carrera) {
+        //     NumeracionActaGrado::create([
+        //         'numero' => 0,
+        //         'usado' => 1,
+        //         'carrera_id' => $carrera->id,
+        //     ]);
+        // }
     }
 }

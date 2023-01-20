@@ -106,7 +106,7 @@ const UpdateCargo = () => {
                 <TextField
                   {...params}
                   required
-                  label="Docente"
+                  label="Funcionario"
                   margin="normal"
                   placeholder="Cédula | Nombres | Apellidos"
                   error={

@@ -15,14 +15,15 @@ class DocenteResource extends JsonResource
      */
     public function toArray($request)
     {
-        $include = $request->get('include');
+        // $include = $request->get('include');
 
-        return array_merge(
-            parent::toArray($request),
-            array(
-                // "carrera" => $this->when(Str::contains($include, 'carrera'), $this->carrera),
-                "carrera" => $this->when(Str::contains($include, 'carrera'), CarreraResource::make($this->carrera)),
-            ),
-        );
+        // return array_merge(
+        //     parent::toArray($request),
+        //     array(
+        //         // "carrera" => $this->when(Str::contains($include, 'carrera'), $this->carrera),
+        //         "carrera" => $this->when(Str::contains($include, 'carrera'), CarreraResource::make($this->carrera)),
+        //     ),
+        // );
+        return parent::toArray($request);
     }
 }

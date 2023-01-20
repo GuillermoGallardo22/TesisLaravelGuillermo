@@ -72,7 +72,7 @@ export const routes: IRoute[] = [
   },
   {
     path: "docentes",
-    label: "Docentes",
+    label: "Funcionarios",
     component: Outlet,
     icon: "hail",
     modules: [ModuleEnum.FACU],

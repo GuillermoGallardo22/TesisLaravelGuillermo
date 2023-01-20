@@ -37,13 +37,9 @@ class DocenteController extends Controller
 
     public function store(StoreDocenteRequest $request)
     {
-        $validated = $request->validated();
+        $docente = Docente::create($request->validated());
 
-        // $docente = Docente::create($request->validated());
-        $docente = new Docente($validated);
-        $docente->carrera_id = $validated['carrera'];
-        return $docente->save();
-        // return ResourceObject::make($docente);
+        return ResourceObject::make($docente);
     }
 
     public function show(Docente $docente)

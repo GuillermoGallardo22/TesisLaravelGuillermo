@@ -16,7 +16,6 @@ const columns: GridColumns = [
   { field: "telefono", headerName: "Teléfono", flex: 1 },
   { field: "correo_uta", headerName: "Correo UTA", flex: 1 },
   { field: "correo", headerName: "Correo", flex: 1 },
-  // { field: "genero", headerName: "Género", width: 80 },
   {
     type: "actions",
     field: "acciones",
@@ -48,14 +47,14 @@ const Docentes = () => {
 
   return (
     <Stack spacing={2}>
-      <TitleNav title="Docentes" goback={false} />
+      <TitleNav title="Funcionario" goback={false} />
       <Button
         component={RouterLink}
         startIcon={<Icon icon="add" />}
         to="nuevo"
         variant="outlined"
       >
-        AÑADIR DOCENTE
+        AÑADIR FUNCIONARIO
       </Button>
 
       <div style={{ height: 600, width: "100%" }}>
