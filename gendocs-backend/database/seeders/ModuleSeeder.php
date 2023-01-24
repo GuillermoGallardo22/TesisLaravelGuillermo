@@ -39,5 +39,49 @@ class ModuleSeeder extends Seeder
             'code' => Modulos::COMM,
             'name' => 'COMUNES',
         ]);
+
+
+        //TITULACION
+
+        Module::create([
+            'code' => Modulos::SIST,
+            'name' => 'SISTEMAS (UNI-TITU)'
+        ]);
+
+        Module::create([
+            'code' => Modulos::INPA,
+            'name' => 'INDUSTRIAL EN PROCESOS (UNI-TITU)'
+        ]);
+
+        Module::create([
+            'code' => Modulos::ELEC,
+            'name' => 'ELECTRÓNICA Y COMUNICACIONES (UNI-TITU)'
+        ]);
+
+        //TITULACION
+
+        //INTEGRACION CURRICULAR
+
+        Module::create([
+            'code' => Modulos::SOFT,
+            'name' => 'SOFTWARE (UNI-IC)'
+        ]);
+
+        Module::create([
+            'code' => Modulos::TECI,
+            'name' => 'TECNOLOGÍA DE INFORMACIÓN (UNI-IC)'
+        ]);
+
+        Module::create([
+            'code' => Modulos::TELE,
+            'name' => 'TELECOMUNICACIONES (UNI-IC)'
+        ]);
+
+        Module::create([
+            'code' => Modulos::INDS,
+            'name' => 'INDUSTRIAL (UNI-IC)'
+        ]);
+
+        //INTEGRACION CURRICULAR
     }
 }
