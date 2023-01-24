@@ -10,7 +10,7 @@ import { useFilterPagination } from "hooks/useFilterPagination";
 import { useGridColumnVisibilityModel } from "hooks/useGridColumnVisibilityModel";
 import { IDocente } from "models/interfaces/IDocente";
 import { Link as RouterLink } from "react-router-dom";
-import { getDocentes } from "services/docentes";
+import { getDocentesTabla } from "services/docentes";
 import { useListDocentes } from "./hooks/useListDocentes";
 
 const columns: GridColumns = [
@@ -56,7 +56,7 @@ const Docentes = () => {
     search,
     setSearch,
   } = useFilterPagination<IDocente>({
-    fetch: getDocentes,
+    fetch: getDocentesTabla,
   }); 
 
   const { columnVisibilityModel, onColumnVisibilityModelChange } =

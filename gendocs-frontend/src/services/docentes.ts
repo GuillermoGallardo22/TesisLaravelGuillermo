@@ -50,6 +50,29 @@ export async function updateDocente(
 
 export async function getDocentes(
   props?: IFilterPaginationProps
+): Promise<IDocente[]> {
+  try {
+    const params = parseFilterPaginationProps(props);
+
+    // const { data } = await axios.get<IPagination<IDocente>>(
+    //   `docentes?${params}`
+    // );
+
+    const {
+      data: { data },
+    } = await axios.get(`docentes?${params}`);
+
+     return data;
+    // return parsePaginationData(data);
+    
+  } catch (error) {
+    // return DEFAULT_PAGINATION_VALUES;
+    return [];
+  }
+}
+
+export async function getDocentesTabla(
+  props?: IFilterPaginationProps
 ): Promise<IPagination<IDocente>> {
   try {
     const params = parseFilterPaginationProps(props);
