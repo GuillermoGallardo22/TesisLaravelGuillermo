@@ -4,4 +4,15 @@ export enum ModuleEnum {
   TITU = "TITU",
   CURR = "CURR",
   COMM = "COMM",
+  //TITULACION
+  SIST = "SIST",
+  INPA = "INPA",
+  ELEC = "ELEC",
+  //TITULACION
+  //INTEGRACION CURRICULAR
+  SOFT = "SOFT",
+  TECI = "TECI",
+  TELE = "TELE",
+  INDS = "INDS",
+  //INTEGRACION CURRICULAR 
 }
