@@ -73,7 +73,7 @@ export default function ListMiembros() {
       {
         type: "boolean",
         field: "responsable",
-        headerName: "Responsable",
+        headerName: "Presidente",
         flex: 1,
         renderCell: (r) => <BooleanCell value={r.row.responsable} />,
       },

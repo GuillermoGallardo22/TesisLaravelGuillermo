@@ -137,7 +137,7 @@ export const AddMiembro: React.FunctionComponent<AddMiembroProps> = ({
           </Grid>
 
           <Grid item xs={12} sx={{ mb: 2 }}>
-            <FormLabel component="legend">Es responsable</FormLabel>
+            <FormLabel component="legend">Presidente</FormLabel>
             <FormControlLabel
               control={
                 <Switch

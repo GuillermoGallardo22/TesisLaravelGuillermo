@@ -1,11 +1,11 @@
 import axios from "axios";
 import { HTTP_STATUS } from "models/enums/HttpStatus";
 import { DocenteForm, IDocente } from "models/interfaces/IDocente";
-import { IFilterPaginationProps } from "models/interfaces/IPagination";
+import { IFilterPaginationProps, IPagination } from "models/interfaces/IPagination";
 import { IResponse } from "models/interfaces/IResponse";
 import { handleErrors } from "utils/axios";
 import { HTTP_MESSAGES } from "utils/messages";
-import { parseFilterPaginationProps } from "utils/pagination";
+import { DEFAULT_PAGINATION_VALUES, parseFilterPaginationProps, parsePaginationData } from "utils/pagination";
 
 export async function saveDocente(
   form: DocenteForm
@@ -50,17 +50,23 @@ export async function updateDocente(
 
 export async function getDocentes(
   props?: IFilterPaginationProps
-): Promise<IDocente[]> {
+): Promise<IPagination<IDocente>> {
   try {
     const params = parseFilterPaginationProps(props);
 
-    const {
-      data: { data },
-    } = await axios.get(`docentes?${params}`);
+    const { data } = await axios.get<IPagination<IDocente>>(
+      `docentes?${params}`
+    );
 
-    return data;
+    // const {
+    //   data: { data },
+    // } = await axios.get(`docentes?${params}`);
+
+    // return data;
+    return parsePaginationData(data);
+    
   } catch (error) {
-    return [];
+    return DEFAULT_PAGINATION_VALUES;
   }
 }
 

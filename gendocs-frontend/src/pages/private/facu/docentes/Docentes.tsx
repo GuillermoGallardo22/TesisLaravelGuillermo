@@ -1,12 +1,16 @@
+import { TextField } from "@mui/material";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import Tooltip from "@mui/material/Tooltip";
 import { DataGrid, GridActionsCellItem, GridColumns } from "@mui/x-data-grid";
 import Icon from "components/Icon";
 import TitleNav from "components/TitleNav";
-import { GridToolbarWithoutExport } from "components/ToolbarDataGrid";
+import { GridToolbarColumns, GridToolbarWithoutExport } from "components/ToolbarDataGrid";
+import { useFilterPagination } from "hooks/useFilterPagination";
 import { useGridColumnVisibilityModel } from "hooks/useGridColumnVisibilityModel";
+import { IDocente } from "models/interfaces/IDocente";
 import { Link as RouterLink } from "react-router-dom";
+import { getDocentes } from "services/docentes";
 import { useListDocentes } from "./hooks/useListDocentes";
 
 const columns: GridColumns = [
@@ -37,8 +41,23 @@ const columns: GridColumns = [
   },
 ];
 
+// const Docentes = () => {
+//   const { docentes,
+//     search,
+//     setSearch,
+//     isLoading } = useListDocentes();
+
 const Docentes = () => {
-  const { docentes, isLoading } = useListDocentes();
+  const {
+    data,
+    handlePageChange,
+    handlePageSizeChange,
+    loading,
+    search,
+    setSearch,
+  } = useFilterPagination<IDocente>({
+    fetch: getDocentes,
+  }); 
 
   const { columnVisibilityModel, onColumnVisibilityModelChange } =
     useGridColumnVisibilityModel({
@@ -57,7 +76,41 @@ const Docentes = () => {
         AÑADIR FUNCIONARIO
       </Button>
 
+      
+      <TextField
+        fullWidth
+        margin="normal"
+        id="search"
+        name="search"
+        label="Buscar"
+        placeholder="Cédula | Nombres "
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+      />
+
       <div style={{ height: 600, width: "100%" }}>
+        <DataGrid
+          disableColumnMenu
+          pagination
+          components={{
+            Toolbar: GridToolbarColumns,
+          }}
+          columnVisibilityModel={columnVisibilityModel}
+          onColumnVisibilityModelChange={onColumnVisibilityModelChange}
+          paginationMode="server"
+          onPageSizeChange={handlePageSizeChange}
+          onPageChange={handlePageChange}
+          //
+          columns={columns}
+          loading={loading}
+          //
+          rows={data.data}
+          page={data.meta.current_page}
+          pageSize={data.meta.per_page}
+          rowCount={data.meta.total}
+        />
+      </div>
+      {/* <div style={{ height: 600, width: "100%" }}>
         <DataGrid
           disableColumnMenu
           columnVisibilityModel={columnVisibilityModel}
@@ -67,7 +120,7 @@ const Docentes = () => {
           loading={isLoading}
           rows={docentes}
         />
-      </div>
+      </div> */}
     </Stack>
   );
 };

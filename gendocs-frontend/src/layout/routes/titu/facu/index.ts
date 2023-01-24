@@ -2,76 +2,93 @@ import { ModuleEnum } from "models/enums/Module";
 import { RolEnum } from "models/enums/Rol";
 import { IRoute } from "models/interfaces/IRoute";
 import { Outlet } from "react-router-dom";
-import {
-  Acta,
-  AddConsejo,
-  AddDocumento,
-  AddPlantilla,
-  AddProceso,
-  AddReserva,
-  Consejos,
-  DocumentosFACU,
-  DriveTemplate,
-  Home,
-  ListMiembros,
-  ListPlantillas,
-  ListResoluciones,
-  UpdateConsejo,
-  UpdatePlantilla,
-  UpdateProceso,
-} from "../facu/components";
-import {
-  BuscarOutlet,
-  ConsejosSUDEOUTLET,
-  DocumentosSUDEOUTLET,
-  ProcesosSUDE,
-  ProcesosSUDEOutlet,
-} from "./components";
 import * as Components from "./components";
 
 export const routes: IRoute[] = [
   {
-    path: "inicio-sude",
+    path: "inicio",
     label: "Buscar",
-    component: BuscarOutlet,
+    component: Components.HomeOutlet,
     icon: "search",
-    modules: [ModuleEnum.SUDE],
+    modules: [ModuleEnum.FACU],
     isMenuOption: true,
     childrens: [
       {
         path: "drive/:driveId",
-        component: DriveTemplate,
+        component: Components.DriveTemplate,
       },
       {
         path: "",
         isIndex: true,
-        component: Home,
+        component: Components.Home,
       },
     ],
   },
   {
-    path: "documentos-sude",
+    path: "documentos",
     label: "Documentos",
-    component: DocumentosSUDEOUTLET,
+    component: Components.DocumentosFACUOutlet,
     icon: "topic",
-    modules: [ModuleEnum.SUDE],
+    modules: [ModuleEnum.FACU],
     isMenuOption: true,
     childrens: [
       {
         path: "nuevo",
-        component: AddDocumento,
+        component: Components.AddDocumento,
         roles: [RolEnum.ADMIN, RolEnum.ADMINTEMP, RolEnum.WRITER],
       },
       {
         path: "reservar",
-        component: AddReserva,
+        component: Components.AddReserva,
         roles: [RolEnum.ADMIN, RolEnum.ADMINTEMP],
       },
       {
         path: "drive/:driveId",
-        component: DriveTemplate,
+        component: Components.DriveTemplate,
       },
-      { path: "", isIndex: true, component: DocumentosFACU },
+      { path: "", isIndex: true, component: Components.DocumentosFACU },
+    ],
+  },
+  {
+    path: "carreras",
+    label: "Carreras",
+    component: Outlet,
+    icon: "apartment",
+    modules: [ModuleEnum.FACU],
+    isMenuOption: true,
+    childrens: [
+      {
+        path: "nuevo",
+        component: Components.AddCarrera,
+        roles: [RolEnum.ADMIN, RolEnum.ADMINTEMP],
+      },
+      {
+        path: ":carreraId",
+        component: Components.UpdateCarrera,
+        roles: [RolEnum.ADMIN, RolEnum.ADMINTEMP],
+      },
+      { path: "", isIndex: true, component: Components.Carreras },
+    ],
+  },
+  {
+    path: "docentes",
+    label: "Funcionarios",
+    component: Outlet,
+    icon: "hail",
+    modules: [ModuleEnum.FACU],
+    isMenuOption: true,
+    childrens: [
+      {
+        path: "nuevo",
+        component: Components.AddDocente,
+        roles: [RolEnum.ADMIN, RolEnum.ADMINTEMP, RolEnum.WRITER],
+      },
+      {
+        path: ":docenteId",
+        component: Components.UpdateDocente,
+        roles: [RolEnum.ADMIN, RolEnum.ADMINTEMP, RolEnum.WRITER],
+      },
+      { path: "", isIndex: true, component: Components.Docentes },
     ],
   },
   {
@@ -100,16 +117,16 @@ export const routes: IRoute[] = [
     ],
   },
   {
-    path: "procesos-sude",
+    path: "procesos",
     label: "Procesos",
-    component: ProcesosSUDEOutlet,
+    component: Components.ProcesosFACUOutlet,
     icon: "list",
-    modules: [ModuleEnum.SUDE],
+    modules: [ModuleEnum.FACU],
     isMenuOption: true,
     childrens: [
       {
         path: "nuevo",
-        component: AddProceso,
+        component: Components.AddProceso,
         roles: [RolEnum.ADMIN, RolEnum.ADMINTEMP, RolEnum.WRITER],
       },
       {
@@ -122,7 +139,7 @@ export const routes: IRoute[] = [
             childrens: [
               {
                 path: "nuevo",
-                component: AddPlantilla,
+                component: Components.AddPlantilla,
                 roles: [RolEnum.ADMIN, RolEnum.ADMINTEMP, RolEnum.WRITER],
               },
               {
@@ -131,12 +148,12 @@ export const routes: IRoute[] = [
                 childrens: [
                   {
                     path: "drive/:driveId",
-                    component: DriveTemplate,
+                    component: Components.DriveTemplate,
                   },
                   {
                     path: "",
                     isIndex: true,
-                    component: UpdatePlantilla,
+                    component: Components.UpdatePlantilla,
                     roles: [RolEnum.ADMIN, RolEnum.ADMINTEMP, RolEnum.WRITER],
                   },
                 ],
@@ -145,40 +162,40 @@ export const routes: IRoute[] = [
                 path: "",
                 label: "",
                 isIndex: true,
-                component: ListPlantillas,
+                component: Components.ListPlantillas,
               },
             ],
           },
           {
             path: "",
             isIndex: true,
-            component: UpdateProceso,
+            component: Components.UpdateProceso,
             roles: [RolEnum.ADMIN, RolEnum.ADMINTEMP, RolEnum.WRITER],
           },
         ],
       },
-      { path: "", isIndex: true, component: ProcesosSUDE },
+      { path: "", isIndex: true, component: Components.ProcesosFACU },
     ],
   },
   {
-    path: "consejos-sude",
+    path: "consejos",
     label: "Consejos",
-    component: ConsejosSUDEOUTLET,
+    component: Components.ConsejosFACUOUTLET,
     icon: "meetingRoom",
-    modules: [ModuleEnum.SUDE],
+    modules: [ModuleEnum.FACU],
     childrens: [
       {
         path: "nuevo",
-        component: AddConsejo,
+        component: Components.AddConsejo,
         roles: [RolEnum.ADMIN, RolEnum.ADMINTEMP],
       },
       {
         path: "plantilla-acta/:driveId",
-        component: DriveTemplate,
+        component: Components.DriveTemplate,
       },
       {
         path: "plantilla-separador/:driveId",
-        component: DriveTemplate,
+        component: Components.DriveTemplate,
       },
       {
         path: ":consejoId",
@@ -186,7 +203,7 @@ export const routes: IRoute[] = [
         childrens: [
           {
             path: "asistencia",
-            component: ListMiembros,
+            component: Components.ListMiembros,
             roles: [RolEnum.ADMIN, RolEnum.ADMINTEMP],
           },
           {
@@ -196,11 +213,11 @@ export const routes: IRoute[] = [
             childrens: [
               {
                 path: "drive/:driveId",
-                component: DriveTemplate,
+                component: Components.DriveTemplate,
               },
               {
                 path: "",
-                component: Acta,
+                component: Components.Acta,
                 isIndex: true,
               },
             ],
@@ -211,26 +228,68 @@ export const routes: IRoute[] = [
             childrens: [
               {
                 path: "drive/:driveId",
-                component: DriveTemplate,
+                component: Components.DriveTemplate,
               },
               {
                 path: "",
                 isIndex: true,
-                component: ListResoluciones,
+                component: Components.ListResoluciones,
               },
             ],
           },
           {
             path: "",
             isIndex: true,
-            component: UpdateConsejo,
+            component: Components.UpdateConsejo,
             roles: [RolEnum.ADMIN, RolEnum.ADMINTEMP],
           },
         ],
       },
-      { path: "", isIndex: true, component: Consejos },
+      { path: "", isIndex: true, component: Components.Consejos },
     ],
     isMenuOption: true,
+  },
+  {
+    path: "cargos",
+    label: "Cargos",
+    component: Outlet,
+    icon: "style",
+    modules: [ModuleEnum.FACU],
+    isMenuOption: true,
+    childrens: [
+      {
+        path: "nuevo",
+        component: Components.AddCargo,
+        roles: [RolEnum.ADMIN, RolEnum.ADMINTEMP, RolEnum.WRITER],
+      },
+      {
+        path: ":cargoId",
+        component: Components.UpdateCargo,
+        roles: [RolEnum.ADMIN, RolEnum.ADMINTEMP, RolEnum.WRITER],
+      },
+      { path: "", isIndex: true, component: Components.Cargos },
+    ],
+  },
+  {
+    path: "usuarios",
+    label: "Usuarios",
+    component: Outlet,
+    icon: "groupAdd",
+    modules: [ModuleEnum.FACU],
+    isMenuOption: true,
+    roles: [RolEnum.ADMIN],
+    childrens: [
+      { path: "nuevo", component: Components.AddUsuario },
+      { path: ":userId", component: Components.UpdateUsuario },
+      { path: "", isIndex: true, component: Components.Usuarios },
+    ],
+  },
+  {
+    path: "profile",
+    label: "Perfil",
+    component: Components.Profile,
+    icon: "accountCircle",
+    modules: [],
   },
 ];
 
