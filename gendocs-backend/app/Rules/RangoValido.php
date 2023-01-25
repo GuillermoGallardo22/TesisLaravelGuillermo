@@ -31,7 +31,7 @@ class RangoValido implements Rule
         $desde = $value;
         $hasta = $this->hasta;
 
-        return $desde < $hasta;
+        return $desde <= $hasta;
     }
 
     /**
