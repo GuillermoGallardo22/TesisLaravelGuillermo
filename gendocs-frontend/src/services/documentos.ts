@@ -1,6 +1,10 @@
 import axios from "axios";
 import { HTTP_STATUS } from "models/enums/HttpStatus";
-import { IDocumento, IDocumentoForm } from "models/interfaces/IDocumento";
+import {
+  IDocumento,
+  IDocumentoForm,
+  IUpdateDocumento,
+} from "models/interfaces/IDocumento";
 import {
   IFilterPaginationProps,
   IPagination,
@@ -31,12 +35,13 @@ export async function saveDocumento(
 }
 
 export async function updateDocumento(
-  form: IDocumento
+  id: string | number,
+  form: IUpdateDocumento
 ): Promise<IResponse<IDocumento>> {
   try {
     const {
       data: { data },
-    } = await axios.put("documentos/" + form.id, form);
+    } = await axios.put("documentos/" + id, form);
     return {
       status: HTTP_STATUS.ok,
       data: data,

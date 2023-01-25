@@ -16,4 +16,7 @@ export const CONSTANTS = {
     [EstadoActaEnum.NO_RESENTACION]: "warning",
   },
   DATEPICKER: ["year", "month", "day"] as CalendarPickerView[],
+  DISABLED_COLOR: "#bdbdbd",
+  WHATSAPP_COLOR: "#009380",
+  EMAIL_COLOR: "#1976d2",
 };

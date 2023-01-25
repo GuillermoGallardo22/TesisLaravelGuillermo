@@ -18,7 +18,6 @@ export function useListDocumentos(consejo: number) {
         },
       }).then((r) => r.data),
     {
-      refetchOnWindowFocus: false,
       enabled: consejo !== -1,
     }
   );
@@ -40,5 +39,6 @@ export function useListDocumentos(consejo: number) {
     //
     confirmationDialog,
     deleteItem,
+    refetch,
   };
 }

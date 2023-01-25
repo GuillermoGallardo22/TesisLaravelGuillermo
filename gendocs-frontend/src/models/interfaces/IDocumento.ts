@@ -26,5 +26,8 @@ export interface IDocumento {
   autor: IUser;
   drive: string | null;
   creado: string | Date;
-  estado: boolean;
+  notificado_w: boolean;
+  notificado_e: boolean;
 }
+
+export type IUpdateDocumento = Partial<IDocumento>;

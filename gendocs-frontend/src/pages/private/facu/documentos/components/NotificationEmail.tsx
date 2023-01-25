@@ -10,6 +10,7 @@ import { NotificationEmailFormProps } from "models/interfaces/INotification";
 import { IProceso } from "models/interfaces/IProceso";
 import { useSnackbar } from "notistack";
 import { useMemo } from "react";
+import { updateDocumento } from "services/documentos";
 import { sendEmail } from "services/estudiantes";
 import { getDefaultNotificationMessage } from "utils/libs";
 import { VALIDATION_MESSAGES } from "utils/messages";
@@ -44,6 +45,7 @@ const NotificationEmailForm: React.FunctionComponent<
     const result = await sendEmail(form.mensaje, documento.estudiante!);
 
     if (result.status === HTTP_STATUS.ok) {
+      await updateDocumento(documento.id, { notificado_e: true });
       enqueueSnackbar(result.message, { variant: "success" });
     } else {
       const { errors, message } = result;

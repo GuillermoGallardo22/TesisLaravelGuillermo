@@ -18,6 +18,8 @@ import { useConsejos } from "hooks/useQuery";
 import { IDocumento } from "models/interfaces/IDocumento";
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
+import { updateDocumento } from "services/documentos";
+import { CONSTANTS } from "utils/constants";
 import {
   generateLink,
   getAutor,
@@ -25,6 +27,7 @@ import {
   getNombreCompleto,
   getPlantilla,
   getProceso,
+  getTooltipTextNotification,
 } from "utils/libs";
 import { useListDocumentos } from "../hooks/useListDocumentos";
 import { NotificationEmail } from "./NotificationEmail";
@@ -51,6 +54,7 @@ const DocumentosBase = () => {
     //
     confirmationDialog: { isVisible, openModal, closeModal, itemSelected },
     deleteItem: { handleDelete, deleting },
+    refetch: refetchDocumentos,
   } = useListDocumentos(consejo);
 
   const {
@@ -63,6 +67,16 @@ const DocumentosBase = () => {
     closeModal: closeModalNE,
     itemSelected: itemSelectedNE,
   } = useConfirmationDialog<IDocumento>();
+
+  const { columnVisibilityModel, onColumnVisibilityModelChange } =
+    useGridColumnVisibilityModel({
+      key: "documentosTableModel",
+    });
+
+  const handleCloseNotification = () => {
+    closeModalNE();
+    refetchDocumentos();
+  };
 
   const columns = useMemo(
     (): GridColumns => [
@@ -113,35 +127,59 @@ const DocumentosBase = () => {
         field: "notificaciones",
         headerName: "Notificaciones",
         width: 120,
-        getActions: (p) => [
-          <GridActionsCellItem
-            key={p.id}
-            disabled={!p.row?.estudiante?.celular}
-            LinkComponent={"a"}
-            href={generateLink(p.row as IDocumento, user.name)}
-            target="_blank"
-            rel="noopener noreferrer"
-            sx={{ color: "#009380" }}
-            icon={
-              <Tooltip title="WhatsApp" arrow>
-                <Icon icon="whatsApp" />
-              </Tooltip>
-            }
-            label="Notificar vía WhatsApp"
-          />,
-          <GridActionsCellItem
-            key={p.id}
-            disabled={!p.row?.estudiante?.correo_uta}
-            color="primary"
-            icon={
-              <Tooltip title="Correo" arrow>
-                <Icon icon="email" />
-              </Tooltip>
-            }
-            label="Notificar vía correo institucional"
-            onClick={() => openModalNE(p.row)}
-          />,
-        ],
+        getActions: (p) =>
+          [
+            p.row?.estudiante?.celular && (
+              <GridActionsCellItem
+                key={p.id}
+                LinkComponent={"a"}
+                href={generateLink(p.row as IDocumento, user.name)}
+                target="_blank"
+                rel="noopener noreferrer"
+                sx={{
+                  color: p.row.notificado_w
+                    ? CONSTANTS.WHATSAPP_COLOR
+                    : CONSTANTS.DISABLED_COLOR,
+                }}
+                icon={
+                  <Tooltip
+                    title={getTooltipTextNotification(p.row.notificado_w, "w")}
+                    arrow
+                  >
+                    <Icon icon="whatsApp" />
+                  </Tooltip>
+                }
+                label={getTooltipTextNotification(p.row.notificado_w, "w")}
+                onClick={() =>
+                  updateDocumento(p.row.id, {
+                    notificado_w: true,
+                  }).finally(() => {
+                    refetchDocumentos();
+                  })
+                }
+              />
+            ),
+            p.row?.estudiante?.correo_uta && (
+              <GridActionsCellItem
+                key={p.id}
+                sx={{
+                  color: p.row.notificado_e
+                    ? CONSTANTS.EMAIL_COLOR
+                    : CONSTANTS.DISABLED_COLOR,
+                }}
+                icon={
+                  <Tooltip
+                    title={getTooltipTextNotification(p.row.notificado_e, "e")}
+                    arrow
+                  >
+                    <Icon icon="email" />
+                  </Tooltip>
+                }
+                label={getTooltipTextNotification(p.row.notificado_e, "e")}
+                onClick={() => openModalNE(p.row)}
+              />
+            ),
+          ].filter(Boolean),
       },
       {
         type: "actions",
@@ -177,11 +215,6 @@ const DocumentosBase = () => {
     ],
     []
   );
-
-  const { columnVisibilityModel, onColumnVisibilityModelChange } =
-    useGridColumnVisibilityModel({
-      key: "documentosTableModel",
-    });
 
   return (
     <Stack spacing={2}>
@@ -247,7 +280,7 @@ const DocumentosBase = () => {
       <NotificationEmail
         documento={itemSelectedNE}
         isVisible={isVisibleNE}
-        closeModal={closeModalNE}
+        closeModal={handleCloseNotification}
       />
 
       {itemSelected && (

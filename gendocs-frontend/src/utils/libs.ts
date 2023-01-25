@@ -404,3 +404,16 @@ export function testFechaSustentacion(v: any, c: any) {
   const { fecha_presentacion } = c.parent;
   return Boolean(fecha_presentacion);
 }
+
+export function getTooltipTextNotification(
+  notificado: boolean,
+  type: "w" | "e"
+): string {
+  if (type === "w") {
+    return !notificado ? "Notificar vía WhatsApp" : "Renotificar vía WhatsApp";
+  } else if (type === "e") {
+    return !notificado ? "Notificar vía Correo" : "Renotificar vía Correo";
+  } else {
+    return "";
+  }
+}
