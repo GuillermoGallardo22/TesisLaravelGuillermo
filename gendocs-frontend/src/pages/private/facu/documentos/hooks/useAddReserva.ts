@@ -1,5 +1,5 @@
 import { useModuleContext } from "contexts/ModuleContext";
-import { useFormik } from "formik";
+import { FormikHelpers, useFormik } from "formik";
 import { useErrorsResponse } from "hooks/useErrorsResponse";
 import { useConsejos } from "hooks/useQuery";
 import { HTTP_STATUS } from "models/enums/HttpStatus";
@@ -46,14 +46,17 @@ export function useAddReserva() {
     ),
   });
 
-  const onSubmit = async (form: IReservaForm) => {
+  const onSubmit = async (
+    form: IReservaForm,
+    helpers: FormikHelpers<IReservaForm>
+  ) => {
     setErrorSummary(undefined);
 
     const result = await createReserva(form);
 
     if (result.status === HTTP_STATUS.created) {
-      // formik.resetForm();
       enqueueSnackbar(result.message, { variant: "success" });
+      helpers.resetForm();
     } else {
       setErrorSummary(result.errors);
       enqueueSnackbar(result.message, { variant: "error" });
