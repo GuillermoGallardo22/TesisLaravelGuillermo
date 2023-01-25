@@ -39,7 +39,11 @@ export function useAddReserva() {
       .required(VALIDATION_MESSAGES.required)
       .integer(VALIDATION_MESSAGES.required)
       .positive(VALIDATION_MESSAGES.invalidOption)
-      .moreThan(yup.ref("desde"), VALIDATION_MESSAGES.invalidOption),
+      .test("isMoreOrEqualsThan", VALIDATION_MESSAGES.invalidOption, (v, c) => {
+        if (!v || !c.parent.desde) return false;
+
+        return v >= c.parent.desde;
+      }),
     consejo: yup.number().oneOf(
       consejos.map((i) => i.id),
       VALIDATION_MESSAGES.invalidOption
