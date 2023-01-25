@@ -24,12 +24,12 @@ class Documento extends Model
         'autor_id',
         'descripcion',
         'variables',
-        'estado'
     ];
 
     protected $casts = [
-        'estado' => 'boolean',
-        'created_at' => 'datetime'
+        'notificado_w' => 'boolean',
+        'notificado_e' => 'boolean',
+        'created_at' => 'datetime',
     ];
 
     public function fields()
@@ -44,7 +44,8 @@ class Documento extends Model
             'autor' => $this->autor,
             'drive' => $this->archivo?->google_drive_id,
             'creado' => $this->created_at,
-            'estado' => $this->estado
+            'notificado_w' => $this->notificado_w,
+            'notificado_e' => $this->notificado_e,
         ];
     }
 

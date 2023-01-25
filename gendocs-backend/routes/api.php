@@ -47,7 +47,7 @@ Route::middleware(["auth:sanctum", "isUserActive"])->group(function () {
     Route::apiResource('procesos', ProcesoController::class)->except(['destroy']);
     Route::apiResource('plantillas', PlantillasController::class)->except(['destroy']);
     Route::apiResource('tipo-consejos', TipoConsejoController::class)->only(['index']);
-    Route::apiResource('documentos', DocumentoController::class)->except(['show', 'update']);
+    Route::apiResource('documentos', DocumentoController::class)->except(['show']);
     Route::apiResource('batch', BatchController::class)->only(['show']);
     Route::apiResource("plantillas-globales", PlantillasGlobalesController::class)->only(['index']);
 

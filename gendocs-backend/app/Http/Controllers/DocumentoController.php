@@ -80,7 +80,22 @@ class DocumentoController extends Controller
 
     public function update(UpdateDocumentoRequest $request, Documento $documento)
     {
-        //
+        $validated = $request->validated();
+
+        if ($request->has("notificado_w")) {
+            $documento->notificado_w = $validated["notificado_w"];
+        }
+
+        if ($request->has("notificado_e")) {
+            $documento->notificado_e = $validated["notificado_e"];
+        }
+
+        if ($documento->isDirty()) {
+            $documento->save();
+        }
+
+
+        return ResourceObject::make($documento);
     }
 
     public function destroy(Documento $documento)

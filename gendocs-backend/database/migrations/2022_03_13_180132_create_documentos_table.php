@@ -41,7 +41,8 @@ class CreateDocumentosTable extends Migration
             $table->json('variables')
                 ->nullable();
 
-            // $table->unique(['numero', 'plantilla_id', 'consejo_id']);
+            $table->boolean('notificado_w')->default(false);
+            $table->boolean('notificado_e')->default(false);
 
             $table->timestamps();
             $table->softDeletes();

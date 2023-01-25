@@ -13,7 +13,7 @@ class UpdateDocumentoRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,8 @@ class UpdateDocumentoRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            "notificado_w" => ["boolean", "nullable"],
+            "notificado_e" => ["boolean", "nullable"],
         ];
     }
 }
