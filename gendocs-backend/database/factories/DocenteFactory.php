@@ -2,7 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Models\Carrera;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class DocenteFactory extends Factory
@@ -24,7 +23,6 @@ class DocenteFactory extends Factory
             ])),
             'correo_uta' => $this->faker->lexify('????@uta.edu.ec'),
             "celular" => $this->faker->regexify('09(8|9)[0-9]{7}'),
-            'carrera_id' => Carrera::inRandomOrder()->first()->id,
         ];
     }
 }

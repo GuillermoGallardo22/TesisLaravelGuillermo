@@ -26,18 +26,18 @@ class DirectorioSeeder extends Seeder
      */
     public function run()
     {
-        Directorio::create([
-            'nombre' => 'El origen',
-            'fecha_inicio' => '2020-01-01',
-            'estado' => false,
-            'drive_id' => $this->googleDrive->create("El origen", MimeType::DRIVE_FOLDER)->id
-        ]);
+        // Directorio::create([
+        //     'nombre' => 'El origen',
+        //     'fecha_inicio' => '2020-01-01',
+        //     'estado' => false,
+        //     'drive_id' => $this->googleDrive->create("El origen", MimeType::DRIVE_FOLDER)->id
+        // ]);
 
-        Directorio::create([
-            'nombre' => 'La resurección',
-            'fecha_inicio' => '2021-01-01',
-            'estado' => true,
-            'drive_id' => $this->googleDrive->create("La resurección", MimeType::DRIVE_FOLDER)->id
-        ]);
+        // Directorio::create([
+        //     'nombre' => 'La resurección',
+        //     'fecha_inicio' => '2021-01-01',
+        //     'estado' => true,
+        //     'drive_id' => $this->googleDrive->create("La resurección", MimeType::DRIVE_FOLDER)->id
+        // ]);
     }
 }

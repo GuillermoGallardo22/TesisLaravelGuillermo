@@ -49,11 +49,33 @@ const Drawer: React.FC<DrawerProps> = ({ open, toggleDrawer }) => {
     //
     hasFacuModule,
     hasSudeModule,
+     //TITULACION
+     hasSistModule,
+     hasInpaModule,
+     hasElecModule,
+     //TITULACION
+     //INTEGRACION CURRICULAR
+     hasSoftModule,
+     hasTeciModule,
+     hasTeleModule,
+     hasIndsModule,
+     //INTEGRACION CURRICULAR
     hasTituModule,
     hasCurrModule,
     hasCommModule,
     //
     sudeRoutes,
+     //TITULACION
+     sistRoutes,
+     inpaRoutes,
+     elecRoutes,
+     //TITULACION
+     //INTEGRACION CURRICULAR
+     softRoutes,
+     teciRoutes,
+     teleRoutes,
+     indsRoutes,
+     //INTEGRACION CURRICULAR
     tituRoutes,
     facuRoutes,
     currRoutes,
@@ -195,6 +217,175 @@ const Drawer: React.FC<DrawerProps> = ({ open, toggleDrawer }) => {
           <Divider />
         </>
       )}
+
+{hasSistModule && (
+        <List>
+            <ListSubheader sx={{ color: "#2517D3" }} component="div" inset>
+              TITULACIÓN 
+              <br></br>
+            Sistemas
+            </ListSubheader>
+
+          {sistRoutes.map(
+            (item) =>
+              item.icon &&
+              item.label && (
+                <Link
+                  key={item.path}
+                  icon={<Icon icon={item.icon} />}
+                  label={item.label}
+                  path={item.path}
+                />
+              )
+          )}
+          <Divider />
+
+        </List>
+      )}
+
+{hasInpaModule && (
+        <List>
+          <ListSubheader component="div" sx={{ color: "#12972C" }} inset>
+            Industrial Proc. Auto.
+          </ListSubheader>
+
+          {inpaRoutes.map(
+            (item) =>
+              item.icon &&
+              item.label && (
+                <Link
+                  key={item.path}
+                  icon={<Icon icon={item.icon} />}
+                  label={item.label}
+                  path={item.path}
+                />
+              )
+          )}
+          <Divider />
+
+        </List>
+      )}
+
+      
+{hasElecModule && (
+        <List>
+          <ListSubheader component="div" sx={{ color: "#AB17D3" }} inset>
+           Electrónica Comu.
+          </ListSubheader>
+          {elecRoutes.map(
+            (item) =>
+              item.icon &&
+              item.label && (
+                <Link
+                  key={item.path}
+                  icon={<Icon icon={item.icon} />}
+                  label={item.label}
+                  path={item.path}
+                />
+              )
+          )}
+          <Divider />
+
+        </List>
+      )}
+
+
+{hasSoftModule && (
+        <List>
+          <ListSubheader component="div" sx={{ color: "#47980C" }} inset>
+          INT. CURRICULAR
+        <br></br>
+           Software
+          </ListSubheader>
+
+          {softRoutes.map(
+            (item) =>
+              item.icon &&
+              item.label && (
+                <Link
+                  key={item.path}
+                  icon={<Icon icon={item.icon} />}
+                  label={item.label}
+                  path={item.path}
+                />
+              )
+          )}
+          <Divider />
+
+        </List>
+      )}
+
+
+  
+{hasTeciModule && (
+        <List>
+          <ListSubheader component="div" sx={{ color: "#0C5898" }} inset>
+           Tecnologías Infor.
+          </ListSubheader>
+
+          {teciRoutes.map(
+            (item) =>
+              item.icon &&
+              item.label && (
+                <Link
+                  key={item.path}
+                  icon={<Icon icon={item.icon} />}
+                  label={item.label}
+                  path={item.path}
+                />
+              )
+          )}
+          <Divider />
+
+        </List>
+      )}    
+
+{hasTeleModule && (
+        <List>
+          <ListSubheader component="div" sx={{ color: "#AA063D" }} inset>
+           Telecomunicaciones
+          </ListSubheader>
+
+          {teleRoutes.map(
+            (item) =>
+              item.icon &&
+              item.label && (
+                <Link
+                  key={item.path}
+                  icon={<Icon icon={item.icon} />}
+                  label={item.label}
+                  path={item.path}
+                />
+              )
+          )}
+          <Divider />
+
+        </List>
+      )}    
+
+{hasIndsModule && (
+        <List>
+          <ListSubheader component="div" sx={{ color: "#0924BF" }}  inset>
+          Industrial
+          </ListSubheader>
+
+          {indsRoutes.map(
+            (item) =>
+              item.icon &&
+              item.label && (
+                <Link
+                  key={item.path}
+                  icon={<Icon icon={item.icon} />}
+                  label={item.label}
+                  path={item.path}
+                />
+              )
+          )}
+          <Divider />
+
+        </List>
+      )}    
+
     </DrawerBase>
   );
 };

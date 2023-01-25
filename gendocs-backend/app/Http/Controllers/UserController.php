@@ -40,7 +40,12 @@ class UserController extends Controller
 
     public function index()
     {
-        return ResourceCollection::make(User::all());
+        $query = User::query();
+        $query->orderBy('status', 'DESC');
+        $query
+        ->orderBy('name');
+        return ResourceCollection::make($query->get());
+        // return ResourceCollection::make(User::all());
     }
 
     public function store(StoreUserRequest $request)

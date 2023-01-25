@@ -26,14 +26,15 @@ class StoreDocenteRequest extends FormRequest
     public function rules()
     {
         return [
-            'cedula' => ['required', 'string', 'max:15', 'unique:\App\Models\Docente,cedula'],
+            // 'cedula' => ['required', 'string', 'max:15', 'unique:\App\Models\Docente,cedula'],
+            'cedula' => ['required', 'string', 'max:15'],
             'nombres' => ['required', 'string', 'max:500'],
             'celular' => ['required', 'string', 'max:25'],
             'telefono' => ['present', 'string', 'nullable', 'max:25'],
             'correo' => ['present', 'string', 'nullable', 'max:150'],
             'correo_uta' => ['required', 'string', 'max:150'],
-            'genero' => ['present', Rule::in([Genero::FEMENINO, Genero::MASCULINO, ""])],
-            'carrera' => ['required', 'exists:\App\Models\Carrera,id'],
+            // 'genero' => ['present', Rule::in([Genero::FEMENINO, Genero::MASCULINO, ""])],
+            // 'carrera' => ['required', 'exists:\App\Models\Carrera,id'],
         ];
     }
 }

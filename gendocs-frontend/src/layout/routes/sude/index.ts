@@ -27,6 +27,7 @@ import {
   ProcesosSUDE,
   ProcesosSUDEOutlet,
 } from "./components";
+import * as Components from "./components";
 
 export const routes: IRoute[] = [
   {
@@ -71,6 +72,31 @@ export const routes: IRoute[] = [
         component: DriveTemplate,
       },
       { path: "", isIndex: true, component: DocumentosFACU },
+    ],
+  },
+  {
+    path: "estudiantes",
+    label: "Estudiantes",
+    component: Outlet,
+    icon: "school",
+    modules: [ModuleEnum.FACU],
+    isMenuOption: true,
+    childrens: [
+      {
+        path: "nuevo",
+        component: Outlet,
+        roles: [RolEnum.ADMIN, RolEnum.ADMINTEMP, RolEnum.WRITER],
+        childrens: [
+          { path: "formato/:driveId", component: Components.DriveTemplate },
+          { path: "", isIndex: true, component: Components.AddEstudiante },
+        ],
+      },
+      {
+        path: ":studentId",
+        component: Components.UpdateEstudiante,
+        roles: [RolEnum.ADMIN, RolEnum.ADMINTEMP, RolEnum.WRITER],
+      },
+      { path: "", isIndex: true, component: Components.Estudiantes },
     ],
   },
   {

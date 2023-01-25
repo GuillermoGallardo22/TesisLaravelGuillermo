@@ -6,6 +6,7 @@ use App\Constants\MimeType;
 use App\Constants\Variables;
 use App\Jobs\GenerarActa;
 use App\Models\Acta;
+use App\Models\Cargo;
 use App\Models\Consejo;
 use App\Models\Directorio;
 use App\Models\PlantillasGlobales;
@@ -136,8 +137,21 @@ class ActaService
                 Variables::NO_ASISTIERON => $this->no_asis($no_asistieron),
             ];
 
+            // $this->googleDriveService->replaceTextOnDocument(
+            //     $consejoData,
+            //     $cargos,
+            //     $documentoDrive->id,
+            // );
+            $cargos = Cargo::query()->with(['docente'])->get()->map(function ($i, $k) {
+                return [$i['variable'] => $i['docente']['nombres']];
+            })->collapse()->toArray();
+
+
             $this->googleDriveService->replaceTextOnDocument(
-                $consejoData,
+                array_merge(
+                    $consejoData,
+                    $cargos,
+                ),
                 $documentoDrive->id,
             );
 

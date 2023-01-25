@@ -42,7 +42,7 @@ const Cargos = () => {
     { field: "variable", headerName: "Variable", flex: 1 },
     {
       field: "docente",
-      headerName: "Docente",
+      headerName: "Funcionario",
       flex: 2,
       valueGetter: (item) => item?.value?.nombres || "",
     },

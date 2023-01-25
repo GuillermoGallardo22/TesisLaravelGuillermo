@@ -75,7 +75,7 @@ export const ActaBase: React.FunctionComponent<ActaBaseProps> = ({
       .then((result) => {
         if (result.status === HTTP_STATUS.created) {
           queryClient.invalidateQueries(["consejo", { id: consejo.id }]);
-          enqueueSnackbar(result.message, { variant: "success" });
+          enqueueSnackbar(result.message + ", ATENCIÓN: revise los números reservados y encolados al momento de generar el acta", { variant: "success" });
         } else {
           //
           enqueueSnackbar(result.errors ? result.errors[0] : result.message, {
@@ -150,7 +150,7 @@ export const ActaBase: React.FunctionComponent<ActaBaseProps> = ({
             "acta",
             { batch_id: consejo.acta?.batch },
           ]);
-          enqueueSnackbar(result.message, { variant: "success" });
+          enqueueSnackbar(result.message + ", ATENCIÓN: revise los números reservados y encolados al momento de generar el acta", { variant: "success" });
         } else {
           enqueueSnackbar(result.message, {
             variant: "error",
@@ -170,7 +170,8 @@ export const ActaBase: React.FunctionComponent<ActaBaseProps> = ({
         <TitleNav title="Acta" />
 
         <Box>
-          <Grid container columns={{ xs: 1, sm: 2 }} spacing={2}>
+          {/* <Grid container columns={{ xs: 1, sm: 2 }} spacing={2}> */}
+          <Grid container columns={{ xs: 1 }} spacing={2}>
             <Grid item xs={1}>
               <LoadingButton
                 fullWidth
@@ -180,7 +181,7 @@ export const ActaBase: React.FunctionComponent<ActaBaseProps> = ({
                 onClick={procesarDocumentosActa}
                 variant="outlined"
               >
-                Procesar documentos
+                1. Procesar documentos
               </LoadingButton>
             </Grid>
             <Grid item xs={1}>
@@ -192,7 +193,7 @@ export const ActaBase: React.FunctionComponent<ActaBaseProps> = ({
                 onClick={generatePlantillaActa}
                 variant="outlined"
               >
-                Generar plantilla acta
+                2. Generar plantilla acta
               </LoadingButton>
             </Grid>
           </Grid>
@@ -217,7 +218,7 @@ export const ActaBase: React.FunctionComponent<ActaBaseProps> = ({
           startIcon={<Icon icon="article" />}
           variant="outlined"
         >
-          Ver Acta
+          4. Ver Acta
         </Button>
       </Stack>
 
@@ -286,7 +287,7 @@ const DownloadActa: React.FunctionComponent<DownloadActaProps> = ({
       variant="outlined"
       color="success"
     >
-      Descargar documentos
+      3. Descargar documentos
     </LoadingButton>
   );
 };

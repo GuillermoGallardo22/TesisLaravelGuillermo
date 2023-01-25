@@ -1,25 +1,19 @@
 import axios from "axios";
 import { HTTP_STATUS } from "models/enums/HttpStatus";
-import { DocenteForm, IDocente, IUpdateDocente } from "models/interfaces/IDocente";
-import { IFilterPaginationProps } from "models/interfaces/IPagination";
+import { DocenteForm, IDocente } from "models/interfaces/IDocente";
+import { IFilterPaginationProps, IPagination } from "models/interfaces/IPagination";
 import { IResponse } from "models/interfaces/IResponse";
 import { handleErrors } from "utils/axios";
 import { HTTP_MESSAGES } from "utils/messages";
-import { parseFilterPaginationProps } from "utils/pagination";
-import { CONSTANTS } from "utils/constants";
-
-
+import { DEFAULT_PAGINATION_VALUES, parseFilterPaginationProps, parsePaginationData } from "utils/pagination";
 
 export async function saveDocente(
   form: DocenteForm
 ): Promise<IResponse<IDocente>> {
   try {
-    const {  genero, ...rest } = form;
-
     const payload = {
       type: "simple",
-      ...rest,
-      genero: genero === -1 ? "" : genero,
+      ...form,
     };
 
     const {
@@ -37,20 +31,12 @@ export async function saveDocente(
 }
 
 export async function updateDocente(
-  form: IUpdateDocente
+  form: IDocente
 ): Promise<IResponse<IDocente>> {
   try {
-    const { carrera, genero, ...rest } = form;
-
-    const payload = {
-      ...rest,
-      genero: genero === -1 ? "" : genero,
-      carrera_id: carrera,
-    };
-
     const {
       data: { data },
-    } = await axios.put("docentes/" + form.id, payload);
+    } = await axios.put("docentes/" + form.id, form);
 
     return {
       status: HTTP_STATUS.ok,
@@ -68,13 +54,42 @@ export async function getDocentes(
   try {
     const params = parseFilterPaginationProps(props);
 
+    // const { data } = await axios.get<IPagination<IDocente>>(
+    //   `docentes?${params}`
+    // );
+
     const {
       data: { data },
     } = await axios.get(`docentes?${params}`);
 
-    return data;
+     return data;
+    // return parsePaginationData(data);
+    
   } catch (error) {
+    // return DEFAULT_PAGINATION_VALUES;
     return [];
+  }
+}
+
+export async function getDocentesTabla(
+  props?: IFilterPaginationProps
+): Promise<IPagination<IDocente>> {
+  try {
+    const params = parseFilterPaginationProps(props);
+
+    const { data } = await axios.get<IPagination<IDocente>>(
+      `docentes?${params}`
+    );
+
+    // const {
+    //   data: { data },
+    // } = await axios.get(`docentes?${params}`);
+
+    // return data;
+    return parsePaginationData(data);
+    
+  } catch (error) {
+    return DEFAULT_PAGINATION_VALUES;
   }
 }
 
@@ -95,30 +110,3 @@ export async function getDocente(
     return handleErrors(error, null);
   }
 }
-
-
-export async function getDocenteById(
-  docenteId: string | number
-): Promise<IResponse<IDocente>> {
-  try {
-    const {
-      data: { data },
-    } = await axios.get("docentes/" + docenteId);
-    return {
-      status: HTTP_STATUS.ok,
-      data: {
-        ...data,
-        celular: data?.celular || "",
-        correo_uta: data?.correo_uta || "",
-        carrera: data?.carrera || "",
-        telefono: data?.telefono || "",
-        correo: data?.correo || "",
-        genero: data?.genero || "",
-      },
-      message: "",
-    };
-  } catch (error) {
-    return handleErrors(error);
-  }
-}
-

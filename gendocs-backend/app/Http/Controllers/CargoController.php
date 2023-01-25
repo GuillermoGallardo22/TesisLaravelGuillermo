@@ -20,7 +20,8 @@ class CargoController extends Controller
     public function index()
     {
         $query = Cargo::query();
-
+        $query
+        ->orderBy('nombre');
         return ResourceCollection::make($query->get());
     }
 
