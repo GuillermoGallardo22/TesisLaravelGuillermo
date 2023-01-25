@@ -67,7 +67,7 @@ class NumeracionPolicy
      */
     public function delete(User $user, Numeracion $numeracion)
     {
-        //
+        return $user->getAllPermissions()->contains('name', Permissions::Numeracion['delete']);
     }
 
     /**

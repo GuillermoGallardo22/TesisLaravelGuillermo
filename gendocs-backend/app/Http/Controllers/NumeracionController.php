@@ -81,4 +81,16 @@ class NumeracionController extends Controller
             ], ResponseAlias::HTTP_UNPROCESSABLE_ENTITY);
         }
     }
+
+    public function destroy(Numeracion $numeracion)
+    {
+        $numeracion->update([
+            'usado' => false,
+            'encolado' => true,
+            'reservado' => false,
+            'consejo_id' => null,
+        ]);
+
+        return response()->noContent(ResponseAlias::HTTP_OK);
+    }
 }
