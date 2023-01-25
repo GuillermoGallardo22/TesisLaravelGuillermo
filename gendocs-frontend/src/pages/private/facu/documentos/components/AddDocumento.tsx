@@ -497,6 +497,7 @@ function AddDocumento() {
         onApprove={(n) => formik.setFieldValue("numero", n)}
         reservados={reservados}
         encolados={encolados}
+        onSuccessDeleteR={refreshNumeracion}
       />
     </Stack>
   );

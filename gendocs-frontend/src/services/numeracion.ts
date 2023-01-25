@@ -76,3 +76,19 @@ export async function getNumeracionActaGrado(
     };
   }
 }
+
+export async function deleteReserva(
+  id: string | number
+): Promise<IResponse<null>> {
+  try {
+    await axios.delete("numeracion/" + id);
+
+    return {
+      data: null,
+      message: HTTP_MESSAGES[200],
+      status: HTTP_STATUS.ok,
+    };
+  } catch (error) {
+    return handleErrors(error);
+  }
+}

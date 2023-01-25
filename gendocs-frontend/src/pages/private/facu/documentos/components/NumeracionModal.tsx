@@ -1,12 +1,15 @@
+import { Tooltip } from "@mui/material";
 import Alert from "@mui/material/Alert";
 import Grid from "@mui/material/Grid";
-import { DataGrid } from "@mui/x-data-grid";
+import { DataGrid, GridActionsCellItem } from "@mui/x-data-grid";
 import ConfirmationDialog from "components/ConfirmationDialog";
+import Icon from "components/Icon";
 import {
   INumeracionBase,
   INumeracionReservado,
 } from "models/interfaces/INumeracion";
 import { useMemo, useState } from "react";
+import { deleteReserva } from "services/numeracion";
 
 type NumeracionModalProps = {
   isVisible: boolean;
@@ -14,6 +17,7 @@ type NumeracionModalProps = {
   onApprove: (number: number) => void;
   reservados: INumeracionReservado[];
   encolados: INumeracionBase[];
+  onSuccessDeleteR?: () => void;
 };
 
 export const NumeracionModal: React.FC<NumeracionModalProps> = ({
@@ -22,6 +26,7 @@ export const NumeracionModal: React.FC<NumeracionModalProps> = ({
   onApprove,
   reservados,
   encolados,
+  onSuccessDeleteR,
 }) => {
   const [selectedValue, setSelectedValue] = useState<number | null>(null);
   const [searching, setSearching] = useState(false);
@@ -57,6 +62,16 @@ export const NumeracionModal: React.FC<NumeracionModalProps> = ({
         .filter((v, i, a) => a.indexOf(v) === i),
     [reservados]
   );
+
+  const handleDeleteNumeroReservado = (data: INumeracionReservado) => {
+    setSearching(true);
+    deleteReserva(data.id).finally(() => {
+      if (onSuccessDeleteR) {
+        onSuccessDeleteR();
+      }
+      setSearching(false);
+    });
+  };
 
   return (
     <ConfirmationDialog
@@ -95,6 +110,25 @@ export const NumeracionModal: React.FC<NumeracionModalProps> = ({
                     type: "singleSelect",
                     valueGetter: ({ value }) => value.nombre,
                     valueOptions: nombreConsejos,
+                  },
+                  {
+                    type: "actions",
+                    field: "Acciones",
+                    headerName: "Acciones",
+                    getActions: (p) => [
+                      <GridActionsCellItem
+                        key={p.id}
+                        color="error"
+                        disabled={searching}
+                        icon={
+                          <Tooltip title="Eliminar" arrow>
+                            <Icon icon="delete" />
+                          </Tooltip>
+                        }
+                        label="Eliminar"
+                        onClick={() => handleDeleteNumeroReservado(p.row)}
+                      />,
+                    ],
                   },
                 ]}
               />
