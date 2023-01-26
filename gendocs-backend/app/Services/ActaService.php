@@ -101,9 +101,9 @@ class ActaService
                 ->consejos
                 ->where('estado', false);
 
-            $numActa = 0;
+            $numActa = 1;
             foreach ($consejos as $consejo) {
-                if ($consejo->modulo->code === $moduleCode) {
+                if ($consejo?->modulo?->code === $moduleCode) {
                     $numActa++;
                 }
             }
