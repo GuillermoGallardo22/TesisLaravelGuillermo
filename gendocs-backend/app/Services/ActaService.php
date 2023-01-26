@@ -104,6 +104,8 @@ class ActaService
             $numActa = 1;
             foreach ($consejos as $consejo) {
                 if ($consejo->module->modulo->code === $moduleCode) {
+                    $fecha = $consejo->fecha;
+                    $fecha->setTimeZone("America/Guayaquil");
                     $numActa++;
                 }
             }
@@ -111,8 +113,6 @@ class ActaService
 
             $now = now();
 
-            $fecha = $consejo->fecha;
-            $fecha->setTimeZone("America/Guayaquil");
 
             $asistieron = $consejo->miembros()->where('asistio', true)->get()->map(function ($m) {
                 return $m->docente->nombres;
