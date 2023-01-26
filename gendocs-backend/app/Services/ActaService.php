@@ -104,14 +104,15 @@ class ActaService
             $numActa = 1;
             foreach ($consejos as $consejo) {
                 if ($consejo->module->modulo->code === $moduleCode) {
-                    $fecha = $consejo->fecha;
-                    $fecha->setTimeZone("America/Guayaquil");
                     $numActa++;
                 }
             }
 
 
             $now = now();
+
+            $fecha = $consejo->fecha;
+            $fecha->setTimeZone("America/Guayaquil");
 
 
             $asistieron = $consejo->miembros()->where('asistio', true)->get()->map(function ($m) {
@@ -124,21 +125,21 @@ class ActaService
 
 
             $consejoData = [
-                Variables::FECHA => $this->formatDate($fecha),
+                Variables::FECHA => $this->formatDate($now),
                 Variables::RESPONSABLE => $consejo->responsable->docente->nombres,
                 //
                 Variables::NUMACT => $this->format_NUMACT($numActa),
                 Variables::FECHA_U => $this->format_FECHA_U($fecha),
                 Variables::SESIONUP => strtoupper($tipoConsejo->nombre),
                 Variables::SESION_L => mb_strtolower($tipoConsejo->nombre),
-                Variables::Y => $this->format_Y($fecha),
-                Variables::DIASEM_T => $this->format_DIASEM_T($fecha),
-                Variables::NUMMES_T_U => $this->format_NUMMES_T_U($fecha),
-                Variables::MES_T_L => $this->format_MES_T_L($fecha),
-                Variables::NUMDIA_T => $this->format_NUMDIA_T($fecha),
-                Variables::NUMANIO_T => $this->format_NUMANIO_T($fecha),
-                Variables::NUMANIO_T_L => $this->format_NUMANIO_T_L($fecha),
-                Variables::DIAS_T => $this->format_DIAS_T($fecha),
+                Variables::Y => $this->format_Y($now),
+                Variables::DIASEM_T => $this->format_DIASEM_T($now),
+                Variables::NUMMES_T_U => $this->format_NUMMES_T_U($now),
+                Variables::MES_T_L => $this->format_MES_T_L($now),
+                Variables::NUMDIA_T => $this->format_NUMDIA_T($now),
+                Variables::NUMANIO_T => $this->format_NUMANIO_T($now),
+                Variables::NUMANIO_T_L => $this->format_NUMANIO_T_L($now),
+                Variables::DIAS_T => $this->format_DIAS_T($now),
                 Variables::HORA_T_L => $this->converNumberToWords($fecha->hour),
                 Variables::MINUTOS_T_L => $this->converNumberToWords($fecha->minute),
                 Variables::ASISTIERON => $this->asis($asistieron),
