@@ -103,10 +103,11 @@ class ActaService
 
             $numActa = 1;
             foreach ($consejos as $consejo) {
-                if ($consejo?->modulo?->code === $moduleCode) {
+                if ($consejo->module->modulo->code === $moduleCode) {
                     $numActa++;
                 }
             }
+
 
             $now = now();
 
@@ -120,6 +121,7 @@ class ActaService
             $no_asistieron = $consejo->miembros()->where('asistio', false)->get()->map(function ($m) {
                 return $m->docente->nombres;
             })->all();
+
 
             $consejoData = [
                 Variables::FECHA => $this->formatDate($now),
