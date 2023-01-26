@@ -47,18 +47,18 @@ class NumeroConsejo implements Rule
             return false;
         }
 
-        if (
-            // SI EL CONSEJO TIENE NUMERACIONES RESERVADAS PARA EL MÓDULO
-            (clone $queryBase)->where('consejo_id', $consejo)->exists()
-            // ||
-            // // SI EL NÚMERO EXISTE Y NO ESTA ENCOLADO PARA EL MÓDULO
-            // (clone $queryBase)->where('numero', $numero)->where('encolado', false)->exists()
-        ) {
-            return (clone $queryBase)
-                ->where('numero', $numero)
-                ->where('consejo_id', $consejo)
-                ->exists();
-        }
+        // if (
+        //     // SI EL CONSEJO TIENE NUMERACIONES RESERVADAS PARA EL MÓDULO
+        //     (clone $queryBase)->where('consejo_id', $consejo)->exists()
+        //     // ||
+        //     // // SI EL NÚMERO EXISTE Y NO ESTA ENCOLADO PARA EL MÓDULO
+        //     // (clone $queryBase)->where('numero', $numero)->where('encolado', false)->exists()
+        // ) {
+        //     return (clone $queryBase)
+        //         ->where('numero', $numero)
+        //         ->where('consejo_id', $consejo)
+        //         ->exists();
+        // }
 
         return true;
     }
