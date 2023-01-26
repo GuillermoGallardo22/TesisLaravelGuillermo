@@ -25,3 +25,17 @@ export const ConsejosINDSOUTLET = lazy(() =>
 export const DocumentosINDSOUTLET = lazy(
   () => import("pages/private/inds/documentos/Documentos")
 );
+
+export const AddEstudiante = lazy(
+  () => import("pages/private/facu/estudiantes/components/AddEstudiante")
+);
+
+export const Estudiantes = lazy(
+  () => import("pages/private/facu/estudiantes/Estudiantes")
+);
+
+export const UpdateEstudiante = lazy(
+  () => import("pages/private/facu/estudiantes/components/UpdateEstudiante")
+);
+
+export const DriveTemplate = lazy(() => import("components/DriveTemplate"));

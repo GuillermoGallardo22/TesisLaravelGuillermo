@@ -75,7 +75,7 @@ export const ActaBase: React.FunctionComponent<ActaBaseProps> = ({
       .then((result) => {
         if (result.status === HTTP_STATUS.created) {
           queryClient.invalidateQueries(["consejo", { id: consejo.id }]);
-          enqueueSnackbar(result.message + ", ATENCIÓN: revise los números reservados y encolados al momento de generar el acta", { variant: "success" });
+          enqueueSnackbar(result.message + ", **ATENCIÓN**: revise los números reservados y encolados al momento de generar el acta", { variant: "success" });
         } else {
           //
           enqueueSnackbar(result.errors ? result.errors[0] : result.message, {
@@ -150,7 +150,7 @@ export const ActaBase: React.FunctionComponent<ActaBaseProps> = ({
             "acta",
             { batch_id: consejo.acta?.batch },
           ]);
-          enqueueSnackbar(result.message + ", ATENCIÓN: revise los números reservados y encolados al momento de generar el acta", { variant: "success" });
+          enqueueSnackbar(result.message + ", **ATENCIÓN**: revise los números reservados y encolados al momento de generar el acta", { variant: "success" });
         } else {
           enqueueSnackbar(result.message, {
             variant: "error",

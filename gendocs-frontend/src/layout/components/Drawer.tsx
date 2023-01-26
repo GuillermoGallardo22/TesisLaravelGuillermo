@@ -220,9 +220,10 @@ const Drawer: React.FC<DrawerProps> = ({ open, toggleDrawer }) => {
 
 {hasSistModule && (
         <List>
-            <ListSubheader sx={{ color: "#2517D3" }} component="div" inset>
-              TITULACIÓN 
-              <br></br>
+         <ListSubheader component="div" sx={{ color: "#330ABB" }} inset>
+                 **TITULACIÓN** 
+          </ListSubheader>
+            <ListSubheader sx={{ color: "#C32121" }} component="div" inset>
             Sistemas
             </ListSubheader>
 
@@ -269,7 +270,7 @@ const Drawer: React.FC<DrawerProps> = ({ open, toggleDrawer }) => {
       
 {hasElecModule && (
         <List>
-          <ListSubheader component="div" sx={{ color: "#AB17D3" }} inset>
+          <ListSubheader component="div" sx={{ color: "#2195C3" }} inset>
            Electrónica Comu.
           </ListSubheader>
           {elecRoutes.map(
@@ -292,11 +293,17 @@ const Drawer: React.FC<DrawerProps> = ({ open, toggleDrawer }) => {
 
 {hasSoftModule && (
         <List>
-          <ListSubheader component="div" sx={{ color: "#47980C" }} inset>
-          INT. CURRICULAR
-        <br></br>
+              <ListSubheader component="div" sx={{ color: "#330ABB" }} inset>
+          **INT. CURRICULAR**
+          </ListSubheader>
+          <ListSubheader component="div" sx={{ color: "#C32121" }} inset>
            Software
           </ListSubheader>
+          {/* <ListSubheader component="div" sx={{ color: "#C32121" }} inset>
+          **INT. CURRICULAR**
+        <br></br>
+           Software
+          </ListSubheader> */}
 
           {softRoutes.map(
             (item) =>
@@ -319,7 +326,7 @@ const Drawer: React.FC<DrawerProps> = ({ open, toggleDrawer }) => {
   
 {hasTeciModule && (
         <List>
-          <ListSubheader component="div" sx={{ color: "#0C5898" }} inset>
+          <ListSubheader component="div" sx={{ color: "#C32121" }} inset>
            Tecnologías Infor.
           </ListSubheader>
 
@@ -342,7 +349,8 @@ const Drawer: React.FC<DrawerProps> = ({ open, toggleDrawer }) => {
 
 {hasTeleModule && (
         <List>
-          <ListSubheader component="div" sx={{ color: "#AA063D" }} inset>
+          {/* , background: "#2195C3" */}
+          <ListSubheader component="div" sx={{ color: "#2195C3"}} inset>
            Telecomunicaciones
           </ListSubheader>
 
@@ -365,7 +373,7 @@ const Drawer: React.FC<DrawerProps> = ({ open, toggleDrawer }) => {
 
 {hasIndsModule && (
         <List>
-          <ListSubheader component="div" sx={{ color: "#0924BF" }}  inset>
+          <ListSubheader component="div" sx={{ color: "#12972C" }}  inset>
           Industrial
           </ListSubheader>
 
@@ -381,7 +389,6 @@ const Drawer: React.FC<DrawerProps> = ({ open, toggleDrawer }) => {
                 />
               )
           )}
-          <Divider />
 
         </List>
       )}    
