@@ -43,7 +43,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware(["auth:sanctum", "isUserActive"])->group(function () {
 
     Route::apiResource('docentes', DocenteController::class)->except(['destroy']);
-    Route::apiResource('carreras', CarreraController::class)->except(['destroy', 'store']);
+    Route::apiResource('carreras', CarreraController::class)->except(['destroy']);
     Route::apiResource('procesos', ProcesoController::class)->except(['destroy']);
     Route::apiResource('plantillas', PlantillasController::class)->except(['destroy']);
     Route::apiResource('tipo-consejos', TipoConsejoController::class)->only(['index']);

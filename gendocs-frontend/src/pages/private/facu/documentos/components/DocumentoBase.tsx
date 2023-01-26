@@ -138,8 +138,8 @@ const DocumentosBase = () => {
                 rel="noopener noreferrer"
                 sx={{
                   color: p.row.notificado_w
-                    ? CONSTANTS.WHATSAPP_COLOR
-                    : CONSTANTS.DISABLED_COLOR,
+                    ? CONSTANTS.DISABLED_COLOR
+                    : CONSTANTS.WHATSAPP_COLOR,
                 }}
                 icon={
                   <Tooltip
@@ -164,8 +164,8 @@ const DocumentosBase = () => {
                 key={p.id}
                 sx={{
                   color: p.row.notificado_e
-                    ? CONSTANTS.EMAIL_COLOR
-                    : CONSTANTS.DISABLED_COLOR,
+                    ? CONSTANTS.DISABLED_COLOR
+                    : CONSTANTS.EMAIL_COLOR,
                 }}
                 icon={
                   <Tooltip

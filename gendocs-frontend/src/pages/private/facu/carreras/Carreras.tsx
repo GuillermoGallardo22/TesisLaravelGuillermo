@@ -1,5 +1,6 @@
 import Stack from "@mui/material/Stack";
 import Tooltip from "@mui/material/Tooltip";
+import Button from "@mui/material/Button";
 import {
   DataGrid,
   GridActionsCellItem,
@@ -12,6 +13,7 @@ import TitleNav from "components/TitleNav";
 import { GridToolbarWithoutExport } from "components/ToolbarDataGrid";
 import { useMemo } from "react";
 import { Link } from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
 import { useListCarreras } from "./hooks/useListCarreras";
 
 export default function Carreras() {
@@ -74,6 +76,15 @@ export default function Carreras() {
   return (
     <Stack spacing={2}>
       <TitleNav title="Carreras" goback={false} />
+      <Button
+        component={Link}
+        startIcon={<Icon icon="add" />}
+        to="nuevo"
+        variant="outlined"
+      >
+        CREAR CARRERA
+      </Button>
+
       <div style={{ height: 700, width: "100%" }}>
         <DataGrid
           disableColumnMenu
