@@ -97,10 +97,16 @@ class ActaService
                     ]
                 );
 
-            $numActa = Directorio::activeDirectory()
+            $consejos = Directorio::activeDirectory()
                 ->consejos
-                ->where('estado', false)
-                ->count() + 1;
+                ->where('estado', false);
+
+            $numActa = 0;
+            foreach ($consejos as $consejo) {
+                if ($consejo->modulo->code === $moduleCode) {
+                    $numActa++;
+                }
+            }
 
             $now = now();
 
