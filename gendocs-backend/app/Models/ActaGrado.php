@@ -102,6 +102,8 @@ class ActaGrado extends Model
 
     public function miembros()
     {
-        return $this->hasMany(MiembrosActaGrado::class, "acta_grado_id");
+        return $this->hasMany(MiembrosActaGrado::class, "acta_grado_id")
+            ->orderBy('tipo')
+            ->orderBy('created_at');
     }
 }

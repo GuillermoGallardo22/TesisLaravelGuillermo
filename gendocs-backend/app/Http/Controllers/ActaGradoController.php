@@ -41,13 +41,14 @@ class ActaGradoController extends Controller
         return ActaGradoResource::collection($query->get());
     }
 
-    public function reporteEstudiantePorCarrera(){
+    public function reporteEstudiantePorCarrera()
+    {
 
-        $query=ActaGrado::selectRaw('COUNT(carrera_id) AS conteo,carrera_id')->with('carrera')->groupBy('carrera_id');
+        $query = ActaGrado::selectRaw('COUNT(carrera_id) AS conteo,carrera_id')->with('carrera')->groupBy('carrera_id');
 
-      // return response($datos);
+        // return response($datos);
         return response($query->get()->toJson());
-      //  return ResourceCollection::make($query->get());
+        //  return ResourceCollection::make($query->get());
 
     }
 
@@ -232,5 +233,27 @@ class ActaGradoController extends Controller
 
         $actaGrado = $service->generarDocumento($actaGrado, $plantilla);
         return ActaGradoResource::make($actaGrado);
+    }
+
+    public function generarReporte(Request $request)
+    {
+        $carrera = $request->get('carrera');
+        $fecha_inicio = $request->get('fi');
+        $fecha_fin = $request->get('ff');
+
+        $query = ActaGrado::query()->with(['estudiante', 'tipo', 'miembros.docente', 'aula']);
+
+        $query
+            ->where('carrera_id', $carrera)
+            ->whereBetween("fecha_presentacion", [$fecha_inicio, $fecha_fin])
+            // ->orderBy("fecha_presentacion")
+            ->orderBy("numero")
+            // ->dd()
+        ;
+
+
+        return response()->json([
+            "data" => $query->get(),
+        ]);
     }
 }
