@@ -12,7 +12,8 @@ type useGridColumnVisibilityModelProps = {
     | "table-model-users"
     | "table-cargos"
     | "actasGradoTableModel"
-    | "asistentesActaGradoTableModel";
+    | "asistentesActaGradoTableModel"
+    | "reporteActasGradoTableModel";
 };
 
 export function useGridColumnVisibilityModel({

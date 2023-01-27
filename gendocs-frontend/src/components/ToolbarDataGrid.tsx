@@ -29,15 +29,30 @@ export function GridToolbarWithoutExport() {
       <GridToolbarDensitySelector />
       <GridToolbarExport
         csvOptions={{
-          fileName: 'ActaGrado',
-          delimiter: ';',
+          fileName: "ActaGrado",
+          delimiter: ";",
           utf8WithBom: true,
           // fields: ['numero', 'docente','informacion_adicional']
         }}
       />
 
-{/* componentsProps={{ toolbar: { csvOptions: { fields: ['destinatario', 'plantilla'] } } }} */}
+      {/* componentsProps={{ toolbar: { csvOptions: { fields: ['destinatario', 'plantilla'] } } }} */}
+    </GridToolbarContainer>
+  );
+}
 
+export function GridToolbarJustColumnsAndExport() {
+  return (
+    <GridToolbarContainer>
+      <GridToolbarColumnsButton />
+      <GridToolbarExport
+      //   csvOptions={{
+      //     fileName: "ActaGrado",
+      //     delimiter: ";",
+      //     utf8WithBom: true,
+      //     // fields: ['numero', 'docente','informacion_adicional']
+      //   }}
+      />
     </GridToolbarContainer>
   );
 }

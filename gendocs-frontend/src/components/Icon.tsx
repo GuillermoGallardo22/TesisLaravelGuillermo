@@ -3,6 +3,7 @@ import AddIcon from "@mui/icons-material/Add";
 import ApartmentIcon from "@mui/icons-material/Apartment";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArticleIcon from "@mui/icons-material/Article";
+import AssessmentIcon from "@mui/icons-material/Assessment";
 import AutorenewIcon from "@mui/icons-material/Autorenew";
 import CheckIcon from "@mui/icons-material/Check";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
@@ -15,6 +16,7 @@ import EmailIcon from "@mui/icons-material/Email";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import FactCheckIcon from "@mui/icons-material/FactCheck";
+import FunctionsIcon from "@mui/icons-material/Functions";
 import GroupAddIcon from "@mui/icons-material/GroupAdd";
 import GroupsIcon from "@mui/icons-material/Groups";
 import HailIcon from "@mui/icons-material/Hail";
@@ -26,7 +28,9 @@ import LockReset from "@mui/icons-material/LockReset";
 import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
 import MenuIcon from "@mui/icons-material/Menu";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 import NumbersIcon from "@mui/icons-material/Numbers";
+import PeopleIcon from "@mui/icons-material/People";
 import PlaylistAddCheckIcon from "@mui/icons-material/PlaylistAddCheck";
 import SchoolIcon from "@mui/icons-material/School";
 import SearchIcon from "@mui/icons-material/Search";
@@ -36,12 +40,10 @@ import StyleIcon from "@mui/icons-material/Style";
 import TopicIcon from "@mui/icons-material/Topic";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import SvgIcon from "@mui/material/SvgIcon";
-import PeopleIcon from "@mui/icons-material/People";
-import FunctionsIcon from "@mui/icons-material/Functions";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { forwardRef } from "react";
 
 export type IconTypes =
+  | "assessment"
   | "moreVert"
   | "functions"
   | "people"
@@ -84,6 +86,7 @@ export type IconTypes =
   | "check";
 
 const ICONS = {
+  assessment: AssessmentIcon,
   moreVert: MoreVertIcon,
   functions: FunctionsIcon,
   people: PeopleIcon,

@@ -35,6 +35,11 @@ export const routes: IRoute[] = [
         roles: [RolEnum.ADMIN, RolEnum.ADMINTEMP],
       },
       {
+        path: "reporte",
+        component: Components.ActaGradoReporte,
+        roles: [],
+      },
+      {
         path: "drive/:driveId",
         component: DriveTemplate,
       },

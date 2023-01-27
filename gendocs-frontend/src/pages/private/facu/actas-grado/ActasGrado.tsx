@@ -340,7 +340,7 @@ const ActasGrado: React.FunctionComponent = () => {
       <TitleNav title="Actas de grado" goback={false} />
 
       <Box>
-        <Grid container columns={{ xs: 1, sm: 2 }} spacing={2}>
+        <Grid container columns={{ xs: 1, sm: 3 }} spacing={2}>
           <Grid item xs={1}>
             <Button
               fullWidth
@@ -362,6 +362,17 @@ const ActasGrado: React.FunctionComponent = () => {
               variant="outlined"
             >
               PLANTILLAS
+            </Button>
+          </Grid>
+          <Grid item xs={1}>
+            <Button
+              fullWidth
+              component={Link}
+              startIcon={<Icon icon="assessment" />}
+              to="reporte"
+              variant="outlined"
+            >
+              REPORTE
             </Button>
           </Grid>
         </Grid>

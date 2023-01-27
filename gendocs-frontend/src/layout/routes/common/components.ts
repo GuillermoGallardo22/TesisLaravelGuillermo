@@ -23,3 +23,7 @@ export const ActasGrado = lazy(
 export const AddActaGrado = lazy(
   () => import("pages/private/facu/actas-grado/components/AddActaGrado")
 );
+
+export const ActaGradoReporte = lazy(
+  () => import("pages/private/facu/actas-grado/components/ActaGradoReporte")
+);
