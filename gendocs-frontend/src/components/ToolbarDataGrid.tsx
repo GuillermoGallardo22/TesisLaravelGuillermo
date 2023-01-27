@@ -46,12 +46,12 @@ export function GridToolbarJustColumnsAndExport() {
     <GridToolbarContainer>
       <GridToolbarColumnsButton />
       <GridToolbarExport
-      //   csvOptions={{
-      //     fileName: "ActaGrado",
-      //     delimiter: ";",
-      //     utf8WithBom: true,
-      //     // fields: ['numero', 'docente','informacion_adicional']
-      //   }}
+        csvOptions={{
+          //     fileName: "ActaGrado",
+          delimiter: ";",
+          //     utf8WithBom: true,
+          //     // fields: ['numero', 'docente','informacion_adicional']
+        }}
       />
     </GridToolbarContainer>
   );
