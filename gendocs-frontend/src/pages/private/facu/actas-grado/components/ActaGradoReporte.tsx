@@ -6,6 +6,7 @@ import Select from "components/Select";
 import TitleNav from "components/TitleNav";
 import { GridToolbarJustColumnsAndExport } from "components/ToolbarDataGrid";
 import { useFormik } from "formik";
+import { useGridColumnVisibilityModel } from "hooks/useGridColumnVisibilityModel";
 import { LocalStorageKeys } from "models/enums/LocalStorageKeys";
 import { TipoAsistenteActaGradoEnum } from "models/interfaces/IActaGrado";
 import { useState } from "react";
@@ -58,61 +59,73 @@ const columns = [
     type: "number",
     field: "id",
     headerName: "#",
+    width: 75,
   },
   {
     type: "string",
     field: "cedula",
     headerName: "Nro. cédula",
+    width: 120,
   },
   {
     type: "string",
     field: "estudiante",
     headerName: "Titulando/a",
+    flex: 1,
   },
   {
     type: "string",
     field: "presidente",
     headerName: "Presidente",
+    flex: 1,
   },
   {
     type: "string",
     field: "modalidad",
     headerName: "Modalidad de titulacion",
+    flex: 1,
   },
   {
     type: "string",
     field: "tutor",
     headerName: "Tutor/a",
+    flex: 1,
   },
   {
     type: "string",
     field: "tema",
     headerName: "Tema Trabajo de Titulación",
+    flex: 1,
   },
   {
     type: "string",
     field: "miembro1",
     headerName: "Mie. Princ.1",
+    flex: 1,
   },
   {
     type: "string",
     field: "miembro2",
     headerName: "Mie. Princ.2",
+    flex: 1,
   },
   {
     type: "string",
     field: "suplente1",
     headerName: "Mie. Suplen.1",
+    flex: 1,
   },
   {
     type: "string",
     field: "suplente2",
     headerName: "Mie. Suplen.2",
+    flex: 1,
   },
   {
     type: "string",
     field: "fecha",
     headerName: "Fecha Grado",
+    width: 150,
   },
   {
     type: "string",
@@ -123,6 +136,7 @@ const columns = [
     type: "string",
     field: "lugar",
     headerName: "Lugar",
+    flex: 1,
   },
 ];
 
@@ -191,6 +205,11 @@ const ActaGradoReporte = () => {
   });
 
   const submitting = formik.isSubmitting;
+
+  const { columnVisibilityModel, onColumnVisibilityModelChange } =
+    useGridColumnVisibilityModel({
+      key: "reporteActasGradoTableModel",
+    });
 
   return (
     <Stack spacing={2}>
@@ -302,8 +321,8 @@ const ActaGradoReporte = () => {
       <div style={{ height: 700, width: "100%" }}>
         <DataGrid
           disableColumnMenu
-          //   columnVisibilityModel={columnVisibilityModel}
-          //   onColumnVisibilityModelChange={onColumnVisibilityModelChange}
+          columnVisibilityModel={columnVisibilityModel}
+          onColumnVisibilityModelChange={onColumnVisibilityModelChange}
           components={{ Toolbar: GridToolbarJustColumnsAndExport }}
           columns={columns}
           loading={submitting}
