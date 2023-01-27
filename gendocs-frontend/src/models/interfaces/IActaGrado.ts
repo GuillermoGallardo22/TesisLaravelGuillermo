@@ -59,13 +59,16 @@ export interface IActaGrado {
   documento: string | null;
   // Relationships
   aula?: IAula;
-  carrera:ICarrera;
+  carrera: ICarrera;
   estudiante: IEstudiante;
   canton: ICanton;
   tipo_acta: ITipoActaGrado;
   modalidad_acta_grado: IModalidadActaGrado;
   estado_acta?: IEstadoActa;
   tema: string | null;
+  //
+  tipo?: ITipoActaGrado;
+  miembros?: IMiembroActaGrado[];
 }
 
 export interface IAddActaGrado {
@@ -123,4 +126,6 @@ export interface IMiembroActaGrado {
   asistio: boolean;
   notificado: boolean;
   fecha_asignacion: string;
+  //
+  tipo?: string;
 }

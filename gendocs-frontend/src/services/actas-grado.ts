@@ -134,3 +134,23 @@ export async function generarDocumentoActaGrado(
     return handleErrors(error);
   }
 }
+
+export async function generarReporteActaGrado(
+  options?: IFilterPaginationProps
+): Promise<IResponse<IActaGrado[]>> {
+  try {
+    const params = parseFilterPaginationProps(options);
+
+    const {
+      data: { data },
+    } = await axios.get(`acta-grado-reporte?${params}`);
+
+    return {
+      status: HTTP_STATUS.ok,
+      message: HTTP_MESSAGES[HTTP_STATUS.ok],
+      data,
+    };
+  } catch (error) {
+    return handleErrors(error, []);
+  }
+}
