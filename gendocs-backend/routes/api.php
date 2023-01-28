@@ -74,13 +74,15 @@ Route::middleware(["auth:sanctum", "isUserActive"])->group(function () {
     Route::apiResource('modalidades-acta-grado', ModalidadActaGradoController::class)->only('index');
 
     Route::apiResource("acta-grado", ActaGradoController::class);
-    Route::get("acta-grado-reporte", [ActaGradoController::class, "generarReporte"]);
     Route::post("acta-grado/{actaGrado}/documento", [ActaGradoController::class, "generarDocumento"]);
     Route::apiResource("miembro-acta-grado", MiembrosActaGradoController::class)->except(["show"]);
     Route::apiResource("celdas-nota-tipo-acta-grado", CeldasNotasTipoActaGradoController::class)->except(['update', 'show']);
 
     Route::apiResource('numeracion', NumeracionController::class)->except(['show']);
     Route::apiResource('numeracion-acta-grado', NumeracionActaGradoController::class)->only(['index']);
+
+    Route::get("acta-grado-reporte", [ActaGradoController::class, "generarReporte"]);
+    Route::get('procesos-reporte', [ProcesoController::class, "generarReporte"]);
 
     // AUTH
     Route::apiResource('modulos', ModuleController::class)->only(['index']);

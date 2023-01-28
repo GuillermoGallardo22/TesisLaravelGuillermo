@@ -7,9 +7,12 @@ use App\Http\Requests\UpdateProcesoRequest;
 use App\Http\Resources\ResourceCollection;
 use App\Http\Resources\ResourceObject;
 use App\Models\Directorio;
+use App\Models\Documento;
 use App\Models\Module;
+use App\Models\Plantillas;
 use App\Models\Proceso;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
 class ProcesoController extends Controller
@@ -91,5 +94,35 @@ class ProcesoController extends Controller
     public function destroy(Proceso $proceso)
     {
         //
+    }
+
+    public function generarReporte(Request $request)
+    {
+        $proceso = $request->get('proceso');
+        // $modulo = $request->get('modulo');
+        $fecha_inicio = $request->get('fi');
+        $fecha_fin = $request->get('ff');
+
+        // $query = Documento::query();
+
+        // $query
+        //     ->whereHas('plantilla', function ($query) use ($proceso) {
+        //         $query->whereHas('proceso', function ($query) use ($proceso) {
+        //             $query->where('id', $proceso);
+        //         });
+        //     })
+        //     ->whereBetween("created_at", [$fecha_inicio, $fecha_fin]);
+
+        $query = DB::table((new Documento())->getTable(), 'd')
+            ->selectRaw('pl.id, pl.nombre, COUNT(d.plantilla_id) as total')
+            ->join((new Plantillas())->getTable() . " as pl", 'pl.id', '=', 'd.plantilla_id')
+            ->join((new Proceso())->getTable() . " as pr", 'pr.id', '=', 'pl.proceso_id')
+            ->whereBetween('d.created_at', [$fecha_inicio, $fecha_fin])
+            ->where('pr.id', $proceso)
+            ->groupBy('pl.id');
+
+        return response()->json([
+            "data" => $query->get(),
+        ]);
     }
 }

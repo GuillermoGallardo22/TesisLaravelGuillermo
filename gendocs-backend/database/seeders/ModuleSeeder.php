@@ -26,16 +26,6 @@ class ModuleSeeder extends Seeder
         ]);
 
         Module::create([
-            'code' => Modulos::TITU,
-            'name' => 'TITULACIÓN'
-        ]);
-
-        Module::create([
-            'code' => Modulos::CURR,
-            'name' => 'INT. CURRICULAR',
-        ]);
-
-        Module::create([
             'code' => Modulos::COMM,
             'name' => 'COMUNES',
         ]);
