@@ -4,6 +4,7 @@ namespace App\Observers;
 
 use App\Constants\MimeType;
 use App\Models\Plantillas;
+use App\Models\PlantillasGlobales;
 use App\Models\Proceso;
 use App\Services\GoogleDriveService;
 use Illuminate\Support\Facades\Log;
@@ -29,7 +30,14 @@ class PlantillaObserver
     public function created(Plantillas $plantilla)
     {
         $google_drive_id = '';
-        $plantillaBase = config('services.google.default_template');
+        $plantillaBase = config('services.google.default_template', null);
+
+        $plantillaBaseTemp = PlantillasGlobales::query()
+            ->where('codigo', $plantilla->proceso->module->modulo->code)->first();
+
+        if ($plantillaBaseTemp) {
+            $plantillaBase = $plantillaBaseTemp->archivo->google_drive_id;
+        }
 
         if ($plantillaBase) {
             $google_drive_id = $this->googleDrive->copyFile(

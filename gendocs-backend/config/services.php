@@ -34,6 +34,7 @@ return [
         'timeout_processing' => env('TIMEOUT_DOCUMENT_PROCESSING', 500000),
         'root_directory' => env('GOOGLE_DRIVE_ROOT_DIRECTORY_ID'),
         'default_template' => env('DEFAULT_TEMPLATE'),
+        'plantillas_globales' => env('DEFAULT_TEMPLATE_DIRECTORY'),
         'credentials' => [
             'type' => env('GOOGLE_APPLICATION_CREDENTIALS_TYPE'),
             'project_id' => env('GOOGLE_APPLICATION_CREDENTIALS_PROJECT_ID'),

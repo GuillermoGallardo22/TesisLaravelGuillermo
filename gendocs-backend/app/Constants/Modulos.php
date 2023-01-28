@@ -30,18 +30,18 @@ abstract class Modulos
     const COMM = 'COMM';
 
 
-     //TITUALCION
+    //TITUALCION
     /**
      * SECRETARÍA DE SISTEMAS
      */
     const SIST = 'SIST';
 
-        /**
+    /**
      * SECRETARÍA DE INDUSTRIAL EN PROCESOS DE AUTOMATIZACION
      */
     const INPA = 'INPA';
 
-            /**
+    /**
      * SECRETARÍA DE ELECTRONICA Y COMUNICACIONES
      */
     const ELEC = 'ELEC';
@@ -50,22 +50,22 @@ abstract class Modulos
 
     //INTEGRACION CURRICULAR
 
-       /**
+    /**
      * SECRETARÍA DE SOFTWARE
      */
     const SOFT = 'SOFT';
 
-           /**
+    /**
      * SECRETARÍA DE TECNOLOGIAS DE LA INFORMACION
      */
     const TECI = 'TECI';
 
-            /**
+    /**
      * SECRETARÍA DE TELECOMUNICACIONES
      */
     const TELE = 'TELE';
 
-        /**
+    /**
      * SECRETARÍA DE INDUSTRIAL
      */
     const INDS = 'INDS';
