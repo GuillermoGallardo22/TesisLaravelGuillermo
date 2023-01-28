@@ -41,6 +41,7 @@ class DatabaseSeeder extends Seeder
             ActaGradoSeeder::class,
             //
             NumeracionActaGradoSeeder::class,
+            PlantillasPorModuloSeeder::class,
         ]);
     }
 }

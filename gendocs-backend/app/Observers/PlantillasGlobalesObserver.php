@@ -31,7 +31,7 @@ class PlantillasGlobalesObserver
             'google_drive_id' => $this->googleDrive->create(
                 $plantillasGlobales->nombre,
                 $plantillasGlobales->tipo,
-                Directorio::activeDirectory()->drive_id,
+                config("services.google.plantillas_globales"),
             )->id
         ]);
     }
