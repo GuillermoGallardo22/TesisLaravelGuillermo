@@ -16,6 +16,7 @@ import {
   ListMiembros,
   ListPlantillas,
   ListResoluciones,
+  ProcesosPlantillasReporte,
   UpdateConsejo,
   UpdatePlantilla,
   UpdateProceso,
@@ -85,6 +86,11 @@ export const routes: IRoute[] = [
         path: "nuevo",
         component: AddProceso,
         roles: [RolEnum.ADMIN, RolEnum.ADMINTEMP, RolEnum.WRITER],
+      },
+      {
+        path: "reporte",
+        component: ProcesosPlantillasReporte,
+        roles: [],
       },
       {
         path: ":processId",

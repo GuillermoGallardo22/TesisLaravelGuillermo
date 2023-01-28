@@ -6,6 +6,7 @@ import {
 } from "models/interfaces/IPagination";
 import { IProceso, IProcesoForm } from "models/interfaces/IProceso";
 import { IResponse } from "models/interfaces/IResponse";
+import { IProcesosPlantillasReporte } from "pages/private/facu/procesos/hooks/useProcesosPlantillasReporte";
 import { handleErrors } from "utils/axios";
 import { HTTP_MESSAGES } from "utils/messages";
 import {
@@ -72,5 +73,25 @@ export async function getProcesoById(
     };
   } catch (error) {
     return handleErrors(error);
+  }
+}
+
+export async function generarReporteProcesoPlantillas(
+  options?: IFilterPaginationProps
+): Promise<IResponse<Array<IProcesosPlantillasReporte>>> {
+  try {
+    const params = parseFilterPaginationProps(options);
+
+    const {
+      data: { data },
+    } = await axios.get(`procesos-reporte?${params}`);
+
+    return {
+      status: HTTP_STATUS.ok,
+      message: HTTP_MESSAGES[HTTP_STATUS.ok],
+      data,
+    };
+  } catch (error) {
+    return handleErrors(error, []);
   }
 }

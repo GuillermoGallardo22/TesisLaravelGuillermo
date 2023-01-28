@@ -1,3 +1,4 @@
+import { Box, Grid } from "@mui/material";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
@@ -83,14 +84,34 @@ export const Procesos = () => {
   return (
     <Stack spacing={2}>
       <TitleNav title="Procesos" goback={false} />
-      <Button
-        component={RouterLink}
-        startIcon={<Icon icon="add" />}
-        to="nuevo"
-        variant="outlined"
-      >
-        AÑADIR PROCESOS
-      </Button>
+
+      <Box>
+        <Grid container columns={{ xs: 1, sm: 2 }} spacing={2}>
+          <Grid item xs={1}>
+            <Button
+              fullWidth
+              component={RouterLink}
+              startIcon={<Icon icon="add" />}
+              to="nuevo"
+              variant="outlined"
+            >
+              AÑADIR PROCESOS
+            </Button>
+          </Grid>
+
+          <Grid item xs={1}>
+            <Button
+              fullWidth
+              component={RouterLink}
+              startIcon={<Icon icon="assessment" />}
+              to="reporte"
+              variant="outlined"
+            >
+              REPORTE
+            </Button>
+          </Grid>
+        </Grid>
+      </Box>
 
       <TextField
         fullWidth

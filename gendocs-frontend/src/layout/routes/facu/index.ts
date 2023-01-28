@@ -130,6 +130,11 @@ export const routes: IRoute[] = [
         roles: [RolEnum.ADMIN, RolEnum.ADMINTEMP, RolEnum.WRITER],
       },
       {
+        path: "reporte",
+        component: Components.ProcesosPlantillasReporte,
+        roles: [],
+      },
+      {
         path: ":processId",
         component: Outlet,
         childrens: [

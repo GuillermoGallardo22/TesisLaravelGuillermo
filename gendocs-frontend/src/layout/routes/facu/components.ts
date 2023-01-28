@@ -80,6 +80,11 @@ export const AddPlantilla = lazy(
   () => import("pages/private/facu/procesos/components/AddPlantilla")
 );
 
+export const ProcesosPlantillasReporte = lazy(
+  () =>
+    import("pages/private/facu/procesos/components/ProcesosPlantillasReporte")
+);
+
 export const ProcesosFACUOutlet = lazy(() =>
   import("pages/private/facu/procesos/Procesos").then((m) => ({
     default: m.ProcesosOutlet,

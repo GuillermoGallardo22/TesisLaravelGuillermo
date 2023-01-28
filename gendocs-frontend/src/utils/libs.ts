@@ -417,3 +417,15 @@ export function getTooltipTextNotification(
     return "";
   }
 }
+
+function getAutocompleteProceso(option: IProceso) {
+  return option.nombre;
+}
+
+export function isOptionEqualToValueProceso(option: IProceso, value: IProceso) {
+  return getAutocompleteProceso(option) === getAutocompleteProceso(value);
+}
+
+export function getOptionLabelProceso(option: IProceso) {
+  return getAutocompleteProceso(option);
+}

@@ -16,10 +16,12 @@ import {
   ListMiembros,
   ListPlantillas,
   ListResoluciones,
+  ProcesosPlantillasReporte,
   UpdateConsejo,
   UpdatePlantilla,
   UpdateProceso,
 } from "../facu/components";
+import * as Components from "./components";
 import {
   BuscarOutlet,
   ConsejosSUDEOUTLET,
@@ -27,7 +29,6 @@ import {
   ProcesosSUDE,
   ProcesosSUDEOutlet,
 } from "./components";
-import * as Components from "./components";
 
 export const routes: IRoute[] = [
   {
@@ -111,6 +112,11 @@ export const routes: IRoute[] = [
         path: "nuevo",
         component: AddProceso,
         roles: [RolEnum.ADMIN, RolEnum.ADMINTEMP, RolEnum.WRITER],
+      },
+      {
+        path: "reporte",
+        component: ProcesosPlantillasReporte,
+        roles: [],
       },
       {
         path: ":processId",
