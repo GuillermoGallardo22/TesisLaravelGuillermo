@@ -1,9 +1,14 @@
 import Button from "@mui/material/Button";
-import IconButton from "@mui/material/IconButton";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import Tooltip from "@mui/material/Tooltip";
-import { DataGrid, GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
+import {
+  DataGrid,
+  GridActionsCellItem,
+  GridColumns,
+  GridRenderCellParams,
+  GridRowParams,
+} from "@mui/x-data-grid";
 import ChipStatus from "components/ChipStatus";
 import Icon from "components/Icon";
 import TitleNav from "components/TitleNav";
@@ -15,7 +20,7 @@ import ModuleProvider from "providers/ModuleProvider";
 import { Link as RouterLink, Outlet } from "react-router-dom";
 import { getProcesos } from "services/proceso";
 
-const columns: GridColDef[] = [
+const columns: GridColumns = [
   { field: "nombre", headerName: "Nombre", flex: 1 },
   {
     field: "estado",
@@ -26,27 +31,36 @@ const columns: GridColDef[] = [
     ),
   },
   {
-    field: "id",
+    type: "actions",
+    field: "acciones",
     headerName: "Acciones",
-    renderCell: (item: GridRenderCellParams) => (
-      <>
-        <Tooltip title="Plantillas">
-          <IconButton
-            color="primary"
-            component={RouterLink}
-            to={`${item?.value}/plantillas`}
-          >
+    width: 200,
+    getActions: (item: GridRowParams<IProceso>) => [
+      <GridActionsCellItem
+        key={item.id}
+        color="primary"
+        LinkComponent={RouterLink}
+        to={`${item.row.id}/plantillas`}
+        icon={
+          <Tooltip title="Plantillas">
             <Icon icon="article" />
-          </IconButton>
-        </Tooltip>
-
-        <Tooltip title="Editar">
-          <IconButton component={RouterLink} to={`${item.value}`}>
+          </Tooltip>
+        }
+        label="Plantillas"
+      />,
+      <GridActionsCellItem
+        key={item.id}
+        color="success"
+        LinkComponent={RouterLink}
+        to={`${item.row.id}`}
+        icon={
+          <Tooltip title="Editar">
             <Icon icon="edit" />
-          </IconButton>
-        </Tooltip>
-      </>
-    ),
+          </Tooltip>
+        }
+        label="Editar"
+      />,
+    ],
   },
 ];
 
