@@ -63,6 +63,7 @@ const Drawer: React.FC<DrawerProps> = ({ open, toggleDrawer }) => {
     hasTituModule,
     hasCurrModule,
     hasCommModule,
+    hasEstuModule,
     //
     sudeRoutes,
      //TITULACION
@@ -80,6 +81,7 @@ const Drawer: React.FC<DrawerProps> = ({ open, toggleDrawer }) => {
     facuRoutes,
     currRoutes,
     commRoutes,
+    estuRoutes,
   } = useRoutes();
 
   return (
@@ -106,6 +108,30 @@ const Drawer: React.FC<DrawerProps> = ({ open, toggleDrawer }) => {
             </ListSubheader>
 
             {commRoutes.map(
+              (item) =>
+                item.icon &&
+                item.label && (
+                  <Link
+                    key={item.path}
+                    icon={<Icon icon={item.icon} />}
+                    label={item.label}
+                    path={item.path}
+                  />
+                )
+            )}
+          </List>
+          <Divider />
+        </>
+      )}
+
+      {hasEstuModule && (
+        <>
+          <List>
+            <ListSubheader sx={{ color: "#0C9BE8" }} component="div" inset>
+              ESTUDIANTES
+            </ListSubheader>
+
+            {estuRoutes.map(
               (item) =>
                 item.icon &&
                 item.label && (

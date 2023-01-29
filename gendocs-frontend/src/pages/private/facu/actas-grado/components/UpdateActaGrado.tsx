@@ -237,7 +237,7 @@ const UpdateActaGradoBase = ({
             <TextField
               fullWidth
               required
-              disabled={true}
+              // disabled={true}
               label="Numeración"
               margin="normal"
               value={actaGrado.numero}
@@ -381,13 +381,13 @@ const UpdateActaGradoBase = ({
 
           <Grid item xs={12} sm={4}>
             <TextField
-              disabled
-              required
-              fullWidth
+              // disabled
+              // required
+              // fullWidth
               margin="normal"
               type="number"
               label="Duración (min)"
-              value={formik.values.duracion}
+              // value={formik.values.duracion}
             />
           </Grid>
 

@@ -30,6 +30,11 @@ class ModuleSeeder extends Seeder
             'name' => 'COMUNES',
         ]);
 
+        Module::create([
+            'code' => Modulos::ESTU,
+            'name' => 'ESTUDIANTES',
+        ]);
+
 
         //TITULACION
 

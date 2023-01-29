@@ -213,31 +213,31 @@ export const routes: IRoute[] = [
     ],
     isMenuOption: true,
   },
-  {
-    path: "estudiantes",
-    label: "Estudiantes",
-    component: Outlet,
-    icon: "school",
-    modules: [ModuleEnum.FACU],
-    isMenuOption: true,
-    childrens: [
-      {
-        path: "nuevo",
-        component: Outlet,
-        roles: [RolEnum.ADMIN, RolEnum.ADMINTEMP, RolEnum.WRITER],
-        childrens: [
-          { path: "formato/:driveId", component: Components.DriveTemplate },
-          { path: "", isIndex: true, component: Components.AddEstudiante },
-        ],
-      },
-      {
-        path: ":studentId",
-        component: Components.UpdateEstudiante,
-        roles: [RolEnum.ADMIN, RolEnum.ADMINTEMP, RolEnum.WRITER],
-      },
-      { path: "", isIndex: true, component: Components.Estudiantes },
-    ],
-  },
+  // {
+  //   path: "estudiantes",
+  //   label: "Estudiantes",
+  //   component: Outlet,
+  //   icon: "school",
+  //   modules: [ModuleEnum.FACU],
+  //   isMenuOption: true,
+  //   childrens: [
+  //     {
+  //       path: "nuevo",
+  //       component: Outlet,
+  //       roles: [RolEnum.ADMIN, RolEnum.ADMINTEMP, RolEnum.WRITER],
+  //       childrens: [
+  //         { path: "formato/:driveId", component: Components.DriveTemplate },
+  //         { path: "", isIndex: true, component: Components.AddEstudiante },
+  //       ],
+  //     },
+  //     {
+  //       path: ":studentId",
+  //       component: Components.UpdateEstudiante,
+  //       roles: [RolEnum.ADMIN, RolEnum.ADMINTEMP, RolEnum.WRITER],
+  //     },
+  //     { path: "", isIndex: true, component: Components.Estudiantes },
+  //   ],
+  // },
   
 ];
 

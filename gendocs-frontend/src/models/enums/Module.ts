@@ -4,6 +4,7 @@ export enum ModuleEnum {
   TITU = "TITU",
   CURR = "CURR",
   COMM = "COMM",
+  ESTU = "ESTU",
   //TITULACION
   SIST = "SIST",
   INPA = "INPA",

@@ -115,17 +115,17 @@ export const AddReserva = lazy(
   () => import("pages/private/facu/documentos/components/AddReserva")
 );
 
-export const AddEstudiante = lazy(
-  () => import("pages/private/facu/estudiantes/components/AddEstudiante")
-);
+// export const AddEstudiante = lazy(
+//   () => import("pages/private/facu/estudiantes/components/AddEstudiante")
+// );
 
-export const Estudiantes = lazy(
-  () => import("pages/private/facu/estudiantes/Estudiantes")
-);
+// export const Estudiantes = lazy(
+//   () => import("pages/private/facu/estudiantes/Estudiantes")
+// );
 
-export const UpdateEstudiante = lazy(
-  () => import("pages/private/facu/estudiantes/components/UpdateEstudiante")
-);
+// export const UpdateEstudiante = lazy(
+//   () => import("pages/private/facu/estudiantes/components/UpdateEstudiante")
+// );
 
 export const AddUsuario = lazy(
   () => import("pages/private/facu/usuarios/components/AddUsuario")

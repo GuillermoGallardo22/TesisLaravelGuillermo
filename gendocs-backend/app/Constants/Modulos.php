@@ -29,6 +29,12 @@ abstract class Modulos
      */
     const COMM = 'COMM';
 
+     /**
+     * MODULOS ESTDUAINTE
+     */
+    const ESTU = 'ESTU';
+
+
 
     //TITUALCION
     /**

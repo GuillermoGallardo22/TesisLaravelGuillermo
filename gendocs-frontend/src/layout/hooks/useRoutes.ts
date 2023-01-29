@@ -2,6 +2,7 @@ import { useAuthContext } from "contexts/AuthContext";
 import { ModuleEnum } from "models/enums/Module";
 import { useMemo } from "react";
 import { getRoutes as getCommRoutes } from "../routes/common";
+import { getRoutes as getEstuRoutes } from "../routes/estu";
 import { getRoutes as getCurrRoutes } from "../routes/curr";
 import { getRoutes as getFacuRoutes } from "../routes/facu";
 import { getRoutes as getSudeRoutes } from "../routes/sude";
@@ -85,6 +86,11 @@ export function useRoutes() {
 
   const hasCommModule = useMemo(
     () => user.modulos.some((m) => m.code === ModuleEnum.COMM),
+    [user.modulos]
+  );
+
+  const hasEstuModule = useMemo(
+    () => user.modulos.some((m) => m.code === ModuleEnum.ESTU),
     [user.modulos]
   );
 
@@ -177,6 +183,7 @@ export function useRoutes() {
     //integracion curricular
 
   const commRoutes = useMemo(() => getCommRoutes(), []);
+  const estuRoutes = useMemo(() => getEstuRoutes(), []);
   const tituRoutes = useMemo(() => getTituRoutes(), []);
   const currRoutes = useMemo(() => getCurrRoutes(), []);
 
@@ -197,6 +204,7 @@ export function useRoutes() {
        //INTEGRACION CURRICULAR
     hasCurrModule,
     hasCommModule,
+    hasEstuModule,
     //
     facuRoutes,
     sudeRoutes,
@@ -214,5 +222,6 @@ export function useRoutes() {
     tituRoutes,
     currRoutes,
     commRoutes,
+    estuRoutes,
   };
 }
