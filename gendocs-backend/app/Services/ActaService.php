@@ -38,6 +38,7 @@ class ActaService
             $moduleCode = $consejo->module->modulo->code;
 
             // GENERANDO DIRECTORIOS BASE
+            Storage::deleteDirectory($consejo->nombre);
             Storage::makeDirectory($consejo->nombre);
             Storage::makeDirectory($consejo->nombre . '/generados');
             Storage::makeDirectory($consejo->nombre . '/descargados');
