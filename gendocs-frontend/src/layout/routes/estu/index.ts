@@ -11,7 +11,7 @@ export const routes: IRoute[] = [
     label: "Estudiantes",
     component: Outlet,
     icon: "school",
-    modules: [ModuleEnum.SUDE],
+    modules: [ModuleEnum.ESTU],
     isMenuOption: true,
     childrens: [
       {
