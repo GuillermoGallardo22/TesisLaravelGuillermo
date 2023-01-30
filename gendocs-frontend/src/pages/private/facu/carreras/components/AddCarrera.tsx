@@ -105,6 +105,22 @@ export default function AddCarrera() {
             />
           </Grid>
 
+          <Grid item xs={12} sx={{ mb: 2 }}>
+            <FormLabel component="legend">Es Titulación</FormLabel>
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={formik.values.desaparecera}
+                  onChange={(e) =>
+                    formik.setFieldValue("desaparecera", e.target.checked)
+                  }
+                />
+              }
+              label={formik.values.desaparecera ? "Si" : "No"}
+              labelPlacement="start"
+            />
+          </Grid>
+
           <Grid item xs={12}>
             <ErrorSummary errors={errorSummary} />
           </Grid>

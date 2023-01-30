@@ -175,6 +175,26 @@ const AddActaGrado: React.FunctionComponent = () => {
         noValidate
       >
         <Grid container spacing={2}>
+        <Grid item xs={12}>
+        <TextField
+              fullWidth
+              disabled={submitting || !estudianteSeleccionado}
+              margin="normal"
+              type="number"
+              id="numero_aux"
+              name="numero_aux"
+              label="Numeración Actas de Grado"
+              value={formik.values.numero_aux}
+              onChange={formik.handleChange}
+              error={
+                formik.touched.numero_aux &&
+                Boolean(formik.errors.numero_aux)
+              }
+              helperText={
+                formik.touched.numero_aux && formik.errors.numero_aux
+              }
+            />
+          </Grid>
           <Grid item xs={12} sm={9} md={8}>
             <SingleAutoComplete
               key="autocomplete-estudiante"
@@ -202,7 +222,7 @@ const AddActaGrado: React.FunctionComponent = () => {
               }}
             />
           </Grid>
-
+      
           <Grid item xs={12} sm={3} md={4}>
             <TextField
               fullWidth
@@ -231,6 +251,7 @@ const AddActaGrado: React.FunctionComponent = () => {
               }}
             />
           </Grid>
+
 
           <Grid item xs={12} sm={6}>
             <SingleAutoComplete
@@ -358,6 +379,10 @@ const AddActaGrado: React.FunctionComponent = () => {
             />
           </Grid>
 
+
+       
+
+
           <Grid item xs={12} sm={6}>
             <TextField
               fullWidth
@@ -388,7 +413,7 @@ const AddActaGrado: React.FunctionComponent = () => {
               required
               id="tipo_acta"
               name="tipo_acta"
-              label="Tipo de acta"
+              label="Modalidad Titulación"
               disabled={submitting || !estudianteSeleccionado}
               items={tipoActasGrado.map((i) => ({
                 id: i.codigo,
@@ -446,7 +471,7 @@ const AddActaGrado: React.FunctionComponent = () => {
               required
               id="modalidad_acta_grado"
               name="modalidad_acta_grado"
-              label="Modalidad acta"
+              label="Tipo acta"
               disabled={submitting || !estudianteSeleccionado}
               items={modalidades.map((i) => ({
                 id: i.codigo,

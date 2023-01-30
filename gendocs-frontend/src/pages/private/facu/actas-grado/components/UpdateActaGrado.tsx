@@ -222,6 +222,26 @@ const UpdateActaGradoBase = ({
         noValidate
       >
         <Grid container spacing={2}>
+        <Grid item xs={12}>
+            <TextField
+              fullWidth
+              disabled={submitting}
+              margin="normal"
+              type="number"
+              id="numero_aux"
+              name="numero_aux"
+              label="Numeración Actas de Grado"
+              value={formik.values.numero_aux}
+              onChange={formik.handleChange}
+              error={
+                formik.touched.numero_aux &&
+                Boolean(formik.errors.numero_aux)
+              }
+              helperText={
+                formik.touched.numero_aux && formik.errors.numero_aux
+              }
+            />
+          </Grid>
           <Grid item xs={12} sm={9} md={8}>
             <TextField
               fullWidth
@@ -349,7 +369,7 @@ const UpdateActaGradoBase = ({
               fullWidth
               disabled
               margin="normal"
-              label="Tipo de acta"
+              label="Modalidad Titulación"
               value={
                 tipoActasGrado.find(
                   (ta) => ta.codigo === formik.values.tipo_acta
@@ -397,7 +417,7 @@ const UpdateActaGradoBase = ({
               fullWidth
               disabled
               margin="normal"
-              label="Modalidad acta"
+              label="Tipo acta"
               value={actaGrado.modalidad_acta_grado.nombre}
             />
           </Grid>

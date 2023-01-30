@@ -14,6 +14,7 @@ class ActaGrado extends Model
 
     protected $fillable = [
         "numero",
+        "numero_aux",
         "titulo_bachiller",
         "fecha_inicio_estudios",
         "fecha_fin_estudios",

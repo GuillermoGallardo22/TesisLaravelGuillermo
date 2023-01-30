@@ -165,7 +165,7 @@ const AsistenciaActaGradoBase: React.FunctionComponent<
           <Grid item xs={1} sm={2} md={1}>
             <Button
               fullWidth
-              disabled={!actaGrado.fecha_presentacion}
+              // disabled={!actaGrado.fecha_presentacion}
               startIcon={<Icon icon="add" />}
               variant="outlined"
               onClick={openModalAddDocente}

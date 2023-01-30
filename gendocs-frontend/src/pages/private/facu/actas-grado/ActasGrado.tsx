@@ -113,6 +113,11 @@ const ActasGrado: React.FunctionComponent = () => {
         headerName: "Número",
       },
       {
+        type: "number",
+        field: "numero_aux",
+        headerName: "Número AUX",
+      },
+      {
         field: "estudiante",
         headerName: "Estudiante",
         flex: 1,
@@ -169,7 +174,7 @@ const ActasGrado: React.FunctionComponent = () => {
       {
         type: "singleSelect",
         field: "tipo_acta",
-        headerName: "Tipo acta",
+        headerName: "Mod. Titulación",
         flex: 1,
         valueGetter: (e: GridValueGetterParams<ITipoActaGrado>) =>
           e.value!.codigo + " | " + e.value!.nombre,
@@ -199,7 +204,7 @@ const ActasGrado: React.FunctionComponent = () => {
       {
         type: "singleSelect",
         field: "modalidad_acta_grado",
-        headerName: "Mod. acta",
+        headerName: "Tipo acta",
         valueGetter: (e: GridValueGetterParams<IModalidadActaGrado>) =>
           e.value!.nombre,
         valueOptions: modalidades.map((v) => v.nombre),

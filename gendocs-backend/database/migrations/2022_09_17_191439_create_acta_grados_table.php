@@ -17,6 +17,7 @@ class CreateActaGradosTable extends Migration
             $table->id();
 
             $table->unsignedBigInteger('numero');
+            $table->integer("numero_aux")->nullable();
 
             $table->string("titulo_bachiller");
 

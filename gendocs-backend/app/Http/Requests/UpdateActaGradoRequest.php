@@ -23,6 +23,7 @@ class UpdateActaGradoRequest extends FormRequest
             "estado_acta" => ["sometimes", "nullable", "exists:\App\Models\EstadoActa,id"],
             "fecha_fin_estudios" => ["sometimes", "nullable", "date"],
             "horas_practicas" => ["present", "integer"],
+            "numero_aux" => ["present", "integer"],
             "fecha_presentacion" => ["sometimes", "nullable", "date"],
             "solicitar_especie" => ["required", "boolean"],
             "envio_financiero_especie" => ["required", "boolean"],
@@ -55,6 +56,7 @@ class UpdateActaGradoRequest extends FormRequest
             //
             "estado_acta" => $this->estado_acta ? $this->estado_acta : null,
             "horas_practicas" => isset($this->horas_practicas) ? (int)$this->horas_practicas : null,
+            "numero_aux" => isset($this->numero_aux) ? (int)$this->numero_aux : null,
             "aula" => $this->aula ? $this->aula : null,
             "link" => $this->link ? $this->link : null,
             "tema" => isset($this->tema) ? $this->tema : "",

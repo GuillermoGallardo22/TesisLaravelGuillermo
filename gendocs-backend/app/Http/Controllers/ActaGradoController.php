@@ -67,6 +67,7 @@ class ActaGradoController extends Controller
 
             $acta = new ActaGrado([
                 "numero" => $numero,
+                "numero_aux" => $validated["numero_aux"],
                 "estudiante_id" => $estudiante->id,
                 "canton_id" => $validated["canton"],
                 "titulo_bachiller" => $validated["titulo_bachiller"],
@@ -139,6 +140,7 @@ class ActaGradoController extends Controller
             $actaGrado->solicitar_especie = $validated["solicitar_especie"];
             $actaGrado->envio_financiero_especie = $validated["envio_financiero_especie"];
             $actaGrado->horas_practicas = $validated["horas_practicas"];
+            $actaGrado->numero_aux = $validated["numero_aux"];
             $actaGrado->fecha_presentacion = $validated["fecha_presentacion"];
             $actaGrado->link = $validated["link"];
             $actaGrado->aula_id = $validated["aula"];

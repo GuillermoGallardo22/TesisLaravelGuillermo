@@ -50,6 +50,33 @@ export default function Carreras() {
         renderCell: (p) => <ChipStatus value={p.value} />,
         width: 120,
       },
+      // {
+      //   field: "desaparecera",
+      //   type: "singleSelect",
+      //   headerName: "Es Titulación",
+      //   valueFormatter: (p: GridValueFormatterParams) => {
+      //     return p.value ? "Si" : "No";
+      //   },
+      //   valueOptions: [
+      //     { value: true, label: "Si" },
+      //     { value: false, label: "No" },
+      //   ],
+      //   renderCell: (p) => <ChipStatus value={p.value} />,
+      //   width: 120,
+      // },
+
+      {
+        field: "desaparecera",
+        headerName: "Es Titulación",
+        renderCell: (item) => (
+          <ChipStatus
+            value={item.value}
+            textPrimary="Si"
+            textSecondary="No"
+            // colorSecondary="success"
+          />
+        ),
+      },
       {
         type: "actions",
         field: "acciones",

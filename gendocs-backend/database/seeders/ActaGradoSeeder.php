@@ -58,6 +58,7 @@ class ActaGradoSeeder extends Seeder
 
         //     $actaGradoOptions = [
         //         "numero" => "1",
+        //         "numero_aux" => "1",
         //         "estudiante_id" => $estudiante->id,
         //         "carrera_id" => $estudiante->carrera->id,
         //         "titulo_bachiller" => "Sistemas computacionales",

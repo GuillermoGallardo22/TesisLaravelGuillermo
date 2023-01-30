@@ -39,6 +39,7 @@ class Carrera extends Model
         return [
             'id' => $this->id,
             "estado" => $this->estado,
+            "desaparecera" => $this->desaparecera,
             "nombre" => $this->nombre,
             "titulo_mas" => $this->titulo_mas,
             "titulo_fem" => $this->titulo_fem,

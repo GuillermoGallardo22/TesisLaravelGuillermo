@@ -35,6 +35,7 @@ export interface ITipoActaGrado {
 export interface IActaGrado {
   id: number;
   numero: number;
+  numero_aux: number;
   titulo_bachiller: string;
   fecha_inicio_estudios: Date;
   fecha_fin_estudios: Date | null;
@@ -73,6 +74,7 @@ export interface IActaGrado {
 
 export interface IAddActaGrado {
   numeracion: number;
+  numero_aux: number;
   estudiante: number | null;
   canton: number | null;
   tipo_acta: string;

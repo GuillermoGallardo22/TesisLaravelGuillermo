@@ -124,7 +124,8 @@ class ActaGradoFactory implements IVariable
             "{{ACTAGRADO_TIPO}}" => $this->textToUpperLower($model->tipo->nombre, "upper"),
             "{{ACTAGRADO_TEMA}}" => $this->textToUpperLower($model->tema, "upper"),
             //
-            Variables::NUMDOC => $this->format_NUMACT($model->numero),
+            // Variables::NUMDOC => $this->format_NUMACT($model->numero),
+            Variables::NUMDOC => $this->format_NUMACT($model->numero_aux),
             Variables::Y => $this->format_Y($fechaPresentacion),
             //
             Variables::FECHA => $this->formatDate($fechaPresentacion),

@@ -27,6 +27,7 @@ class StoreActaGradoRequest extends FormRequest
                 "numeric",
                 new ValidarNumeroActa($this->estudiante)
             ],
+            "numero_aux" => ["present", "integer"],
             "canton" => ["required", "exists:\App\Models\Canton,id"],
             "titulo_bachiller" => ["required", "string", "max:255"],
             "fecha_inicio_estudios" => ["required", "date"],
@@ -73,6 +74,7 @@ class StoreActaGradoRequest extends FormRequest
             //
             "estado_acta" => $this->estado_acta ? $this->estado_acta : null,
             "horas_practicas" => isset($this->horas_practicas) ? (int)$this->horas_practicas : null,
+            "numero_aux" => isset($this->numero_aux) ? (int)$this->numero_aux : null,
             "duracion" => isset($this->duracion) ? (int)$this->duracion : null,
             "creditos_aprobados" => isset($this->creditos_aprobados) ? (int)$this->creditos_aprobados : null,
             "aula" => $this->aula ? $this->aula : null,
