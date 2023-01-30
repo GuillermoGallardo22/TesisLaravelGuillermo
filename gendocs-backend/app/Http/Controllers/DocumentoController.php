@@ -39,7 +39,7 @@ class DocumentoController extends Controller
         return ResourceCollection::make($query->get());
     }
 
-    public function store(StoreDocumentoRequest $request, DocumentoService $service)
+    public function store(StoreDocumentoRequest $request)
     {
         $validated = $request->validated();
 
@@ -58,8 +58,6 @@ class DocumentoController extends Controller
             if (count($validated['docentes'])) {
                 $documento->docentes()->attach($validated['docentes']);
             }
-
-            $service->generar($documento);
 
             DB::commit();
 

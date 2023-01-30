@@ -45,7 +45,7 @@ class UserCreated extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->from($this->sender->email, config('app.name'))
+            ->from(env("MAIL_FROM_ADDRESS"))
             ->subject(config('app.name') . " | " . "Bienvenido")
             ->markdown('emails.users.created', [
                 'name' => $notifiable->name,

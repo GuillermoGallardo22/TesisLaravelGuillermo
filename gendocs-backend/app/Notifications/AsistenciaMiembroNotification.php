@@ -48,10 +48,7 @@ class AsistenciaMiembroNotification extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->from(
-                $this->getSenderEmail($this->sender),
-                $this->getSenderName($this->sender)
-            )
+            ->from(env("MAIL_FROM_ADDRESS"))
             ->subject($this->getSubject("Notificación asistencia"))
             ->greeting('Notificación asistencia')
             ->markdown('emails.estudiantes.documento', [

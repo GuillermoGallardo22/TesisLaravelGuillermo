@@ -48,7 +48,7 @@ class DocumentNotification extends Notification
         $app = config('app.name');
 
         return (new MailMessage)
-            ->from($this->sender->email, "$sender ($app)")
+            ->from(env("MAIL_FROM_ADDRESS"))
             ->subject(config('app.name') . " | " . "Notificación documento")
             ->greeting('Notificación documento')
             ->markdown('emails.estudiantes.documento', [
