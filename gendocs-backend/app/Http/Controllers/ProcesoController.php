@@ -119,7 +119,7 @@ class ProcesoController extends Controller
             ->join((new Proceso())->getTable() . " as pr", 'pr.id', '=', 'pl.proceso_id')
             ->whereBetween('d.created_at', [$fecha_inicio, $fecha_fin])
             ->where('pr.id', $proceso)
-            ->groupBy('pl.id');
+            ->groupBy(['pl.id', 'pl.nombre']);
 
         return response()->json([
             "data" => $query->get(),
