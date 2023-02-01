@@ -39,7 +39,7 @@ class DocumentoController extends Controller
         return ResourceCollection::make($query->get());
     }
 
-    public function store(StoreDocumentoRequest $request)
+    public function store(StoreDocumentoRequest $request, DocumentoService $service)
     {
         $validated = $request->validated();
 
@@ -58,6 +58,8 @@ class DocumentoController extends Controller
             if (count($validated['docentes'])) {
                 $documento->docentes()->attach($validated['docentes']);
             }
+
+            $service->generar($documento);
 
             DB::commit();
 
@@ -78,22 +80,7 @@ class DocumentoController extends Controller
 
     public function update(UpdateDocumentoRequest $request, Documento $documento)
     {
-        $validated = $request->validated();
-
-        if ($request->has("notificado_w")) {
-            $documento->notificado_w = $validated["notificado_w"];
-        }
-
-        if ($request->has("notificado_e")) {
-            $documento->notificado_e = $validated["notificado_e"];
-        }
-
-        if ($documento->isDirty()) {
-            $documento->save();
-        }
-
-
-        return ResourceObject::make($documento);
+        //
     }
 
     public function destroy(Documento $documento)

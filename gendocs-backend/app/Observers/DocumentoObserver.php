@@ -4,28 +4,18 @@ namespace App\Observers;
 
 use App\Models\Documento;
 use App\Models\Numeracion;
-use App\Services\DocumentoService;
-use Illuminate\Support\Facades\Log;
 
 class DocumentoObserver
 {
-
-    protected DocumentoService $service;
-
-    public function __construct(DocumentoService $service)
-    {
-        $this->service = $service;
-    }
-
     /**
      * Handle the Documento "created" event.
      *
      * @param \App\Models\Documento $documento
      * @return void
      */
-    public function created(Documento $documento,)
+    public function created(Documento $documento)
     {
-        $this->service->generar($documento);
+        //
     }
 
     /**
