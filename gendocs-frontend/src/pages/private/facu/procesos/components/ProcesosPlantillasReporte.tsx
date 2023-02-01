@@ -16,7 +16,7 @@ import { SingleAutoComplete } from "components/SingleAutoComplete";
 import TitleNav from "components/TitleNav";
 import { useModuleContext } from "contexts/ModuleContext";
 import { IProceso } from "models/interfaces/IProceso";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Bar } from "react-chartjs-2";
 import { getProcesos } from "services/proceso";
 import { CONSTANTS } from "utils/constants";
@@ -54,6 +54,7 @@ export const options = {
 
 const ProcesosPlantillasReporte = () => {
   const { module } = useModuleContext();
+  const chartRef = useRef<any>();
 
   const [acProceso, setACProceso] = useState<IProceso | null>(null);
   const {
@@ -96,6 +97,19 @@ const ProcesosPlantillasReporte = () => {
       labels,
     };
   }, [result]);
+
+  const onClick = () => {
+    if (!chartRef || !acProceso) return;
+
+    const base64Img = chartRef.current.toBase64Image();
+
+    const link = document.createElement("a");
+    link.href = base64Img;
+    link.download =
+      `${acProceso.nombre}-reporte-${Date.now()}`.replace(/[^A-Z0-9]+/gi, "-") +
+      ".png";
+    link.click();
+  };
 
   return (
     <Stack spacing={2}>
@@ -219,7 +233,13 @@ const ProcesosPlantillasReporte = () => {
         </Box>
 
         <Box>
-          <Bar height={125} options={options} data={data} />
+          <Bar
+            ref={chartRef}
+            height={125}
+            options={options}
+            data={data}
+            onClick={onClick}
+          />
         </Box>
       </Stack>
     </Stack>
