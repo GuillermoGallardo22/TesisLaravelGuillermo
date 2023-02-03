@@ -27,6 +27,7 @@ const TODAY = new Date();
 TODAY.setMinutes(0);
 
 const initialValues: IAddActaGrado = {
+  numero_aux: 0,
   numeracion: 0,
   estudiante: -1,
   canton: -1,

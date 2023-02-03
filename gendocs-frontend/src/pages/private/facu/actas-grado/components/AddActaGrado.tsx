@@ -175,8 +175,8 @@ const AddActaGrado: React.FunctionComponent = () => {
         noValidate
       >
         <Grid container spacing={2}>
-        <Grid item xs={12}>
-        <TextField
+          <Grid item xs={12}>
+            <TextField
               fullWidth
               disabled={submitting || !estudianteSeleccionado}
               margin="normal"
@@ -187,14 +187,12 @@ const AddActaGrado: React.FunctionComponent = () => {
               value={formik.values.numero_aux}
               onChange={formik.handleChange}
               error={
-                formik.touched.numero_aux &&
-                Boolean(formik.errors.numero_aux)
+                formik.touched.numero_aux && Boolean(formik.errors.numero_aux)
               }
-              helperText={
-                formik.touched.numero_aux && formik.errors.numero_aux
-              }
+              helperText={formik.touched.numero_aux && formik.errors.numero_aux}
             />
           </Grid>
+
           <Grid item xs={12} sm={9} md={8}>
             <SingleAutoComplete
               key="autocomplete-estudiante"
@@ -222,7 +220,7 @@ const AddActaGrado: React.FunctionComponent = () => {
               }}
             />
           </Grid>
-      
+
           <Grid item xs={12} sm={3} md={4}>
             <TextField
               fullWidth
@@ -251,7 +249,6 @@ const AddActaGrado: React.FunctionComponent = () => {
               }}
             />
           </Grid>
-
 
           <Grid item xs={12} sm={6}>
             <SingleAutoComplete
@@ -378,10 +375,6 @@ const AddActaGrado: React.FunctionComponent = () => {
               }
             />
           </Grid>
-
-
-       
-
 
           <Grid item xs={12} sm={6}>
             <TextField
