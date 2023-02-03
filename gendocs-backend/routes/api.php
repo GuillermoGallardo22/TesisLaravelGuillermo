@@ -75,6 +75,7 @@ Route::middleware(["auth:sanctum", "isUserActive"])->group(function () {
 
     Route::apiResource("acta-grado", ActaGradoController::class);
     Route::post("acta-grado/{actaGrado}/documento", [ActaGradoController::class, "generarDocumento"]);
+    Route::post("acta-grado/{carrera}/generar-numeracion", [ActaGradoController::class, "generarNumeracion"]);
     Route::apiResource("miembro-acta-grado", MiembrosActaGradoController::class)->except(["show"]);
     Route::apiResource("celdas-nota-tipo-acta-grado", CeldasNotasTipoActaGradoController::class)->except(['update', 'show']);
 

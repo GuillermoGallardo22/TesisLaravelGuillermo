@@ -9,6 +9,7 @@ use App\Http\Resources\ActaGradoResource;
 use App\Http\Resources\ResourceCollection;
 use App\Http\Resources\ResourceObject;
 use App\Models\ActaGrado;
+use App\Models\Carrera;
 use App\Models\Directorio;
 use App\Models\Estudiante;
 use App\Models\ModalidadActaGrado;
@@ -257,5 +258,31 @@ class ActaGradoController extends Controller
         return response()->json([
             "data" => $query->get(),
         ]);
+    }
+
+    public function generarNumeracion(Carrera $carrera)
+    {
+        $query = ActaGrado::query();
+
+        $result = $query
+            ->where("carrera_id", $carrera->id)
+            ->whereNotNull("fecha_presentacion")
+            ->orderBy("fecha_presentacion")
+            ->get();
+
+        for ($i = 0; $i < $result->count(); $i++) {
+            $acta = $result[$i];
+
+            $acta->numero_aux = ($i + 1);
+            // $acta->duracion = ($i + 1);
+
+            $acta->save();
+        }
+
+        // Log::info([
+        //     "count" => $result->count(),
+        // ]);
+
+        return response()->noContent();
     }
 }
