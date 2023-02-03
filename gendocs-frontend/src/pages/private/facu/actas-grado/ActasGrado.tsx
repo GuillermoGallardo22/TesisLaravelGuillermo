@@ -40,6 +40,7 @@ import { parseToDate, parseToDateTime } from "utils/date";
 import { getLocalStoragePreviousValue } from "utils/libs";
 import { useListCarreras } from "../carreras/hooks/useListCarreras";
 import { useEstadoActasList } from "./hooks/useEstadoActasList";
+import { useGenerarNumeracion } from "./hooks/useGenerarNumeracion";
 import { useModalidadActasList } from "./hooks/useModalidadActasList";
 import { useTipoActasList } from "./hooks/useTipoActasList";
 
@@ -95,6 +96,21 @@ const ActasGrado: React.FunctionComponent = () => {
     itemSelected: itemSelectedDeleteModal,
     openModal: openDeleteModal,
   } = useConfirmationDialog<IActaGrado>();
+
+  const {
+    closeModal: closeGNModal,
+    isVisible: isVisibleGNModal,
+    // itemSelected: itemSelectedDeleteModal,
+    openJustModal: openGNModal,
+  } = useConfirmationDialog();
+
+  const { handleGenerarNumeracion, generating } = useGenerarNumeracion({
+    carreraId: carrera,
+    callback: () => {
+      refetch();
+      closeGNModal();
+    },
+  });
 
   const { deleting, handleDelete } = useDeleteItem({
     id: itemSelectedDeleteModal?.id,
@@ -345,7 +361,7 @@ const ActasGrado: React.FunctionComponent = () => {
       <TitleNav title="Actas de grado" goback={false} />
 
       <Box>
-        <Grid container columns={{ xs: 1, sm: 3 }} spacing={2}>
+        <Grid container columns={{ xs: 1, sm: 2, lg: 4 }} spacing={2}>
           <Grid item xs={1}>
             <Button
               fullWidth
@@ -378,6 +394,16 @@ const ActasGrado: React.FunctionComponent = () => {
               variant="outlined"
             >
               REPORTE
+            </Button>
+          </Grid>
+          <Grid item xs={1}>
+            <Button
+              fullWidth
+              startIcon={<Icon icon="autorenew" />}
+              variant="outlined"
+              onClick={() => openGNModal()}
+            >
+              Generar numeración
             </Button>
           </Grid>
         </Grid>
@@ -427,6 +453,23 @@ const ActasGrado: React.FunctionComponent = () => {
         <DialogContentText>
           ¿Está seguro que desea eliminar el acta número{" "}
           <strong>{itemSelectedDeleteModal?.numero}</strong>?
+        </DialogContentText>
+      </ConfirmationDialog>
+
+      <ConfirmationDialog
+        id="generar-numeracion-modal"
+        keepMounted={true}
+        isVisible={isVisibleGNModal}
+        title="Generar numeración"
+        onCancel={closeGNModal}
+        onApprove={handleGenerarNumeracion}
+        textApprove="Generar"
+        // buttonColorApprove="error"
+        buttonColorCancel="error"
+        loading={generating}
+      >
+        <DialogContentText>
+          ¿Está seguro que desea generar la numeración?
         </DialogContentText>
       </ConfirmationDialog>
     </Stack>

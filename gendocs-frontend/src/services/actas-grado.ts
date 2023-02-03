@@ -154,3 +154,21 @@ export async function generarReporteActaGrado(
     return handleErrors(error, []);
   }
 }
+
+export async function generarNumeracionActasGrado(
+  carreraId: number | string
+): Promise<IResponse<null>> {
+  try {
+    const {
+      data: { data },
+    } = await axios.post(`acta-grado/${carreraId}/generar-numeracion`);
+
+    return {
+      status: HTTP_STATUS.ok,
+      message: HTTP_MESSAGES[HTTP_STATUS.ok],
+      data,
+    };
+  } catch (error) {
+    return handleErrors(error, null);
+  }
+}
