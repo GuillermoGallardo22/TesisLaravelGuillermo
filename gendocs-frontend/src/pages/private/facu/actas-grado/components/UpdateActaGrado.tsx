@@ -288,14 +288,29 @@ const UpdateActaGradoBase = ({
           </Grid>
 
           <Grid item xs={12} sm={6}>
-            <TextField
-              required
-              fullWidth
-              disabled={true}
-              margin="normal"
-              name="fecha_inicio_estudios"
-              label="Fecha inicio estudios"
-              value={parseToDate(formik.values.fecha_inicio_estudios)}
+          <DatePicker
+              views={CONSTANTS.DATEPICKER}
+              label="Fecha fin estudios"
+              disabled={submitting}
+              value={formik.values.fecha_inicio_estudios}
+              onChange={(date) =>
+                formik.setFieldValue("fecha_inicio_estudios", date)
+              }
+              renderInput={(props) => (
+                <TextField
+                  {...props}
+                  margin="normal"
+                  fullWidth
+                  error={
+                    formik.touched.fecha_inicio_estudios &&
+                    Boolean(formik.errors.fecha_inicio_estudios)
+                  }
+                  helperText={
+                    formik.touched.fecha_inicio_estudios &&
+                    formik.errors.fecha_inicio_estudios
+                  }
+                />
+              )}
             />
           </Grid>
 
@@ -330,7 +345,7 @@ const UpdateActaGradoBase = ({
             <TextField
               required
               fullWidth
-              disabled
+              // disabled
               margin="normal"
               type="number"
               label="Créditos aprobados"

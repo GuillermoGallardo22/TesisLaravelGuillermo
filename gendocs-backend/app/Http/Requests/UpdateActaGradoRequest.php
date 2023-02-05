@@ -21,7 +21,9 @@ class UpdateActaGradoRequest extends FormRequest
     {
         return [
             "estado_acta" => ["sometimes", "nullable", "exists:\App\Models\EstadoActa,id"],
+            "fecha_inicio_estudios" => ["sometimes", "nullable", "date"],
             "fecha_fin_estudios" => ["sometimes", "nullable", "date"],
+            "creditos_aprobados" => ["required", "integer", "min:1"],
             "horas_practicas" => ["present", "integer"],
             "numero_aux" => ["present", "integer"],
             "fecha_presentacion" => ["sometimes", "nullable", "date"],
@@ -51,9 +53,11 @@ class UpdateActaGradoRequest extends FormRequest
     protected function prepareForValidation()
     {
         $this->merge([
+            "fecha_inicio_estudios" => $this->fecha_inicio_estudios ? Carbon::parse($this->fecha_inicio_estudios)->setSecond(0)->setMilli(0)->toDateString() : null,
             "fecha_fin_estudios" => $this->fecha_fin_estudios ? Carbon::parse($this->fecha_fin_estudios)->setSecond(0)->setMilli(0)->toDateString() : null,
             "fecha_presentacion" => $this->fecha_presentacion ? Carbon::parse($this->fecha_presentacion)->setSecond(0)->setMilli(0) : null,
             //
+            "creditos_aprobados" => isset($this->creditos_aprobados) ? (int)$this->creditos_aprobados : null,
             "estado_acta" => $this->estado_acta ? $this->estado_acta : null,
             "horas_practicas" => isset($this->horas_practicas) ? (int)$this->horas_practicas : null,
             "numero_aux" => isset($this->numero_aux) ? (int)$this->numero_aux : null,

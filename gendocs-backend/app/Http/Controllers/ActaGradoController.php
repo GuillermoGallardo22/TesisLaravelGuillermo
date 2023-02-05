@@ -135,7 +135,8 @@ class ActaGradoController extends Controller
 
         try {
             DB::beginTransaction();
-
+            $actaGrado->creditos_aprobados = $validated["creditos_aprobados"];
+            $actaGrado->fecha_inicio_estudios = $validated["fecha_inicio_estudios"];
             $actaGrado->fecha_fin_estudios = $validated["fecha_fin_estudios"];
             $actaGrado->estado_acta_id = $validated["estado_acta"];
             $actaGrado->solicitar_especie = $validated["solicitar_especie"];
