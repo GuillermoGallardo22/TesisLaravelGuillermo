@@ -1,4 +1,5 @@
 import axios from "axios";
+import { format, parseISO } from "date-fns";
 import { HTTP_STATUS } from "models/enums/HttpStatus";
 import {
   IActaGrado,
@@ -11,6 +12,30 @@ import { handleErrors } from "utils/axios";
 import { clean } from "utils/libs";
 import { HTTP_MESSAGES } from "utils/messages";
 import { parseFilterPaginationProps } from "utils/pagination";
+
+function parseActaGrado(data: any): IActaGrado {
+  return {
+    ...data,
+    fecha_inicio_estudios: data?.fecha_inicio_estudios
+      ? parseISO(data?.fecha_inicio_estudios)
+      : null,
+    fecha_fin_estudios: data?.fecha_fin_estudios
+      ? parseISO(data?.fecha_fin_estudios)
+      : null,
+  };
+}
+
+function sanitalizeOnlyDate(form: IAddActaGrado | IUpdateActaGrado) {
+  return {
+    ...form,
+    fecha_inicio_estudios: form.fecha_inicio_estudios
+      ? format(form.fecha_inicio_estudios, "yyyy-MM-dd")
+      : "",
+    fecha_fin_estudios: form.fecha_fin_estudios
+      ? format(form.fecha_fin_estudios, "yyyy-MM-dd")
+      : "",
+  };
+}
 
 export async function getActasGrado(
   options?: IFilterPaginationProps
@@ -25,7 +50,7 @@ export async function getActasGrado(
     return {
       status: HTTP_STATUS.ok,
       message: HTTP_MESSAGES[HTTP_STATUS.ok],
-      data: data,
+      data: (data || []).map(parseActaGrado),
     };
   } catch (error) {
     return {
@@ -50,7 +75,7 @@ export async function getActaGrado(
     return {
       status: HTTP_STATUS.ok,
       message: HTTP_MESSAGES[HTTP_STATUS.ok],
-      data: data,
+      data: parseActaGrado(data),
     };
   } catch (error) {
     return handleErrors(error);
@@ -61,7 +86,7 @@ export async function addActaGrado(
   form: IAddActaGrado
 ): Promise<IResponse<IActaGrado>> {
   try {
-    const payload = clean(form, {
+    const payload = clean(sanitalizeOnlyDate(form), {
       cleanValues: [-1],
     });
 
@@ -83,7 +108,7 @@ export async function updateActaGrado(
   form: IUpdateActaGrado
 ): Promise<IResponse<IActaGrado>> {
   try {
-    const payload = clean(form, {
+    const payload = clean(sanitalizeOnlyDate(form), {
       cleanValues: [-1],
     });
 
@@ -94,7 +119,7 @@ export async function updateActaGrado(
     return {
       status: HTTP_STATUS.ok,
       message: HTTP_MESSAGES[HTTP_STATUS.ok],
-      data,
+      data: parseActaGrado(data),
     };
   } catch (error) {
     return handleErrors(error);
@@ -128,7 +153,7 @@ export async function generarDocumentoActaGrado(
     return {
       status: HTTP_STATUS.ok,
       message: HTTP_MESSAGES[HTTP_STATUS.ok],
-      data,
+      data: parseActaGrado(data),
     };
   } catch (error) {
     return handleErrors(error);
@@ -148,7 +173,7 @@ export async function generarReporteActaGrado(
     return {
       status: HTTP_STATUS.ok,
       message: HTTP_MESSAGES[HTTP_STATUS.ok],
-      data,
+      data: (data || []).map(parseActaGrado),
     };
   } catch (error) {
     return handleErrors(error, []);
