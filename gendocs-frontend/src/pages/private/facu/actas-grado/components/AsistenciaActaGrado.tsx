@@ -25,7 +25,7 @@ import {
   deleteMiembroActaGrado,
   marcarAsistencia,
 } from "services/miembro-acta-grado";
-import { parseToDate } from "utils/date";
+import { parseToDateString } from "utils/date";
 import { getNombreCompletoMiembro } from "utils/libs";
 import { AsistenciaDialog } from "../../consejos/components/AsistenciaDialog";
 import AddAsistenteActa from "../components/AddAsistenteActa";
@@ -106,7 +106,7 @@ const AsistenciaActaGradoBase: React.FunctionComponent<
         field: "fecha_asignacion",
         headerName: "F. asignación",
         width: 150,
-        valueFormatter: (v) => parseToDate(v.value),
+        valueFormatter: (v) => parseToDateString(v.value),
       },
       {
         type: "boolean",
