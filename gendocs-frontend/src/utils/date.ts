@@ -1,4 +1,4 @@
-import { format } from "date-fns";
+import { format, parseISO } from "date-fns";
 
 export function parseToDate(date: string | Date | null) {
   if (typeof date === "string") {
@@ -15,7 +15,11 @@ export function parseToDateTime(date: string) {
 }
 
 export function parseToDateString(date: string | Date | null) {
-  return date == null ? "" : format(new Date(date), "dd/MM/yyyy");
+
+  if (date == null) return "";
+  if (typeof date === "string") date = parseISO(date);
+
+  return format(date, "dd/MM/yyyy");
 }
 
 export function parseToTimeString(date: string | Date | null) {
