@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Http\Resources\ActaGradoResource;
 use App\Http\Resources\ResourceObject;
 use App\Traits\Filterable;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -40,7 +41,7 @@ class MiembrosActaGrado extends Model
             "informacion_adicional" => $this->informacion_adicional,
             "notificado" => $this->notificado,
             "asistio" => $this->asistio,
-            "fecha_asignacion" => $this->fecha_asignacion,
+            "fecha_asignacion" => $this->fecha_asignacion ? Carbon::parse($this->fecha_asignacion)->toDateString() : null,
         ];
     }
 
