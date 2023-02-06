@@ -54,8 +54,8 @@ class ActaGrado extends Model
     protected $cast = [
         "solicitar_especie" => "boolean",
         "envio_financiero_especie" => "boolean",
-        "fecha_inicio_estudios" => "date",
-        "fecha_fin_estudios" => "date",
+        // "fecha_inicio_estudios" => "date",
+        // "fecha_fin_estudios" => "date",
         "horas_practicas" => "integer",
         "creditos_aprobados" => "integer",
         "duracion" => "integer",
