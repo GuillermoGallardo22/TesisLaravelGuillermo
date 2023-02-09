@@ -31,7 +31,6 @@ import { updateActaGrado } from "services/actas-grado";
 import { getAulas } from "services/aulas";
 import { getTipoActasGrado } from "services/tipoActasGrado";
 import { CONSTANTS } from "utils/constants";
-import { parseToDate } from "utils/date";
 import {
   getOptionLabelAula,
   getOptionLabelCanton,
@@ -87,7 +86,7 @@ const UpdateActaGrado = () => {
       .finally(() => {
         setLoading(false);
       });
-  }, [actaGrado]);
+  }, [JSON.stringify(actaGrado)]);
 
   if (!actaGrado || isLoadingActaGrado || loading) return <Skeleton />;
 
@@ -102,13 +101,20 @@ const UpdateActaGrado = () => {
 const renderCount = 1;
 const TODAY = new Date();
 
+TODAY.setMinutes(0);
+
 const validationSchema = yup.object().shape({
   fecha_fin_estudios: yup
     .date()
     .nullable()
     .min(yup.ref("fecha_inicio_estudios"), VM.invalidDate),
+  fecha_inicio_estudios: yup.date().nullable(),
   fecha_presentacion: yup.date().min(TODAY, VM.invalidDate).nullable(),
-  horas_practicas: yup.number(),
+  horas_practicas: yup.number().min(1, VM.invalidOption),
+  creditos_aprobados: yup
+    .number()
+    .required(VM.required)
+    .min(1, VM.invalidOption),
   estado_acta: yup.number().nullable(),
   solicitar_especie: yup.boolean(),
   envio_financiero_especie: yup.boolean(),
@@ -140,7 +146,6 @@ const UpdateActaGradoBase = ({
 
   const initialValues: IUpdateActaGrado = {
     ...actaGrado,
-    fecha_inicio_estudios: new Date(actaGrado.fecha_inicio_estudios),
     numeracion: actaGrado.numero,
     estudiante: actaGrado.estudiante_id,
     canton: actaGrado.canton_id,
@@ -222,7 +227,7 @@ const UpdateActaGradoBase = ({
         noValidate
       >
         <Grid container spacing={2}>
-        <Grid item xs={12}>
+          <Grid item xs={12}>
             <TextField
               fullWidth
               disabled={submitting}
@@ -234,12 +239,9 @@ const UpdateActaGradoBase = ({
               value={formik.values.numero_aux}
               onChange={formik.handleChange}
               error={
-                formik.touched.numero_aux &&
-                Boolean(formik.errors.numero_aux)
+                formik.touched.numero_aux && Boolean(formik.errors.numero_aux)
               }
-              helperText={
-                formik.touched.numero_aux && formik.errors.numero_aux
-              }
+              helperText={formik.touched.numero_aux && formik.errors.numero_aux}
             />
           </Grid>
           <Grid item xs={12} sm={9} md={8}>
@@ -288,7 +290,7 @@ const UpdateActaGradoBase = ({
           </Grid>
 
           <Grid item xs={12} sm={6}>
-          <DatePicker
+            <DatePicker
               views={CONSTANTS.DATEPICKER}
               label="Fecha fin estudios"
               disabled={submitting}
@@ -345,11 +347,19 @@ const UpdateActaGradoBase = ({
             <TextField
               required
               fullWidth
-              // disabled
               margin="normal"
               type="number"
               label="Créditos aprobados"
               value={formik.values.creditos_aprobados}
+              onChange={formik.handleChange}
+              error={
+                formik.touched.creditos_aprobados &&
+                Boolean(formik.errors.creditos_aprobados)
+              }
+              helperText={
+                formik.touched.creditos_aprobados &&
+                formik.errors.creditos_aprobados
+              }
             />
           </Grid>
 
@@ -416,13 +426,12 @@ const UpdateActaGradoBase = ({
 
           <Grid item xs={12} sm={4}>
             <TextField
-              // disabled
-              // required
-              // fullWidth
+              disabled
+              fullWidth
               margin="normal"
               type="number"
               label="Duración (min)"
-              // value={formik.values.duracion}
+              value={formik.values.duracion}
             />
           </Grid>
 
