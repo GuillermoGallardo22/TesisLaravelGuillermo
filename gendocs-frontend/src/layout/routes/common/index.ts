@@ -35,8 +35,13 @@ export const routes: IRoute[] = [
         roles: [RolEnum.ADMIN, RolEnum.ADMINTEMP],
       },
       {
-        path: "reporte",
-        component: Components.ActaGradoReporte,
+        path: "reporteinicial",
+        component: Components.ActaGradoReporteInicial,
+        roles: [],
+      },
+      {
+        path: "reportefinal",
+        component: Components.ActaGradoReporteFinal,
         roles: [],
       },
       {

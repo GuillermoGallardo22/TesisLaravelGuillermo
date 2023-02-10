@@ -180,6 +180,27 @@ export async function generarReporteActaGrado(
   }
 }
 
+export async function generarReporteActaGradoInicial(
+  options?: IFilterPaginationProps
+): Promise<IResponse<IActaGrado[]>> {
+  try {
+    const params = parseFilterPaginationProps(options);
+
+    const {
+      data: { data },
+    } = await axios.get(`acta-grado-reporteinicial?${params}`);
+
+    return {
+      status: HTTP_STATUS.ok,
+      message: HTTP_MESSAGES[HTTP_STATUS.ok],
+      data,
+      // data: (data || []).map(parseActaGrado),
+    };
+  } catch (error) {
+    return handleErrors(error, []);
+  }
+}
+
 export async function generarNumeracionActasGrado(
   carreraId: number | string
 ): Promise<IResponse<null>> {

@@ -213,7 +213,7 @@ const ActaGradoReporte = () => {
 
   return (
     <Stack spacing={2}>
-      <TitleNav title="Reporte actas de grado" />
+      <TitleNav title="Reporte actas de grado Final" />
 
       <Box
         component="form"

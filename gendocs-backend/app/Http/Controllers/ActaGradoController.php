@@ -261,6 +261,28 @@ class ActaGradoController extends Controller
         ]);
     }
 
+    public function generarReporteInicial(Request $request)
+    {
+        $carrera = $request->get('carrera');
+
+        $query = ActaGrado::query()->with(['estudiante', 'tipo', 'miembros.docente', 'aula']);
+
+        $query
+            ->where('carrera_id', $carrera)
+            ->where("fecha_presentacion", null)
+
+            // ->orWhereNull("fecha_presentacion")
+            // ->orderBy("fecha_presentacion")
+            ->orderBy("numero")
+            // ->dd()
+        ;
+
+
+        return response()->json([
+            "data" => $query->get(),
+        ]);
+    }
+
     public function generarNumeracion(Carrera $carrera)
     {
         $query = ActaGrado::query();

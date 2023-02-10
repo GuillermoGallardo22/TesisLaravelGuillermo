@@ -131,7 +131,7 @@ const ActasGrado: React.FunctionComponent = () => {
       {
         type: "number",
         field: "numero_aux",
-        headerName: "Número AUX",
+        headerName: "Número Acta",
       },
       {
         field: "estudiante",
@@ -361,7 +361,7 @@ const ActasGrado: React.FunctionComponent = () => {
       <TitleNav title="Actas de grado" goback={false} />
 
       <Box>
-        <Grid container columns={{ xs: 1, sm: 2, lg: 4 }} spacing={2}>
+        <Grid container columns={{ xs: 1, sm: 2, lg: 3 }} spacing={2}>
           <Grid item xs={1}>
             <Button
               fullWidth
@@ -388,17 +388,6 @@ const ActasGrado: React.FunctionComponent = () => {
           <Grid item xs={1}>
             <Button
               fullWidth
-              component={Link}
-              startIcon={<Icon icon="assessment" />}
-              to="reporte"
-              variant="outlined"
-            >
-              REPORTE
-            </Button>
-          </Grid>
-          <Grid item xs={1}>
-            <Button
-              fullWidth
               startIcon={<Icon icon="autorenew" />}
               variant="outlined"
               onClick={() => openGNModal()}
@@ -406,6 +395,36 @@ const ActasGrado: React.FunctionComponent = () => {
               Generar numeración
             </Button>
           </Grid>
+        </Grid>
+      </Box>
+
+      <Box>
+        <Grid container columns={{ xs: 1, sm: 2, lg: 2 }} spacing={2}>
+          
+        <Grid item xs={1}>
+            <Button
+              fullWidth
+              component={Link}
+              startIcon={<Icon icon="assessment" />}
+              to="reporteinicial"
+              variant="outlined"
+            >
+              REPORTE INICIAL
+            </Button>
+          </Grid>
+
+          <Grid item xs={1}>
+            <Button
+              fullWidth
+              component={Link}
+              startIcon={<Icon icon="assessment" />}
+              to="reportefinal"
+              variant="outlined"
+            >
+              REPORTE FINAL
+            </Button>
+          </Grid>
+          
         </Grid>
       </Box>
 

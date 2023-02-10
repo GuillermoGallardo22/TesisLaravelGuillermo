@@ -83,6 +83,7 @@ Route::middleware(["auth:sanctum", "isUserActive"])->group(function () {
     Route::apiResource('numeracion-acta-grado', NumeracionActaGradoController::class)->only(['index']);
 
     Route::get("acta-grado-reporte", [ActaGradoController::class, "generarReporte"]);
+    Route::get("acta-grado-reporteinicial", [ActaGradoController::class, "generarReporteInicial"]);
     Route::get('procesos-reporte', [ProcesoController::class, "generarReporte"]);
 
     // AUTH
