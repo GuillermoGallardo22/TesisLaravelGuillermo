@@ -24,6 +24,7 @@ class MiembrosActaGradoController extends Controller
     {
         $query = MiembrosActaGrado::query();
 
+        $query->orderBy('asistio', 'desc');
         $query->orderBy('tipo');
         $query->orderBy('created_at');
 
@@ -74,9 +75,25 @@ class MiembrosActaGradoController extends Controller
     {
         $validated = $request->validated();
 
-        $miembroActaGrado->asistio = $validated["asistio"];
+        if ($request->exists("asistio")) {
+            $miembroActaGrado->asistio = $validated["asistio"];
+        }
 
-        $miembroActaGrado->save();
+        if ($request->exists("tipo")) {
+            $miembroActaGrado->tipo = $validated["tipo"];
+        }
+
+        if ($request->exists("informacion_adicional")) {
+            $miembroActaGrado->informacion_adicional = $validated["informacion_adicional"];
+        }
+
+        if ($request->exists("fecha_asignacion")) {
+            $miembroActaGrado->fecha_asignacion = $validated["fecha_asignacion"];
+        }
+
+        if ($miembroActaGrado->isDirty()) {
+            $miembroActaGrado->save();
+        }
 
         return ResourceObject::make($miembroActaGrado);
     }

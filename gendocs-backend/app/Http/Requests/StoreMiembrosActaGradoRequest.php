@@ -30,7 +30,7 @@ class StoreMiembrosActaGradoRequest extends FormRequest
             "docente" => ["required", "exists:\App\Models\Docente,id", new DisponibilidadDocente($this->actaGrado)],
             "actaGrado" => ["required", "exists:\App\Models\ActaGrado,id"],
             "tipo" => ["required", Rule::in([TipoAsistenteActaGrado::TUTOR, TipoAsistenteActaGrado::M_PRINCIPAL, TipoAsistenteActaGrado::M_SUPLENTE, TipoAsistenteActaGrado::PRESIDENTE])],
-            "informacion_adicional" => ["nullable", "string", "max:100"],
+            "informacion_adicional" => ["nullable", "string"],
             "fecha_asignacion" => ["nullable", "date"],
         ];
     }
