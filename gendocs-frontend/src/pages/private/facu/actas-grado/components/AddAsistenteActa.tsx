@@ -6,12 +6,14 @@ import ConfirmationDialog from "components/ConfirmationDialog";
 import ErrorSummary from "components/ErrorSummary";
 import Select from "components/Select";
 import { SingleAutoComplete } from "components/SingleAutoComplete";
-import { FormikHelpers, useFormik } from "formik";
+import { format } from "date-fns";
+import { useFormik } from "formik";
 import { useErrorsResponse } from "hooks/useErrorsResponse";
 import { HTTP_STATUS } from "models/enums/HttpStatus";
 import {
   IActaGrado,
   IAddAsistenteActaGrado,
+  IMiembroActaGrado,
   TipoAsistenteActaGradoEnum,
 } from "models/interfaces/IActaGrado";
 import { IDocente } from "models/interfaces/IDocente";
@@ -19,7 +21,10 @@ import { useSnackbar } from "notistack";
 import { useEffect, useMemo, useState } from "react";
 import { useQueryClient } from "react-query";
 import { getDocentes } from "services/docentes";
-import { saveMiembroActaGrado } from "services/miembro-acta-grado";
+import {
+  saveMiembroActaGrado,
+  updateMiembroActaGrado,
+} from "services/miembro-acta-grado";
 import { CONSTANTS } from "utils/constants";
 import { getOptionLabelDocente, isOptionEqualToValueDocente } from "utils/libs";
 import { VALIDATION_MESSAGES as VM } from "utils/messages";
@@ -30,6 +35,7 @@ type AddAsistenteActaProps = {
   actaGrado: IActaGrado;
   isVisible: boolean;
   onCancel: () => void;
+  miembro: IMiembroActaGrado | null;
 };
 
 const tiposAsistentesActaGrado = [
@@ -77,28 +83,44 @@ const AddAsistenteActa: React.FunctionComponent<AddAsistenteActaProps> = ({
   actaGrado,
   isVisible,
   onCancel: closeModal,
+  miembro,
 }) => {
   const client = useQueryClient();
-  const [acDocente, setACDocente] = useState<IDocente | null>(null);
+  const [acDocente, setACDocente] = useState<IDocente | null>(
+    miembro?.docente || null
+  );
+
+  const isEditMode = Boolean(miembro);
 
   const { enqueueSnackbar } = useSnackbar();
 
   const { errorSummary, setErrorSummary, cleanErrorsSumary } =
     useErrorsResponse();
 
-  const onSubmit = async (
-    form: IAddAsistenteActaGrado,
-    helpers: FormikHelpers<IAddAsistenteActaGrado>
-  ) => {
+  const onSubmit = async (form: IAddAsistenteActaGrado) => {
     cleanErrorsSumary();
 
-    const result = await saveMiembroActaGrado(form);
+    const result = miembro
+      ? await updateMiembroActaGrado(miembro.id, {
+          ...form,
+          fecha_asignacion: form.fecha_asignacion
+            ? format(form.fecha_asignacion, "yyyy-MM-dd")
+            : "",
+        })
+      : await saveMiembroActaGrado({
+          ...form,
+          fecha_asignacion: form.fecha_asignacion
+            ? format(form.fecha_asignacion, "yyyy-MM-dd")
+            : "",
+        });
 
-    if (result.status === HTTP_STATUS.created) {
+    if (
+      result.status === HTTP_STATUS.created ||
+      result.status === HTTP_STATUS.ok
+    ) {
       client.invalidateQueries(["miembros-acta-grados", actaGrado.id + ""]);
 
       enqueueSnackbar(result.message, { variant: "success" });
-      helpers.resetForm();
       handleCloseModal();
     } else {
       enqueueSnackbar(result.message, { variant: "error" });
@@ -106,23 +128,39 @@ const AddAsistenteActa: React.FunctionComponent<AddAsistenteActaProps> = ({
     }
   };
 
-  const initialValues: IAddAsistenteActaGrado = {
-    docente: -1,
-    tipo: TipoAsistenteActaGradoEnum.M_PRINCIPAL,
-    informacion_adicional: "",
-    actaGrado: actaGrado.id,
-    fecha_asignacion: null,
-  };
+  const initialValues = useMemo(
+    (): IAddAsistenteActaGrado => ({
+      docente: miembro?.docente?.id || -1,
+      tipo: miembro?.tipo || TipoAsistenteActaGradoEnum.M_PRINCIPAL,
+      informacion_adicional: miembro?.informacion_adicional || "",
+      actaGrado: actaGrado.id,
+      fecha_asignacion: miembro?.fecha_asignacion
+        ? new Date(miembro.fecha_asignacion)
+        : null,
+    }),
+    [miembro]
+  );
 
   const formik = useFormik({
     initialValues: initialValues,
     onSubmit: onSubmit,
     validationSchema,
+    enableReinitialize: true,
   });
 
   useEffect(() => {
     formik.setFieldValue("docente", acDocente?.id || -1);
   }, [acDocente]);
+
+  useEffect(() => {
+    if (isVisible) {
+      if (miembro?.docente) {
+        setACDocente(miembro.docente);
+      }
+    } else {
+      setACDocente(null);
+    }
+  }, [isVisible]);
 
   const submitting = formik.isSubmitting;
 
@@ -131,6 +169,7 @@ const AddAsistenteActa: React.FunctionComponent<AddAsistenteActaProps> = ({
   const handleCloseModal = () => {
     formik.resetForm();
     setACDocente(null);
+    cleanErrorsSumary();
     closeModal();
   };
 
@@ -161,9 +200,9 @@ const AddAsistenteActa: React.FunctionComponent<AddAsistenteActaProps> = ({
         id="add-asistente-acta"
         keepMounted={true}
         isVisible={isVisible}
-        title="Agregar miembros"
+        title={isEditMode ? "Editar miembro" : "Agregar miembro"}
         onCancel={handleCloseModal}
-        textApprove="Agregar"
+        textApprove="Guardar"
         maxWidth="md"
         buttonColorCancel="error"
         loading={submitting}
@@ -184,10 +223,12 @@ const AddAsistenteActa: React.FunctionComponent<AddAsistenteActaProps> = ({
               hookProps={{
                 fetch: getDocentes,
                 preventSubmitOnOpen: true,
+                enableReinitialize: true,
+                initValue: miembro?.docente,
               }}
               AutoCompleteProps={{
                 id: "autocomplete-asistente-acta",
-                disabled: submitting,
+                disabled: submitting || isEditMode,
                 isOptionEqualToValue: isOptionEqualToValueDocente,
                 getOptionLabel: getOptionLabelDocente,
               }}
@@ -195,7 +236,7 @@ const AddAsistenteActa: React.FunctionComponent<AddAsistenteActaProps> = ({
                 required: true,
                 label: "Docente",
                 placeholder: "Nombre",
-                disabled: submitting,
+                disabled: submitting || isEditMode,
                 error: formik.touched.docente && Boolean(formik.errors.docente),
                 helperText: formik.touched.docente && formik.errors.docente,
               }}

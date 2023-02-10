@@ -10,6 +10,7 @@ export type useAutocompleteProps<T> = {
   filters?: IFilterProps;
   preventSubmitOnOpen?: boolean;
   initValue?: T | null | undefined;
+  enableReinitialize?: boolean;
 };
 
 export const useAutocomplete = <T>({
@@ -17,6 +18,7 @@ export const useAutocomplete = <T>({
   filters,
   preventSubmitOnOpen = false,
   initValue,
+  enableReinitialize,
 }: useAutocompleteProps<T>) => {
   const [inputValue, setInputValue] = useState("");
 
@@ -101,6 +103,12 @@ export const useAutocomplete = <T>({
       active = false;
     };
   }, [inputValue, isOpen]);
+
+  useEffect(() => {
+    if (enableReinitialize && initValue) {
+      setValue(initValue);
+    }
+  }, [initValue]);
 
   const onChange = (event: React.SyntheticEvent, value: T | null) => {
     // setItems(value ? [value, ...items] : items);

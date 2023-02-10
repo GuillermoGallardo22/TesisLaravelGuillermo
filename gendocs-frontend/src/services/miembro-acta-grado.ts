@@ -1,9 +1,6 @@
 import axios from "axios";
 import { HTTP_STATUS } from "models/enums/HttpStatus";
-import {
-  IAddAsistenteActaGrado,
-  IMiembroActaGrado,
-} from "models/interfaces/IActaGrado";
+import { IMiembroActaGrado } from "models/interfaces/IActaGrado";
 import { IFilterPaginationProps } from "models/interfaces/IPagination";
 import { IResponse } from "models/interfaces/IResponse";
 import { handleErrors } from "utils/axios";
@@ -28,7 +25,7 @@ export async function getMiembrosActaGrado(
 }
 
 export async function saveMiembroActaGrado(
-  form: IAddAsistenteActaGrado
+  form: any
 ): Promise<IResponse<IMiembroActaGrado>> {
   try {
     const {
@@ -38,6 +35,25 @@ export async function saveMiembroActaGrado(
     return {
       status: HTTP_STATUS.created,
       message: HTTP_MESSAGES[HTTP_STATUS.created],
+      data,
+    };
+  } catch (error) {
+    return handleErrors(error);
+  }
+}
+
+export async function updateMiembroActaGrado(
+  id: number,
+  form: any
+): Promise<IResponse<IMiembroActaGrado>> {
+  try {
+    const {
+      data: { data },
+    } = await axios.put("miembro-acta-grado/" + id, clean(form));
+
+    return {
+      status: HTTP_STATUS.ok,
+      message: HTTP_MESSAGES[HTTP_STATUS.ok],
       data,
     };
   } catch (error) {

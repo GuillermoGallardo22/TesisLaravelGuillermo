@@ -63,9 +63,10 @@ const AsistenciaActaGradoBase: React.FunctionComponent<
 
   const {
     isVisible: isVisibleAddDocente,
-    openJustModal: openModalAddDocente,
+    openModal: openModalAddDocente,
     closeModal: closeModalAddDocente,
-  } = useConfirmationDialog();
+    itemSelected: docenteSeleccionado,
+  } = useConfirmationDialog<IMiembroActaGrado | null>();
 
   const {
     isVisible: isVisibleDeleteMiembroModal,
@@ -121,14 +122,25 @@ const AsistenciaActaGradoBase: React.FunctionComponent<
         getActions: (p) => [
           <GridActionsCellItem
             key={p.id}
+            disabled={p.row.asistio}
+            icon={
+              <Tooltip title="Editar" arrow>
+                <Icon icon="edit" />
+              </Tooltip>
+            }
+            label="Editar"
+            onClick={() => openModalAddDocente(p.row)}
+          />,
+          <GridActionsCellItem
+            key={p.id}
             color="error"
-            // disabled={!consejo?.estado}
+            disabled={p.row.asistio}
             icon={
               <Tooltip title="Eliminar" arrow>
                 <Icon icon="delete" />
               </Tooltip>
             }
-            label="Eliminar documento"
+            label="Eliminar"
             onClick={() => openDeleteMiembroModal(p.row)}
           />,
         ],
@@ -165,10 +177,9 @@ const AsistenciaActaGradoBase: React.FunctionComponent<
           <Grid item xs={1} sm={2} md={1}>
             <Button
               fullWidth
-              // disabled={!actaGrado.fecha_presentacion}
               startIcon={<Icon icon="add" />}
               variant="outlined"
-              onClick={openModalAddDocente}
+              onClick={() => openModalAddDocente(null)}
             >
               AGREGAR
             </Button>
@@ -204,6 +215,7 @@ const AsistenciaActaGradoBase: React.FunctionComponent<
       </div>
 
       <AddAsistenteActa
+        miembro={docenteSeleccionado}
         actaGrado={actaGrado}
         isVisible={isVisibleAddDocente}
         onCancel={closeModalAddDocente}

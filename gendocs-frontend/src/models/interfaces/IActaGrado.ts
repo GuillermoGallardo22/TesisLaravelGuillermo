@@ -127,7 +127,7 @@ export interface IMiembroActaGrado {
   informacion_adicional: string | null;
   asistio: boolean;
   notificado: boolean;
-  fecha_asignacion: string;
+  fecha_asignacion: string | Date;
   //
-  tipo?: string;
+  tipo?: TipoAsistenteActaGradoEnum;
 }
