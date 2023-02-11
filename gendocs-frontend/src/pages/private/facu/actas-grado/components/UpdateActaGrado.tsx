@@ -349,6 +349,8 @@ const UpdateActaGradoBase = ({
               fullWidth
               margin="normal"
               type="number"
+              id="creditos_aprobados"
+              name="creditos_aprobados"
               label="Créditos aprobados"
               value={formik.values.creditos_aprobados}
               onChange={formik.handleChange}
