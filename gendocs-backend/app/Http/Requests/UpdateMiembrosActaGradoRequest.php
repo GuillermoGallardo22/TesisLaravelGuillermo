@@ -33,8 +33,8 @@ class UpdateMiembrosActaGradoRequest extends FormRequest
                 TipoAsistenteActaGrado::M_SUPLENTE,
                 TipoAsistenteActaGrado::PRESIDENTE,
             ]), "sometimes"],
-            "informacion_adicional" => ["string", "sometimes"],
-            "fecha_asignacion" => ["date", "sometimes"],
+            "informacion_adicional" => ["string", "sometimes", "nullable"],
+            "fecha_asignacion" => ["date", "sometimes", "nullable"],
         ];
     }
 
