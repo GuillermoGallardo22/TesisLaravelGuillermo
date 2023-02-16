@@ -211,6 +211,11 @@ const ActaGradoReporte = () => {
       key: "reporteActasGradoTableModel",
     });
 
+  const handleReset = () => {
+    setResult([]);
+    formik.resetForm();
+  };
+
   return (
     <Stack spacing={2}>
       <TitleNav title="Reporte actas de grado Final" />
@@ -218,7 +223,7 @@ const ActaGradoReporte = () => {
       <Box
         component="form"
         onSubmit={formik.handleSubmit}
-        onReset={formik.handleReset}
+        onReset={handleReset}
         noValidate
       >
         <Grid container spacing={2}>
