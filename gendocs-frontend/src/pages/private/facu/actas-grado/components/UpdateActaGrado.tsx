@@ -53,7 +53,7 @@ const UpdateActaGrado = () => {
   const { actaGrado, isLoadingActaGrado } = useActaGrado({
     actaGradoId,
     options: {
-      include: "aula,estudiante,carrera,canton,provincia,estado,modalidad,tipo",
+      include: "aula,estudiante,carrera,canton,provincia,modalidad,tipo",
     },
     props: {
       withMiembros: false,
@@ -72,7 +72,7 @@ const UpdateActaGrado = () => {
         filters: {
           carrera: actaGrado.carrera_id,
         },
-        include: "estados,estado",
+        include: "estados",
       }),
       // getModalidadesActaGrado(),
     ])
@@ -292,7 +292,7 @@ const UpdateActaGradoBase = ({
           <Grid item xs={12} sm={6}>
             <DatePicker
               views={CONSTANTS.DATEPICKER}
-              label="Fecha fin estudios"
+              label="Fecha inicio estudios"
               disabled={submitting}
               value={formik.values.fecha_inicio_estudios}
               onChange={(date) =>

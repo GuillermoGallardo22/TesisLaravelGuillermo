@@ -35,7 +35,7 @@ import { IModalidadActaGrado } from "models/interfaces/IModalidadActaGrado";
 import { useEffect, useMemo, useState } from "react";
 import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
-import { deleteActaGrado, getActasGrado } from "services/actas-grado";
+import { deleteActaGrado, getActasGrado, cerrarActaGrado } from "services/actas-grado";
 import { parseToDate, parseToDateTime } from "utils/date";
 import { getLocalStoragePreviousValue } from "utils/libs";
 import { useListCarreras } from "../carreras/hooks/useListCarreras";
@@ -45,6 +45,8 @@ import { useModalidadActasList } from "./hooks/useModalidadActasList";
 import { useTipoActasList } from "./hooks/useTipoActasList";
 
 const ActasGrado: React.FunctionComponent = () => {
+  const [token, setToken] = useState(1);
+
   const [carrera, setCarrera] = useState(
     getLocalStoragePreviousValue(
       LocalStorageKeys.CARRERA_SELECCIONADA_ACTA_GRADO
@@ -71,6 +73,24 @@ const ActasGrado: React.FunctionComponent = () => {
       refetchOnWindowFocus: false,
     },
   });
+  
+  const {
+    isVisible: isVisibleC,
+    openModal: openModalC,
+    closeModal: closeModalC,
+    itemSelected: itemSelectedC,
+  } = useConfirmationDialog<IActaGrado>();
+
+  const { deleting: closing, handleDelete: _cerrarActa } = useDeleteItem({
+    id: itemSelectedC?.id,
+    onDelete: cerrarActaGrado,
+    callback: () => {
+      // setToken(Date.now());
+      refetch();
+      closeModalC();
+    },
+  });
+
 
   const {
     data: actasGrado = [],
@@ -83,7 +103,7 @@ const ActasGrado: React.FunctionComponent = () => {
         filters: {
           carrera,
         },
-        include: "aula,estudiante,tipo,estado,modalidad,canton,provincia",
+        include: "aula,estudiante,estado,tipo,modalidad,canton,provincia",
       }).then((r) => r.data),
     {
       enabled: carrera !== -1,
@@ -269,10 +289,11 @@ const ActasGrado: React.FunctionComponent = () => {
         type: "actions",
         field: "acciones",
         headerName: "Acciones",
-        width: 200,
+        width: 230,
         getActions: (p: GridRowParams<IActaGrado>) => [
           <GridActionsCellItem
             key={p.id}
+            disabled={!p.row.estadoTemp}
             // color="primary"
             LinkComponent={Link}
             to={p.row.id + ""}
@@ -285,6 +306,7 @@ const ActasGrado: React.FunctionComponent = () => {
           />,
           <GridActionsCellItem
             key={p.id}
+            disabled={!p.row.estadoTemp}
             color="success"
             LinkComponent={Link}
             to={"asistencia/" + p.row.id}
@@ -297,9 +319,10 @@ const ActasGrado: React.FunctionComponent = () => {
           />,
           <GridActionsCellItem
             key={p.id}
+            disabled={!p.row.estadoTemp || !p.row.documento_notas}
             color="secondary"
             LinkComponent={Link}
-            disabled={!p.row.documento_notas}
+            // disabled={}
             to={`drive/${p.row.documento_notas}?type=${GoogleType.SPREADSHEETS}`}
             icon={
               <Tooltip title="Notas" arrow>
@@ -321,7 +344,20 @@ const ActasGrado: React.FunctionComponent = () => {
             label="Documento"
           />,
           <GridActionsCellItem
+          key={p.id}
+          disabled={!p.row.estadoTemp}
+          color="warning"
+          label="Cerrar"
+          icon={
+            <Tooltip title="Cerrar" arrow>
+              <Icon icon="lock" />
+            </Tooltip>
+          }
+          onClick={() => openModalC(p.row as IActaGrado)}
+        />,
+          <GridActionsCellItem
             key={p.id}
+          disabled={!p.row.estadoTemp}
             color="error"
             icon={
               <Tooltip title="Eliminar" arrow>
@@ -457,6 +493,25 @@ const ActasGrado: React.FunctionComponent = () => {
           rows={actasGrado}
         />
       </div>
+
+      <ConfirmationDialog
+        id="close-acta-grado-modal"
+        keepMounted={true}
+        isVisible={isVisibleC}
+        title="Cerrar Acta Grado"
+        onCancel={closeModalC}
+        onApprove={_cerrarActa}
+        textApprove="CERRAR"
+        buttonColorApprove="error"
+        loading={closing}
+      >
+        <DialogContentText>
+          ¿Está seguro que desea cerrar el acta de grado {" "}
+          <strong>{itemSelectedC?.estudiante.nombres}</strong>?
+          {" "} 
+          <strong>{itemSelectedC?.estudiante.apellidos}</strong>?
+        </DialogContentText>
+      </ConfirmationDialog>
 
       <ConfirmationDialog
         id="delete-acta-modal"

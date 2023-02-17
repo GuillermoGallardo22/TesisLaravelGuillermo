@@ -35,7 +35,9 @@ class ActaGradoController extends Controller
     {
         $query = ActaGrado::query();
 
-        $query->orderBy("numero", "DESC");
+
+        $query ->orderBy('estadoTemp', 'DESC')
+                ->orderBy("numero", "DESC");
 
         $query->applyFilters($request->all());
 
@@ -308,4 +310,17 @@ class ActaGradoController extends Controller
 
         return response()->noContent();
     }
+
+
+    public function cerrar(ActaGrado $actaGrado)
+    {
+        $actaGrado->estadoTemp = false;
+        $actaGrado->update();
+
+        DB::commit();
+
+        return ActaGradoResource::make($actaGrado);
+    }
+
+
 }

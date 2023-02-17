@@ -15,6 +15,7 @@ export interface IEstadoActa {
   nombre_fem: string;
   //
   temp: string;
+  estadoTemp: boolean;
 }
 
 interface ITipoEstadoActaGrado {
@@ -70,6 +71,7 @@ export interface IActaGrado {
   //
   tipo?: ITipoActaGrado;
   miembros?: IMiembroActaGrado[];
+  estadoTemp: boolean;
 }
 
 export interface IAddActaGrado {

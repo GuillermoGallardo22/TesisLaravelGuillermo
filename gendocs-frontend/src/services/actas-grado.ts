@@ -142,6 +142,24 @@ export async function deleteActaGrado(
   }
 }
 
+export async function cerrarActaGrado(
+  actaId: number
+): Promise<IResponse<IActaGrado>> {
+  try {
+    const {
+      data: { data },
+    } = await axios.patch(`acta-grado/${actaId}/cerrar`);
+
+    return {
+      data,
+      status: HTTP_STATUS.ok,
+      message: HTTP_MESSAGES[HTTP_STATUS.ok],
+    };
+  } catch (error) {
+    return handleErrors(error);
+  }
+}
+
 export async function generarDocumentoActaGrado(
   id: number
 ): Promise<IResponse<IActaGrado>> {
@@ -200,6 +218,7 @@ export async function generarReporteActaGradoInicial(
     return handleErrors(error, []);
   }
 }
+
 
 export async function generarNumeracionActasGrado(
   carreraId: number | string

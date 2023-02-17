@@ -122,7 +122,7 @@ const AsistenciaActaGradoBase: React.FunctionComponent<
         getActions: (p) => [
           <GridActionsCellItem
             key={p.id}
-            disabled={p.row.asistio}
+            // disabled={p.row.asistio}
             icon={
               <Tooltip title="Editar" arrow>
                 <Icon icon="edit" />
@@ -134,7 +134,7 @@ const AsistenciaActaGradoBase: React.FunctionComponent<
           <GridActionsCellItem
             key={p.id}
             color="error"
-            disabled={p.row.asistio}
+            // disabled={p.row.asistio}
             icon={
               <Tooltip title="Eliminar" arrow>
                 <Icon icon="delete" />

@@ -55,7 +55,7 @@ const Login = () => {
             id="password"
             name="password"
             type="password"
-            label="Contaseña"
+            label="Contraseña"
             autoComplete="current-password"
             value={formik.values.password}
             onChange={formik.handleChange}

@@ -35,6 +35,7 @@ class ActaGrado extends Model
         "envio_financiero_especie",
         "created_user_id",
         "tema",
+        "estadoTemp",
     ];
 
     protected $hidden = [
@@ -43,7 +44,7 @@ class ActaGrado extends Model
         "deleted_at",
     ];
 
-    protected const FILTERS = ["carrera"];
+    protected const FILTERS = ["carrera", "estadoTemp"];
 
     protected $dates = [
         // "fecha_inicio_estudios",
@@ -59,7 +60,14 @@ class ActaGrado extends Model
         "horas_practicas" => "integer",
         "creditos_aprobados" => "integer",
         "duracion" => "integer",
+        "estadoTemp" => "boolean",
     ];
+
+
+    public function scopeEstado($query, $target)
+    {
+        return $query->where('estadoTemp', '=', $target);
+    }
 
     public function scopeCarrera(Builder $query, $value)
     {

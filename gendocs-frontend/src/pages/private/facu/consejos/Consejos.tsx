@@ -87,7 +87,7 @@ export const Consejos = () => {
     id: itemSelectedC?.id,
     onDelete: cerrarConsejo,
     callback: () => {
-      setToken(Date.now());
+       setToken(Date.now());
       closeModalC();
     },
   });
@@ -188,7 +188,7 @@ export const Consejos = () => {
           />,
           <GridActionsCellItem
             key={p.id}
-            disabled={!p.row.estado}
+            disabled={!p.row.estaado}
             color="error"
             label="Eliminar"
             icon={

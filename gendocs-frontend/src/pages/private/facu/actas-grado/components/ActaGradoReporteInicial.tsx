@@ -204,6 +204,11 @@ const ActaGradoReporte = () => {
     onSubmit,
   });
 
+  const handleReset = () => {
+    setResult([]);
+    formik.resetForm();
+  };
+
   const submitting = formik.isSubmitting;
 
   const { columnVisibilityModel, onColumnVisibilityModelChange } =
@@ -218,7 +223,7 @@ const ActaGradoReporte = () => {
       <Box
         component="form"
         onSubmit={formik.handleSubmit}
-        onReset={formik.handleReset}
+        onReset={handleReset}
         noValidate
       >
         <Grid container spacing={2}>
