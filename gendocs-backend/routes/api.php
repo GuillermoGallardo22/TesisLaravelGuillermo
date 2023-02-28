@@ -74,11 +74,11 @@ Route::middleware(["auth:sanctum", "isUserActive"])->group(function () {
     Route::apiResource('modalidades-acta-grado', ModalidadActaGradoController::class)->only('index');
 
     Route::apiResource("acta-grado", ActaGradoController::class);
-    Route::patch('acta-grado/{actaGrado}/cerrar', [ActaGradoController::class, 'cerrar']);
-    Route::post("acta-grado/{actaGrado}/documento", [ActaGradoControler::class, "generarDocumento"]);
+    Route::post("acta-grado/{actaGrado}/documento", [ActaGradoController::class, "generarDocumento"]);
     Route::post("acta-grado/{carrera}/generar-numeracion", [ActaGradoController::class, "generarNumeracion"]);
     Route::apiResource("miembro-acta-grado", MiembrosActaGradoController::class)->except(["show"]);
     Route::apiResource("celdas-nota-tipo-acta-grado", CeldasNotasTipoActaGradoController::class)->except(['update', 'show']);
+    Route::post('acta-grado/{actaGrado}/cerrar', [ActaGradoController::class, 'cerrar']);
 
     Route::apiResource('numeracion', NumeracionController::class)->except(['show']);
     Route::apiResource('numeracion-acta-grado', NumeracionActaGradoController::class)->only(['index']);

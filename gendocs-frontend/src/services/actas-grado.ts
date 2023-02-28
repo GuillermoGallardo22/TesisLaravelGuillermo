@@ -148,7 +148,7 @@ export async function cerrarActaGrado(
   try {
     const {
       data: { data },
-    } = await axios.patch(`acta-grado/${actaId}/cerrar`);
+    } = await axios.post(`acta-grado/${actaId}/cerrar`);
 
     return {
       data,

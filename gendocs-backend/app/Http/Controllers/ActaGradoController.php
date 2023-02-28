@@ -35,9 +35,11 @@ class ActaGradoController extends Controller
     {
         $query = ActaGrado::query();
 
+        // $query ->orderBy('estadoTemp', 'DESC')
+        // ->orderBy("numero", "DESC");
 
-        $query ->orderBy('estadoTemp', 'DESC')
-                ->orderBy("numero", "DESC");
+        $query
+            ->orderBy("numero", "DESC");
 
         $query->applyFilters($request->all());
 
