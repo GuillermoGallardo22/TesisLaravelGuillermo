@@ -156,7 +156,8 @@ const ActasGrado: React.FunctionComponent = () => {
       {
         field: "estudiante",
         headerName: "Estudiante",
-        flex: 1,
+        // flex: 1,
+        width: 270,
         valueGetter: (e: GridValueGetterParams<IEstudiante>) =>
           e.value!.nombres + " " + e.value!.apellidos,
       },
@@ -186,7 +187,7 @@ const ActasGrado: React.FunctionComponent = () => {
         type: "dateTime",
         field: "fecha_presentacion",
         headerName: "F. sus./inc.",
-        width: 180,
+        width: 165,
         valueFormatter: (v: GridValueFormatterParams) =>
           v.value && parseToDateTime(v.value),
       },
@@ -220,7 +221,7 @@ const ActasGrado: React.FunctionComponent = () => {
         type: "singleSelect",
         field: "estado_acta",
         headerName: "Estado acta",
-        width: 130,
+        width: 100,
         valueGetter: (e: GridValueGetterParams<IEstadoActa>) =>
           e.value ? e.value.nombre_mas : "[VACÍO]",
         valueFormatter: (e) => (e.value !== "[VACÍO]" ? e.value : ""),
@@ -263,7 +264,8 @@ const ActasGrado: React.FunctionComponent = () => {
       {
         field: "aula",
         headerName: "Aula",
-        flex: 1,
+        // flex: 1,
+        width: 100,
         valueGetter: (e: GridValueGetterParams<IAula>) => e.value?.nombre,
       },
       {
@@ -275,21 +277,21 @@ const ActasGrado: React.FunctionComponent = () => {
         type: "boolean",
         field: "solicitar_especie",
         headerName: "Sol. especie",
-        width: 130,
+        width: 110,
         renderCell: (r) => <BooleanCell value={r.value} />,
       },
       {
         type: "boolean",
         field: "envio_financiero_especie",
         headerName: "Envío espcie.",
-        width: 130,
+        width: 110,
         renderCell: (r) => <BooleanCell value={r.value} />,
       },
       {
         type: "actions",
         field: "acciones",
         headerName: "Acciones",
-        width: 230,
+        width: 215,
         getActions: (p: GridRowParams<IActaGrado>) => [
           <GridActionsCellItem
             key={p.id}
