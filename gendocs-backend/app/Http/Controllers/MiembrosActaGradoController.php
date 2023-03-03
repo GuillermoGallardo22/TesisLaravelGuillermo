@@ -83,13 +83,13 @@ class MiembrosActaGradoController extends Controller
             $miembroActaGrado->tipo = $validated["tipo"];
         }
 
-        // if ($request->exists("informacion_adicional")) {
-        //     $miembroActaGrado->informacion_adicional = $validated["informacion_adicional"];
-        // }
+        if ($request->exists("informacion_adicional")) {
+            $miembroActaGrado->informacion_adicional = $validated["informacion_adicional"];
+        }
 
-        // if ($request->exists("fecha_asignacion")) {
-        //     $miembroActaGrado->fecha_asignacion = $validated["fecha_asignacion"];
-        // }
+        if ($request->exists("fecha_asignacion")) {
+            $miembroActaGrado->fecha_asignacion = $validated["fecha_asignacion"];
+        }
 
         if ($miembroActaGrado->isDirty()) {
             $miembroActaGrado->save();
