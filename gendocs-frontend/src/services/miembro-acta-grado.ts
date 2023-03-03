@@ -49,7 +49,7 @@ export async function updateMiembroActaGrado(
   try {
     const {
       data: { data },
-    } = await axios.put("miembro-acta-grado/" + id, clean(form));
+    } = await axios.put("miembro-acta-grado/" + id, form);
 
     return {
       status: HTTP_STATUS.ok,
