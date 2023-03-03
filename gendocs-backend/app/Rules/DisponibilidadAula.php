@@ -47,22 +47,27 @@ class DisponibilidadAula implements Rule
         $this->actaGradoId = isset($row['actaGradoId']) ? $row['actaGradoId'] : null;
     }
 
-    public function passes($attribute, $value)
+    public function passes($attribute, $aulaIdSelected)
     {
         $fecha_presentacion = Carbon::parse($this->fecha_presentacion);
 
         if ($this->actaGradoId !== null) {
             $actaGrado = ActaGrado::find($this->actaGradoId);
-            if ($actaGrado->aula_id === $value) {
-                return true;
-            }
+
+            $actas = ActaGrado::query()
+                ->where("aula_id", $aulaIdSelected)
+                ->whereNotIn("id", [$actaGrado->id])
+                ->whereDate("fecha_presentacion", $fecha_presentacion->toDateString())
+                ->orderBy("fecha_presentacion")
+                ->get();
+        } else {
+            $actas = ActaGrado::query()
+                ->where("aula_id", $aulaIdSelected)
+                ->whereDate("fecha_presentacion", $fecha_presentacion->toDateString())
+                ->orderBy("fecha_presentacion")
+                ->get();
         }
 
-        $actas = ActaGrado::query()
-            ->where("aula_id", $value)
-            ->whereDate("fecha_presentacion", $fecha_presentacion->toDateString())
-            ->orderBy("fecha_presentacion")
-            ->get();
 
         return $this->check($actas, $fecha_presentacion, $this->duracion);
     }
