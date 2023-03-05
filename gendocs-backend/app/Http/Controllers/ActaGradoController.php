@@ -314,8 +314,15 @@ class ActaGradoController extends Controller
     }
 
 
-    public function cerrar(ActaGrado $actaGrado)
+    public function cerrar(Request $request, ActaGrado $actaGrado)
     {
+        // Log::info($request->user());
+        // Log::info($actaGrado);
+
+        if ($request->user()->cannot('cerrar', $actaGrado)) {
+            abort(403);
+        }
+
         $actaGrado->estadoTemp = false;
         $actaGrado->update();
 

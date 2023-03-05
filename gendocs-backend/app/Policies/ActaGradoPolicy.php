@@ -3,9 +3,11 @@
 namespace App\Policies;
 
 use App\Constants\Permissions;
+use App\Constants\Roles;
 use App\Models\ActaGrado;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Support\Facades\Log;
 
 class ActaGradoPolicy
 {
@@ -66,8 +68,17 @@ class ActaGradoPolicy
      */
     public function delete(User $user, ActaGrado $actaGrado)
     {
+        // return $user->hasRole([Roles::Admin]);
         return $user->getAllPermissions()->contains('name', Permissions::ActaGrado['delete']);
     }
+
+    public function cerrar(User $user, ActaGrado $actaGrado)
+    {
+        // return $user->hasRole([Roles::Admin]);
+        // Log::info($user->getAllPermissions()->contains('name', Permissions::ActaGrado['cerrar']));
+        return $user->getAllPermissions()->contains('name', Permissions::ActaGrado['cerrar']);
+    }
+
 
     /**
      * Determine whether the user can restore the model.

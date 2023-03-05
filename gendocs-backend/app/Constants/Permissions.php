@@ -80,6 +80,7 @@ abstract class Permissions
         'create' => 'acta-grado.create',
         'update' => 'acta-grado.update',
         'delete' => 'acta-grado.delete',
+        'cerrar' => 'acta-grado.cerrar',
     ];
 
     const MiembroActaGrado = [
