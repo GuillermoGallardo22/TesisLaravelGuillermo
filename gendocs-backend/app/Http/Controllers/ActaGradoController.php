@@ -151,6 +151,7 @@ class ActaGradoController extends Controller
             $actaGrado->link = $validated["link"];
             $actaGrado->aula_id = $validated["aula"];
             $actaGrado->tema = $validated["tema"];
+            $actaGrado->titulo_bachiller = $validated["titulo_bachiller"];
 
             $actaGrado->update();
 

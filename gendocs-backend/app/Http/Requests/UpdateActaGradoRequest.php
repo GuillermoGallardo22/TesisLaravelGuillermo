@@ -47,6 +47,7 @@ class UpdateActaGradoRequest extends FormRequest
                 new ModalidadActa($this->modalidad_acta_grado, ModalidadesActaGrado::ONL),
                 DisponibilidadLink::onUpdate($this->fecha_presentacion, $this->duracion, $this->id),
             ],
+            "titulo_bachiller" => ["required", "string", "max:255"],
         ];
     }
 

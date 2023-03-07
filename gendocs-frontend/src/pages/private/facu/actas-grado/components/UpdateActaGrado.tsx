@@ -158,6 +158,7 @@ const UpdateActaGradoBase = ({
     solicitar_especie: Boolean(actaGrado.solicitar_especie),
     link: actaGrado?.link || "",
     tema: actaGrado.tema || "",
+    titulo_bachiller: actaGrado.titulo_bachiller || "",
   };
 
   const onSubmit = async (form: IUpdateActaGrado) => {
@@ -270,22 +271,28 @@ const UpdateActaGradoBase = ({
             <TextField
               fullWidth
               required
+              disabled={submitting}
               disabled={true}
               label="Cantón de residencia"
               margin="normal"
               value={getOptionLabelCanton(actaGrado.canton)}
+
             />
           </Grid>
 
           <Grid item xs={12} sm={6}>
             <TextField
-              required
+              // required
               fullWidth
-              disabled={true}
+              // disabled={true}
               margin="normal"
               name="titulo_bachiller"
               label="Título bachiller"
               value={formik.values.titulo_bachiller}
+              disabled={submitting}
+              onChange={formik.handleChange}
+              error={formik.touched.titulo_bachiller && Boolean(formik.errors.titulo_bachiller)}
+              helperText={formik.touched.titulo_bachiller && formik.errors.titulo_bachiller}
             />
           </Grid>
 
@@ -501,8 +508,8 @@ const UpdateActaGradoBase = ({
               id="tema"
               name="tema"
               label="Tema"
-              disabled={submitting}
               value={formik.values.tema}
+              disabled={submitting}
               onChange={formik.handleChange}
               error={formik.touched.tema && Boolean(formik.errors.tema)}
               helperText={formik.touched.tema && formik.errors.tema}
