@@ -1,5 +1,10 @@
 import { format, parseISO } from "date-fns";
 
+export enum DATE_FORMAT {
+  LOCAL = "dd/MM/yyyy",
+  GLOBAL = "yyyy-MM-dd",
+}
+
 export function parseToDate(date: string | Date | null) {
   if (typeof date === "string") {
     date = new Date(date);
@@ -14,12 +19,16 @@ export function parseToDateTime(date: string) {
   return format(new Date(date), "dd/MM/yyyy HH:mm a");
 }
 
-export function parseToDateString(date: string | Date | null) {
-
+export function parseToDateString(
+  date: string | Date | null,
+  formatter?: DATE_FORMAT
+) {
   if (date == null) return "";
   if (typeof date === "string") date = parseISO(date);
 
-  return format(date, "dd/MM/yyyy");
+  const _format = !formatter ? DATE_FORMAT.LOCAL : formatter;
+
+  return format(date, _format);
 }
 
 export function parseToTimeString(date: string | Date | null) {

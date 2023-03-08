@@ -13,6 +13,7 @@ import { useState } from "react";
 import { generarReporteActaGrado } from "services/actas-grado";
 import { CONSTANTS } from "utils/constants";
 import {
+  DATE_FORMAT,
   getFirstMonthDate,
   parseToDateString,
   parseToTimeString,
@@ -156,8 +157,8 @@ const ActaGradoReporte = () => {
     const { data } = await generarReporteActaGrado({
       queryParams: {
         carrera: form.carrera,
-        fi: form.fecha_inicio.toISOString(),
-        ff: form.fecha_fin.toISOString(),
+        fi: parseToDateString(form.fecha_inicio, DATE_FORMAT.GLOBAL),
+        ff: parseToDateString(form.fecha_fin, DATE_FORMAT.GLOBAL),
       },
     });
 
