@@ -17,6 +17,7 @@ use App\Models\NumeracionActaGrado;
 use App\Models\TipoActaGrado;
 use App\Models\TipoEstadoActaGrado;
 use App\Services\ActaGradoService;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -247,19 +248,15 @@ class ActaGradoController extends Controller
     public function generarReporte(Request $request)
     {
         $carrera = $request->get('carrera');
-        $fecha_inicio = $request->get('fi');
-        $fecha_fin = $request->get('ff');
+        $fecha_inicio = Carbon::parse($request->get('fi'))->toDateString();
+        $fecha_fin = Carbon::parse($request->get('ff'))->toDateString();
 
         $query = ActaGrado::query()->with(['estudiante', 'tipo', 'miembros.docente', 'aula']);
 
         $query
             ->where('carrera_id', $carrera)
-            ->whereBetween("fecha_presentacion", [$fecha_inicio, $fecha_fin])
-            // ->orderBy("fecha_presentacion")
-            ->orderBy("numero")
-            // ->dd()
-        ;
-
+            ->whereBetween(DB::raw("DATE(fecha_presentacion)"), [$fecha_inicio, $fecha_fin])
+            ->orderBy("numero");
 
         return response()->json([
             "data" => $query->get(),
@@ -331,6 +328,4 @@ class ActaGradoController extends Controller
 
         return ActaGradoResource::make($actaGrado);
     }
-
-
 }
