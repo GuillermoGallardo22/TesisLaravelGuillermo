@@ -6,7 +6,7 @@ import ConfirmationDialog from "components/ConfirmationDialog";
 import ErrorSummary from "components/ErrorSummary";
 import Select from "components/Select";
 import { SingleAutoComplete } from "components/SingleAutoComplete";
-import { format } from "date-fns";
+import { format, parseISO } from "date-fns";
 import { useFormik } from "formik";
 import { useErrorsResponse } from "hooks/useErrorsResponse";
 import { HTTP_STATUS } from "models/enums/HttpStatus";
@@ -135,7 +135,7 @@ const AddAsistenteActa: React.FunctionComponent<AddAsistenteActaProps> = ({
       informacion_adicional: miembro?.informacion_adicional || "",
       actaGrado: actaGrado.id,
       fecha_asignacion: miembro?.fecha_asignacion
-        ? new Date(miembro.fecha_asignacion)
+        ? parseISO(miembro.fecha_asignacion as string)
         : null,
     }),
     [miembro]
