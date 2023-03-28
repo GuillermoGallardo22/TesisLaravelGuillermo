@@ -27,7 +27,8 @@ class StoreMiembrosActaGradoRequest extends FormRequest
     public function rules()
     {
         return [
-            "docente" => ["required", "exists:\App\Models\Docente,id", new DisponibilidadDocente($this->actaGrado)],
+            // "docente" => ["required", "exists:\App\Models\Docente,id", new DisponibilidadDocente($this->actaGrado)],
+            "docente" => ["required", "exists:\App\Models\Docente,id"],
             "actaGrado" => ["required", "exists:\App\Models\ActaGrado,id"],
             "tipo" => ["required", Rule::in([TipoAsistenteActaGrado::TUTOR, TipoAsistenteActaGrado::M_PRINCIPAL, TipoAsistenteActaGrado::M_SUPLENTE, TipoAsistenteActaGrado::PRESIDENTE])],
             "informacion_adicional" => ["nullable", "string"],
